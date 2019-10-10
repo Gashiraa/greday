@@ -3,17 +3,21 @@
   <meta charset="UTF-8"/>
   <style>
     h5 {
-      margin: 0;
       text-align: center;
+      margin: 0;
       font-size: 15px;
     }
 
     p {
       color: grey;
       text-align: justify;
-      font-size: 10px;
+      font-size: 8px;
       margin-left: 65px;
       margin-right: 65px;
+    }
+
+    .right {
+      float: right;
     }
   </style>
   <script>
@@ -33,16 +37,31 @@
   </script>
 </head>
 <body onload="number_pages()">
-    <section id="notes">
-      <h5>
-        <%= t('invoice_account') %><b> BE47 0015 7715 0480</b>
-      </h5>
-      <p>
-        <%= t('invoice_notice') %>
-      </p>
-      <h5>
-        <span class="page"></span>/<span class="topage"></span>
-      </h5>
-    </section>
-  </body>
+<section id="notes">
+  <hr>
+  <table style="width:100%;font-size: 12px">
+    <tr>
+      <td style="width:33.3%">
+        <h5 style="text-align:left">
+          <span class="page"></span>/<span class="topage"></span>
+        </h5>
+      </td>
+      <td style="width:33.3%">
+        <div style="text-align:center">
+          RPM LIEGE
+          </br>
+          TVA : BE 08110.007.903
+        </div>
+      </td>
+      <td style="width:33.3%">
+        <div style="text-align:right">
+          IBAN BE47 0015 7715 0480         </br>
+          BIC GEBABEBB
+        </div>
+      </td>
+    </tr>
+  </table>
+
+</section>
+</body>
 </html>

@@ -4,20 +4,13 @@
       <div class="logo">
         <%= wicked_pdf_image_tag "logo_greday.png" %>
       </div>
-
       <div class="company-info">
-        <div>
-          <%= @company.name %>
-        </div>
-        <span>
-          <%= @company.street %>
-        </span>
-        <br/>
-        <span><%= @company.postcode %> <%= @company.locality %></span>
-        <br/>
-        <span><%= @company.phone %></span>
-        <br/>
-        <span><%= @company.email %></span>
+        <div>THOMAS GREDAY</div>
+        <div>Rue Pachlauw, 4</div>
+        <div>4690 Wonck</div>
+        <div>0479/26.44.17</div>
+        <div>thomas.greday@gmail.com</div>
+        <div>TVA: BE0810.007.903</div>
       </div>
 
     </section>
@@ -50,7 +43,6 @@
               </span>
       </div>
     </section>
-
     <div class="clearfix"></div>
 
     <section id="invoice-title-number">
@@ -65,11 +57,9 @@
     </section>
 
     <div class="clearfix"></div>
-
     <span id="dateInvoice">
           <%= "Wonck le, " + l(@invoice.date).to_s %>
     </span>
-
     <hr>
 
     <% if @invoice.projects.any? %>
@@ -176,23 +166,25 @@
         </section>
 
         <% unless @invoice.projects.length == 1 && @invoice.wares.length == 0 %>
-          <section id="sums" class="sums_project">
-            <table cellpadding="0" cellspacing="0">
-              <tr class="amount-total">
-              <tr data-hide-on-quote="true">
-                <th>Total TVA projet (€)</th>
-                <td><%= number_with_precision (project.total - project.total_gross), :precision => 2 %></td>
-              </tr>
-              <th>TOTAL HT PROJET (€)</th>
-              <td><%= number_with_precision project.total_gross, :precision => 2 %></td>
-              </tr>
-              <tr>
-                <th><%= "TOTAL TTC PROJET (€)" %></th>
-                <td><%= number_with_precision project.total, :precision => 2 %></td>
+          <div class="avoidbreak">
+            <section id="sums" class="sums_project">
+              <table cellpadding="0" cellspacing="0" class="avoidbreak">
+                <tr class="amount-total">
+                <tr data-hide-on-quote="true">
+                  <th>Total TVA projet (€)</th>
+                  <td><%= number_with_precision (project.total - project.total_gross), :precision => 2 %></td>
+                </tr>
+                <th>TOTAL HT PROJET (€)</th>
+                <td><%= number_with_precision project.total_gross, :precision => 2 %></td>
+                </tr>
+                <tr>
+                  <th><%= "TOTAL TTC PROJET (€)" %></th>
+                  <td><%= number_with_precision project.total, :precision => 2 %></td>
 
-              </tr>
-            </table>
-          </section>
+                </tr>
+              </table>
+            </section>
+          </div>
           <div class="clearfix"></div>
           <hr>
         <% end %>
@@ -253,5 +245,13 @@
       <div class="clearfix"></div>
     </section>
     <div class="clearfix"></div>
+    <div class="payment-notes">
+      <h5>
+        <%= t('invoice_account') %><b> BE47 0015 7715 0480</b>
+      </h5>
+      <p>
+        <%= t('invoice_notice') %>
+      </p>
+    </div>
   </div>
 </div>

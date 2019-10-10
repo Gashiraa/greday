@@ -2,6 +2,13 @@
 
 .pdf {
 
+  .payment-notes {
+    margin-top: 25px;
+    h5 {
+      text-align: center;
+    }
+  }
+
   ol, ul {
     list-style: none;
   }
@@ -171,7 +178,7 @@
       background: rgba(12, 84, 96, 0.63);
       color: white;
       display: inline;
-      padding: 0.5% 1.5%;
+      padding:  0 1.5%;
     }
 
     .title-project-container {

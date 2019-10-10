@@ -20,7 +20,6 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    @company = Company.first
     @invoice = scope.find(params[:id])
 
     respond_to do |format|
@@ -32,7 +31,7 @@ class InvoicesController < ApplicationController
                layout: 'pdf.html',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 35},
+               :margin => {:bottom => 20},
                footer: {
                    html: {
                        template: 'layouts/pdf_footer.html.erb'
