@@ -3,9 +3,12 @@
 .pdf {
 
   .payment-notes {
-    margin-top: 25px;
+    margin-top: 35px;
     h5 {
       text-align: center;
+    }
+    p {
+      text-align: justify;
     }
   }
 
@@ -172,17 +175,17 @@
   }
 
   #items {
-    margin: 35px 30px 0 30px;
+    margin: 5px 5px 0 5px;
 
     .title-project {
       background: rgba(12, 84, 96, 0.63);
       color: white;
       display: inline;
-      padding:  0 1.5%;
+      padding:  0 0.5%;
     }
 
     .title-project-container {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     p {
@@ -200,13 +203,13 @@
       th {
         background: #4e555b;
         font-weight: bold;
-        padding: 5px 8px;
+        padding: 3px 3px;
         color: white;
         text-transform: uppercase;
       }
 
       td {
-        padding: 9px 8px;
+        padding: 3px 3px;
         border-bottom: 1px solid #ddd;
       }
 
@@ -228,7 +231,7 @@
   }
 
   .sums_project#sums {
-    margin: 25px 30px 0 0;
+    margin: 5px 0px 0 0;
     background: none;
 
     tr:last-child th, table tr:last-child td {
@@ -258,7 +261,7 @@
   }
 
   #sums {
-    margin: 40px 30px 0 0;
+    margin: 10px 0px 0 0;
     z-index: 100;
     position: relative;
     background: url("total-stripe-firebrick.png") right bottom no-repeat;
@@ -328,9 +331,13 @@
     font-size: 18px;
   }
 
+  table { page-break-inside:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  thead { display:table-header-group }
+  tfoot { display:table-footer-group }
+
   .avoidbreak {
     break-inside: avoid;
     page-break-inside: avoid;
   }
-
 }

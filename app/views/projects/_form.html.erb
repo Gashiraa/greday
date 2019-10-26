@@ -1,6 +1,7 @@
 <div class="close">
   <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
 </div>
+
 <%= form_with(model: @project, local: true) do |form| %>
   <div class="ui form">
 
@@ -12,11 +13,10 @@
       <% end %>
     </h2>
 
-
-    <div class="four fields">
+    <div class="three fields">
 
       <div class="field">
-        <%= form.label t('customer'), class: ''%>
+        <%= form.label t('customer'), class: '' %>
         <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'project_form_customer'} %>
       </div>
       <div class="field">
@@ -28,20 +28,51 @@
         <%= form.label t('date_locale') %>
         <div class="input-group mb-3">
           <%= form.text_field :date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", value: @project.date ? l(@project.date) : Time.zone.now.to_date.strftime("%d/%m/%Y"), autocomplete: 'off', id: "dateProject", class: "form-control" %>
-
         </div>
       </div>
+
+    </div>
+
+    <div class="four fields">
 
       <div class="field">
         <%= form.label t('Name') %>
         <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", :required => true, autocomplete: 'nope' %>
       </div>
+
+      <div class="field">
+        <%= form.label t('machine') %>
+        <%= form.select :customer_machine_line_id, CustomerMachineLine.all.map { |customerMachineLine| [customerMachineLine.machine.brand + " " + customerMachineLine.machine.model + " (" + customerMachineLine.machine.year + ")", customerMachineLine.id, {customer: customerMachineLine.customer_id}] },
+                        class: "form-control", :include_blank => true, :required => true, autocomplete: 'nope' %>
+      </div>
+
+      <div class="field">
+        <%= form.label t('PO').upcase %>
+        <%= form.text_field :po, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+      </div>
+
+      <div class="field">
+        <%= form.label t('applicant') %>
+        <%= form.text_field :applicant, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+      </div>
     </div>
 
-    <hr>
     <div class="field">
       <%= form.label t('description') %>
       <%= form.text_area :description, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+    </div>
+
+    <div class="ui segment">
+      <div class="field">
+        <%= form.label t('description') %>
+        <%= form.text_area :comment, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+      </div>
+      <div class="field">
+        <div class="ui toggle checkbox">
+          <%= form.check_box :no_vat %>
+          <%= form.label :no_vat, t("no_vat") %>
+        </div>
+      </div>
     </div>
 
     <div class="field">

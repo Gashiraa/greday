@@ -65,16 +65,16 @@
     <% if @invoice.projects.any? %>
       <% @invoice.projects.each do |project| %>
         <section id="items" class="project">
+          <div class="title-project-container">
+            <h4 class="title-project">Projet #<%= project.id %> : <%= project.name %></h4>
+          </div>
+          <p><%= project.description %></p>
           <div class="avoidbreak">
-
-            <div class="title-project-container">
-              <h4 class="title-project">Projet #<%= project.id %> : <%= project.name %></h4>
-            </div>
-            <p><%= project.description %></p>
             <% if project.services.any? %>
-              <h5>Prestations</h5>
-
-              <table class="table table-hover table-striped avoidbreak">
+              <table class="table table-hover table-striped">
+                <tr>
+                  <h5>Prestations</h5>
+                </tr>
                 <thead class=thead-dark>
                 <tr>
                   <th class="name-cell"><%= t('Name') %></th>
@@ -84,7 +84,6 @@
                   <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <% project.services.each do |service| %>
                   <tr>
@@ -101,9 +100,10 @@
           </div>
           <div class="avoidbreak">
             <% if project.wares.any? %>
-              <h5>Marchandises</h5>
-
               <table class="table table-hover table-striped">
+                <tr>
+                  <h5>Marchandises</h5>
+                </tr>
                 <thead class=thead-dark>
                 <tr>
                   <th class="name-cell"><%= t('ware_name') %></th>
@@ -123,6 +123,13 @@
                     <td class="number-cell"><%= number_with_precision ware.tva_rate, :precision => 2 %></td>
                     <td class="number-cell"><%= number_with_precision ware.total_gross, :precision => 2 %></td>
                   </tr>
+                  <% if ware.show_desc_invoice %>
+                    <tr>
+                      <td colspan="5">
+                        <%= simple_format(ware.comment) %>
+                      </td>
+                    </tr>
+                  <% end %>
                 <% end %>
                 </tbody>
               </table>
@@ -130,10 +137,11 @@
           </div>
           <div class="avoidbreak">
             <% if project.project_extra_lines.any? %>
-              <h5><%= t('extra').pluralize %>
-              </h5>
-
               <table class="table table-hover table-striped">
+                <tr>
+                  <h5><%= t('extra').pluralize %>
+                  </h5>
+                </tr>
                 <thead class=thead-dark>
                 <tr>
                   <th class="name-cell"><%= t('Name') %></th>
@@ -168,7 +176,7 @@
         <% unless @invoice.projects.length == 1 && @invoice.wares.length == 0 %>
           <div class="avoidbreak">
             <section id="sums" class="sums_project">
-              <table cellpadding="0" cellspacing="0" class="avoidbreak">
+              <table cellpadding="0" cellspacing="0">
                 <tr class="amount-total">
                 <tr data-hide-on-quote="true">
                   <th>Total TVA projet (€)</th>
@@ -190,7 +198,7 @@
         <% end %>
       <% end %>
     <% end %>
-    <section id="items" class="wares avoidbreak">
+    <section class="wares avoidbreak">
       <% if @invoice.wares.any? %>
         <% if @invoice.projects.any? %>
           <div class="title-project-container">
@@ -219,6 +227,13 @@
               <td class="number-cell"><%= number_with_precision ware.tva_rate, :precision => 2 %></td>
               <td class="number-cell"><%= number_with_precision ware.total_gross, :precision => 2 %></td>
             </tr>
+            <% if ware.show_desc_invoice %>
+              <tr>
+                <td colspan="5">
+                  <%= simple_format(ware.comment) %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
           </tbody>
         </table>
@@ -245,9 +260,13 @@
       <div class="clearfix"></div>
     </section>
     <div class="clearfix"></div>
-    <div class="payment-notes">
+    <div class="payment-notes avoidbreak">
       <h5>
         <%= t('invoice_account') %><b> BE47 0015 7715 0480</b>
+      </h5>
+      <h5>
+        Communication à mentionner sur votre virement
+        : <%= @invoice.display_number.to_s + " - " + l(@invoice.date).to_s %>
       </h5>
       <p>
         <%= t('invoice_notice') %>

@@ -13,6 +13,7 @@
 </head>
 <div class="ui inverted attached menu">
   <a class="item" href="/projects" id="logo"> <%= company.short_name.upcase %> </a>
+
   <div class="menu">
     <% if current_user %>
       <%= content_tag :div, class: "locale", data: {locale: current_user.locale} do %>
@@ -25,26 +26,29 @@
 
       <a class="brown item" href="/customers"> <%= t('customers').capitalize %> </a>
 
-      <a class="yellow item" href="/extras"> <%= t('extras').capitalize %> </a>
+      <a class="purple item" href="/machines"> <%= t('machines').capitalize %> </a>
 
-      <a class="teal item" href="/quotations"> <%= t('quotations').capitalize %> </a>
+      <a class="yellow item" href="/extras"> <%= t('extras').capitalize %> </a>
 
       <a class="olive item" href="/invoices"> <%= t('invoices').capitalize %> </a>
 
       <a class="green item" href="/payments"> <%= t('payments').capitalize %> </a>
-      </div>
     <% end %>
 
-    <div class="right menu">
+  </div>
 
-      <%= link_to t('FR'), {:controller => '/application', :action => 'change_locale', :id => 'fr'}, class: "item" %>
 
-      <%= link_to t('EN'), {:controller => '/application', :action => 'change_locale', :id => 'en'}, class: "item" %>
+  <div class="right menu">
 
-      <%= link_to(t('logout'), destroy_user_session_path, method: :delete, class: "item logout-button") %>
-    </div>
+    <%= link_to t('FR'), {:controller => '/application', :action => 'change_locale', :id => 'fr'}, class: "item" %>
 
-    </div>
+    <%= link_to t('EN'), {:controller => '/application', :action => 'change_locale', :id => 'en'}, class: "item" %>
+
+    <%= link_to(t('logout'), destroy_user_session_path, method: :delete, class: "item logout-button") %>
+  </div>
+
+</div>
+
 
 <% if notice %>
   <div id="notice" class="ui success floating message">

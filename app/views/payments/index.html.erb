@@ -1,35 +1,20 @@
-<div class="header-project">
-  <table>
-    <tr>
-      <td>
-        <%= link_to t('create_new_payment'), new_payment_path, {class: 'btn btn-success', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
-      </td>
-      <td>
-        <h2 id="titleBadge" display=<%= controller_name %>>
-          <%= t(controller_name).to_s %>
-        </h2>
-      </td>
-      <td>
-      </td>
-    </tr>
-  </table>
-</div>
-<hr>
 <%= search_form_for @search do |form| %>
-  <div class="form">
-    <div class="row">
-      <h5> <%= form.label t('filtres') %> </h5>
+  <div class="ui form">
+    <div class="four fields">
+      <div class="two wide field add-button">
+        <%= link_to t('create_new_payment'), new_payment_path, {class: 'ui green button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+      </div>
     </div>
   </div>
 <% end %>
 
-<table class="table table-hover table-striped" id="table-to-color">
+<table class="ui striped selectable green table table-to-color">
   <thead class=thead-dark>
   <tr>
     <th>
       <%= sort_link(@search, :customer_id, t('customer')) %>
     </th>
-    <th class="center-cell">
+    <th class="center aligned">
       <%= sort_link(@search, :date, t('date_locale')) %>
     </th>
     <th>
@@ -44,7 +29,7 @@
   <tbody>
   <% unless @payments.any? %>
     <tr>
-      <td class="emptyTable" colspan="9">Aucune données à afficher</td>
+      <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
     </tr>
   <% end %>
   <% @payments.each do |payment| %>
@@ -52,10 +37,12 @@
       <td>
         <%= payment.customer ? payment.customer.name : '' %>
       </td>
-      <td class="center-cell"><%= l(payment.date) %></td>
+      <td class="center aligned">
+        <%= l(payment.date) %>
+      </td>
       <td><%= payment.reference %></td>
       <td><%= number_with_precision payment.total, :precision => 2 %></td>
-      <td class="center-cell">
+      <td class="center aligned">
         <%= link_to edit_payment_path(payment), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
@@ -67,14 +54,10 @@
   <% end %>
   </tbody>
 </table>
-<br>
-<div class="flickr_pagination">
-  <%= will_paginate @payments %>
-</div>
 
-<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-    </div>
+<%= will_paginate @payments %>
+
+<div id="modal-window" class="ui modal">
+  <div class="content">
   </div>
 </div>

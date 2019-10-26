@@ -1,78 +1,79 @@
-<button type="button" class="close" data-dismiss="modal">
-  <span aria-hidden="true">&times;</span>
-</button>
+<div class="close">
+  <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
+</div>
 
 <%= form_with(model: @customer, local: true, html: {autocomplete: 'off'}) do |form| %>
   <input autocomplete="false" name="hidden" type="text" style="display:none;">
-  <div class="form center-div">
+  <div class="ui form">
 
-    <% if @customer.id %>
-      <h3><%= t('editing_customers') %></h3>
-    <% else %>
-      <h3><%= t('creating_customers') %></h3>
-    <% end %>
+    <h2 class="centered">
+      <% if @customer.id %>
+        <%= t('editing_customers') %>
+      <% else %>
+        <%= t('creating_customers') %>
+      <% end %>
+    </h2>
 
-    <div class="form-row">
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+      <div class="field">
         <%= form.label t('Name') %>
         <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('mail') %>
         <%= form.text_field :mail, class: "form-control", autocomplete: 'nope' %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('tva_record') %>
         <%= form.text_field :tva_record, class: "form-control", autocomplete: 'nope' %>
       </div>
 
     </div>
 
-    <div class="form-row">
-
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+      <div class="field">
         <%= form.label t('phone_number') %>
         <%= form.text_field :phone_number, class: "form-control", autocomplete: 'nope' %>
       </div>
 
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-5">
+      <div class="field">
         <%= form.label t('street') %>
         <%= form.text_field :street, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-3">
+      <div class="field">
         <%= form.label t('number') %>
         <%= form.text_field :number, class: "form-control", autocomplete: 'nope' %>
       </div>
-
     </div>
 
-    <div class="form-row">
-
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+      <div class="field">
         <%= form.label t('zip') %>
         <%= form.number_field :cp, class: "form-control", autocomplete: 'nope' %>
       </div>
 
-
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('locality') %>
         <%= form.text_field :locality, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('country') %>
         <%= form.text_field :country, value: @customer.country || "Belgique", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
     </div>
-    <div class="form-row">
 
-      <div class="actions col-12 createButton">
-        <%= form.submit t('create'), :class => "btn btn-dark form-group" %>
-      </div>
+    <div class="field">
+      <%= form.label t('customer_rate') %>
+      <%= form.text_field :customer_rate, value: @customer.customer_rate || '45', autocomplete: 'nope' %>
+    </div>
+
+    <div class="field">
+      <%= form.submit t('create'), :class => "ui green button" %>
     </div>
   </div>
 <% end %>

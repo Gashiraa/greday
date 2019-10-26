@@ -1,0 +1,85 @@
+<%= image_tag("azshara.png") %>
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+
+<div class="timerPurple">
+  <h2>
+    <time>00:00:00</time>
+  </h2>
+  <button class="ui icon mini button" id="start">
+    <i class="play icon"></i>
+  </button>
+  <button class="ui icon mini button" id="stop">
+    <i class="pause icon"></i>
+  </button>
+  <button class="ui icon mini button" id="clear">
+    <i class="undo icon"></i>
+  </button>
+</div>
+
+<style>
+  .timerPurple {
+    text-align: center;
+    position: fixed;
+    top: 0em;
+    left: 8em;
+  }
+
+  time, h2 {
+    color: white;
+    font-family: "Helvetica Neue";
+    margin: 0;
+  }
+</style>
+
+<script>
+    //PURPLE
+    {
+        var h2 = document.getElementsByTagName('h2')[0],
+            start = document.getElementById('start'),
+            stop = document.getElementById('stop'),
+            clear = document.getElementById('clear'),
+            seconds = 0, minutes = 0, hours = 0,
+            t;
+
+        function add() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            h2.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+            timer();
+        }
+
+        function timer() {
+            t = setTimeout(add, 1000);
+        }
+
+        timer();
+
+
+        /* Start button */
+        start.onclick = timer;
+
+        /* Stop button */
+        stop.onclick = function () {
+            clearTimeout(t);
+        };
+
+        /* Clear button */
+        clear.onclick = function () {
+            h2.textContent = "00:00:00";
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+        }
+    }
+
+</script>

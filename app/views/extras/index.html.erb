@@ -1,45 +1,29 @@
-<div class="header-project">
-  <table>
-    <tr>
-      <td>
-        <%= link_to t('create_new_extra'), new_extra_path, {class: 'btn btn-success', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
-      </td>
-      <td>
-        <h2 id="titleBadge" display=<%= controller_name %>>
-          <%= t(controller_name).to_s %>
-        </h2>
-      </td>
-      <td>
-      </td>
-    </tr>
-  </table>
-</div>
-<hr>
 <%= search_form_for @search do |form| %>
-  <div class="form">
-    <div class="row">
-      <h5> <%= form.label t('filtres') %> </h5>
+  <div class="ui form">
+    <div class="four fields">
+      <div class="two wide field add-button">
+        <%= link_to t('create_new_extra'), new_extra_path, {class: 'ui yellow button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+      </div>
     </div>
   </div>
 <% end %>
 
-<table class="table table-hover table-striped" id="table-to-color">
+<table class="ui striped selectable yellow table table-to-color">
   <thead class=thead-dark>
-
   <tr>
     <th>
       <%= sort_link(@search, :name, t('extra_name')) %>
     </th>
-    <th>
+    <th class="center aligned">
       <%= sort_link(@search, :category, t('category')) %>
     </th>
-    <th>
+    <th class="center aligned">
       <%= sort_link(@search, :unit, t('unit')) %>
     </th>
-    <th>
+    <th class="right aligned">
       <%= sort_link(@search, :unit_price, t('unit_price')) %>
     </th>
-    <th>
+    <th class="right aligned">
       <%= sort_link(@search, :tva_rate, t('tva_rate')) %>
     </th>
     <th></th>
@@ -47,14 +31,29 @@
   </thead>
 
   <tbody>
+  <% unless @extras.any? %>
+    <tr>
+      <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
+    </tr>
+  <% end %>
   <% @extras.each do |extra| %>
     <tr>
-      <td><%= extra.name %></td>
-      <td><%= extra.category %></td>
-      <td><%= extra.unit %></td>
-      <td><%= extra.unit_price %></td>
-      <td><%= extra.tva_rate %></td>
-      <td class="center-cell">
+      <td>
+        <%= extra.name %>
+      </td>
+      <td class="center aligned">
+        <%= extra.category %>
+      </td>
+      <td class="center aligned">
+        <%= extra.unit %>
+      </td>
+      <td class="right aligned">
+        <%= extra.unit_price %>
+      </td>
+      <td class="right aligned">
+        <%= extra.tva_rate %>
+      </td>
+      <td class="center aligned">
         <%= link_to edit_extra_path(extra), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
@@ -67,15 +66,9 @@
   </tbody>
 </table>
 
-<div class="flickr_pagination">
-  <hr>
-  <%= will_paginate @extras %>
-</div>
+<%= will_paginate @extras %>
 
-<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-
-    </div>
+<div id="modal-window" class="ui modal">
+  <div class="content">
   </div>
 </div>

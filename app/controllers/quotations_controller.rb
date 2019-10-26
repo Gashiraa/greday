@@ -7,7 +7,7 @@ class QuotationsController < ApplicationController
   # GET /quotations
   # GET /quotations.json
   def index
-    @search = Quotation.ransack(params[:q])
+    @search = Quotation.order(date: :desc).ransack(params[:q])
     @quotations = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
   end
 
@@ -29,7 +29,7 @@ class QuotationsController < ApplicationController
                lowquality: true,
                zoom: 1,
                dpi: 75,
-               margin: { bottom: 35 },
+               margin: { bottom: 20 },
                footer: {
                  html: {
                    template: 'layouts/pdf_footer.html.erb'

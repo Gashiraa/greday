@@ -1,8 +1,34 @@
 --A FAIRE--
 
-CONSOLIDATION
-ICONES PARTOUT
-COLORER DANS PROJET ?
+--14/10--
+
+Taux/horaire client préchoisi dans projet
+Afficher commentaires dans facture
+Page break Pire michel
+Tri facture par défaut et devis aussi
+Mettre corbeille à la place de croix
+Supprimer bouton edition sur index projet
+Quantité décimales sur quantité
+Rajouter clic sur la ligne
+
+--23/09--
+Devis :
+
+ROUGE CREE
+JAUNE ACCEPTE
+VERT FACTURE
+
+Facture
+
+CREE
+ENVOYE
+PAYE
+nom fichier devis plusview sprl-devis numéro
+nom fichier facture plusview sprl-facture numéro
+ouvir pdf dans nouvel onglet
+#PO et Nom demandeur dans projet
+Changer status
+Page show projet
 
 --14/05--
 

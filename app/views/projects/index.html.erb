@@ -1,10 +1,8 @@
-
 <%= search_form_for @search do |form| %>
   <div class="ui form">
-
     <div class="six fields">
       <div class="two wide field add-button">
-        <%= link_to t('create_new_project'), new_project_path, {class: 'ui green button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+        <%= link_to t('create_new_project'), new_project_path, {class: 'ui blue button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
       </div>
       <div class="field">
         <%= form.label t('project') %>
@@ -37,7 +35,7 @@
   </div>
 <% end %>
 
-<table class="ui striped selectable table table-to-color">
+<table class="ui striped selectable blue table table-to-color">
   <thead class=thead-dark>
   <tr>
     <th class="center aligned">
@@ -71,11 +69,11 @@
   <tbody>
   <% unless @projects.any? %>
     <tr>
-      <td class="emptyTable" colspan="9"><%= t('no_data_display') %></td>
+      <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
     </tr>
   <% end %>
   <% @projects.each do |project| %>
-    <tr class="">
+    <tr data-project="<%= project_path(project) %>">
       <td class="center aligned">
         <%= link_to '#' + project.id.to_s, project_path(project.id), class: 'ui grey button' %>
       </td>
@@ -84,26 +82,33 @@
       <td><%= project.description %></td>
       <td class="center aligned"><%= project.date ? l(project.date) : "" %></td>
       <%= tag.td class: 'center aligned status-cell', status: project.status do %>
-        <div> <%= project.translated_status %> </div>
+        <div>
+          <div>
+            <%= project.translated_status %>
+          </div>
+        </div>
       <% end %>
       <td class="right aligned"><%= number_with_precision project.total_gross, :precision => 2 %></td>
       <td class="right aligned"><%= number_with_precision project.total, :precision => 2 %></td>
       <td class="center aligned">
         <%= link_to project_path(project) do %>
-          <%= image_tag("open-icon.png", size: "27x27") %>
-        <% end %>
-        <%= link_to edit_project_path(project), remote: true do %>
           <%= image_tag("edit-icon.png", size: "27x27") %>
         <% end %>
-        <%= link_to project, method: :delete, data: {confirm: t('confirm_delete')} do %>
-          <%= image_tag("delete-icon.png", size: "27x27") %>
+        <% if project.status == "bin" %>
+          <%= link_to project, method: :delete, data: {confirm: t('confirm_delete')} do %>
+            <%= image_tag("delete-icon.png", size: "27x27") %>
+          <% end %>
+        <% else %>
+          <%= link_to(controller: :projects, action: :bin, id: project.id) do %>
+            <%= image_tag("bin-icon.png", size: "30x30") %>
+          <% end %>
         <% end %>
       </td>
     </tr>
   <% end %>
   </tbody>
 </table>
-  <%= will_paginate @projects %>
+<%= will_paginate @projects %>
 
 <div id="modal-window" class="ui modal">
   <div class="content">

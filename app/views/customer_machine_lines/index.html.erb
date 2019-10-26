@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Customer Machine Lines</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Machine</th>
+      <th>Hours</th>
+      <th>Km</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @customer_machine_lines.each do |customer_machine_line| %>
+      <tr>
+        <td><%= customer_machine_line.customer %></td>
+        <td><%= customer_machine_line.machine %></td>
+        <td><%= customer_machine_line.hours %></td>
+        <td><%= customer_machine_line.km %></td>
+        <td><%= link_to 'Show', customer_machine_line %></td>
+        <td><%= link_to 'Edit', edit_customer_machine_line_path(customer_machine_line) %></td>
+        <td><%= link_to 'Destroy', customer_machine_line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Customer Machine Line', new_customer_machine_line_path %>

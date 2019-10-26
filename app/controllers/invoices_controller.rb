@@ -6,7 +6,8 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
-    @search = Invoice.ransack(params[:q])
+    @search = Invoice.order(date: :desc).ransack(params[:q])
+    @total =  @search.result(distinct: true)
     @invoices = @search.result(distinct: true).order(:status).paginate(page: params[:page], per_page: 30)
   end
 

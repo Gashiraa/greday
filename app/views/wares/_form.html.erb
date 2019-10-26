@@ -1,199 +1,169 @@
-<button type="button" class="close" data-dismiss="modal">
-  <span aria-hidden="true">&times;</span>
-</button>
+<div class="close">
+  <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
+</div>
 
 <%= form_with(model: @ware, id: 'waresForm', html: {autocomplete: 'off'}) do |form| %>
-  <div class="form center-div">
+  <div class="ui form">
 
-    <% if @ware.id %>
-      <h3><%= t('editing_wares') %></h3>
-    <% else %>
-      <h3><%= t('creating_wares') %></h3>
-    <% end %>
+    <h2 class="centered">
+      <% if @ware.id %>
+        <%= t('editing_wares') %>
+      <% else %>
+        <%= t('creating_wares') %>
+      <% end %>
+    </h2>
 
     <%= form.hidden_field :id, value: @ware.id || 0, id: "ware_id" %>
 
-    <div class="form-row">
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+
+      <div class="field">
         <%= form.label t('project') %>
-        <%= form.select :project_id, Project.all.map {|project| [
+        <%= form.select :project_id, Project.all.map { |project| [
             if project.customer
               project.name + ' - ' + project.customer.name
             else
               project.name
             end, project.id
-        ]}, {:include_blank => true}, {class: 'form-control', id: 'ware_form_project'} %>
+        ] }, {:include_blank => true}, {class: 'form-control', id: 'ware_form_project'} %>
       </div>
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('customer') %>
         <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'ware_form_customer'} %>
       </div>
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+
+      <div class="field">
         <%= form.label t('status') %>
-        <%= form.select :status, Ware.translated_statuses.map {|status| [status[0], status[1], {status: status[1]}]}, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'} %>
+        <%= form.select :status, Ware.translated_statuses.map { |status| [status[0], status[1], {status: status[1]}] }, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'} %>
       </div>
+
     </div>
-    <hr>
-    <div class="form-row">
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+      <div class="field">
         <%= form.label t('ware_name') %>
-        <%= form.select :ware_name, Ware.where("ware_name != ''").distinct.order(:ware_name).pluck(:ware_name), {:include_blank => true}, {class: 'form-control', onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'} %>
+        <%= form.text_field :ware_name, {class: 'form-control', onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'} %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('provider_name') %>
         <%= form.text_field :provider_name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('provider_invoice') %>
         <%= form.text_field :provider_invoice, class: "form-control", autocomplete: 'nope' %>
       </div>
     </div>
-    <hr>
 
-    <div class="form-row">
-
-      <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-12">
+    <div class="ui segment">
+      <div class="field">
         <%= form.label t('comment') %>
         <%= form.text_area :comment, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
-
-    </div>
-
-    <div class="form-row">
-      <div class="form-check">
-        <%= form.check_box :show_desc_quot, class: "form-check-input", id: "show_desc_quot" %>
-        <%= form.label t('showInQuot'), class: "form-check-label", for: "show_desc_quot" %>
+      <div class="field">
+        <div class="ui toggle checkbox">
+          <%= form.check_box :show_desc_quot, class: "form-check-input", id: "show_desc_quot" %>
+          <%= form.label t('showInQuot'), class: "form-check-label", for: "show_desc_quot" %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui toggle checkbox">
+          <%= form.check_box :show_desc_invoice, class: "form-check-input", id: "show_desc_invoice" %>
+          <%= form.label t('showInInv'), class: "form-check-label", for: "show_desc_quot" %>
+        </div>
       </div>
     </div>
-    <hr>
 
-    <div class="form-row">
-
-      <div class="col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+      <div class="field">
         <%= form.label t('provider_price') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">€</label>
           <%= form.text_field :provider_price, class: "form-control", autocomplete: 'nope', id: 'provider_price' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "euro" %>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('provider_discount') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">%</label>
           <%= form.text_field :provider_discount, class: "form-control", autocomplete: 'nope', id: 'provider_discount' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "percent" %>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('bought_price') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">€</label>
           <%= form.text_field :bought_price, class: "form-control", autocomplete: 'nope', readonly: true, id: 'bought_price' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "euro" %>
-            </div>
-          </div>
         </div>
       </div>
-
     </div>
 
-    <div class="form-row">
-
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+      <div class="field">
         <%= form.label t('Quantity') %>
-        <%= form.text_field :quantity, class: "form-control", autocomplete: 'nope', id: 'quantity', value: @ware.quantity || "1" %>
+        <%= form.number_field :quantity, step: :any, class: "form-control", autocomplete: 'nope', id: 'quantity', value: @ware.quantity || "1" %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('sell_price') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">€</label>
           <%= form.text_field :sell_price, class: "form-control", autocomplete: 'nope', readonly: true, id: 'sell_price' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "euro" %>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('margin') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">%</label>
           <%= form.text_field :margin, class: "form-control", autocomplete: 'nope', id: 'margin' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "percent" %>
-            </div>
-          </div>
         </div>
       </div>
-
     </div>
 
-    <div class="form-row">
-
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+    <div class="three fields">
+      <div class="field">
         <%= form.label t('tva_rate') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">%</label>
           <%= form.text_field :tva_rate, value: @ware.tva_rate || '21', class: "form-control", autocomplete: 'nope', id: 'tva_rate' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "percent" %>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('gross_cost') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">€</label>
           <%= form.text_field :total_gross, class: "form-control", autocomplete: 'nope', readonly: true, id: 'total_gross' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "euro" %>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-4">
+      <div class="field">
         <%= form.label t('total_cost') %>
-        <div class="input-group mb-3">
+        <div class="ui labeled input">
+          <label for="amount" class="ui label">€</label>
           <%= form.text_field :total_cost, class: "form-control", autocomplete: 'nope', readonly: true, id: 'total_cost' %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <%= fa_icon "euro" %>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-12 createButton">
-      <%= form.submit t('create'),
-                      :class => "btn btn-dark form-group",
-                      data:
-                          if @ware
-                            if @ware.invoice or @ware.project&.invoice
-                              {confirm: t('ware_already_invoiced')}
-                            elsif @ware.translated_status == "A facturer"
-                              {confirm: t('ware_ready_invoiced')}
-                            end
-                          elsif {}
-                          end %>
+    <div class="field">
+      <div class="centered">
+        <%= form.submit t('create'),
+                        :class => "ui green button",
+                        data:
+                            if @ware
+                              if @ware.invoice or @ware.project&.invoice
+                                {confirm: t('ware_already_invoiced')}
+                              elsif @ware.translated_status == "A facturer"
+                                {confirm: t('ware_ready_invoiced')}
+                              end
+                            elsif {}
+                            end %>
+      </div>
     </div>
   </div>
 <% end %>

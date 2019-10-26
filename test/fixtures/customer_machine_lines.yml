@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: one
+  machine: one
+  hours: 1
+  km: 1
+
+two:
+  customer: two
+  machine: two
+  hours: 1
+  km: 1

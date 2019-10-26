@@ -13,13 +13,40 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   # GET /projects/1.json
-  def show;
+  def show
+    @company = Company.first
+    @project = scope.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: t('quotation') + "_#{@project.id}",
+               page_size: 'A4',
+               template: 'quotations/show.html.erb',
+               layout: 'pdf.html',
+               orientation: 'Portrait',
+               encoding: 'utf8',
+               lowquality: true,
+               zoom: 1,
+               dpi: 75,
+               margin: { bottom: 20 },
+               footer: {
+                   html: {
+                       template: 'layouts/pdf_footer.html.erb'
+                   }
+               }
+      end
+    end
   end
 
     # GET /projects/new
   def new
     @project = Project.new
     respond_to(&:js)
+  end
+
+  def scope
+    ::Project.all
   end
 
   # GET /projects/1/edit
@@ -68,6 +95,19 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def bin
+    respond_to do |format|
+      if @project.update(status: 5)
+        @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
+        format.json { render :show, status: :ok, location: @project }
+      else
+        format.html { render :edit }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   private
 
@@ -78,7 +118,7 @@ class ProjectsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def project_params
-    params.require(:project).permit(:invoice_id, :quotation_id, :customer_id, :name, :status, :wielding, :machining, :karcher, :total, :total_gross, :date, :description)
+    params.require(:project).permit(:invoice_id, :quotation_id, :customer_id, :name, :status, :wielding, :machining, :karcher, :total, :total_gross, :date, :description, :no_vat, :customer_machine_line_id)
   end
 
 end

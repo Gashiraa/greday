@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @machine.model %>
+</p>
+
+<p>
+  <strong>Brand:</strong>
+  <%= @machine.brand %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @machine.year %>
+</p>
+
+<p>
+  <strong>Hours:</strong>
+  <%= @machine.hours %>
+</p>
+
+<p>
+  <strong>Km:</strong>
+  <%= @machine.km %>
+</p>
+
+<%= link_to 'Edit', edit_machine_path(@machine) %> |
+<%= link_to 'Back', machines_path %>

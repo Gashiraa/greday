@@ -1,41 +1,46 @@
-<div class="header-project">
-  <table>
-    <tr>
-      <td>
-        <%= link_to t('create_new_invoice'), new_invoice_path, {class: 'btn btn-success', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
-      </td>
-      <td>
-        <h2 id="titleBadge" display=<%= controller_name %>>
-          <%= t(controller_name).to_s %>
-        </h2>
-      </td>
-      <td>
-      </td>
-    </tr>
-  </table>
-</div>
-<hr>
 <%= search_form_for @search do |form| %>
-  <div class="form">
-    <div class="row">
-      <h5> <%= form.label t('filtres') %> </h5>
-      <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-2">
+  <div class="ui form">
+    <div class="seven fields">
+      <div class="two wide field add-button">
+        <%= link_to t('create_new_invoice'), new_invoice_path, {class: 'ui olive button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+      </div>
+      <div class="field">
         <%= form.label t('project') %>
         <%= form.collection_select :id_eq, Project.all, :id, :name, {:include_blank => t('all_projects')}, {class: 'form-control', id: 'project_sort', onchange: 'this.form.submit();'} %>
       </div>
-      <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-2">
+      <div class="field">
         <%= form.label t('customer') %>
         <%= form.collection_select :customer_id_eq, Customer.all, :id, :name, {:include_blank => t('all_customers')}, {class: 'form-control', id: 'customer_sort', onchange: 'this.form.submit();'} %>
       </div>
-      <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-2">
+      <div class="field">
         <%= form.label t('status') %>
-        <%= form.select :status_eq, Invoice.statuses.map {|status| [t(status[0]), status[1].to_i, {status: status[0]}]}, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
+        <%= form.select :status_eq, Invoice.statuses.map { |status| [t(status[0]), status[1].to_i, {status: status[0]}] }, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
+      </div>
+      <div class="field">
+        <%= form.label t('from') %>
+        <div class="picker-container">
+          <%= form.text_field :date_gteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectFrom", class: "form-control", onchange: 'this.form.submit();' %>
+        </div>
+      </div>
+      <div class="field">
+        <%= form.label t('to') %>
+        <div class="picker-container">
+          <%= form.text_field :date_lteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectTo", class: "form-control", onchange: 'this.form.submit();' %>
+        </div>
+      </div>
+      <div class="field invoice-report-total">
+        <h5 class="ui small green compact button">
+          <%= t('total_invoiced') %>
+        </h5>
+        <h3>
+          <%= @total.collect {|w| w.valid? ? w.total_gross : 0}.sum %> €
+        </h3>
       </div>
     </div>
   </div>
 <% end %>
 
-<table class="table table-to-color">
+<table class="ui striped selectable olive table table-to-color">
   <thead class=thead-dark>
   <tr>
     <th>
@@ -44,10 +49,10 @@
     <th>
       <%= sort_link(@search, :customer_id, t('customer')) %>
     </th>
-    <th class="center-cell">
+    <th class="center aligned">
       <%= sort_link(@search, :date, t('date_locale')) %>
     </th>
-    <th class="center-cell">
+    <th class="center aligned">
       <%= sort_link(@search, :status, t('status')) %>
     </th>
     <th>
@@ -62,7 +67,7 @@
   <tbody>
   <% unless @invoices.any? %>
     <tr>
-      <td class="emptyTable" colspan="9">Aucune données à afficher</td>
+      <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
     </tr>
   <% end %>
   <% @invoices.each do |invoice| %>
@@ -73,17 +78,28 @@
       <td>
         <%= invoice.customer ? invoice.customer.name : '' %>
       </td>
-      <td class="center-cell"><%= l(invoice.date) %></td>
-      <%= tag.td class: 'center-cell', id: 'status-cell', status: invoice.status do %>
-        <%= invoice.translated_status %>
+      <td class="center aligned">
+        <%= l(invoice.date) %>
+      </td>
+      <%= tag.td class: 'center aligned status-cell', status: invoice.status do %>
+        <div>
+          <div class="visible content">
+            <%= invoice.translated_status %>
+          </div>
+          <% if invoice.status == "created" %>
+<!--            <div class="hidden content">-->
+              <%#= link_to "Payé", id: invoice.id, controller: :invoices, action: :paid, method: :get %>
+<!--            </div>-->
+          <% end %>
+        </div>
       <% end %>
       <td><%= number_with_precision invoice.total_gross, :precision => 2 %></td>
       <td><%= number_with_precision invoice.total, :precision => 2 %></td>
-      <td class="center-cell">
+      <td class="center aligned">
         <%= link_to edit_invoice_path(invoice), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
-        <%= link_to image_tag("pdf-icon.png", size: "30x30"), invoice_path(invoice.id, :format => :pdf) %>
+        <%= link_to image_tag("pdf-icon.png", size: "30x30"), invoice_path(invoice.id, :format => :pdf), target:"_blank" %>
         <%= link_to invoice, method: :delete, data: {confirm: t('confirm_delete')} do %>
           <%= image_tag("delete-icon.png", size: "30x30") %>
         <% end %>
@@ -97,9 +113,7 @@
   <%= will_paginate @invoices %>
 </div>
 
-<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-    </div>
+<div id="modal-window" class="ui modal">
+  <div class="content">
   </div>
 </div>

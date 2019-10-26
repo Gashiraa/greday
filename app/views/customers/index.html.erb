@@ -1,35 +1,25 @@
-<div class="header-project">
-  <table>
-    <tr>
-      <td>
-        <%= link_to t('create_new_customer'), new_customer_path, {class: 'btn btn-success', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
-      </td>
-      <td>
-        <h2 id="titleBadge" display=<%= controller_name %>>
-          <%= t(controller_name).to_s %>
-        </h2>
-      </td>
-      <td>
-      </td>
-    </tr>
-  </table>
-</div><hr>
 <%= search_form_for @search do |form| %>
-  <div class="form">
-    <div class="row">
-      <h5> <%= form.label t('filtres') %> </h5>
-      <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-2">
+  <div class="ui form">
+    <div class="six fields">
+      <div class="two wide field add-button">
+        <%= link_to t('create_new_customer'), new_customer_path, {class: 'ui brown button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+      </div>
+
+      <div class="field">
         <%= form.label t('Name') %>
         <%= form.select :name_eq, Customer.pluck(:name), {:include_blank => t('all_customer_names')}, {class: 'form-control', id: 'customer_form_name', onchange: 'this.form.submit();'} %>
       </div>
-      <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-2">
+
+      <div class="field">
         <%= form.label t('locality') %>
         <%= form.select :locality_eq, Customer.distinct.order(:locality).pluck(:locality), {:include_blank => t('all_customer_localities')}, {class: 'form-control', id: 'customer_form_locality', onchange: 'this.form.submit();'} %>
       </div>
+
     </div>
   </div>
 <% end %>
-<table class="table table-hover table-striped" id="table-to-color">
+
+<table class="ui striped selectable brown table table-to-color">
   <thead class=thead-dark>
   <tr>
     <th>
@@ -66,7 +56,7 @@
   <tbody>
   <% unless @customers.any? %>
     <tr>
-      <td class="emptyTable" colspan="9">Aucune données à afficher</td>
+      <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
     </tr>
   <% end %>
   <% @customers.each do |customer| %>
@@ -80,7 +70,7 @@
       <td><%= customer.cp %></td>
       <td><%= customer.locality %></td>
       <td><%= customer.country %></td>
-      <td class="center-cell">
+      <td class="center aligned">
         <%= link_to edit_customer_path(customer), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
@@ -93,15 +83,11 @@
   </tbody>
 </table>
 
-<div class="flickr_pagination">
-  <hr>
-  <%= will_paginate @customers %>
-</div>
+<%= will_paginate @customers %>
 
-<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-    </div>
+
+<div id="modal-window" class="ui modal">
+  <div class="content">
   </div>
 </div>
 

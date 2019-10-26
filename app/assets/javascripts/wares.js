@@ -14,14 +14,6 @@ $(document).on("turbolinks:load", function () {
             language: $('.locale').data('locale')
         }); //PICKING A CUSTOMER IN WARE FORM
 
-        $("#ware_form_name").select2({
-            theme: "bootstrap",
-            width: '100%',
-            tags: true,
-            selectOnClose: true,
-            language: $('.locale').data('locale')
-        }); //PICKING A NAME IN WARE FORM
-
         //Disabling dropdowns for ware forms
         $('select[id="ware_form_project"]').on('focus trigger mouseover change', function () {
             if ($(this).val()) {
@@ -70,7 +62,7 @@ $(document).on("turbolinks:load", function () {
                 let tva_rate = document.getElementById('tva_rate').value || 0;
 
                 let sell = parseFloat(bought_price) + ((parseFloat(bought_price) / 100) * parseFloat(margin));
-                let gross = (parseInt(quantity) * parseFloat(sell));
+                let gross = (parseFloat(quantity) * parseFloat(sell));
                 let total = gross * (1 + parseFloat(tva_rate) / 100);
 
                 sell_price.value = sell.toFixed(3);

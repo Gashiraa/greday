@@ -1,55 +1,53 @@
-<button type="button" class="close" data-dismiss="modal">
-  <span aria-hidden="true">&times;</span>
-</button>
+<div class="close">
+  <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
+</div>
 
 <%= form_with(model: @payment, local: true, html: {autocomplete: 'off'}) do |form| %>
-  <div class="form center-div">
+  <div class="ui form">
 
-    <% if @payment.id %>
-      <h3><%= t('editing_payment') %></h3>
-    <% else %>
-      <h3><%= t('creating_payment') %></h3>
-    <% end %>
+    <h2 class="centered">
 
-    <div class="form-row">
+      <% if @payment.id %>
+        <%= t('editing_payment') %>
+      <% else %>
+        <%= t('creating_payment') %>
+      <% end %>
+    </h2>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-3">
-        <%= form.label t('date_locale') %>
-        <div class="picker-container">
-          <%= form.text_field :date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", value: @payment.date ? l(@payment.date) : Time.zone.now.to_date.strftime("%d/%m/%Y"), autocomplete: 'off', id: "dateProject", class: "form-control" %>
-        </div>
-      </div>
+    <div class="three fields">
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-3">
+      <div class="field">
         <%= form.label t('customer') %>
-        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {required: true, class: 'form-control', id: 'customer_select_invoice'} %>
+        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {required: true, id: 'payment_form_customer'} %>
       </div>
 
-      <div class="form-group col-xs-12 col-sm-4 col-md-12 col-lg-4 col-xl-6">
+      <div class="field">
+        <%= form.label t('date_locale') %>
+        <%= form.text_field :date, value: @payment.date ? l(@payment.date) : Time.zone.now.to_date.strftime("%d/%m/%Y"), id: "dateProject" %>
+      </div>
+
+      <div class="field">
         <%= form.label t('payment_reference') %>
         <div class="picker-container">
           <%= form.text_field :reference, autocomplete: 'off', id: "payment_reference", class: "form-control" %>
         </div>
       </div>
     </div>
-    <div class="form-row">
 
-      <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <%= form.label t('invoice').pluralize %>
-        <% if @payment.id %>
-          <%= form.select(:invoice_ids, Invoice.where(status: :created)
-              .or(Invoice.where(payment_id: @payment.id))
-              .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', autocomplete: 'nope', :multiple => true}) %>
-        <% else %>
-          <%= form.select(:invoice_ids, Invoice.where(status: :created)
-              .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', autocomplete: 'nope', :multiple => true}) %>
-        <% end %>
-      </div>
+    <div class="field">
+      <%= form.label t('invoice').pluralize %>
+      <% if @payment.id %>
+        <%= form.select(:invoice_ids, Invoice.where(status: :created)
+            .or(Invoice.where(payment_id: @payment.id))
+            .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', autocomplete: 'nope', :multiple => true}) %>
+      <% else %>
+        <%= form.select(:invoice_ids, Invoice.where(status: :created)
+            .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', autocomplete: 'nope', :multiple => true}) %>
+      <% end %>
     </div>
-    <div class="form-row">
-      <div class="col-12 createButton">
-        <%= form.submit t('create'), :class => "btn btn-dark form-group" %>
-      </div>
+
+    <div class="field centered">
+      <%= form.submit t('create'), :class => "ui green button" %>
     </div>
   </div>
 <% end %>

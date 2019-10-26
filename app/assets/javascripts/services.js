@@ -39,6 +39,14 @@ $(document).on("turbolinks:load", function () {
             $("#service_form_project").val($('#project-id').data('somedata'));
         }
 
+        if (document.getElementById('service_id')) {
+            if ($('#customer-rate').data('somedata')) {
+                if (document.getElementById('service_id').value === "0") {
+                    document.getElementById('hourly_rate').value = $('#customer-rate').data('somedata')
+                }
+            }
+        }
+
         //Disabling dropdowns for ware forms
         $('select[id="service_form_project"]').on('focus trigger mouseover change', function () {
             if ($(this).val()) {

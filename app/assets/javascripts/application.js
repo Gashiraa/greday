@@ -16,6 +16,14 @@ document.addEventListener('turbolinks:before-cache', function () {
 
 $(document).on("turbolinks:load", function () {
 
+
+        $('.ui.checkbox').checkbox();
+
+        $('.ui.sticky')
+            .sticky({
+                context: '#example1'
+            });
+
         {
             // SELECT2 INITIALISATIONS
             $("#project_sort").select2({
@@ -59,25 +67,31 @@ $(document).on("turbolinks:load", function () {
         }
 
         //Clickable rows (remote true) Not used ATM
-        // $("tr[data-link]").click(function () {
-        //     if (event.target.tagName === "IMG") {
-        //         return
-        //     }
-        //     $.ajax({
-        //         url: this.getAttribute('data-link'),
-        //         dataType: "script",
-        //         type: "GET"
-        //     });
-        //     event.preventDefault();
-        // });
-        //
+        $("tr[data-link]").click(function () {
+            if (event.target.tagName === "IMG") {
+                return
+            }
+            $.ajax({
+                url: this.getAttribute('data-link'),
+                dataType: "script",
+                type: "GET"
+            });
+            event.preventDefault();
+        });
+
+        $("tr[data-project]").click(function () {
+            if (event.target.tagName === "IMG") {
+                return
+            }
+            window.location = $(this).data("project")
+        });
+
         //Navbar active (also handling locale)
         $.each($('.ui.menu').find('a'), function () {
-            console.log($(this).attr('href'));
             $(this).toggleClass('active',
                 ((window.location.pathname.indexOf($(this).attr('href')) > -1) ||
-                $('.locale').data('locale') === this.text.toLowerCase() ||
-                (window.location.pathname === "/" && $(this).attr('href') === "/projects")) &&
+                    $('.locale').data('locale') === this.text.toLowerCase() ||
+                    (window.location.pathname === "/" && $(this).attr('href') === "/projects")) &&
                 $(this).attr('id') !== "logo"
             )
         });
@@ -89,20 +103,6 @@ $(document).on("turbolinks:load", function () {
 
         // //Color lines from a table
         $('.table-to-color').each(function () {
-            let original;
-            let rgb;
-            // $("tr").not(':first').hover(
-            //     function () {
-            //         original = $(this).css("background-color");
-            //         rgb = original.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
-            //         $(this).css("background-color", "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + 0.75 + ")");
-            //     },
-            //     function () {
-            //         original = $(this).css("background-color");
-            //         rgb = original.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
-            //         $(this).css("background-color", "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + 0.55 + ")");
-            //     }
-            // );
             colorTable();
         });
 
@@ -115,37 +115,6 @@ $(document).on("turbolinks:load", function () {
         $('#status_sort_select > option').each(function () {
             this.style.backgroundColor = assignColor(this.getAttribute('status'));
         });
-
-        // //Badges titles
-        // let title = document.getElementById("titleBadge");
-        // switch (title.getAttribute('display')) {
-        //     case 'projects' :
-        //         title.style.backgroundColor = "#32469b";
-        //         break;
-        //     case 'wares' :
-        //         title.style.backgroundColor = "#6f3e9b";
-        //         break;
-        //     case 'services' :
-        //         title.style.backgroundColor = "#9b4b5b";
-        //         break;
-        //     case 'customers' :
-        //         title.style.backgroundColor = "#9b724c";
-        //         break;
-        //     case 'quotations' :
-        //         title.style.backgroundColor = "#3c769b";
-        //         break;
-        //     case 'invoices' :
-        //         title.style.backgroundColor = "#819b4c";
-        //         break;
-        //     case 'payments' :
-        //         title.style.backgroundColor = "#479b46";
-        //         break;
-        //     case 'extras' :
-        //         title.style.backgroundColor = "#9b7311";
-        //         break;
-        //     default:
-        //         console.log(title.value);
-        // }
     }
 );
 
@@ -166,34 +135,34 @@ function autoFormatDatePicker(picker) {
 function colorTable() {
     $('.status-cell').each(function () {
         this.firstElementChild.classList.add("ui");
+        if ((this.getAttribute('status') === "created") && (window.location.pathname === "/projects" || window.location.pathname === "/invoices" || window.location.pathname === "/")) {
+            this.firstElementChild.classList.add("animated");
+        }
         this.firstElementChild.classList.add(assignColor(this.getAttribute('status')));
-        this.firstElementChild.classList.add("button")
-        this.firstElementChild.classList.add("status-button")
-        // this.parentElement.classList.add(assignColor(this.getAttribute('status')))
+        this.firstElementChild.classList.add("button");
     });
 }
 
 //Color picker based on status enum
 function assignColor(status) {
     switch (status) {
-        case 'quotation' : //Project, Ware
-            return "blue"; //BLUE
-        case 'invoiced' :
-        case 'created' :
-            return "yellow"; //YELLOW
+        case 'done' :
+        case 'not_assigned' :
+            return "red"; //RED
+        case 'in_progress' :
+        case 'assigned' :
         case 'assigned_project' :
         case 'assigned_customer' :
-        case 'assigned' :
-        case 'in_progress' :
             return "orange"; //ORANGE
-        case 'not_assigned' :
-        case 'done' :
-            return "red"; //RED
         case 'accepted' :
+        case 'sent' :
+        case 'created' :
+        case 'invoiced' :
+            return "yellow"; //YELLOW
         case 'paid' :
             return "green"; //GREEN
-        case 'bin' :
-            return "grey"; //GREEN
+        case 'quotation' :
+            return "teal"; //BLUE
         default:
     }
 }

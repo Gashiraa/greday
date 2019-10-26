@@ -1,0 +1,1 @@
+$(document).on("turbolinks:load",function(){$("#customer_form_name").select2({theme:"bootstrap",width:"100%",tags:!0,selectOnClose:!0,language:$(".locale").data("locale")}),$("#customer_form_locality").select2({theme:"bootstrap",width:"100%",tags:!0,selectOnClose:!0,language:$(".locale").data("locale")})});

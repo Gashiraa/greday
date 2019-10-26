@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @customer_machine_line.customer %>
+</p>
+
+<p>
+  <strong>Machine:</strong>
+  <%= @customer_machine_line.machine %>
+</p>
+
+<p>
+  <strong>Hours:</strong>
+  <%= @customer_machine_line.hours %>
+</p>
+
+<p>
+  <strong>Km:</strong>
+  <%= @customer_machine_line.km %>
+</p>
+
+<%= link_to 'Edit', edit_customer_machine_line_path(@customer_machine_line) %> |
+<%= link_to 'Back', customer_machine_lines_path %>

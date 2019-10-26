@@ -33,7 +33,7 @@ fr:
   total_gross: Total HT
   provider_name: Fournisseur
 
-  hourly_rate: Taux hor.
+  hourly_rate: Taux horaire
   coefficient: Coefficent
   duration: Durée
   status: Statut
@@ -313,7 +313,6 @@ fr:
   project_total: "Total projet TTC"
   editing_extra_line: "Edition divers"
   creating_extra_line: "Ajout divers"
-  invoice_number: "Num. Facture"
   in_progress: "En réalisation"
   done: "Terminé"
   invoiced: "Facturé"
@@ -352,3 +351,23 @@ fr:
   invoice_account: "Les paiements se feront au compte BNP Fortis :"
   total_duration: "Durée totale"
   showInQuot: "Afficher dans devis"
+  showInInv: "Afficher dans facture"
+  customer_rate: "Taux client"
+  project_paid: "Payer"
+  PO: "Bon de commande"
+  applicant: "Demandeur"
+  no_vat: "TVA 0%"
+  invoice_number: Numéro Facture
+  machines: "machines"
+  create_new_machine: "Créer nouvelle machine"
+  model: "Modèle"
+  brand: "Marque"
+  year: "Année"
+  creating_machines: "Création machine"
+  editing_machines: "Edition machine"
+  machine_add_success: "Machine ajoutée avec succès"
+  machine_update_success: "Machine mise à jour avec succès"
+  machine_detroy_success: "Machine supprimée avec succés"
+  all_machines_brands: "Toutes les marques"
+  all_machines_categories: "Toutes les catégories"
+  machine: "Machine"

@@ -1,0 +1,1 @@
+$(document).on("turbolinks:load",function(){$("#extra_form_category").select2({theme:"bootstrap",width:"100%",tags:!0,selectOnClose:!0,language:$(".locale").data("locale")})});

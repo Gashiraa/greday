@@ -4,8 +4,23 @@
   padding: 1%;
 }
 
+.hidden {
+  a {
+    color: white !important;
+    text-decoration: none;
+  }
+}
+
+select {
+  -webkit-appearance: none;
+}
+
 img {
   margin: 0 0.2vw;
+}
+
+.login {
+  margin: 5% auto !important;
 }
 
 #notice {
@@ -34,17 +49,25 @@ img {
   margin: auto;
 }
 
-.add-button{
-  margin:auto 0 !important;
+.add-button {
+  margin: auto 0 !important;
   text-align: center;
 }
 
-.centered{
+.centered {
   text-align: center;
 }
 
 .status-button {
   width: 10rem;
+}
+
+.invoice-report-total {
+  text-align: right;
+
+  h3 {
+    margin-top: 0.4em;
+  }
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
@@ -71,352 +94,31 @@ img {
   padding-left: 15px !important;
 }
 
+.edit-project-button {
+  float: right;
+}
 
-//::first-letter {
-//  text-transform: uppercase;
-//}
-//
-//#ui-datepicker-div {z-index:2000 !important;}
-//
-//
-//.content {
-//  font-family: Helvetica, Arial, Sans-Serif, serif;
-//  -webkit-font-smoothing: antialiased;
-//  -moz-osx-font-smoothing: grayscale;
-//  max-width: 98%;
-//  margin: 1em auto auto auto;
-//
-//  a:hover {
-//    text-decoration: none;
-//  }
-//
-//  .center-div {
-//    h3 {
-//      text-align: center;
-//    }
-//
-//    background-color: #fcfcfc;
-//    border: 1px solid #a3a3a3;
-//    border-radius: 2px;
-//    padding: 1.5vw 1.5vw 0 1.5vw;
-//    margin: 0 auto;
-//    max-width: 1000px /* value of your choice which suits your alignment */
-//
-//  }
-//
-//  .button-add {
-//    margin-top: auto;
-//  }
-//
-//  #titleBadge {
-//    text-align: center;
-//    border: 1.5px solid #000000;
-//    box-shadow: 3px 0 18px 4px rgba(0, 0, 0, 0.2);
-//    border-radius: 1px;
-//    color: white;
-//  }
-//
-//  h2 {
-//    max-width: 28.5vh;
-//    font-size: 3.3vh;
-//    text-transform: uppercase;
-//    margin-left: auto;
-//    margin-right: auto;
-//    left: 0;
-//    right: 0;
-//  }
-//
-//  .loginScreen {
-//    margin-top: 10%;
-//    text-align: center;
-//
-//    h2 {
-//      text-align: center;
-//      text-transform: uppercase;
-//      position: relative;
-//      width: 100%;
-//    }
-//  }
-//
-//  .btn-primary {
-//    font-size: 2vh;
-//    background-color: #68889E;
-//    color: #FFF;
-//    border-color: #2F3E48;
-//  }
-//
-//  .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
-//    background-color: #2F3E48;
-//    color: #FFF;
-//    border-color: #31347B;
-//  }
-//
+.total-project {
+  font-size: 1.2em;
+}
 
-//
-//  form {
-//    h5 {
-//      margin: auto 1% auto 1%;
-//    }
-//  }
-//
-//  .project-content {
-//    width: 100%;
-//
-//    .panel {
-//      float: left;
-//      width: 48%;
-//      margin-right: 2%;
-//    }
-//
-//    .project-section {
-//      display: table;
-//      width: 100%;
-//      margin: 1% 1% 0 1%;
-//
-//      td {
-//        width: 5%;
-//
-//        img {
-//          margin: 0;
-//        }
-//
-//        #status-project {
-//          text-align: center;
-//          font-weight: bold;
-//          border: 2px solid black;
-//          border-radius: 2px;
-//        }
-//      }
-//    }
-//
-//    .table.totals-table {
-//      display: block;
-//
-//      .totals-row {
-//        font-weight: bold;
-//      }
-//    }
-//
-//    .project-recap {
-//      border: 2px solid black;
-//      border-radius: 2px;
-//      padding: 1vw;
-//      margin-bottom: 3%;
-//      background-color: #0075ff24;
-//
-//      .btn-right {
-//        float: right;
-//      }
-//
-//      .left-cell {
-//        text-align: left;
-//      }
-//
-//      .project-info {
-//        text-align: left;
-//        width: 100%;
-//      }
-//
-//      .info-header {
-//        width: 2%;
-//      }
-//
-//      .table.totals-table {
-//        float: unset;
-//        margin: auto;
-//        width: 100%;
-//        background-color: #ebb7a2;
-//      }
-//    }
-//  }
-//
-//  .header-project {
-//    table {
-//      width: 100%;
-//    }
-//
-//    td {
-//      width: 33%;
-//    }
-//
-//    .right-cell {
-//      text-align: right;
-//    }
-//  }
-//
-//  .createButton {
-//    text-align: center;
-//  }
-//
-//  .table {
-//    margin-top: 1%;
-//    box-shadow: 10px 0 40px 2px rgba(0, 0, 0, 0.37);
-//    -webkit-box-shadow: 10px 0 40px 2px rgba(0, 0, 0, 0.37);
-//    background-color: white;
-//
-//    .small-column {
-//      width: 15%
-//    }
-//
-//    .emptyTable {
-//      text-align: center;
-//    }
-//
-//    .buttons-cell {
-//      width: 10%;
-//    }
-//
-//    .btn-info {
-//      line-height: 0.9;
-//    }
-//
-//    .center-cell {
-//      text-align: center;
-//
-//      img {
-//        margin: 0.2vw;
-//      }
-//    }
-//
-//    .right-cell {
-//      text-align: right;
-//    }
-//
-//    .total-cell {
-//      text-align: center;
-//      width: 10%
-//    }
-//
-//    .disabled-cell {
-//      background-color: rgba(163, 167, 168, 0.26);
-//    }
-//
-//    tr {
-//      cursor: pointer;
-//
-//      th, td {
-//        vertical-align: middle;
-//        padding: 0.4rem 0.65rem 0.4rem 0.65rem;
-//        border-top: 0.05px solid rgba(0, 0, 0, 0.17);
-//      }
-//
-//      th .current {
-//        background-repeat: no-repeat;
-//        background-position: right center;
-//      }
-//
-//      th {
-//        a, a :link, a :active, a :hover, a :visited {
-//          color: white;
-//          text-decoration: none;
-//        }
-//      }
-//    }
-//
-//    .description-header {
-//      width: 30vw;
-//    }
-//  }
-//
-//  .picker-container {
-//    display: -webkit-box;
-//  }
-//
-//  .smallerLabel {
-//    font-size: 0.9em;
-//  }
-//
-//  .time-picker {
-//    width: 50%;
-//  }
-//
-//  .picker-container {
-//    display: -webkit-box;
-//  }
-//
-//  .form-login {
-//    margin: auto;
-//  }
-//
-//  .nav-item {
-//    z-index: 9;
-//  }
-//
-//  .tab-content {
-//    margin-top: 1%;
-//  }
-//
-//  .flickr_pagination {
-//    display: table;
-//    margin: auto;
-//    text-align: center;
-//    padding: 0.3em;
-//    cursor: default;
-//
-//    a, span, em {
-//      padding: 0.2em 0.5em;
-//    }
-//
-//    .disabled {
-//      color: #aaaaaa;
-//    }
-//
-//    .current {
-//      font-style: normal;
-//      font-weight: bold;
-//      color: #000000;
-//    }
-//
-//    a {
-//      border: 1px solid #dddddd;
-//      color: #0063dc;
-//      text-decoration: none;
-//    }
-//
-//    a:hover, a:focus {
-//      border-color: #003366;
-//      background: #0063dc;
-//      color: white;
-//    }
-//
-//    .page_info {
-//      color: #aaaaaa;
-//      padding-top: 0.8em;
-//    }
-//
-//    .previous_page, .next_page {
-//      border-width: 2px;
-//    }
-//
-//    .previous_page {
-//      margin-right: 1em;
-//    }
-//
-//    .next_page {
-//      margin-left: 1em;
-//    }
-//  }
-//}
-//
-//@media all and (max-width: 1024px) {
-//
-//  .table {
-//    display: block;
-//    overflow-x: auto;
-//    white-space: nowrap;
-//  }
-//  .content .project-content .panel {
-//    width: 98%;
-//  }
-//}
-//
+.project-content {
+  width: calc(100vw - 380px);
+  float: right;
+}
 
-//
-//.logout-button {
-//  margin-left: 2vw;
-//}
-//
-//.select2-container--bootstrap .select2-results__option[aria-disabled=true] {
-//  display: none !important;
-//}
-//
+.project-section {
+  a {
+    margin-left: 1vw;
+  }
+}
+
+.status-cell {
+  .button {
+    width: 11em;
+  }
+}
+
+.ui.left.rail {
+  padding: 0;
+}

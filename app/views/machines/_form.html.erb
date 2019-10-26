@@ -1,0 +1,49 @@
+<div class="close">
+  <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
+</div>
+
+<%= form_with(model: @machine, local: true, id: "machinesForm") do |form| %>
+
+  <div class="ui form">
+
+    <h2 class="centered">
+      <% if @machine.id %>
+        <%= t('editing_machines') %>
+      <% else %>
+        <%= t('creating_machines') %>
+      <% end %>
+    </h2>
+
+    <div class="two fields">
+
+      <div class="field">
+        <%= form.label t('category') %>
+        <%= form.text_field :category %>
+      </div>
+
+      <div class="field">
+        <%= form.label t('model') %>
+        <%= form.text_field :model %>
+      </div>
+    </div>
+
+    <div class="two fields">
+
+      <div class="field">
+        <%= form.label t('brand') %>
+        <%= form.text_field :brand %>
+      </div>
+
+      <div class="field">
+        <%= form.label t('year') %>
+        <%= form.text_field :year %>
+      </div>
+
+    </div>
+
+    <div class="field centered">
+        <%= form.submit t('create'), :class => "ui green button" %>
+      </div>
+  </div>
+
+<% end %>

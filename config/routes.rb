@@ -2,6 +2,8 @@
 
 Rails.application.routes.draw do
 
+  resources :customer_machine_lines
+  resources :machines
   resources :companies
   devise_for :users, skip: [:registrations]
 
@@ -23,5 +25,9 @@ Rails.application.routes.draw do
   resources :payments
 
   get '/change_locale', to: 'application#change_locale', as: :change_locale
+
+  get 'projects/bin/:id' => 'projects#bin', as: :bin
+
+  get "/pages/:page" => "pages#show"
 
 end
