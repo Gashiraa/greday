@@ -70,7 +70,13 @@
       <div class="field">
         <div class="ui toggle checkbox">
           <%= form.check_box :show_desc_invoice, class: "form-check-input", id: "show_desc_invoice" %>
-          <%= form.label t('showInInv'), class: "form-check-label", for: "show_desc_quot" %>
+          <%= form.label t('showInInv'), class: "form-check-label", for: "show_desc_invoice" %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui toggle checkbox">
+          <%= form.check_box :machine_specific, class: "form-check-input", id: "machine_specific" %>
+          <%= form.label t('machineSpecific'), class: "form-check-label", for: "machine_specific" %>
         </div>
       </div>
     </div>

@@ -3,4 +3,5 @@ class Customer < ApplicationRecord
   has_many :quotations, dependent: :nullify
   has_many :payments, dependent: :nullify
   has_many :projects, dependent: :nullify
+  has_many :customer_machine_lines, dependent: :nullify
 end

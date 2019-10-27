@@ -115,7 +115,24 @@
                 <% end %>
               </div>
             </div>
+
           </div>
+          <% if @project.customer_machine_line_id %>
+            <div class="card" data-machine="<%= machine_path(@machineLine.machine) %>" style="cursor: pointer">
+              <div class="content">
+                <div class="header">
+                  <%= @machineLine.machine.brand  + " " + @machineLine.machine.model + " (" + @machineLine.machine.year + ")" %>
+                </div>
+                <div class="meta">
+                  <%= @machineLine.machine.category %>
+                  <br>
+                  <%= @machineLine.hours.to_s + " heures" %>
+                  <br>
+                  <%= @machineLine.km.to_s + " km"  %>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
@@ -183,7 +200,6 @@
         <% end %>
         <tr>
           <td colspan="3">
-
           </td>
           <td class="right aligned">
             <%= t('total_duration') + ' : ' %>

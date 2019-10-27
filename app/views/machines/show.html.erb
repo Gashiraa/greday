@@ -1,29 +1,144 @@
-<p id="notice"><%= notice %></p>
+<div class="ui segment project-content" id="example1">
+  <div class="left ui rail" style="">
+    <div class="ui sticky">
+      <div class="ui cards">
+        <div class="card">
+          <div class="content">
+            <div class="header">
+              <%= @machine.brand + " " + @machine.model + " (" + @machine.year + ")" %>
+            </div>
+            <div class="meta">
+              <%= @machine.category %>
+              <br>
+            </div>
+          </div>
+          <div class="content">
+            <div class="center aligned">
+              <%= link_to(new_customer_machine_line_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
+                <button class="ui brown compact labeled icon button">
+                  Ajouter à un client
+                  <i class="plus icon"></i>
+                </button>
+              <% end %>
+            </div>
+          </div>
+          <div class="content">
+            <div class="center aligned">
+              <%= link_to(machines_path) do %>
+                <button class="ui blue compact labeled icon button">
+                  Retour aux machines
+                  <i class="arrow left icon"></i>
+                </button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="machine-section">
+    <table class="ui striped selectable brown table table-to-color">
+      <h4>Clients possédant cette machine</h4>
+      <thead class=thead-dark>
+      <tr>
+        <th><%= t('Name') %>
+        </th>
+        <th class="right aligned">
+          <%= t('hours') %>
+        </th>
+        <th class="right aligned">
+          <%= t('km') %>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% unless @customers.any? %>
+        <tr>
+          <td class="center aligned" colspan="9">Aucune données à afficher</td>
+        </tr>
+      <% end %>
+      <% @customers.each do |customerLine| %>
+        <tr data-link="<%= edit_customer_machine_line_path(customerLine) %>">
+          <td><%= customerLine.customer.name %></td>
+          <td class="right aligned">
+            <%= customerLine.hours %>
+          </td>
+          <td class="right aligned">
+            <%= customerLine.km %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <table class="ui striped selectable blue table table-to-color">
+      <h4>Projets concernant cette machine</h4>
+      <thead class=thead-dark>
+      <tr>
+        <th><%= t('Name') %>
+        </th>
+        <th>
+          <%= t('date_locale') %>
+        </th>
+        <th>
+          <%= t('customer') %>
+        </th>
 
-<p>
-  <strong>Model:</strong>
-  <%= @machine.model %>
-</p>
+      </tr>
+      </thead>
+      <tbody>
+      <% unless @projects.any? %>
+        <tr>
+          <td class="center aligned" colspan="9">Aucune données à afficher</td>
+        </tr>
+      <% end %>
+      <% @projects.each do |project| %>
+        <tr data-project="<%= project_path(project) %>">
+          <td><%= project.name %></td>
+          <td>
+            <%= l(project.date) %>
+          </td>
+          <td>
+            <%= project.customer.name %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <table class="ui striped selectable red table table-to-color">
+      <h4>Marchandises spécifiques à cette machine</h4>
+      <thead class=thead-dark>
+      <tr>
+        <th><%= t('ware_name') %></th>
+        <th class="right aligned"><%= t('total_gross') %> (€)</th>
+        <th class="right aligned"><%= t('total_cost') %> (€)</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% unless @wares.any? %>
+        <tr>
+          <td class="center aligned" colspan="9">Aucune données à afficher</td>
+        </tr>
+      <% end %>
+      <% @wares.each do |ware| %>
+        <tr data-link="<%= edit_ware_path(ware) %>">
+          <td>
+            <%= ware.ware_name %>
+          </td>
+          <td class="right aligned">
+            <%= number_with_precision ware.total_gross, :precision => 2 %>
+          </td>
+          <td class="right aligned">
+            <%= number_with_precision ware.total_cost, :precision => 2 %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<p>
-  <strong>Brand:</strong>
-  <%= @machine.brand %>
-</p>
 
-<p>
-  <strong>Year:</strong>
-  <%= @machine.year %>
-</p>
-
-<p>
-  <strong>Hours:</strong>
-  <%= @machine.hours %>
-</p>
-
-<p>
-  <strong>Km:</strong>
-  <%= @machine.km %>
-</p>
-
-<%= link_to 'Edit', edit_machine_path(@machine) %> |
-<%= link_to 'Back', machines_path %>
+<div id="modal-window" class="ui modal">
+  <div class="content">
+  </div>
+</div>

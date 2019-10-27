@@ -8,6 +8,7 @@ class Project < ApplicationRecord
   belongs_to :invoice, optional: true
 
   has_one :quotation, dependent: :nullify
+  has_one :customer_machine_line
 
   has_many :wares, dependent: :nullify
   has_many :services, dependent: :nullify

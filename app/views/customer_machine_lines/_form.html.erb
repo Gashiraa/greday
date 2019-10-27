@@ -1,37 +1,50 @@
-<%= form_with(model: customer_machine_line, local: true) do |form| %>
-  <% if customer_machine_line.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(customer_machine_line.errors.count, "error") %> prohibited this customer_machine_line from being saved:</h2>
+<div class="close">
+  <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
+</div>
 
-      <ul>
-      <% customer_machine_line.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<%= form_with(model: @customer_machine_line, local: true) do |form| %>
+
+  <div class="ui form">
+
+    <h2 class="centered">
+      <% if @customer_machine_line.id %>
+        <%= t('editing_machines') %>
+      <% else %>
+        <%= t('adding_machines') %>
       <% end %>
-      </ul>
+    </h2>
+
+    <div class="two fields">
+
+      <div class="field">
+        <%= form.label t('customer') %>
+        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'project_form_customer'} %>
+      </div>
+
+      <div class="field">
+        <%= form.label :machine_id %>
+        <%= form.text_field :machine_id %>
+      </div>
+
     </div>
-  <% end %>
+    <div class="two fields">
 
-  <div class="field">
-    <%= form.label :customer_id %>
-    <%= form.text_field :customer_id %>
+
+      <div class="field">
+        <%= form.label :hours %>
+        <%= form.number_field :hours %>
+      </div>
+
+      <div class="field">
+        <%= form.label :km %>
+        <%= form.number_field :km %>
+      </div>
+    </div>
+
+    <div class="field centered">
+      <%= form.submit t('create'), :class => "ui green button" %>
+    </div>
+
   </div>
 
-  <div class="field">
-    <%= form.label :machine_id %>
-    <%= form.text_field :machine_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :hours %>
-    <%= form.number_field :hours %>
-  </div>
-
-  <div class="field">
-    <%= form.label :km %>
-    <%= form.number_field :km %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

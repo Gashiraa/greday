@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_26_152402) do
+ActiveRecord::Schema.define(version: 2019_10_27_103752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(version: 2019_10_26_152402) do
     t.float "sell_price"
     t.boolean "show_desc_quot"
     t.boolean "show_desc_invoice"
+    t.boolean "machine_specific"
     t.index ["customer_id"], name: "index_wares_on_customer_id"
     t.index ["invoice_id"], name: "index_wares_on_invoice_id"
     t.index ["project_id"], name: "index_wares_on_project_id"

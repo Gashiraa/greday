@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   def show
     @company = Company.first
     @project = scope.find(params[:id])
-
+    @machineLine = CustomerMachineLine.where(id: @project.customer_machine_line_id).first
     respond_to do |format|
       format.html
       format.pdf do

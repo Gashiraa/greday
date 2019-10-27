@@ -86,6 +86,13 @@ $(document).on("turbolinks:load", function () {
             window.location = $(this).data("project")
         });
 
+    $(".card[data-machine]").click(function () {
+        if (event.target.tagName === "IMG") {
+            return
+        }
+        window.location = $(this).data("machine")
+    });
+
         //Navbar active (also handling locale)
         $.each($('.ui.menu').find('a'), function () {
             $(this).toggleClass('active',

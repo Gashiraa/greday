@@ -11,6 +11,9 @@ class MachinesController < ApplicationController
   # GET /machines/1
   # GET /machines/1.json
   def show
+    @customers = CustomerMachineLine.where(machine_id: params[:id])
+    @projects = Project.where(customer_machine_line_id: @customers.ids)
+    @wares = Ware.where(project_id: @projects.ids).where(machine_specific: true)
   end
 
   # GET /machines/new

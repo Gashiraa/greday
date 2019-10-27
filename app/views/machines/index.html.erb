@@ -45,7 +45,7 @@
     </tr>
   <% end %>
   <% @machines.each do |machine| %>
-    <tr>
+    <tr data-project="<%= machine_path(machine) %>">
       <td class="center aligned">
         <%= machine.category %>
       </td>
