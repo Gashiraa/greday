@@ -1,0 +1,6 @@
+expense_account
+    reverse_invoice :boolean
+    invoice :references
+    description :text
+    total_gross :float
+    total :float
