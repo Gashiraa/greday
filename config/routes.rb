@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
 
+  resources :expense_accounts
   resources :customer_machine_lines
   resources :machines
   resources :companies

@@ -12,8 +12,12 @@ class MachinesController < ApplicationController
   # GET /machines/1.json
   def show
     @customers = CustomerMachineLine.where(machine_id: params[:id])
-    @projects = Project.where(customer_machine_line_id: @customers.ids)
-    @wares = Ware.where(project_id: @projects.ids).where(machine_specific: true)
+
+    @search_projects = Project.where(customer_machine_line_id: @customers.ids).ransack(params[:q])
+    @projects = @search_projects.result.paginate(page: params[:page], per_page: 10)
+
+    @search_wares = Ware.where(project_id: @projects.ids).where(machine_specific: true).ransack(params[:q])
+    @wares = @search_wares.result.paginate(page: params[:page], per_page: 10)
   end
 
   # GET /machines/new
