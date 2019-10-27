@@ -28,7 +28,7 @@ class CustomerMachineLinesController < ApplicationController
 
     respond_to do |format|
       if @customer_machine_line.save
-        format.html { redirect_to @customer_machine_line, notice: 'Customer machine line was successfully created.' }
+        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('machine_add_success')}
         format.json { render :show, status: :created, location: @customer_machine_line }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class CustomerMachineLinesController < ApplicationController
   def update
     respond_to do |format|
       if @customer_machine_line.update(customer_machine_line_params)
-        format.html { redirect_to @customer_machine_line, notice: 'Customer machine line was successfully updated.' }
+        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('machine_update_success')}
         format.json { render :show, status: :ok, location: @customer_machine_line }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class CustomerMachineLinesController < ApplicationController
   def destroy
     @customer_machine_line.destroy
     respond_to do |format|
-      format.html { redirect_to customer_machine_lines_url, notice: 'Customer machine line was successfully destroyed.' }
+      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('machine_detroy_success')}
       format.json { head :no_content }
     end
   end

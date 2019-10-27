@@ -20,10 +20,10 @@
         <%= form.label t('customer') %>
         <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'project_form_customer'} %>
       </div>
-
+<!--      THIS IS A GOOD PRESELECT-->
       <div class="field">
         <%= form.label :machine_id %>
-        <%= form.text_field :machine_id %>
+        <%= form.select :machine_id, Machine.all.map {|machine| [machine.brand + " " + machine.model + " (" + machine.year + ")", machine.id]}, {selected: params[:machine]}, {:disabled => false} %>
       </div>
 
     </div>
@@ -31,12 +31,12 @@
 
 
       <div class="field">
-        <%= form.label :hours %>
+        <%= form.label t(:hours) %>
         <%= form.number_field :hours %>
       </div>
 
       <div class="field">
-        <%= form.label :km %>
+        <%= form.label t(:km) %>
         <%= form.number_field :km %>
       </div>
     </div>

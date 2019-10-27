@@ -5,17 +5,19 @@
         <div class="card">
           <div class="content">
             <div class="header">
-              <%= @machine.brand + " " + @machine.model + " (" + @machine.year + ")" %>
+              <%= @machine.brand + " " + @machine.model %>
             </div>
             <div class="meta">
               <%= @machine.category %>
+              <br>
+              <%= "Année : " + @machine.year  %>
               <br>
             </div>
           </div>
           <div class="content">
             <div class="center aligned">
-              <%= link_to(new_customer_machine_line_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
-                <button class="ui brown compact labeled icon button">
+              <%= link_to(new_customer_machine_line_path(:machine => @machine.id), :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window') do %>
+                <button class="ui brown labeled icon button">
                   Ajouter à un client
                   <i class="plus icon"></i>
                 </button>
@@ -49,6 +51,7 @@
         <th class="right aligned">
           <%= t('km') %>
         </th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -58,13 +61,18 @@
         </tr>
       <% end %>
       <% @customers.each do |customerLine| %>
-        <tr data-link="<%= edit_customer_machine_line_path(customerLine) %>">
+        <tr data-link="<%= edit_customer_machine_line_path(customerLine, :machine => @machine.id) %>">
           <td><%= customerLine.customer.name %></td>
           <td class="right aligned">
             <%= customerLine.hours %>
           </td>
           <td class="right aligned">
             <%= customerLine.km %>
+          </td>
+          <td class="center aligned">
+            <%= link_to customerLine, method: :delete, data: {confirm: t('confirm_delete')} do %>
+              <%= image_tag("delete-icon.png", size: "30x30") %>
+            <% end %>
           </td>
         </tr>
       <% end %>
