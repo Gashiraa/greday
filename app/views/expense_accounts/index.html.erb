@@ -1,35 +1,78 @@
-<p id="notice"><%= notice %></p>
+<%= search_form_for @search do |form| %>
+  <div class="ui form">
+    <div class="seven fields">
+      <div class="two wide field add-button">
+        <%= link_to t('create_new_expense_account'), new_invoice_path, {class: 'ui green button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+      </div>
+    </div>
+  </div>
+<% end %>
 
-<h1>Expense Accounts</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Reverse invoice</th>
-      <th>Invoice</th>
-      <th>Description</th>
-      <th>Total gross</th>
-      <th>Total</th>
-      <th colspan="3"></th>
-    </tr>
+<table class="ui striped selectable green table table-to-color">
+  <thead class=thead-dark>
+  <tr>
+    <th>
+      <%= sort_link(@search, :id, t('id')) %>
+    </th>
+    <th>
+      <%= sort_link(@search, :customer_id, t('customer')) %>
+    </th>
+    <th class="center aligned">
+      <%= sort_link(@search, :date, t('date_locale')) %>
+    </th>
+    <th class="center aligned">
+      <%= sort_link(@search, :status, t('description')) %>
+    </th>
+    <th>
+      <%= sort_link(@search, :total_gross, t('gross_cost').to_s + ' (€)') %>
+    </th>
+    <th>
+      <%= sort_link(@search, :total, t('total').to_s + ' (€)') %>
+    </th>
+    <th></th>
+  </tr>
   </thead>
-
   <tbody>
-    <% @expense_accounts.each do |expense_account| %>
-      <tr>
-        <td><%= expense_account.reverse_invoice %></td>
-        <td><%= expense_account.invoice %></td>
-        <td><%= expense_account.description %></td>
-        <td><%= expense_account.total_gross %></td>
-        <td><%= expense_account.total %></td>
-        <td><%= link_to 'Show', expense_account %></td>
-        <td><%= link_to 'Edit', edit_expense_account_path(expense_account) %></td>
-        <td><%= link_to 'Destroy', expense_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <% unless @expense_accounts.any? %>
+    <tr>
+      <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
+    </tr>
+  <% end %>
+  <% @expense_accounts.each do |expense_account| %>
+    <tr>
+      <td>
+        <%= expense_account.id %>
+      </td>
+      <td>
+        <%= expense_account.customer ? expense_account.customer.name : '' %>
+      </td>
+      <td class="center aligned">
+        <%= l(expense_account.date) %>
+      </td>
+      <td>
+        <%= expense_account.description %>
+      </td>
+      <td><%= number_with_precision invoice.total_gross, :precision => 2 %></td>
+      <td><%= number_with_precision invoice.total, :precision => 2 %></td>
+      <td class="center aligned">
+        <%= link_to edit_expense_account_path(expense_account), remote: true do %>
+          <%= image_tag("edit-icon.png", size: "30x30") %>
+        <% end %>
+        <%= link_to image_tag("pdf-icon.png", size: "30x30"), expense_account_path(expense_account.id, :format => :pdf), target:"_blank" %>
+        <%= link_to expense_account, method: :delete, data: {confirm: t('confirm_delete')} do %>
+          <%= image_tag("delete-icon.png", size: "30x30") %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
-
 <br>
+<div class="flickr_pagination">
+  <%= will_paginate @expense_accounts %>
+</div>
 
-<%= link_to 'New Expense Account', new_expense_account_path %>
+<div id="modal-window" class="ui modal">
+  <div class="content">
+  </div>
+</div>

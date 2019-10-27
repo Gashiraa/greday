@@ -18,6 +18,10 @@ $(document).on("turbolinks:load", function () {
 
 
         $('.ui.checkbox').checkbox();
+        $('.ui.dropdown').dropdown({
+            on: 'hover'
+        })
+        ;
 
         $('.ui.sticky')
             .sticky({
@@ -86,12 +90,12 @@ $(document).on("turbolinks:load", function () {
             window.location = $(this).data("project")
         });
 
-    $(".card[data-machine]").click(function () {
-        if (event.target.tagName === "IMG") {
-            return
-        }
-        window.location = $(this).data("machine")
-    });
+        $(".card[data-machine]").click(function () {
+            if (event.target.tagName === "IMG") {
+                return
+            }
+            window.location = $(this).data("machine")
+        });
 
         //Navbar active (also handling locale)
         $.each($('.ui.menu').find('a'), function () {

@@ -375,3 +375,5 @@ fr:
   km: "Kilométrage"
   machineSpecific: "Marchandise spécifique à la machine"
   adding_machines: "Ajout de machine à un client"
+  expense_accounts: "Notes de frais"
+  create_new_expense_account: "Créer une nouvelle note de frais"
