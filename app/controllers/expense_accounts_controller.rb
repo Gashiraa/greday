@@ -11,6 +11,25 @@ class ExpenseAccountsController < ApplicationController
   # GET /expense_accounts/1
   # GET /expense_accounts/1.json
   def show
+    @expense_account = scope.find(params[:id])
+    @invoice = @expense_account.invoice
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: t('expense_accounts') + "_#{@expense_account.id}",
+               page_size: 'A4',
+               template: 'expense_accounts/show.html.erb',
+               layout: 'pdf.html',
+               encoding: 'utf8',
+               show_as_html: params.key?('debug'),
+               :margin => {:bottom => 20},
+               footer: {
+                   html: {
+                       template: 'layouts/pdf_footer.html.erb'
+                   },
+               }
+      end
+    end
   end
 
   # GET /expense_accounts/new
@@ -29,7 +48,7 @@ class ExpenseAccountsController < ApplicationController
 
     respond_to do |format|
       if @expense_account.save
-        format.html {redirect_to @expense_account, notice: 'Expense account was successfully created.'}
+        format.html {redirect_to expense_account_path(@expense_account.id, :format => :pdf), notice: t('expense_add_success')}
         format.json {render :show, status: :created, location: @expense_account}
       else
         format.html {render :new}
@@ -43,7 +62,7 @@ class ExpenseAccountsController < ApplicationController
   def update
     respond_to do |format|
       if @expense_account.update(expense_account_params)
-        format.html {redirect_to @expense_account, notice: 'Expense account was successfully updated.'}
+        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('expense_update_success')}
         format.json {render :show, status: :ok, location: @expense_account}
       else
         format.html {render :edit}
@@ -57,9 +76,13 @@ class ExpenseAccountsController < ApplicationController
   def destroy
     @expense_account.destroy
     respond_to do |format|
-      format.html {redirect_to expense_accounts_url, notice: 'Expense account was successfully destroyed.'}
+      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('expense_destroy_success')}
       format.json {head :no_content}
     end
+  end
+
+  def scope
+    ::ExpenseAccount.all
   end
 
   private

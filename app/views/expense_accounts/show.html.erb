@@ -1,29 +1,293 @@
-<p id="notice"><%= notice %></p>
+<div class="pdf">
+  <div id="container">
+    <section id="memo">
+      <div class="logo">
+        <%= wicked_pdf_image_tag "logo_greday.png" %>
+      </div>
+      <div class="company-info">
+        <div>THOMAS GREDAY</div>
+        <div>Rue Pachlauw, 4</div>
+        <div>4690 Wonck</div>
+        <div>0479/26.44.17</div>
+        <div>thomas.greday@gmail.com</div>
+        <div>TVA: BE0810.007.903</div>
+      </div>
 
-<p>
-  <strong>Reverse invoice:</strong>
-  <%= @expense_account.reverse_invoice %>
-</p>
+    </section>
 
-<p>
-  <strong>Invoice:</strong>
-  <%= @expense_account.invoice %>
-</p>
+      <section id="client-info">
+        <div>
+        <span>
+          <%= @expense_account.customer.name %>
+        </span>
+        </div>
+        <div>
+        <span>
+          <%= @expense_account.customer.street.to_s + ', ' + @expense_account.customer.number.to_s %>
+        </span>
+        </div>
+        <div>
+        <span>
+          <%= @expense_account.customer.cp.to_s + ' ' + @expense_account.customer.locality %>
+        </span>
+        </div>
+        <div>
+        <span>
+          <%= @expense_account.customer.country %>
+        </span>
+        </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @expense_account.description %>
-</p>
+        <div>
+              <span>
+      <%= "TVA : " + @expense_account.customer.tva_record %>
+              </span>
+        </div>
+      </section>
 
-<p>
-  <strong>Total gross:</strong>
-  <%= @expense_account.total_gross %>
-</p>
 
-<p>
-  <strong>Total:</strong>
-  <%= @expense_account.total %>
-</p>
+    <div class="clearfix"></div>
 
-<%= link_to 'Edit', edit_expense_account_path(@expense_account) %> |
-<%= link_to 'Back', expense_accounts_path %>
+    <section id="invoice-title-number">
+      <span id="expense-title">Note de frais</span>
+      <div class="clearfix"></div>
+      <span id="number">
+        <h2>
+          <%= '#' + @expense_account.id.to_s %>
+        </h2>
+      </span>
+      <div class="clearfix"></div>
+    </section>
+
+    <div class="clearfix"></div>
+    <span id="dateInvoice">
+          <%= "Wonck le, " + l(@expense_account.date).to_s %>
+    </span>
+    <hr>
+    <div style="margin:1em">
+      <%= @expense_account.description %>
+    </div>
+
+    <% if @expense_account.reverse_invoice %>
+
+      <% if @invoice.projects.any? %>
+        <% @invoice.projects.each do |project| %>
+          <section id="items" class="project">
+            <div class="title-project-container">
+              <h4 class="title-project">Projet #<%= project.id %> : <%= project.name %></h4>
+            </div>
+            <p><%= project.description %></p>
+            <div class="avoidbreak">
+              <% if project.services.any? %>
+                <table class="table table-hover table-striped">
+                  <tr>
+                    <h5>Prestations</h5>
+                  </tr>
+                  <thead class=thead-dark>
+                  <tr>
+                    <th class="name-cell"><%= t('Name') %></th>
+                    <th class="quantity-cell"><%= t('duration') %></th>
+                    <th class="number-cell"><%= t('hourly_rate') + ' (€)' %></th>
+                    <th class="number-cell"><%= t('tva_rate') + ' (%)' %></th>
+                    <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% project.services.each do |service| %>
+                    <tr>
+                      <td class="name-cell"><%= service.name %></td>
+                      <td class="quantity-cell"><%= service.duration.strftime('%H:%M') %></td>
+                      <td class="number-cell"><%= number_with_precision service.hourly_rate, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision service.tva_rate, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision service.total_gross, :precision => 2 %></td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </div>
+            <div class="avoidbreak">
+              <% if project.wares.any? %>
+                <table class="table table-hover table-striped">
+                  <tr>
+                    <h5>Marchandises</h5>
+                  </tr>
+                  <thead class=thead-dark>
+                  <tr>
+                    <th class="name-cell"><%= t('ware_name') %></th>
+                    <th class="quantity-cell"><%= t('Quantity') %></th>
+                    <th class="number-cell"><%= t('sell_price') + ' (€)' %></th>
+                    <th class="number-cell"><%= t('tva_rate') + ' (%)' %></th>
+                    <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <% project.wares.each do |ware| %>
+                    <tr>
+                      <td class="name-cell"><%= ware.ware_name %></td>
+                      <td class="quantity-cell"><%= ware.quantity %></td>
+                      <td class="number-cell"><%= number_with_precision ware.sell_price, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision ware.tva_rate, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision ware.total_gross, :precision => 2 %></td>
+                    </tr>
+                    <% if ware.show_desc_invoice %>
+                      <tr>
+                        <td colspan="5">
+                          <%= simple_format(ware.comment) %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </div>
+            <div class="avoidbreak">
+              <% if project.project_extra_lines.any? %>
+                <table class="table table-hover table-striped">
+                  <tr>
+                    <h5><%= t('extra').pluralize %>
+                    </h5>
+                  </tr>
+                  <thead class=thead-dark>
+                  <tr>
+                    <th class="name-cell"><%= t('Name') %></th>
+                    <th class="quantity-cell"><%= t('quantity') %></th>
+                    <th class="number-cell"><%= t('unit_price') + ' (€)' %></th>
+                    <th class="number-cell"><%= t('tva_rate') + ' (%)' %></th>
+                    <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <% unless project.project_extra_lines.any? %>
+                    <tr>
+                      <td class="emptyTable" colspan="9">Aucune données à afficher</td>
+                    </tr>
+                  <% end %>
+                  <% project.project_extra_lines.each do |project_extra_line| %>
+                    <tr>
+                      <td class="name-cell"><%= project_extra_line.extra.name %></td>
+                      <td class="quantity-cell"><%= project_extra_line.quantity.to_s + ' ' + project_extra_line.extra.unit %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.extra.unit_price, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.extra.tva_rate, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.total_gross, :precision => 2 %></td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </div>
+          </section>
+
+          <% unless @invoice.projects.length == 1 && @invoice.wares.length == 0 %>
+            <div class="avoidbreak">
+              <section id="sums" class="sums_project">
+                <table cellpadding="0" cellspacing="0">
+                  <tr class="amount-total">
+                  <tr data-hide-on-quote="true">
+                    <th>Total TVA projet (€)</th>
+                    <td><%= number_with_precision (project.total - project.total_gross), :precision => 2 %></td>
+                  </tr>
+                  <th>TOTAL HT PROJET (€)</th>
+                  <td><%= number_with_precision project.total_gross, :precision => 2 %></td>
+                  </tr>
+                  <tr>
+                    <th><%= "TOTAL TTC PROJET (€)" %></th>
+                    <td><%= number_with_precision project.total, :precision => 2 %></td>
+
+                  </tr>
+                </table>
+              </section>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+          <% end %>
+        <% end %>
+      <% end %>
+      <section class="wares avoidbreak">
+        <% if @invoice.wares.any? %>
+          <% if @invoice.projects.any? %>
+            <div class="title-project-container">
+              <h4 class="title-project">Comptoir</h4>
+            </div>
+          <% else %>
+            <h4>Marchandises</h4>
+          <% end %>
+          <table class="table table-hover table-striped">
+            <thead class=thead-dark>
+            <tr>
+              <th class="name-cell"><%= t('ware_name') %></th>
+              <th class="quantity-cell"><%= t('Quantity') %></th>
+              <th class="number-cell"><%= t('sell_price') + ' (€)' %></th>
+              <th class="number-cell"><%= t('tva_rate') + ' (%)' %></th>
+              <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% @invoice.wares.each do |ware| %>
+              <tr>
+                <td class="name-cell"><%= ware.ware_name %></td>
+                <td class="quantity-cell"><%= ware.quantity %></td>
+                <td class="number-cell"><%= number_with_precision ware.sell_price, :precision => 2 %></td>
+                <td class="number-cell"><%= number_with_precision ware.tva_rate, :precision => 2 %></td>
+                <td class="number-cell"><%= number_with_precision ware.total_gross, :precision => 2 %></td>
+              </tr>
+              <% if ware.show_desc_invoice %>
+                <tr>
+                  <td colspan="5">
+                    <%= simple_format(ware.comment) %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </section>
+
+      <section id="sums" class="avoidbreak">
+        <div class="clearfix"></div>
+        <table>
+          <tr class="amount-total">
+            <th>TOTAL HT (€)</th>
+            <td><%= number_with_precision @invoice.total_gross, :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>Total TVA (€)</th>
+            <td><%= # noinspection RubyArgumentParentheses
+                    number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>TOTAL TTC (€)</th>
+            <td class="invoice_total"><%= number_with_precision @invoice.total, :precision => 2 %></td>
+          </tr>
+        </table>
+        <div class="clearfix"></div>
+      </section>
+      <div class="clearfix"></div>
+    <% else %>
+      <section id="sums" class="avoidbreak">
+        <div class="clearfix"></div>
+        <table>
+          <tr class="amount-total">
+            <th>TOTAL HT (€)</th>
+            <td><%= number_with_precision @expense_account.total_gross, :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>Total TVA (€)</th>
+            <td><%= # noinspection RubyArgumentParentheses
+                    number_with_precision (@expense_account.total - @expense_account.total_gross), :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>TOTAL TTC (€)</th>
+            <td class="invoice_total"><%= number_with_precision @expense_account.total, :precision => 2 %></td>
+          </tr>
+        </table>
+        <div class="clearfix"></div>
+      </section>
+      <div class="clearfix"></div>
+    <% end %>
+  </div>
+</div>

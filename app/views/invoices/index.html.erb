@@ -14,7 +14,7 @@
       </div>
       <div class="field">
         <%= form.label t('status') %>
-        <%= form.select :status_eq, Invoice.statuses.map { |status| [t(status[0]), status[1].to_i, {status: status[0]}] }, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
+        <%= form.select :status_eq, Invoice.statuses.map {|status| [t(status[0]), status[1].to_i, {status: status[0]}]}, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
       </div>
       <div class="field">
         <%= form.label t('from') %>
@@ -87,19 +87,23 @@
             <%= invoice.translated_status %>
           </div>
           <% if invoice.status == "created" %>
-<!--            <div class="hidden content">-->
-              <%#= link_to "Payé", id: invoice.id, controller: :invoices, action: :paid, method: :get %>
-<!--            </div>-->
+            <!--            <div class="hidden content">-->
+            <%#= link_to "Payé", id: invoice.id, controller: :invoices, action: :paid, method: :get %>
+            <!--            </div>-->
           <% end %>
         </div>
       <% end %>
-      <td><%= number_with_precision invoice.total_gross, :precision => 2 %></td>
-      <td><%= number_with_precision invoice.total, :precision => 2 %></td>
+      <td>
+        <%= number_with_precision invoice.total_gross, :precision => 2 %>
+      </td>
+      <td>
+        <%= number_with_precision invoice.total, :precision => 2 %>
+      </td>
       <td class="center aligned">
         <%= link_to edit_invoice_path(invoice), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
-        <%= link_to image_tag("pdf-icon.png", size: "30x30"), invoice_path(invoice.id, :format => :pdf), target:"_blank" %>
+        <%= link_to image_tag("pdf-icon.png", size: "30x30"), invoice_path(invoice.id, :format => :pdf), target: "_blank" %>
         <%= link_to invoice, method: :delete, data: {confirm: t('confirm_delete')} do %>
           <%= image_tag("delete-icon.png", size: "30x30") %>
         <% end %>

@@ -380,3 +380,6 @@ fr:
   reverse_invoice: "Annulation d'une facture"
   editing_expense_account: "Edition d'une note de frais"
   creating_expense_account: "Création d'une note de frais"
+  expense_add_success: "Note de frais créée avec succès"
+  expense_update_success: "Note de frais mise à jour avec succès"
+  expense_destroy_success: "Note de frais supprimée avec succès"

@@ -20,8 +20,8 @@
     <th class="center aligned">
       <%= sort_link(@search, :date, t('date_locale')) %>
     </th>
-    <th class="center aligned">
-      <%= sort_link(@search, :status, t('description')) %>
+    <th>
+      <%= sort_link(@search, :description, t('description')) %>
     </th>
     <th>
       <%= sort_link(@search, :total_gross, t('gross_cost').to_s + ' (€)') %>
@@ -52,13 +52,31 @@
       <td>
         <%= expense_account.description %>
       </td>
-      <td><%= number_with_precision expense_account.total_gross, :precision => 2 %></td>
-      <td><%= number_with_precision expense_account.total, :precision => 2 %></td>
+      <% if expense_account.invoice %>
+
+        <td>
+          <%= number_with_precision expense_account.invoice.total_gross, :precision => 2 %>
+        </td>
+        <td>
+          <%= number_with_precision expense_account.invoice.total, :precision => 2 %>
+        </td>
+
+      <% else %>
+
+        <td>
+          <%= number_with_precision expense_account.total_gross, :precision => 2 %>
+        </td>
+        <td>
+          <%= number_with_precision expense_account.total, :precision => 2 %>
+        </td>
+
+      <% end %>
+
       <td class="center aligned">
         <%= link_to edit_expense_account_path(expense_account), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
-        <%= link_to image_tag("pdf-icon.png", size: "30x30"), expense_account_path(expense_account.id, :format => :pdf), target:"_blank" %>
+        <%= link_to image_tag("pdf-icon.png", size: "30x30"), expense_account_path(expense_account.id, :format => :pdf), target: "_blank" %>
         <%= link_to expense_account, method: :delete, data: {confirm: t('confirm_delete')} do %>
           <%= image_tag("delete-icon.png", size: "30x30") %>
         <% end %>

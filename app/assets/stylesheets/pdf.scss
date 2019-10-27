@@ -120,20 +120,26 @@
       min-width: 20px;
     }
 
-    #invoice-title, #quotation-title {
+    #invoice-title, #quotation-title, #expense-title {
       text-transform: uppercase;
       padding: 0 40px 0 40px;
-      font-size: 50px;
       color: white;
       margin-left: 3%;
     }
 
     #invoice-title {
+      font-size: 50px;
       background: #F4846F;
     }
 
     #quotation-title {
+      font-size: 50px;
       background: #55a1f4;
+    }
+
+    #expense-title {
+      font-size: 35px;
+      background: #3bcb27;
     }
 
     #quotation-number {

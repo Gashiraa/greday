@@ -62,7 +62,7 @@
 
         <div class="field">
           <%= form.label t('invoice') %>
-          <%= form.collection_select :invoice_id, Invoice.all, :id, :id, {:include_blank => true}, {required: true, class: 'form-control', id: 'expense_form_invoice'} %>
+          <%= form.collection_select :invoice_id, Invoice.all, :id, :id, {:include_blank => true}, {class: 'form-control', id: 'expense_form_invoice'} %>
         </div>
 
       </div>
