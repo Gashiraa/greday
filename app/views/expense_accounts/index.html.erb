@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Expense Accounts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reverse invoice</th>
+      <th>Invoice</th>
+      <th>Description</th>
+      <th>Total gross</th>
+      <th>Total</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expense_accounts.each do |expense_account| %>
+      <tr>
+        <td><%= expense_account.reverse_invoice %></td>
+        <td><%= expense_account.invoice %></td>
+        <td><%= expense_account.description %></td>
+        <td><%= expense_account.total_gross %></td>
+        <td><%= expense_account.total %></td>
+        <td><%= link_to 'Show', expense_account %></td>
+        <td><%= link_to 'Edit', edit_expense_account_path(expense_account) %></td>
+        <td><%= link_to 'Destroy', expense_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Expense Account', new_expense_account_path %>

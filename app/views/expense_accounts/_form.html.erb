@@ -1,0 +1,42 @@
+<%= form_with(model: expense_account, local: true) do |form| %>
+  <% if expense_account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(expense_account.errors.count, "error") %> prohibited this expense_account from being saved:</h2>
+
+      <ul>
+      <% expense_account.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :reverse_invoice %>
+    <%= form.check_box :reverse_invoice %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_id %>
+    <%= form.text_field :invoice_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_gross %>
+    <%= form.text_field :total_gross %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total %>
+    <%= form.text_field :total %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

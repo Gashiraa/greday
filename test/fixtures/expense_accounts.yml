@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reverse_invoice: false
+  invoice: one
+  description: MyText
+  total_gross: 1.5
+  total: 1.5
+
+two:
+  reverse_invoice: false
+  invoice: two
+  description: MyText
+  total_gross: 1.5
+  total: 1.5

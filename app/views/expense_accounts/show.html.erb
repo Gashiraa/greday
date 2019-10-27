@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reverse invoice:</strong>
+  <%= @expense_account.reverse_invoice %>
+</p>
+
+<p>
+  <strong>Invoice:</strong>
+  <%= @expense_account.invoice %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @expense_account.description %>
+</p>
+
+<p>
+  <strong>Total gross:</strong>
+  <%= @expense_account.total_gross %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @expense_account.total %>
+</p>
+
+<%= link_to 'Edit', edit_expense_account_path(@expense_account) %> |
+<%= link_to 'Back', expense_accounts_path %>

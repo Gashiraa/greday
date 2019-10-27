@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_27_103752) do
+ActiveRecord::Schema.define(version: 2019_10_27_152515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,17 @@ ActiveRecord::Schema.define(version: 2019_10_27_103752) do
     t.datetime "updated_at", null: false
     t.string "phone_number"
     t.float "customer_rate"
+  end
+
+  create_table "expense_accounts", force: :cascade do |t|
+    t.boolean "reverse_invoice"
+    t.bigint "invoice_id"
+    t.text "description"
+    t.float "total_gross"
+    t.float "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invoice_id"], name: "index_expense_accounts_on_invoice_id"
   end
 
   create_table "extras", force: :cascade do |t|
@@ -223,6 +234,7 @@ ActiveRecord::Schema.define(version: 2019_10_27_103752) do
 
   add_foreign_key "customer_machine_lines", "customers"
   add_foreign_key "customer_machine_lines", "machines"
+  add_foreign_key "expense_accounts", "invoices"
   add_foreign_key "invoices", "customers"
   add_foreign_key "invoices", "payments"
   add_foreign_key "payments", "customers"
