@@ -8,6 +8,7 @@ class Invoice < ApplicationRecord
 
   has_many :projects, dependent: :nullify
   has_many :wares, dependent: :nullify
+  has_many :expense_accounts, dependent: :nullify
 
   enum status: [:created, :paid]
   translate_enum :status

@@ -1,8 +1,8 @@
 <%= search_form_for @search do |form| %>
   <div class="ui form">
-    <div class="seven fields">
-      <div class="two wide field add-button">
-        <%= link_to t('create_new_expense_account'), new_invoice_path, {class: 'ui green button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+    <div class="three fields">
+      <div class="three wide field add-button">
+        <%= link_to t('create_new_expense_account'), new_expense_account_path, {class: 'ui green button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
       </div>
     </div>
   </div>
@@ -52,8 +52,8 @@
       <td>
         <%= expense_account.description %>
       </td>
-      <td><%= number_with_precision invoice.total_gross, :precision => 2 %></td>
-      <td><%= number_with_precision invoice.total, :precision => 2 %></td>
+      <td><%= number_with_precision expense_account.total_gross, :precision => 2 %></td>
+      <td><%= number_with_precision expense_account.total, :precision => 2 %></td>
       <td class="center aligned">
         <%= link_to edit_expense_account_path(expense_account), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>

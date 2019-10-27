@@ -4,7 +4,8 @@ class ExpenseAccountsController < ApplicationController
   # GET /expense_accounts
   # GET /expense_accounts.json
   def index
-    @expense_accounts = ExpenseAccount.all
+    @search = ExpenseAccount.order(date: :desc).ransack(params[:q])
+    @expense_accounts = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
   end
 
   # GET /expense_accounts/1
@@ -28,11 +29,11 @@ class ExpenseAccountsController < ApplicationController
 
     respond_to do |format|
       if @expense_account.save
-        format.html { redirect_to @expense_account, notice: 'Expense account was successfully created.' }
-        format.json { render :show, status: :created, location: @expense_account }
+        format.html {redirect_to @expense_account, notice: 'Expense account was successfully created.'}
+        format.json {render :show, status: :created, location: @expense_account}
       else
-        format.html { render :new }
-        format.json { render json: @expense_account.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @expense_account.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -42,11 +43,11 @@ class ExpenseAccountsController < ApplicationController
   def update
     respond_to do |format|
       if @expense_account.update(expense_account_params)
-        format.html { redirect_to @expense_account, notice: 'Expense account was successfully updated.' }
-        format.json { render :show, status: :ok, location: @expense_account }
+        format.html {redirect_to @expense_account, notice: 'Expense account was successfully updated.'}
+        format.json {render :show, status: :ok, location: @expense_account}
       else
-        format.html { render :edit }
-        format.json { render json: @expense_account.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @expense_account.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -56,19 +57,20 @@ class ExpenseAccountsController < ApplicationController
   def destroy
     @expense_account.destroy
     respond_to do |format|
-      format.html { redirect_to expense_accounts_url, notice: 'Expense account was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html {redirect_to expense_accounts_url, notice: 'Expense account was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_expense_account
-      @expense_account = ExpenseAccount.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def expense_account_params
-      params.require(:expense_account).permit(:reverse_invoice, :invoice_id, :description, :total_gross, :total)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_expense_account
+    @expense_account = ExpenseAccount.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def expense_account_params
+    params.require(:expense_account).permit(:reverse_invoice, :invoice_id, :description, :total_gross, :total, :customer_id, :date)
+  end
 end

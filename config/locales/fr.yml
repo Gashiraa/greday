@@ -377,3 +377,6 @@ fr:
   adding_machines: "Ajout de machine à un client"
   expense_accounts: "Notes de frais"
   create_new_expense_account: "Créer une nouvelle note de frais"
+  reverse_invoice: "Annulation d'une facture"
+  editing_expense_account: "Edition d'une note de frais"
+  creating_expense_account: "Création d'une note de frais"

@@ -4,3 +4,6 @@ expense_account
     description:text
     total_gross:float
     total:float
+
+Compléter select Invoice dans le formulaire
+Formater le PDF

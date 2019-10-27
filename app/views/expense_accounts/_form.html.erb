@@ -1,42 +1,76 @@
-<%= form_with(model: expense_account, local: true) do |form| %>
-  <% if expense_account.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(expense_account.errors.count, "error") %> prohibited this expense_account from being saved:</h2>
+<div class="close">
+  <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
+</div>
 
-      <ul>
-      <% expense_account.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<%= form_with(model: @expense_account, local: true, html: {autocomplete: 'off'}) do |form| %>
+  <div class="ui form">
+
+    <h2 class="centered">
+      <% if @expense_account.id %>
+        <%= t('editing_expense_account') %>
+      <% else %>
+        <%= t('creating_expense_account') %>
       <% end %>
-      </ul>
+    </h2>
+
+    <div class="three fields">
+
+      <div class="field">
+        <%= form.label t('customer') %>
+        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {required: true, class: 'form-control', id: 'project_form_customer'} %>
+      </div>
+
+
+      <div class="field">
+        <%= form.label t('date_locale') %>
+        <div class="picker-container">
+          <%= form.text_field :date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", value: @expense_account.date ? l(@expense_account.date) : Time.zone.now.to_date.strftime("%d/%m/%Y"), autocomplete: 'off', id: "dateProject", class: "form-control" %>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :reverse_invoice %>
-    <%= form.check_box :reverse_invoice %>
-  </div>
+    <div class="field">
+      <%= form.label t('description') %>
+      <%= form.text_area(:description, {class: 'form-control', rows: "5", autocomplete: 'nope'}) %>
+    </div>
 
-  <div class="field">
-    <%= form.label :invoice_id %>
-    <%= form.text_field :invoice_id %>
-  </div>
+    <div class="ui segment">
+      <div class="two fields">
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
+        <div class="field">
+          <%= form.label t('total_gross') %>
+          <%= form.text_field(:total_gross, {class: 'form-control', autocomplete: 'nope'}) %>
+        </div>
 
-  <div class="field">
-    <%= form.label :total_gross %>
-    <%= form.text_field :total_gross %>
-  </div>
+        <div class="field">
+          <%= form.label t('total') %>
+          <%= form.text_field(:total, {class: 'form-control', autocomplete: 'nope'}) %>
+        </div>
 
-  <div class="field">
-    <%= form.label :total %>
-    <%= form.text_field :total %>
-  </div>
+      </div>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
+    <div class="ui segment">
+      <div class="two fields">
+
+        <div class="field">
+          <div class="ui toggle checkbox">
+            <%= form.check_box :reverse_invoice %>
+            <%= form.label :reverse_invoice, t("reverse_invoice") %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label t('invoice') %>
+          <%= form.collection_select :invoice_id, Invoice.all, :id, :id, {:include_blank => true}, {required: true, class: 'form-control', id: 'expense_form_invoice'} %>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="field centered">
+      <%= form.submit t('create'), :class => "ui green button", onclick: "setTimeout(function(){location.reload()}, 3000);", formtarget: "_blank" %>
+    </div>
+
   </div>
 <% end %>
