@@ -2,10 +2,6 @@
 
 Rails.application.routes.draw do
 
-  resources :expense_accounts
-  resources :customer_machine_lines
-  resources :machines
-  resources :companies
   devise_for :users, skip: [:registrations]
 
   as :user do
@@ -24,6 +20,10 @@ Rails.application.routes.draw do
   resources :quotations
   resources :invoices
   resources :payments
+  resources :expense_accounts
+  resources :customer_machine_lines
+  resources :machines
+  resources :companies
 
   get '/change_locale', to: 'application#change_locale', as: :change_locale
 
