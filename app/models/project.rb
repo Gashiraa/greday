@@ -9,7 +9,7 @@ class Project < ApplicationRecord
 
   has_one :quotation, dependent: :nullify
 
-  belongs_to :customer_machine_line
+  belongs_to :customer_machine_line, optional: true
 
   has_many :wares, dependent: :nullify
   has_many :services, dependent: :nullify

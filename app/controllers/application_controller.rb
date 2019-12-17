@@ -5,8 +5,12 @@ class ApplicationController < ActionController::Base
   helper_method :company
   protect_from_forgery with: :reset_session
   include TranslateEnum
+  include RansackMemory::Concern # insert this line
+
 
   before_action :authenticate_user!
+  before_action :save_and_load_filters # insert this line after Devise auth before filter (Devise gem is not necessary)
+
   before_action :set_locale
 
   def set_locale

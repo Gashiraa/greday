@@ -371,7 +371,7 @@ fr:
   all_machines_brands: "Toutes les marques"
   all_machines_categories: "Toutes les catégories"
   machine: "Machine"
-  hours: "Heures de roulage"
+  hours: "Heures de fonctionnement"
   km: "Kilométrage"
   machineSpecific: "Marchandise spécifique à la machine"
   adding_machines: "Ajout de machine à un client"

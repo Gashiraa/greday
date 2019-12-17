@@ -110,7 +110,7 @@
     <div class="three fields">
       <div class="field">
         <%= form.label t('Quantity') %>
-        <%= form.number_field :quantity, step: :any, class: "form-control", autocomplete: 'nope', id: 'quantity', value: @ware.quantity || "1" %>
+        <%= form.number_field :quantity, step: :any, class: "form-control", :onclick => 'this.select();', autocomplete: 'nope', id: 'quantity', value: @ware.quantity || "1" %>
       </div>
 
       <div class="field">

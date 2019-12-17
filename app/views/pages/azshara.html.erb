@@ -1,181 +1,74 @@
+<head>
+  <title>FARMING BABY</title>
+</head>
 <%= image_tag("azshara.png") %>
 <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<div class="timer timerPurple">
-  <h2>
-    <Purple>
-      <time>00:00:00</time>
-    </Purple>
-  </h2>
-  <button class="ui icon mini button" id="startPurple">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopPurple">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearPurple">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-purple" id="purple">
 </div>
 
-<div class="timer timerGreen">
-  <h2>
-    <Green>
-      <time>00:00:00</time>
-    </Green>
-  </h2>
-  <button class="ui icon mini button" id="startGreen">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopGreen">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearGreen">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-green" id="green">
 </div>
 
-<div class="timer timerWhite">
-  <h2>
-    <White>
-      <time>00:00:00</time>
-    </White>
-  </h2>
-  <button class="ui icon mini button" id="startWhite">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopWhite">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearWhite">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-white" id="white">
 </div>
 
-<div class="timer timerRed">
-  <h2>
-    <Red>
-      <time>00:00:00</time>
-    </Red>
-  </h2>
-  <button class="ui icon mini button" id="startRed">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopRed">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearRed">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-red" id="red">
 </div>
 
-<div class="timer timerBlue">
-  <h2>
-    <Blue>
-      <time>00:00:00</time>
-    </Blue>
-  </h2>
-  <button class="ui icon mini button" id="startBlue">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopBlue">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearBlue">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-blue" id="blue">
 </div>
 
-<div class="timer timerYellow">
-  <h2>
-    <Yellow>
-      <time>00:00:00</time>
-    </Yellow>
-  </h2>
-  <button class="ui icon mini button" id="startYellow">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopYellow">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearYellow">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-light-blue" id="light-blue">
 </div>
 
-<div class="timer timerOrange">
-  <h2>
-    <Orange>
-      <time>00:00:00</time>
-    </Orange>
-  </h2>
-  <button class="ui icon mini button" id="startOrange">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopOrange">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearOrange">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-yellow" id="yellow">
+
 </div>
 
-<div class="timer timerLBlue">
-  <h2>
-    <LBlue>
-      <time>00:00:00</time>
-    </LBlue>
-  </h2>
-  <button class="ui icon mini button" id="startLBlue">
-    <i class="play icon"></i>
-  </button>
-  <button class="ui icon mini button" id="stopLBlue">
-    <i class="pause icon"></i>
-  </button>
-  <button class="ui icon mini button" id="clearLBlue">
-    <i class="undo icon"></i>
-  </button>
+<div class="timer timer-orange" id="orange">
+
 </div>
 
 <style>
-  .timerPurple {
+  .timer-purple {
     top: 9em;
     left: 26em;
   }
 
-  .timerGreen {
+  .timer-green {
     top: 29em;
     left: 26em;
   }
 
-  .timerWhite {
+  .timer-white {
     top: 48em;
     left: 70em;
   }
 
-  .timerRed {
-    top: 42em;
-    left: 55em;
+  .timer-red {
+    top: 48em;
+    left: 45em;
   }
 
-  .timerBlue {
-    top: 26em;
-    left: 55em;
+  .timer-blue {
+    top: 20em;
+    left: 45em;
   }
 
-  .timerYellow {
-    top: 3em;
+  .timer-light-blue {
+    top: 35em;
+    left: 65em;
+  }
+
+  .timer-yellow {
+    top: 2em;
     left: 52em;
   }
 
-  .timerOrange {
-    top: 23em;
-    left: 77em;
-  }
-
-  .timerLBlue {
-    top: 6em;
-    left: 83em;
+  .timer-orange {
+    top: 8em;
+    left: 80em;
   }
 
   .timer {
@@ -193,59 +86,123 @@
 <script>
 
     //PURPLE
-    colorStopwatch("Purple");
-    colorStopwatch("Yellow");
-    colorStopwatch("Red");
-    colorStopwatch("Blue");
-    colorStopwatch("Green");
-    colorStopwatch("White");
-    colorStopwatch("LBlue");
-    colorStopwatch("Orange");
-
-
+    colorStopwatch("purple");
+    colorStopwatch("yellow");
+    colorStopwatch("red");
+    colorStopwatch("blue");
+    colorStopwatch("light-blue");
+    colorStopwatch("green");
+    colorStopwatch("white");
+    colorStopwatch("orange");
 
     function colorStopwatch(name) {
         let
-            purple = document.getElementsByTagName(name)[0],
-            startPurple = document.getElementById("start"+name),
-            stopPurple = document.getElementById("stop"+name),
-            clearPurple = document.getElementById("clear"+name),
-            secondsPurple = 0, minutesPurple = 0, hoursPurple = 0,
-            tPurple;
+            div = document.getElementById(name),
+
+            seconds = 0, minutes = 0, hours = 0, t,
+
+            startTime,
+
+            h2 = document.createElement("H2"),
+            subh2 = document.createElement("DIV"),
+            time = document.createElement("TIME"),
+
+            buttonPlay = document.createElement("BUTTON"),
+            buttonPause = document.createElement("BUTTON"),
+            buttonClear = document.createElement("BUTTON"),
+            buttonAdd = document.createElement("BUTTON"),
+
+            iconPlay = document.createElement("I"),
+            iconPause = document.createElement("I"),
+            iconClear = document.createElement("I"),
+            iconAdd = document.createElement("I");
+
+        time.innerHTML = "00:00:00";
+        subh2.appendChild(time);
+        h2.appendChild(subh2);
+
+        buttonPlay.setAttribute("class", "ui icon mini button");
+        buttonPause.setAttribute("class", "ui icon mini button");
+        buttonClear.setAttribute("class", "ui icon mini button");
+        buttonAdd.setAttribute("class", "ui icon mini button");
+
+        buttonPlay.setAttribute("id", "start-" + name);
+        buttonPause.setAttribute("id", "stop-" + name);
+        buttonClear.setAttribute("id", "clear-" + name);
+        buttonAdd.setAttribute("id", "add-" + name);
+
+        iconPlay.setAttribute("class", "play icon");
+        iconPause.setAttribute("class", "stop icon");
+        iconClear.setAttribute("class", "undo icon");
+        iconAdd.setAttribute("class", "add icon");
+
+        buttonPlay.appendChild(iconPlay);
+        buttonPause.appendChild(iconPause);
+        buttonClear.appendChild(iconClear);
+        buttonAdd.appendChild(iconAdd);
+
+        div.appendChild(h2);
+        div.appendChild(buttonPlay);
+        div.appendChild(buttonPause);
+        div.appendChild(buttonClear);
+        div.appendChild(buttonAdd);
 
         function add() {
-            secondsPurple++;
-            if (secondsPurple >= 60) {
-                secondsPurple = 0;
-                minutesPurple++;
-                if (minutesPurple >= 60) {
-                    minutesPurple = 0;
-                    hoursPurple++;
-                }
-            }
-            purple.textContent = (hoursPurple ? (hoursPurple > 9 ? hoursPurple : "0" + hoursPurple) : "00") + ":" + (minutesPurple ? (minutesPurple > 9 ? minutesPurple : "0" + minutesPurple) : "00") + ":" + (secondsPurple > 9 ? secondsPurple : "0" + secondsPurple);
+            var now = new Date();
+            seconds = Math.round((now.getTime() / 1000) - (startTime.getTime() / 1000));
+            minutes = Math.floor(seconds / 60)%60;
+            hours = Math.floor(seconds / 3600);
+            seconds = seconds%60;
+
+
+            // if (seconds >= 60) {
+            //     seconds = 0;
+            //     minutes++;
+            //     if (minutes >= 60) {
+            //         minutes = 0;
+            //         hours++;
+            //     }
+            // }
+            subh2.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
             timer();
         }
 
         function timer() {
-            tPurple = setTimeout(add, 1000);
+            t = setTimeout(add, 1000);
         }
 
         /* Start button */
-        startPurple.onclick = timer;
+        buttonPlay.onclick = function () {
+            startTime = new Date();
+            timer();
+        };
 
         /* Stop button */
-        stopPurple.onclick = function () {
-            clearTimeout(tPurple);
+        buttonPause.onclick = function () {
+            subh2.textContent = "00:00:00";
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            startTime = new Date();
+            clearTimeout(t);
         };
 
         /* Clear button */
-        clearPurple.onclick = function () {
-            purple.textContent = "00:00:00";
-            secondsPurple = 0;
-            minutesPurple = 0;
-            hoursPurple = 0;
-        }
+        buttonClear.onclick = function () {
+            subh2.textContent = "00:00:00";
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            startTime = new Date();
+        };
+        buttonAdd.onclick = function () {
+            startTime.setMinutes(startTime.getMinutes() - 1)
+        };
     }
+
+    window.addEventListener('beforeunload', function (e) {
+        e.preventDefault();
+        e.returnValue = '';
+    });
 
 </script>

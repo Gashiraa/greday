@@ -4,6 +4,8 @@ class QuotationsController < ApplicationController
   before_action :set_quotation, only: %i[show edit update destroy]
   load_and_authorize_resource
 
+  before_action :set_cache_headers
+
   # GET /quotations
   # GET /quotations.json
   def index
@@ -95,6 +97,12 @@ class QuotationsController < ApplicationController
   end
 
   private
+
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = Time.now
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_quotation
