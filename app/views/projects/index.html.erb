@@ -1,6 +1,6 @@
 <%= search_form_for @search do |form| %>
   <div class="ui form">
-    <div class="six fields">
+    <div class="seven fields">
       <div class="two wide field add-button">
         <%= link_to t('create_new_project'), new_project_path, {class: 'ui blue button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
       </div>
@@ -19,50 +19,51 @@
       </div>
       <div class="field">
         <%= form.label t('from') %>
-        <div class="picker-container">
-          <%= form.text_field :date_gteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectFrom", class: "form-control", onchange: 'this.form.submit();' %>
-        </div>
+        <%= form.text_field :date_gteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectFrom", class: "form-control", onchange: 'this.form.submit();' %>
       </div>
       <div class="field">
         <%= form.label t('to') %>
-        <div class="picker-container">
-          <%= form.text_field :date_lteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectTo", class: "form-control", onchange: 'this.form.submit();' %>
-        </div>
+        <%= form.text_field :date_lteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectTo", class: "form-control", onchange: 'this.form.submit();' %>
+      </div>
+
+      <div class="field clear-filter">
+        <%= link_to url_for + "?cancel_filter=true" do %>
+          <%= image_tag("clear-filter-icon.png", size: "30x30") %>
+        <% end %>
       </div>
 
     </div>
-
   </div>
 <% end %>
 
 <table class="ui striped selectable blue table table-to-color">
   <thead class=thead-dark>
   <tr>
-    <th class="center aligned">
+    <th class="one wide center aligned">
       <%= sort_link(@search, :id, t('id_locale')) %>
     </th>
-    <th class="small-column">
+    <th class="two wide">
       <%= sort_link(@search, :customer_id, t('customer')) %>
     </th>
-    <th>
+    <th class="two wide">
       <%= sort_link(@search, :name, t('project_title')) %>
     </th>
-    <th class="description-header">
+    <th class="five wide">
       <%= sort_link(@search, :description, t('description')) %>
     </th>
-    <th class="center aligned">
+    <th class="one wide center aligned">
       <%= sort_link(@search, :date, t('date_locale')) %>
     </th>
-    <th class="center aligned">
+    <th class="two wide center aligned">
       <%= sort_link(@search, :status, t('status')) %>
     </th>
-    <th class="right aligned">
+    <th class="one wide right aligned">
       <%= sort_link(@search, :total_gross, t('gross_cost').to_s + ' (€)') %>
     </th>
-    <th class="right aligned">
+    <th class="one wide right aligned">
       <%= sort_link(@search, :total, t('total').to_s + ' (€)') %>
     </th>
-    <th></th>
+    <th class="one wide"></th>
   </tr>
   </thead>
 

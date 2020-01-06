@@ -14,7 +14,11 @@
         <%= form.label t('locality') %>
         <%= form.select :locality_eq, Customer.distinct.order(:locality).pluck(:locality), {:include_blank => t('all_customer_localities')}, {class: 'form-control', id: 'customer_form_locality', onchange: 'this.form.submit();'} %>
       </div>
-
+      <div class="field clear-filter">
+        <%= link_to url_for + "?cancel_filter=true" do %>
+          <%= image_tag("clear-filter-icon.png", size: "30x30") %>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
@@ -22,34 +26,34 @@
 <table class="ui striped selectable brown table table-to-color">
   <thead class=thead-dark>
   <tr>
-    <th>
+    <th class="three wide">
       <%= sort_link(@search, :name, t('customer_name')) %>
     </th>
-    <th>
+    <th class="three wide">
       <%= sort_link(@search, :mail, t('mail')) %>
     </th>
-    <th>
+    <th class="one wide">
       <%= sort_link(@search, :tva_record, t('tva_record')) %>
     </th>
-    <th>
+    <th class="one wide">
       <%= sort_link(@search, :phone_number, t('phone_number')) %>
     </th>
-    <th>
+    <th class="three wide">
       <%= sort_link(@search, :street, t('street')) %>
     </th>
-    <th>
+    <th class="one wide">
       <%= sort_link(@search, :number, t('number')) %>
     </th>
-    <th>
+    <th class="one wide">
       <%= sort_link(@search, :cp, t('zip')) %>
     </th>
-    <th>
+    <th class="one wide">
       <%= sort_link(@search, :locality, t('locality')) %>
     </th>
-    <th>
+    <th class="one wide">
       <%= sort_link(@search, :country, t('country')) %>
     </th>
-    <th></th>
+    <th class="one wide"></th>
   </tr>
   </thead>
 

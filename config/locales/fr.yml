@@ -383,3 +383,5 @@ fr:
   expense_add_success: "Note de crédit créée avec succès"
   expense_update_success: "Note de crédit mise à jour avec succès"
   expense_destroy_success: "Note de crédit supprimée avec succès"
+  all_categories: "Toutes les catégories"
+  total_invoiced: "Total facturé"

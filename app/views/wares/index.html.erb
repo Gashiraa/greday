@@ -16,6 +16,11 @@
         <%= form.label t('status') %>
         <%= form.select :status_eq, Ware.statuses.map { |status| [t(status[0]), status[1], {status: status[0]}] }, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
       </div>
+      <div class="field clear-filter">
+        <%= link_to url_for + "?cancel_filter=true" do %>
+          <%= image_tag("clear-filter-icon.png", size: "30x30") %>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
@@ -23,24 +28,24 @@
 <table class="ui striped selectable violet table table-to-color">
   <thead class=thead-dark>
   <tr>
-    <th class="center aligned ">
+    <th class="one wide center aligned">
       <%= sort_link(@search, :project_id, t('project')) %>
     </th>
-    <th>
+    <th class="two wide">
       <%= sort_link(@search, :customer_id, t('customer')) %>
     </th>
-    <th>
+    <th class="three wide">
       <%= sort_link(@search, :ware_name, t('ware_name')) %>
     </th>
-    <th>
+    <th class="two wide">
       <%= sort_link(@search, :provider_name, t('provider_name')) %>
     </th>
-    <th>
+    <th class="five wide">
       <%= sort_link(@search, :comment, t('comment')) %>
     </th>
-    <th class="center aligned ">
+    <th class="two wide center aligned">
       <%= sort_link(@search, :status, t('status')) %>
-    <th></th>
+    <th class="one wide"></th>
   </tr>
   </thead>
 

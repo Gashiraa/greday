@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= company.short_name %></title>
+
+  <% if Rails.env.development? %>
+    <title><%= "[DEV] " + company.short_name %></title>
+  <% else %>
+    <title><%= company.short_name %></title>
+  <% end %>
 
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>

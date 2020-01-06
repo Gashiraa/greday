@@ -4,6 +4,19 @@
   padding: 1%;
 }
 
+.scrollable-project-section {
+  max-height: 25vh;
+  overflow-y: auto;
+}
+
+.clear-filter {
+  position: relative;
+  img {
+    position: absolute;
+    bottom: 0.8rem;
+  }
+}
+
 .hidden {
   a {
     color: white !important;

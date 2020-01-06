@@ -28,6 +28,11 @@
           <%= form.text_field :date_lteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectTo", class: "form-control", onchange: 'this.form.submit();' %>
         </div>
       </div>
+      <div class="field clear-filter">
+        <%= link_to url_for + "?cancel_filter=true" do %>
+          <%= image_tag("clear-filter-icon.png", size: "30x30") %>
+        <% end %>
+      </div>
       <div class="field invoice-report-total">
         <h5 class="ui small green compact button">
           <%= t('total_invoiced') %>
@@ -43,25 +48,25 @@
 <table class="ui striped selectable olive table table-to-color">
   <thead class=thead-dark>
   <tr>
-    <th>
+    <th class="one wide center aligned">
       <%= sort_link(@search, :display_number, t('invoice_number')) %>
     </th>
-    <th>
+    <th class="five wide">
       <%= sort_link(@search, :customer_id, t('customer')) %>
     </th>
-    <th class="center aligned">
+    <th class="two wide center aligned">
       <%= sort_link(@search, :date, t('date_locale')) %>
     </th>
-    <th class="center aligned">
+    <th class="two wide center aligned">
       <%= sort_link(@search, :status, t('status')) %>
     </th>
-    <th>
+    <th class="one wide right aligned">
       <%= sort_link(@search, :total_gross, t('gross_cost').to_s + ' (€)') %>
     </th>
-    <th>
+    <th class="one wide right aligned">
       <%= sort_link(@search, :total, t('total').to_s + ' (€)') %>
     </th>
-    <th></th>
+    <th class="two wide"></th>
   </tr>
   </thead>
   <tbody>
@@ -72,7 +77,7 @@
   <% end %>
   <% @invoices.each do |invoice| %>
     <tr>
-      <td>
+      <td class="center aligned">
         <%= invoice.display_number %>
       </td>
       <td>
@@ -93,10 +98,10 @@
           <% end %>
         </div>
       <% end %>
-      <td>
+      <td class="right aligned">
         <%= number_with_precision invoice.total_gross, :precision => 2 %>
       </td>
-      <td>
+      <td class="right aligned">
         <%= number_with_precision invoice.total, :precision => 2 %>
       </td>
       <td class="center aligned">

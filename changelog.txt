@@ -1,32 +1,46 @@
---A FAIRE--
+________________________________________________________________________________________________________________________
+                                                    --A FAIRE--
 
---16/12--
+[16/12- réunion atelier pour ajustement machines]
 
-Défilante projets
-Supprimer filtres partout
-Surveiller corbeille
-Selection machine automatique
-Historique heures machines + pouvoir encoder a chaque projet pour cette machine + date jour
-Listing historique date/heures
-Indication huiles
-Tri catégories unique
-Divers changer
-Filtres divers
-Largeur colonnes PARTOUT
-Ecran client show
-Choix heures/km sur machine
-Select2 catégorie machine
-Champ catégorie + machine segment + heures actuelles
-Resultats recherche agencement ransack
-Prestation : projet + client
-Dupliquer projet pour devis noir
-Recapitulatif factures si x lignes -> switch
-Bloc pied de page
-Description tooltip
+PROJETS
+    ✓ Défilante dans les trois tableau projets/show
+    Fixer la selection de machine automatique
+    Pouvoir encoder a chaque projet pour une machine + date jour
+    Champ catégorie + machine segment + heures actuelles
+    Dupliquer projet
+GLOBAL
+    ✓ Ajouter un bouton permettant de supprimer les filtres partout
+    Surveiller comportements corbeille
+    ✓ Ajuster les largeurs de colonnes PARTOUT
+    ✓ Resultats recherche agencement ransack/select2
+    Description tooltip
+MACHINES
+    Ajuster vue machines/show (voir transparents)
+    Historique heures machines
+    Afficher un listing historique date/heures
+    Afficher indication huiles
+    Ajuster le tri catégories unique
+    Choix heures/km sur machine
+    Select2 catégorie machine
+DIVERS
+    ✓ Verrouiller possiblité de modifier prix divers
+    ✓ Verrouiller possiblité de supprimer divers
+    Divers supprimé sont seulement cachés
+    ✓ Ajouter des filtres aux divers
+    Largeur colonnes
+CLIENT
+    Faire une vue customer/show (voir transparents)
+    Prestation : projet + client, ajouter détails heures
+FACTURES
+    Recapitulatif factures si x lignes -> switch
+    Bloc pied de page
+
+________________________________________________________________________________________________________________________
 
 --14/10--
 
-Taux/horaire client préchoisi dans projet
+Taux/horaire client préchoisi dans projet ✓
 Afficher commentaires dans facture
 Page break Pire michel
 Tri facture par défaut et devis aussi

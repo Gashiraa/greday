@@ -39,8 +39,21 @@ $(document).on("turbolinks:load", function () {
             $("#customer_sort").select2({
                 width: '100%',
                 selectOnClose: true,
-                language: $('.locale').data('locale')
+                language: $('.locale').data('locale'),
+                matcher: matchStart
             }); //SORTING BY CUSTOMER NAME IN LISTINGS
+
+            function matchStart(params, data) {
+                params.term = params.term || '';
+                table = data.text.split(" ");
+
+                for (var i = 0; i < table.length; i++) {
+                    if (table[i].toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+                        return data;
+                    }
+                }
+                return false;
+            }
         }
 
         {  // DATEPICKER SECTION

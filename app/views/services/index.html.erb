@@ -1,7 +1,7 @@
 <%= search_form_for @search do |form| %>
   <div class="ui form">
-    <div class="six fields">
-      <div class="three wide field add-button">
+    <div class="seven fields">
+      <div class="two wide field add-button">
         <%= link_to t('create_new_service'), new_service_path, {class: 'ui red button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
       </div>
       <div class="field">
@@ -16,6 +16,11 @@
         <%= form.label t('status') %>
         <%= form.select :status_eq, Service.statuses.map { |status| [t(status[0]), status[1].to_i, {status: status[0]}] }, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
       </div>
+      <div class="field clear-filter">
+        <%= link_to url_for + "?cancel_filter=true" do %>
+          <%= image_tag("clear-filter-icon.png", size: "30x30") %>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
@@ -23,34 +28,34 @@
 <table class="ui striped selectable red table table-to-color">
   <thead class=thead-dark>
   <tr>
-    <th class="center aligned">
+    <th class="one wide center aligned">
       <%= sort_link(@search, :project_id, t('project')) %>
     </th>
-    <th>
+    <th class="three wide">
       <%= sort_link(@search, :name, t('description')) %>
     </th>
-    <th>
+    <th class="three wide">
       <%= sort_link(@search, :comment, t('comment')) %>
     </th>
-    <th class="center aligned">
+    <th class="two wide center aligned">
       <%= sort_link(@search, :status, t('status')) %>
     </th>
-    <th class="center aligned">
+    <th class="one wide center aligned">
       <%= sort_link(@search, :date, t('date_locale')) %>
     </th>
-    <th class="right aligned">
+    <th class="two wide center aligned">
       <%= sort_link(@search, :hourly_rate, t('hourly_rate').to_s + ' (€/H)') %>
     </th>
-    <th class="center aligned">
+    <th class="one wide center aligned">
       <%= sort_link(@search, :duration, t('duration').to_s + ' (H)') %>
     </th>
-    <th class="right aligned">
+    <th class="one wide right aligned">
       <%= sort_link(@search, :tva_rate, t('tva_rate').to_s + ' (%)') %>
     </th>
-    <th class="right aligned">
+    <th class="one wide right aligned">
       <%= sort_link(@search, :total_cost, t('total_cost').to_s + ' (€)') %>
     </th>
-    <th></th>
+    <th class="one wide"></th>
   </tr>
   </thead>
 

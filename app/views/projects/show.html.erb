@@ -121,14 +121,14 @@
             <div class="card" data-machine="<%= machine_path(@machineLine.machine) %>" style="cursor: pointer">
               <div class="content">
                 <div class="header">
-                  <%= @machineLine.machine.brand  + " " + @machineLine.machine.model + " (" + @machineLine.machine.year + ")" %>
+                  <%= @machineLine.machine.brand + " " + @machineLine.machine.model + " (" + @machineLine.machine.year + ")" %>
                 </div>
                 <div class="meta">
                   <%= @machineLine.machine.category %>
                   <br>
                   <%= @machineLine.hours.to_s + " heures" %>
                   <br>
-                  <%= @machineLine.km.to_s + " km"  %>
+                  <%= @machineLine.km.to_s + " km" %>
                 </div>
               </div>
             </div>
@@ -146,60 +146,67 @@
           </button>
         <% end %>
       </h3>
+      <div class="scrollable-project-section">
+        <table class="ui striped selectable red table table-to-color">
 
-
-      <table class="ui striped selectable red table table-to-color">
-
-        <thead class=thead-dark>
-        <tr>
-          <th><%= t('Name') %></th>
-          <th><%= t('status') %></th>
-          <th class="center aligned">
-            <%= t('Date') %>
-          </th>
-          <th class="right aligned">
-            <%= t('hourly_rate').to_s %>
-          </th>
-          <th class="right aligned">
-            <%= t('total_gross') %> (€)
-          </th>
-          <th class="right aligned">
-            <%= t('total_cost') %> (€)
-          </th>
-          <th></th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <% unless @project.services.any? %>
+          <thead class=thead-dark>
           <tr>
-            <td class="center aligned" colspan="9">Aucune données à afficher</td>
+            <th><%= t('Name') %></th>
+            <th><%= t('status') %></th>
+            <th class="center aligned">
+              <%= t('Date') %>
+            </th>
+            <th class="right aligned">
+              <%= t('hourly_rate').to_s %>
+            </th>
+            <th class="two wide right aligned">
+              <%= t('total_gross') %> (€)
+            </th>
+            <th class="two wide right aligned">
+              <%= t('total_cost') %> (€)
+            </th>
+            <th class="two wide"></th>
           </tr>
-        <% end %>
-        <% @project.services.each do |service| %>
-          <tr data-link="<%= edit_service_path(service) %>">
-            <td><%= service.name %></td>
-            <td id="status-cell"><%= service.translated_status %></td>
-            <td class="center aligned">
-              <%= service.date ? l(service.date) : "" %></td>
-            <td class="right aligned">
-              <%= number_with_precision service.hourly_rate, :precision => 2 %></td>
-            <td class="right aligned">
-              <%= number_with_precision service.total_gross, :precision => 2 %></td>
-            <td class="right aligned">
-              <%= number_with_precision service.total_cost, :precision => 2 %></td>
-            <td class="right aligned">
-              <%= link_to edit_service_path(service), remote: true do %>
-                <%= image_tag("edit-icon.png", size: "30x30") %>
-              <% end %>
-              <%= link_to service, method: :delete, data: {confirm: t('confirm_delete')} do %>
-                <%= image_tag("delete-icon.png", size: "30x30") %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
+          </thead>
+
+
+          <% unless @project.services.any? %>
+            <tr>
+              <td class="center aligned" colspan="9">Aucune données à afficher</td>
+            </tr>
+          <% end %>
+          <div class="scrollable-project-section">
+
+            <% @project.services.each do |service| %>
+              <tr data-link="<%= edit_service_path(service) %>">
+                <td><%= service.name %></td>
+                <td id="status-cell"><%= service.translated_status %></td>
+                <td class="center aligned">
+                  <%= service.date ? l(service.date) : "" %></td>
+                <td class="right aligned">
+                  <%= number_with_precision service.hourly_rate, :precision => 2 %></td>
+                <td class="right aligned">
+                  <%= number_with_precision service.total_gross, :precision => 2 %></td>
+                <td class="right aligned">
+                  <%= number_with_precision service.total_cost, :precision => 2 %></td>
+                <td class="right aligned">
+                  <%= link_to edit_service_path(service), remote: true do %>
+                    <%= image_tag("edit-icon.png", size: "30x30") %>
+                  <% end %>
+                  <%= link_to service, method: :delete, data: {confirm: t('confirm_delete')} do %>
+                    <%= image_tag("delete-icon.png", size: "30x30") %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </div>
+
+          </tbody>
+        </table>
+      </div>
+      <table class="ui compact table">
         <tr>
-          <td colspan="3">
+          <td class="">
           </td>
           <td class="right aligned">
             <%= t('total_duration') + ' : ' %>
@@ -207,26 +214,19 @@
               <%= +Service.where(project_id: @project.id).sum(:duration).to_s.chop.chop.chop %>
             </b>
           </td>
-          <td class="right aligned">
+          <td class="two wide right aligned">
             <%= t('total_gross') + ' : ' %>
             <b>
               <%= (number_with_precision @project.services.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€" %>
             </b>
           </td>
-          <td class="right aligned">
+          <td class="two wide right aligned">
             <%= t('total') + ' : ' %>
             <b>
               <%= (number_with_precision @project.services.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€" %>
             </b>
           </td>
-          <td></td>
-
-        </tr>
-        </tbody>
-      </table>
-      <table class="table totals-table">
-        <tr class="totals-row">
-
+          <td class="two wide"></td>
         </tr>
       </table>
     </div> <!--SERVICES-->
@@ -241,67 +241,71 @@
           </button>
         <% end %>
       </h3>
-      <table class="ui striped selectable violet table table-to-color">
-        <thead>
-        <tr>
-          <th><%= t('ware_name') %></th>
-          <th><%= t('status') %></th>
-          <th class="right aligned"><%= t('total_gross') %> (€)</th>
-          <th class="right aligned"><%= t('total_cost') %> (€)</th>
-          <th></th>
-        </tr>
-        </thead>
+      <div class="scrollable-project-section">
 
-        <tbody>
-        <% unless @project.wares.any? %>
+        <table class="ui striped compact selectable violet table table-to-color">
+          <thead>
           <tr>
-            <td class="center aligned" colspan="9">Aucune données à afficher</td>
+            <th><%= t('ware_name') %></th>
+            <th><%= t('status') %></th>
+            <th class="right aligned"><%= t('total_gross') %> (€)</th>
+            <th class="three wide right aligned"><%= t('total_cost') %> (€)</th>
+            <th class="two wide"></th>
           </tr>
-        <% end %>
-        <% @project.wares.each do |ware| %>
-          <tr data-link="<%= edit_ware_path(ware) %>">
-            <td>
-              <%= ware.ware_name %>
-            </td>
-            <td id="status-cell">
-              <%= ware.translated_status %>
-            </td>
-            <td class="right aligned">
-              <%= number_with_precision ware.total_gross, :precision => 2 %>
-            </td>
-            <td class="right aligned">
-              <%= number_with_precision ware.total_cost, :precision => 2 %>
-            </td>
-            <td class="right aligned">
-              <%= link_to edit_ware_path(ware), remote: true do %>
-                <%= image_tag("edit-icon.png", size: "30x30") %>
-              <% end %>
-              <%= link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do %>
-                <%= image_tag("delete-icon.png", size: "30x30") %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        <tr>
-          <td colspan="2">
+          </thead>
 
-          </td>
-          <td class="right aligned">
+          <tbody>
+          <% unless @project.wares.any? %>
+            <tr>
+              <td class="center aligned" colspan="9">Aucune données à afficher</td>
+            </tr>
+          <% end %>
+
+          <% @project.wares.each do |ware| %>
+            <tr data-link="<%= edit_ware_path(ware) %>">
+              <td>
+                <%= ware.ware_name %>
+              </td>
+              <td id="status-cell">
+                <%= ware.translated_status %>
+              </td>
+              <td class="right aligned">
+                <%= number_with_precision ware.total_gross, :precision => 2 %>
+              </td>
+              <td class="right aligned">
+                <%= number_with_precision ware.total_cost, :precision => 2 %>
+              </td>
+              <td class="right aligned">
+                <%= link_to edit_ware_path(ware), remote: true do %>
+                  <%= image_tag("edit-icon.png", size: "30x30") %>
+                <% end %>
+                <%= link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do %>
+                  <%= image_tag("delete-icon.png", size: "30x30") %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+      <table class="ui compact table">
+        <tr>
+          <td class="eleven wide right aligned">
             <%= t('total_gross') + ' : ' %>
             <b>
               <%= (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€" %>
             </b>
           </td>
-          <td class="right aligned">
+          <td class="three wide right aligned">
             <%= t('total') + ' : ' %>
             <b>
               <%= (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€" %>
             </b>
           </td>
-          <td></td>
+          <td class="two wide"></td>
         </tr>
-        </tbody>
       </table>
+
     </div> <!--WARES-->
     <br>
     <div class="project-section">
@@ -333,61 +337,64 @@
             <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
           </tr>
         <% end %>
-        <% @project.project_extra_lines.each do |project_extra_line| %>
-          <% if project_extra_line.is_manual %>
-            <tr data-link="<%= edit_project_extra_line_path(project_extra_line) %>">
-              <td>
-                <%= project_extra_line.manual_name %>
-              </td>
-              <td class="center aligned">
-                <%= project_extra_line.unit %>
-              </td>
-              <td class="right aligned">
-                <%= project_extra_line.quantity %>
-              </td>
-              <td class="right aligned">
-                <%= number_with_precision project_extra_line.total_gross, :precision => 2 %>
-              </td>
-              <td class="right aligned">
-                <%= number_with_precision project_extra_line.total, :precision => 2 %>
-              </td>
-              <td class="center aligned">
-                <%= link_to "project_extra_lines/edit_manual/" + project_extra_line.id.to_s, remote: true do %>
-                  <%= image_tag("edit-icon.png", size: "30x30") %>
-                <% end %>
-                <%= link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do %>
-                  <%= image_tag("delete-icon.png", size: "30x30") %>
-                <% end %>
-              </td>
-            </tr>
-          <% else %>
-            <tr data-link="<%= edit_project_extra_line_path(project_extra_line) %>">
-              <td>
-                <%= project_extra_line.extra.name %>
-              </td>
-              <td class="center aligned">
-                <%= project_extra_line.extra.unit %>
-              </td>
-              <td class="right aligned">
-                <%= project_extra_line.quantity %>
-              </td>
-              <td class="right aligned">
-                <%= number_with_precision project_extra_line.total_gross, :precision => 2 %>
-              </td>
-              <td class="right aligned">
-                <%= number_with_precision project_extra_line.total, :precision => 2 %>
-              </td>
-              <td class="center aligned">
-                <%= link_to edit_project_extra_line_path(project_extra_line), remote: true do %>
-                  <%= image_tag("edit-icon.png", size: "30x30") %>
-                <% end %>
-                <%= link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do %>
-                  <%= image_tag("delete-icon.png", size: "30x30") %>
-                <% end %>
-              </td>
-            </tr>
+        <div class="scrollable-project-section">
+
+          <% @project.project_extra_lines.each do |project_extra_line| %>
+            <% if project_extra_line.is_manual %>
+              <tr data-link="<%= edit_project_extra_line_path(project_extra_line) %>">
+                <td>
+                  <%= project_extra_line.manual_name %>
+                </td>
+                <td class="center aligned">
+                  <%= project_extra_line.unit %>
+                </td>
+                <td class="right aligned">
+                  <%= project_extra_line.quantity %>
+                </td>
+                <td class="right aligned">
+                  <%= number_with_precision project_extra_line.total_gross, :precision => 2 %>
+                </td>
+                <td class="right aligned">
+                  <%= number_with_precision project_extra_line.total, :precision => 2 %>
+                </td>
+                <td class="center aligned">
+                  <%= link_to "project_extra_lines/edit_manual/" + project_extra_line.id.to_s, remote: true do %>
+                    <%= image_tag("edit-icon.png", size: "30x30") %>
+                  <% end %>
+                  <%= link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do %>
+                    <%= image_tag("delete-icon.png", size: "30x30") %>
+                  <% end %>
+                </td>
+              </tr>
+            <% else %>
+              <tr data-link="<%= edit_project_extra_line_path(project_extra_line) %>">
+                <td>
+                  <%= project_extra_line.extra.name %>
+                </td>
+                <td class="center aligned">
+                  <%= project_extra_line.extra.unit %>
+                </td>
+                <td class="right aligned">
+                  <%= project_extra_line.quantity %>
+                </td>
+                <td class="right aligned">
+                  <%= number_with_precision project_extra_line.total_gross, :precision => 2 %>
+                </td>
+                <td class="right aligned">
+                  <%= number_with_precision project_extra_line.total, :precision => 2 %>
+                </td>
+                <td class="center aligned">
+                  <%= link_to edit_project_extra_line_path(project_extra_line), remote: true do %>
+                    <%= image_tag("edit-icon.png", size: "30x30") %>
+                  <% end %>
+                  <%= link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do %>
+                    <%= image_tag("delete-icon.png", size: "30x30") %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
         <tr>
           <td colspan="3">
 
