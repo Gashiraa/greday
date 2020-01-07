@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
 
+  resources :machine_histories
   devise_for :users, skip: [:registrations]
 
   as :user do
@@ -30,5 +31,8 @@ Rails.application.routes.draw do
   get 'projects/bin/:id' => 'projects#bin', as: :bin
 
   get "/pages/:page" => "pages#show"
+
+  get 'projects/duplicate/:id' => 'projects#duplicate', as: :duplicate
+  post 'projects/duplicate/:id' => 'projects#duplicate'
 
 end

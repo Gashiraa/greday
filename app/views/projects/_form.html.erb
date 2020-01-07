@@ -13,12 +13,18 @@
       <% end %>
     </h2>
 
-    <div class="three fields">
+    <div class="four fields">
+
+      <div class="field">
+        <%= form.label t('Name') %>
+        <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", :required => true, autocomplete: 'nope' %>
+      </div>
 
       <div class="field">
         <%= form.label t('customer'), class: '' %>
         <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'project_form_customer'} %>
       </div>
+
       <div class="field">
         <%= form.label t('status') %>
         <%= form.select :status, Project.translated_statuses.map { |status| [status[0], status[1]] }, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'} %>
@@ -33,18 +39,7 @@
 
     </div>
 
-    <div class="four fields">
-
-      <div class="field">
-        <%= form.label t('Name') %>
-        <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", :required => true, autocomplete: 'nope' %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('machine') %>
-        <%= form.select :customer_machine_line_id, CustomerMachineLine.all.map { |customerMachineLine| [customerMachineLine.machine.brand + " " + customerMachineLine.machine.model + " (" + customerMachineLine.machine.year + ")", customerMachineLine.id, {customer: customerMachineLine.customer_id}] },
-                        class: "form-control", :include_blank => true, :required => true, autocomplete: 'nope' %>
-      </div>
+    <div class="three fields">
 
       <div class="field">
         <%= form.label t('PO').upcase %>
@@ -55,24 +50,34 @@
         <%= form.label t('applicant') %>
         <%= form.text_field :applicant, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
-    </div>
 
-    <div class="field">
-      <%= form.label t('description') %>
-      <%= form.text_area :description, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
-    </div>
-
-    <div class="ui segment">
-      <div class="field">
-        <%= form.label t('description') %>
-        <%= form.text_area :comment, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
-      </div>
       <div class="field">
         <div class="ui toggle checkbox">
           <%= form.check_box :no_vat %>
           <%= form.label :no_vat, t("no_vat") %>
         </div>
       </div>
+
+    </div>
+
+    <div class="two fields">
+
+      <div class="field">
+        <%= form.label t('machine') %>
+        <%= form.select :machine_id, Machine.all.map { |machine| [machine.brand + " " + machine.model + " (" + machine.year + ")", machine.id, {customer: machine.customer_id}] },
+                        class: "form-control", :include_blank => true, :required => true, autocomplete: 'nope' %>
+      </div>
+    </div>
+
+
+    <div class="field">
+      <%= form.label t('description') %>
+      <%= form.text_area :description, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+    </div>
+
+    <div class="field">
+      <%= form.label t('comment') %>
+      <%= form.text_area :comment, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
     </div>
 
     <div class="field">

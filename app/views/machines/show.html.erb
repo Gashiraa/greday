@@ -6,28 +6,34 @@
           <div class="content">
             <div class="header">
               <%= @machine.brand + " " + @machine.model %>
+              <%= link_to edit_machine_path(@machine), remote: true do %>
+                <button class="edit-card-button ui compact icon purple button">
+                  <i class="edit icon"></i>
+                </button>
+              <% end %>
             </div>
             <div class="meta">
               <%= @machine.category %>
               <br>
-              <%= "Année : " + @machine.year  %>
+            </div>
+            <div class="description">
+              <%= @machine.customer ? @machine.customer.name : "" %>
+              <br>
+              <%= "Année : " + (@machine.year ? @machine.year : "") %>
+              <br>
+              <%= "Numéro de série : " + (@machine.serial ? @machine.serial : "") %>
               <br>
             </div>
           </div>
           <div class="content">
-            <div class="center aligned">
-              <%= link_to(new_customer_machine_line_path(:machine => @machine.id), :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window') do %>
-                <button class="ui brown labeled icon button">
-                  Ajouter à un client
-                  <i class="plus icon"></i>
-                </button>
-              <% end %>
+            <div class="description">
+              <%= @machine.comment %>
             </div>
           </div>
           <div class="content">
             <div class="center aligned">
               <%= link_to(machines_path) do %>
-                <button class="ui blue compact labeled icon button">
+                <button class="ui purple compact labeled icon button">
                   Retour aux machines
                   <i class="arrow left icon"></i>
                 </button>
@@ -35,44 +41,158 @@
             </div>
           </div>
         </div>
+        <div class="card">
+          <div class="content">
+            <div class="header">
+              <%= t("history_machine") %>
+              <%= link_to new_machine_history_path(:machine => @machine.id), remote: true do %>
+                <button class="edit-card-button ui compact icon purple button">
+                  <i class="plus icon"></i>
+                </button>
+              <% end %>
+            </div>
+            <div class="meta">
+              <%= @machine.isKm ? t('km_usage') : t('hours') %>
+              <br>
+            </div>
+            <div class="description">
+              <table class="ui striped selectable table table-to-color">
+                <tbody>
+                <% @machine_history.each do |history| %>
+                  <tr>
+                    <td>
+                      <%= l(history.date) %>
+                    </td>
+                    <td>
+                      <%= history.amount %>
+                    </td>
+                    <td>
+                      <%= link_to edit_machine_history_path(history, :machine => @machine.id), remote: true do %>
+                        <%= image_tag("edit-icon.png", size: "15x15") %>
+                      <% end %>
+                      <%= link_to history, method: :delete, data: {confirm: t('confirm_delete')} do %>
+                        <%= image_tag("delete-icon.png", size: "15x15") %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <div class="header">
+              <%= t("oils") %>
+              <%= link_to edit_machine_path(@machine), remote: true do %>
+                <button class="edit-card-button ui compact icon purple button">
+                  <i class="edit icon"></i>
+                </button>
+              <% end %>
+              <br>
+            </div>
+            <div class="description">
+              <%= simple_format(@machine.oils_text) %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="machine-section">
-    <table class="ui striped selectable brown table table-to-color">
-      <h4>Clients possédant cette machine</h4>
+    <h4>
+      Marchandises d'entretien
+      <%= link_to(new_ware_path(maintenance: :true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
+        <button class="ui olive compact labeled icon button">
+          Ajouter une marchandise d'entretien
+          <i class="plus icon"></i>
+        </button>
+      <% end %>
+    </h4>
+
+    <table class="ui striped selectable olive table table-to-color">
       <thead class=thead-dark>
       <tr>
-        <th><%= t('Name') %>
+        <th class="four wide">
+          <%= t('ware_name') %>
         </th>
-        <th class="right aligned">
-          <%= t('hours') %>
+        <th class="three wide">
+          <%= t('provider_name') %>
         </th>
-        <th class="right aligned">
-          <%= t('km') %>
+        <th class="three wide">
+          <%= t('provider_invoice') %>
         </th>
-        <th></th>
+        <th class="four wide">
+          <%= t('comment') %>
+        </th>
+        <th class="two wide">
+        </th>
       </tr>
       </thead>
       <tbody>
-      <% unless @customers.any? %>
+      <% unless @maintenance_wares.any? %>
         <tr>
           <td class="center aligned" colspan="9">Aucune données à afficher</td>
         </tr>
       <% end %>
-      <% @customers.each do |customerLine| %>
-        <tr data-link="<%= edit_customer_machine_line_path(customerLine, :machine => @machine.id) %>">
-          <td><%= customerLine.customer.name %></td>
-          <td class="right aligned">
-            <%= customerLine.hours %>
+      <% @maintenance_wares.each do |ware| %>
+        <tr data-link="<%= edit_ware_path(ware) %>">
+          <td class="four wide">
+            <%= ware.ware_name %>
           </td>
-          <td class="right aligned">
-            <%= customerLine.km %>
+          <td class="three wide">
+            <%= ware.provider_name %>
           </td>
-          <td class="center aligned">
-            <%= link_to customerLine, method: :delete, data: {confirm: t('confirm_delete')} do %>
+          <td class="three wide">
+            <%= ware.provider_invoice %>
+          </td>
+          <td class="four wide">
+            <%= ware.comment %>
+          </td>
+          <td class="two wide">
+            <%= link_to edit_ware_path(ware, maintenance: :true), remote: true do %>
+              <%= image_tag("edit-icon.png", size: "30x30") %>
+            <% end %>
+            <%= link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do %>
               <%= image_tag("delete-icon.png", size: "30x30") %>
             <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <table class="ui striped selectable red table table-to-color">
+      <h4>Marchandises spécifiques à cette machine</h4>
+      <thead class=thead-dark>
+      <tr>
+        <th class="four wide">
+          <%= t('ware_name') %>
+        </th>
+        <th class="four wide right aligned">
+          <%= t('total_gross') %> (€)
+        </th>
+        <th class="four wide right aligned">
+          <%= t('total_cost') %> (€)
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% unless @wares.any? %>
+        <tr>
+          <td class="center aligned" colspan="9">Aucune données à afficher</td>
+        </tr>
+      <% end %>
+      <% @wares.each do |ware| %>
+        <tr data-link="<%= edit_ware_path(ware) %>">
+          <td class="four wide">
+            <%= ware.ware_name %>
+          </td>
+          <td class="four wide right aligned">
+            <%= number_with_precision ware.total_gross, :precision => 2 %>
+          </td>
+          <td class="four wide right aligned">
+            <%= number_with_precision ware.total_cost, :precision => 2 %>
           </td>
         </tr>
       <% end %>
@@ -82,12 +202,13 @@
       <h4>Projets concernant cette machine</h4>
       <thead class=thead-dark>
       <tr>
-        <th><%= t('Name') %>
+        <th class="four wide">
+          <%= t('Name') %>
         </th>
-        <th>
+        <th class="four wide">
           <%= t('date_locale') %>
         </th>
-        <th>
+        <th class="four wide">
           <%= t('customer') %>
         </th>
 
@@ -101,42 +222,14 @@
       <% end %>
       <% @projects.each do |project| %>
         <tr data-project="<%= project_path(project) %>">
-          <td><%= project.name %></td>
-          <td>
+          <td class="four wide">
+            <%= project.name %>
+          </td>
+          <td class="four wide">
             <%= l(project.date) %>
           </td>
-          <td>
+          <td class="four wide">
             <%= project.customer.name %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-    <table class="ui striped selectable red table table-to-color">
-      <h4>Marchandises spécifiques à cette machine</h4>
-      <thead class=thead-dark>
-      <tr>
-        <th><%= t('ware_name') %></th>
-        <th class="right aligned"><%= t('total_gross') %> (€)</th>
-        <th class="right aligned"><%= t('total_cost') %> (€)</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% unless @wares.any? %>
-        <tr>
-          <td class="center aligned" colspan="9">Aucune données à afficher</td>
-        </tr>
-      <% end %>
-      <% @wares.each do |ware| %>
-        <tr data-link="<%= edit_ware_path(ware) %>">
-          <td>
-            <%= ware.ware_name %>
-          </td>
-          <td class="right aligned">
-            <%= number_with_precision ware.total_gross, :precision => 2 %>
-          </td>
-          <td class="right aligned">
-            <%= number_with_precision ware.total_cost, :precision => 2 %>
           </td>
         </tr>
       <% end %>
@@ -146,7 +239,6 @@
 
   </div>
 </div>
-
 
 <div id="modal-window" class="ui modal">
   <div class="content">

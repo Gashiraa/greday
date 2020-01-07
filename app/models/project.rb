@@ -6,10 +6,11 @@ class Project < ApplicationRecord
 
   belongs_to :customer, optional: true
   belongs_to :invoice, optional: true
+  belongs_to :machine, optional: true
 
   has_one :quotation, dependent: :nullify
 
-  belongs_to :customer_machine_line, optional: true
+  belongs_to :customer, optional: true
 
   has_many :wares, dependent: :nullify
   has_many :services, dependent: :nullify

@@ -4,9 +4,11 @@
 
   .payment-notes {
     margin-top: 35px;
+
     h5 {
       text-align: center;
     }
+
     p {
       text-align: justify;
     }
@@ -187,7 +189,7 @@
       background: rgba(12, 84, 96, 0.63);
       color: white;
       display: inline;
-      padding:  0 0.5%;
+      padding: 0 0.5%;
     }
 
     .title-project-container {
@@ -337,13 +339,32 @@
     font-size: 18px;
   }
 
-  table { page-break-inside:auto }
-  tr    { page-break-inside:avoid; page-break-after:auto }
-  thead { display:table-header-group }
-  tfoot { display:table-footer-group }
+  table {
+    page-break-inside: auto
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto
+  }
+
+  thead {
+    display: table-header-group
+  }
+
+  tfoot {
+    display: table-footer-group
+  }
 
   .avoidbreak {
     break-inside: avoid;
     page-break-inside: avoid;
   }
+
+  .page-break {
+    display: block;
+    clear: both;
+    page-break-after: always;
+  }
+
 }

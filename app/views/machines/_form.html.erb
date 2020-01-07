@@ -14,7 +14,23 @@
       <% end %>
     </h2>
 
-    <div class="two fields">
+    <div class="three fields">
+
+      <div class="field">
+        <%= form.label t('customer'), class: '' %>
+        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'project_form_customer'} %>
+      </div>
+
+      <div class="field">
+        <div class="ui toggle checkbox">
+          <%= form.check_box :isKm %>
+          <%= form.label :isKm, t("km_usage") %>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="four fields">
 
       <div class="field">
         <%= form.label t('category') %>
@@ -25,9 +41,6 @@
         <%= form.label t('model') %>
         <%= form.text_field :model %>
       </div>
-    </div>
-
-    <div class="two fields">
 
       <div class="field">
         <%= form.label t('brand') %>
@@ -41,9 +54,23 @@
 
     </div>
 
-    <div class="field centered">
-        <%= form.submit t('create'), :class => "ui green button" %>
+    <div class="two fields">
+
+      <div class="field">
+        <%= form.label t('comment') %>
+        <%= form.text_area :comment, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
+
+      <div class="field">
+        <%= form.label t('oils') %>
+        <%= form.text_area :oils_text, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+      </div>
+
+    </div>
+
+    <div class="field centered">
+      <%= form.submit t('create'), :class => "ui green button" %>
+    </div>
   </div>
 
 <% end %>

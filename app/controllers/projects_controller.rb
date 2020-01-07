@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   def show
     @company = Company.first
     @project = scope.find(params[:id])
-    @machineLine = CustomerMachineLine.where(id: @project.customer_machine_line_id).first
+    @machine = Machine.where(id: @project.machine_id).first
     respond_to do |format|
       format.html
       format.pdf do
@@ -35,6 +35,32 @@ class ProjectsController < ApplicationController
                        template: 'layouts/pdf_footer.html.erb'
                    }
                }
+      end
+    end
+  end
+
+  def duplicate
+    respond_to do |format|
+      @clone = @project.dup
+      @clone.status = 0
+      @clone.date = Date.today
+      @clone.invoice_id = nil
+      @project.project_extra_lines.each do |project_extra_lines|
+        @clone.project_extra_lines.push(project_extra_lines.dup)
+      end
+      @project.services.each do |services|
+        @clone.services.push(services.dup)
+      end
+      @project.wares.each do |wares|
+        @clone.wares.push(wares.dup)
+      end
+
+      if @clone.save!
+        format.html { redirect_to project_path(@clone), notice: t('project_update_success') }
+        format.json { render :show, status: :ok, location: @project }
+      else
+        format.html { render :edit }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -118,7 +144,7 @@ class ProjectsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def project_params
-    params.require(:project).permit(:invoice_id, :quotation_id, :customer_id, :name, :status, :wielding, :machining, :karcher, :total, :total_gross, :date, :description, :no_vat, :customer_machine_line_id)
+    params.require(:project).permit(:invoice_id, :quotation_id, :customer_id, :name, :status, :wielding, :machining, :karcher, :total, :total_gross, :date, :description, :no_vat, :machine_id)
   end
 
 end

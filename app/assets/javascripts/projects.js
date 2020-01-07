@@ -24,18 +24,18 @@ $(document).on("turbolinks:load", function () {
             customer = $('#project_form_customer').children("option:selected").val();
         }
 
-        $("#project_customer_machine_line_id > option").each(function () {
+        $("#project_machine_id > option").each(function () {
             if (this.getAttribute("customer") === customer) {
                 this.style.display = "block";
-                $('#project_customer_machine_line_id').val(this.value);
+                // $('#project_machine_id').val(this.value);
             } else {
                 if (this.value !== "") {
                     this.style.display = "none";
-                    $("#project_customer_machine_line_id").prop('selectedIndex', -1)
+                    $("#project_machine_id").prop('selectedIndex', -1)
                 }
             }
         });
-        $('#project_customer_machine_line_id').trigger('change');
+        $('#project_machine_id').trigger('change');
     });
 
 

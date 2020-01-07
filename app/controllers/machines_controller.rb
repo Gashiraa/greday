@@ -11,10 +11,11 @@ class MachinesController < ApplicationController
   # GET /machines/1
   # GET /machines/1.json
   def show
-    @customers = CustomerMachineLine.where(machine_id: params[:id])
-
-    @search_projects = Project.where(customer_machine_line_id: @customers.ids).ransack(params[:q])
+    @search_projects = Project.where(machine_id: params[:id]).ransack(params[:q])
     @projects = @search_projects.result.paginate(page: params[:page], per_page: 10)
+
+    @machine_history = MachineHistory.order(date: :asc).where(machine_id: params[:id])
+    @maintenance_wares = Ware.where(machine_id: params[:id]).where(is_maintenance: true)
 
     @search_wares = Ware.where(project_id: @projects.ids).where(machine_specific: true).ransack(params[:q])
     @wares = @search_wares.result.paginate(page: params[:page], per_page: 10)
@@ -36,7 +37,7 @@ class MachinesController < ApplicationController
 
     respond_to do |format|
       if @machine.save
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('machine_add_success')}
+        format.html {redirect_to @machine, notice: t('machine_add_success')}
         format.json { render :show, status: :created, location: @machine }
       else
         format.html { render :new }
@@ -77,6 +78,6 @@ class MachinesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def machine_params
-      params.require(:machine).permit(:model, :brand, :year, :category)
+      params.require(:machine).permit(:model, :brand, :year, :category, :comment, :oils_text,:customer_id, :isKm)
     end
 end

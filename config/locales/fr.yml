@@ -227,6 +227,7 @@ fr:
       - ven
       - sam
     abbr_month_names:
+      -
       - jan.
       - fév.
       - mar.
@@ -248,11 +249,11 @@ fr:
       - vendredi
       - samedi
     formats:
-      input: '%d/%m/%Y'
-      default: '%d/%m/%Y'
-      long: '%e %B %Y'
-      short: '%e %b'
+      default: "%d/%m/%Y"
+      long: "%e %B %Y"
+      short: "%e %b"
     month_names:
+      -
       - janvier
       - février
       - mars
@@ -385,3 +386,13 @@ fr:
   expense_destroy_success: "Note de crédit supprimée avec succès"
   all_categories: "Toutes les catégories"
   total_invoiced: "Total facturé"
+  Date: "Date"
+  oils: "Huiles"
+  history_machine: "Historique machine"
+  amount: "Quantité"
+  editing_machine_history: "Edition d'historique machine"
+  creating_machine_history: "Création d'historique machine"
+  hours/km: "Heures/Km"
+  km_usage: "Fonctionnement en kilomètres"
+  editing_maintenance_wares: "Edition d'une marchandise de maintenance"
+  creating_maintenance_wares: "Création d'une marchandise de maintenance"

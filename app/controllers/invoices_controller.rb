@@ -27,7 +27,7 @@ class InvoicesController < ApplicationController
 
   def show
     @invoice = scope.find(params[:id])
-
+    @size = @invoice.get_size(@invoice)
     respond_to do |format|
       format.html
       format.pdf do

@@ -5,171 +5,212 @@
 <%= form_with(model: @ware, id: 'waresForm', html: {autocomplete: 'off'}) do |form| %>
   <div class="ui form">
 
-    <h2 class="centered">
-      <% if @ware.id %>
-        <%= t('editing_wares') %>
-      <% else %>
-        <%= t('creating_wares') %>
-      <% end %>
-    </h2>
+    <% if params[:maintenance] %>
 
-    <%= form.hidden_field :id, value: @ware.id || 0, id: "ware_id" %>
+      <h2 class="centered">
+        <% if @ware.id %>
+          <%= t('editing_maintenance_wares') %>
+        <% else %>
+          <%= t('creating_maintenance_wares') %>
+        <% end %>
+      </h2>
 
-    <div class="three fields">
+      <div class="three fields">
+        <div class="field">
+          <%= form.label t('ware_name') %>
+          <%= form.text_field :ware_name, {class: 'form-control', onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'} %>
+        </div>
 
-      <div class="field">
-        <%= form.label t('project') %>
-        <%= form.select :project_id, Project.all.map { |project| [
-            if project.customer
-              project.name + ' - ' + project.customer.name
-            else
-              project.name
-            end, project.id
-        ] }, {:include_blank => true}, {class: 'form-control', id: 'ware_form_project'} %>
-      </div>
-      <div class="field">
-        <%= form.label t('customer') %>
-        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'ware_form_customer'} %>
-      </div>
+        <div class="field">
+          <%= form.label t('provider_name') %>
+          <%= form.text_field :provider_name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+        </div>
 
-      <div class="field">
-        <%= form.label t('status') %>
-        <%= form.select :status, Ware.translated_statuses.map { |status| [status[0], status[1], {status: status[1]}] }, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'} %>
+        <div class="field">
+          <%= form.label t('provider_invoice') %>
+          <%= form.text_field :provider_invoice, class: "form-control", autocomplete: 'nope' %>
+        </div>
       </div>
 
-    </div>
-
-    <div class="three fields">
-      <div class="field">
-        <%= form.label t('ware_name') %>
-        <%= form.text_field :ware_name, {class: 'form-control', onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'} %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('provider_name') %>
-        <%= form.text_field :provider_name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('provider_invoice') %>
-        <%= form.text_field :provider_invoice, class: "form-control", autocomplete: 'nope' %>
-      </div>
-    </div>
-
-    <div class="ui segment">
       <div class="field">
         <%= form.label t('comment') %>
         <%= form.text_area :comment, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
       </div>
-      <div class="field">
-        <div class="ui toggle checkbox">
-          <%= form.check_box :show_desc_quot, class: "form-check-input", id: "show_desc_quot" %>
-          <%= form.label t('showInQuot'), class: "form-check-label", for: "show_desc_quot" %>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui toggle checkbox">
-          <%= form.check_box :show_desc_invoice, class: "form-check-input", id: "show_desc_invoice" %>
-          <%= form.label t('showInInv'), class: "form-check-label", for: "show_desc_invoice" %>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui toggle checkbox">
-          <%= form.check_box :machine_specific, class: "form-check-input", id: "machine_specific" %>
-          <%= form.label t('machineSpecific'), class: "form-check-label", for: "machine_specific" %>
-        </div>
-      </div>
-    </div>
 
-    <div class="three fields">
-      <div class="field">
-        <%= form.label t('provider_price') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">€</label>
-          <%= form.text_field :provider_price, class: "form-control", autocomplete: 'nope', id: 'provider_price' %>
-        </div>
+      <%= form.hidden_field(:is_maintenance, value: true) %>
+
+      <div class="field centered">
+        <%= form.submit t('create'), :class => "ui green button" %>
       </div>
 
-      <div class="field">
-        <%= form.label t('provider_discount') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">%</label>
-          <%= form.text_field :provider_discount, class: "form-control", autocomplete: 'nope', id: 'provider_discount' %>
+    <% else %>
+
+      <h2 class="centered">
+        <% if @ware.id %>
+          <%= t('editing_wares') %>
+        <% else %>
+          <%= t('creating_wares') %>
+        <% end %>
+      </h2>
+
+      <%= form.hidden_field :id, value: @ware.id || 0, id: "ware_id" %>
+
+      <div class="three fields">
+
+        <div class="field">
+          <%= form.label t('project') %>
+          <%= form.select :project_id, Project.all.map { |project| [
+              if project.customer
+                project.name + ' - ' + project.customer.name
+              else
+                project.name
+              end, project.id
+          ] }, {:include_blank => true}, {class: 'form-control', id: 'ware_form_project'} %>
         </div>
-      </div>
-
-      <div class="field">
-        <%= form.label t('bought_price') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">€</label>
-          <%= form.text_field :bought_price, class: "form-control", autocomplete: 'nope', readonly: true, id: 'bought_price' %>
+        <div class="field">
+          <%= form.label t('customer') %>
+          <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'ware_form_customer'} %>
         </div>
-      </div>
-    </div>
 
-    <div class="three fields">
-      <div class="field">
-        <%= form.label t('Quantity') %>
-        <%= form.number_field :quantity, step: :any, class: "form-control", :onclick => 'this.select();', autocomplete: 'nope', id: 'quantity', value: @ware.quantity || "1" %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('sell_price') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">€</label>
-          <%= form.text_field :sell_price, class: "form-control", autocomplete: 'nope', readonly: true, id: 'sell_price' %>
+        <div class="field">
+          <%= form.label t('status') %>
+          <%= form.select :status, Ware.translated_statuses.map { |status| [status[0], status[1], {status: status[1]}] }, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'} %>
         </div>
+
       </div>
 
-      <div class="field">
-        <%= form.label t('margin') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">%</label>
-          <%= form.text_field :margin, class: "form-control", autocomplete: 'nope', id: 'margin' %>
+      <div class="three fields">
+        <div class="field">
+          <%= form.label t('ware_name') %>
+          <%= form.text_field :ware_name, {class: 'form-control', onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'} %>
         </div>
-      </div>
-    </div>
 
-    <div class="three fields">
-      <div class="field">
-        <%= form.label t('tva_rate') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">%</label>
-          <%= form.text_field :tva_rate, value: @ware.tva_rate || '21', class: "form-control", autocomplete: 'nope', id: 'tva_rate' %>
+        <div class="field">
+          <%= form.label t('provider_name') %>
+          <%= form.text_field :provider_name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('provider_invoice') %>
+          <%= form.text_field :provider_invoice, class: "form-control", autocomplete: 'nope' %>
         </div>
       </div>
 
-      <div class="field">
-        <%= form.label t('gross_cost') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">€</label>
-          <%= form.text_field :total_gross, class: "form-control", autocomplete: 'nope', readonly: true, id: 'total_gross' %>
+      <div class="ui segment">
+        <div class="field">
+          <%= form.label t('comment') %>
+          <%= form.text_area :comment, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'nope' %>
+        </div>
+        <div class="field">
+          <div class="ui toggle checkbox">
+            <%= form.check_box :show_desc_quot, class: "form-check-input", id: "show_desc_quot" %>
+            <%= form.label t('showInQuot'), class: "form-check-label", for: "show_desc_quot" %>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui toggle checkbox">
+            <%= form.check_box :show_desc_invoice, class: "form-check-input", id: "show_desc_invoice" %>
+            <%= form.label t('showInInv'), class: "form-check-label", for: "show_desc_invoice" %>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui toggle checkbox">
+            <%= form.check_box :machine_specific, class: "form-check-input", id: "machine_specific" %>
+            <%= form.label t('machineSpecific'), class: "form-check-label", for: "machine_specific" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="three fields">
+        <div class="field">
+          <%= form.label t('provider_price') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">€</label>
+            <%= form.text_field :provider_price, class: "form-control", autocomplete: 'nope', id: 'provider_price' %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label t('provider_discount') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">%</label>
+            <%= form.text_field :provider_discount, class: "form-control", autocomplete: 'nope', id: 'provider_discount' %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label t('bought_price') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">€</label>
+            <%= form.text_field :bought_price, class: "form-control", autocomplete: 'nope', readonly: true, id: 'bought_price' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="three fields">
+        <div class="field">
+          <%= form.label t('Quantity') %>
+          <%= form.number_field :quantity, step: :any, class: "form-control", :onclick => 'this.select();', autocomplete: 'nope', id: 'quantity', value: @ware.quantity || "1" %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('sell_price') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">€</label>
+            <%= form.text_field :sell_price, class: "form-control", autocomplete: 'nope', readonly: true, id: 'sell_price' %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label t('margin') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">%</label>
+            <%= form.text_field :margin, class: "form-control", autocomplete: 'nope', id: 'margin' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="three fields">
+        <div class="field">
+          <%= form.label t('tva_rate') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">%</label>
+            <%= form.text_field :tva_rate, value: @ware.tva_rate || '21', class: "form-control", autocomplete: 'nope', id: 'tva_rate' %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label t('gross_cost') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">€</label>
+            <%= form.text_field :total_gross, class: "form-control", autocomplete: 'nope', readonly: true, id: 'total_gross' %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label t('total_cost') %>
+          <div class="ui labeled input">
+            <label for="amount" class="ui label">€</label>
+            <%= form.text_field :total_cost, class: "form-control", autocomplete: 'nope', readonly: true, id: 'total_cost' %>
+          </div>
         </div>
       </div>
 
       <div class="field">
-        <%= form.label t('total_cost') %>
-        <div class="ui labeled input">
-          <label for="amount" class="ui label">€</label>
-          <%= form.text_field :total_cost, class: "form-control", autocomplete: 'nope', readonly: true, id: 'total_cost' %>
+        <div class="centered">
+          <%= form.submit t('create'),
+                          :class => "ui green button",
+                          data:
+                              if @ware
+                                if @ware.invoice or @ware.project&.invoice
+                                  {confirm: t('ware_already_invoiced')}
+                                elsif @ware.translated_status == "A facturer"
+                                  {confirm: t('ware_ready_invoiced')}
+                                end
+                              elsif {}
+                              end %>
         </div>
       </div>
-    </div>
-
-    <div class="field">
-      <div class="centered">
-        <%= form.submit t('create'),
-                        :class => "ui green button",
-                        data:
-                            if @ware
-                              if @ware.invoice or @ware.project&.invoice
-                                {confirm: t('ware_already_invoiced')}
-                              elsif @ware.translated_status == "A facturer"
-                                {confirm: t('ware_ready_invoiced')}
-                              end
-                            elsif {}
-                            end %>
       </div>
-    </div>
-  </div>
+    <% end %>
 <% end %>

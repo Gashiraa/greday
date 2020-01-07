@@ -1,23 +1,25 @@
 <%= search_form_for @search do |form| %>
   <div class="ui form">
-    <div class="six fields">
-      <div class="two wide field add-button">
-        <%= link_to t('create_new_machine'), new_machine_path, {class: 'ui purple button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
-      </div>
+    <div class="ui segment">
+      <div class="fields">
+        <div class="two wide field add-button">
+          <%= link_to t('create_new_machine'), new_machine_path, {class: 'ui purple button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+        </div>
 
-      <div class="field">
-        <%= form.label t('brand') %>
-        <%= form.select :brand_eq, Machine.pluck(:brand), {:include_blank => t('all_machines_brands')}, {class: 'form-control', id: 'machines_brand_sort', onchange: 'this.form.submit();'} %>
-      </div>
+        <div class="two wide field">
+          <%= form.label t('brand') %>
+          <%= form.select :brand_eq, Machine.pluck(:brand), {:include_blank => t('all_machines_brands')}, {class: 'form-control', id: 'machines_brand_sort', onchange: 'this.form.submit();'} %>
+        </div>
 
-      <div class="field">
-        <%= form.label t('category') %>
-        <%= form.select :category_eq, Machine.pluck(:category), {:include_blank => t('all_machines_categories')}, {class: 'form-control', id: 'machines_brand_sort', onchange: 'this.form.submit();'} %>
-      </div>
-      <div class="field clear-filter">
-        <%= link_to url_for + "?cancel_filter=true" do %>
-          <%= image_tag("clear-filter-icon.png", size: "30x30") %>
-        <% end %>
+        <div class="two wide field">
+          <%= form.label t('category') %>
+          <%= form.select :category_eq, Machine.pluck(:category), {:include_blank => t('all_machines_categories')}, {class: 'form-control', id: 'machines_brand_sort', onchange: 'this.form.submit();'} %>
+        </div>
+        <div class="field clear-filter">
+          <%= link_to url_for + "?cancel_filter=true" do %>
+            <%= image_tag("clear-filter-icon.png", size: "30x30") %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

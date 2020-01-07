@@ -1,23 +1,25 @@
 <%= search_form_for @search do |form| %>
   <div class="ui form">
-    <div class="six fields">
-      <div class="two wide field add-button">
-        <%= link_to t('create_new_customer'), new_customer_path, {class: 'ui brown button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
-      </div>
+    <div class="ui segment">
+      <div class="fields">
+        <div class="two wide field add-button">
+          <%= link_to t('create_new_customer'), new_customer_path, {class: 'ui brown button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+        </div>
 
-      <div class="field">
-        <%= form.label t('Name') %>
-        <%= form.select :name_eq, Customer.pluck(:name), {:include_blank => t('all_customer_names')}, {class: 'form-control', id: 'customer_form_name', onchange: 'this.form.submit();'} %>
-      </div>
+        <div class="two wide field">
+          <%= form.label t('Name') %>
+          <%= form.select :name_eq, Customer.pluck(:name), {:include_blank => t('all_customer_names')}, {class: 'form-control', id: 'customer_form_name', onchange: 'this.form.submit();'} %>
+        </div>
 
-      <div class="field">
-        <%= form.label t('locality') %>
-        <%= form.select :locality_eq, Customer.distinct.order(:locality).pluck(:locality), {:include_blank => t('all_customer_localities')}, {class: 'form-control', id: 'customer_form_locality', onchange: 'this.form.submit();'} %>
-      </div>
-      <div class="field clear-filter">
-        <%= link_to url_for + "?cancel_filter=true" do %>
-          <%= image_tag("clear-filter-icon.png", size: "30x30") %>
-        <% end %>
+        <div class="two wide field">
+          <%= form.label t('locality') %>
+          <%= form.select :locality_eq, Customer.distinct.order(:locality).pluck(:locality), {:include_blank => t('all_customer_localities')}, {class: 'form-control', id: 'customer_form_locality', onchange: 'this.form.submit();'} %>
+        </div>
+        <div class="field clear-filter">
+          <%= link_to url_for + "?cancel_filter=true" do %>
+            <%= image_tag("clear-filter-icon.png", size: "30x30") %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

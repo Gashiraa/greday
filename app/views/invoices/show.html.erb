@@ -12,7 +12,6 @@
         <div>thomas.greday@gmail.com</div>
         <div>TVA: BE0810.007.903</div>
       </div>
-
     </section>
 
     <section id="client-info">
@@ -61,7 +60,10 @@
           <%= "Wonck le, " + l(@invoice.date).to_s %>
     </span>
     <hr>
-
+    <% if @size > 20 %>
+      <div class="page-break">
+      </div>
+  <% end %>
     <% if @invoice.projects.any? %>
       <% @invoice.projects.each do |project| %>
         <section id="items" class="project">

@@ -29,13 +29,13 @@ class Invoice < ApplicationRecord
   end
 
   def do_total(projects, wares)
-    wares.collect {|w| w.valid? ? w.total_cost : 0}.sum +
-        projects.collect {|p| p.valid? ? p.total : 0}.sum
+    wares.collect { |w| w.valid? ? w.total_cost : 0 }.sum +
+        projects.collect { |p| p.valid? ? p.total : 0 }.sum
   end
 
   def do_total_gross(projects, wares)
-    wares.collect {|w| w.valid? ? w.total_gross : 0}.sum +
-        projects.collect {|p| p.valid? ? p.total_gross : 0}.sum
+    wares.collect { |w| w.valid? ? w.total_gross : 0 }.sum +
+        projects.collect { |p| p.valid? ? p.total_gross : 0 }.sum
   end
 
   def update_statuses_invoice(invoice)
@@ -69,6 +69,17 @@ class Invoice < ApplicationRecord
       project.wares.update(status: :invoiced)
       project.services.update(status: :invoiced)
     end
+  end
+
+  def get_size(invoice)
+    total = 0
+    invoice.projects.each do |project|
+      total += project.wares.count
+      total += project.services.count
+      total += project.project_extra_lines.count
+    end
+    total += invoice.wares.count
+    total += (invoice.projects.count * 6)
   end
 
 end

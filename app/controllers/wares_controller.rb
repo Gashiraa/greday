@@ -102,7 +102,7 @@ class WaresController < ApplicationController
                                  :status, :tva_rate, :total_cost, :total_gross,
                                  :provider_name, :provider_discount, :sell_price,
                                  :provider_invoice, :ware_name, :show_desc_quot,
-                                 :show_desc_invoice, :machine_specific)
+                                 :show_desc_invoice, :machine_specific, :is_maintenance)
   end
 
 end

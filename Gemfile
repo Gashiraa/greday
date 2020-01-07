@@ -74,5 +74,5 @@ gem 'fomantic-ui-sass'
 gem 'jquery-ui-themes'
 gem "will_paginate_semantic_ui"
 gem 'ransack_memory'
-
+gem 'haml'
 # gem 'mini_racer'

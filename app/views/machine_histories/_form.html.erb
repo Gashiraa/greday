@@ -1,0 +1,37 @@
+<div class="close">
+  <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
+</div>
+
+<%= form_with(model: @machine_history, local: true, id: "machinesForm") do |form| %>
+
+  <div class="ui form">
+
+    <h2 class="centered">
+      <% if @machine_history.id %>
+        <%= t('editing_machine_history') %>
+      <% else %>
+        <%= t('creating_machine_history') %>
+      <% end %>
+    </h2>
+
+    <div class="two fields">
+
+      <div class="field">
+        <%= form.label t('date_locale') %>
+        <%= form.text_field :date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", value: @machine_history.date ? l(@machine_history.date) : Time.zone.now.to_date.strftime("%d/%m/%Y") %>
+      </div>
+
+      <div class="field">
+        <%= form.label Machine.where(id: params[:machine]).first.isKm ? t("km_usage") : t("hours") %>
+        <%= form.text_field :amount %>
+      </div>
+    </div>
+
+    <%= form.hidden_field(:machine_id, value: params[:machine]) %>
+
+    <div class="field centered">
+      <%= form.submit t('create'), :class => "ui green button" %>
+    </div>
+  </div>
+
+<% end %>

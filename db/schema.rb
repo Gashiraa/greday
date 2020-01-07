@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_27_170133) do
+ActiveRecord::Schema.define(version: 2020_01_07_191740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,17 +33,6 @@ ActiveRecord::Schema.define(version: 2019_10_27_170133) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "short_name"
-  end
-
-  create_table "customer_machine_lines", force: :cascade do |t|
-    t.bigint "customer_id"
-    t.bigint "machine_id"
-    t.integer "hours"
-    t.integer "km"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_customer_machine_lines_on_customer_id"
-    t.index ["machine_id"], name: "index_customer_machine_lines_on_machine_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -83,6 +72,7 @@ ActiveRecord::Schema.define(version: 2019_10_27_170133) do
     t.datetime "updated_at", null: false
     t.float "tva_rate"
     t.string "category"
+    t.boolean "flag_delete"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -100,6 +90,15 @@ ActiveRecord::Schema.define(version: 2019_10_27_170133) do
     t.index ["payment_id"], name: "index_invoices_on_payment_id"
   end
 
+  create_table "machine_histories", force: :cascade do |t|
+    t.date "date"
+    t.integer "amount"
+    t.bigint "machine_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["machine_id"], name: "index_machine_histories_on_machine_id"
+  end
+
   create_table "machines", force: :cascade do |t|
     t.string "model"
     t.string "brand"
@@ -107,6 +106,12 @@ ActiveRecord::Schema.define(version: 2019_10_27_170133) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
+    t.bigint "customer_id"
+    t.text "comment"
+    t.string "serial"
+    t.text "oils_text"
+    t.boolean "isKm"
+    t.index ["customer_id"], name: "index_machines_on_customer_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -156,10 +161,10 @@ ActiveRecord::Schema.define(version: 2019_10_27_170133) do
     t.string "applicant"
     t.boolean "no_vat"
     t.text "comment"
-    t.bigint "customer_machine_line_id"
+    t.bigint "machine_id"
     t.index ["customer_id"], name: "index_projects_on_customer_id"
-    t.index ["customer_machine_line_id"], name: "index_projects_on_customer_machine_line_id"
     t.index ["invoice_id"], name: "index_projects_on_invoice_id"
+    t.index ["machine_id"], name: "index_projects_on_machine_id"
   end
 
   create_table "quotations", force: :cascade do |t|
@@ -230,27 +235,31 @@ ActiveRecord::Schema.define(version: 2019_10_27_170133) do
     t.boolean "show_desc_quot"
     t.boolean "show_desc_invoice"
     t.boolean "machine_specific"
+    t.boolean "is_maintenance"
+    t.bigint "machine_id"
     t.index ["customer_id"], name: "index_wares_on_customer_id"
     t.index ["invoice_id"], name: "index_wares_on_invoice_id"
+    t.index ["machine_id"], name: "index_wares_on_machine_id"
     t.index ["project_id"], name: "index_wares_on_project_id"
   end
 
-  add_foreign_key "customer_machine_lines", "customers"
-  add_foreign_key "customer_machine_lines", "machines"
   add_foreign_key "expense_accounts", "customers"
   add_foreign_key "expense_accounts", "invoices"
   add_foreign_key "invoices", "customers"
   add_foreign_key "invoices", "payments"
+  add_foreign_key "machine_histories", "machines"
+  add_foreign_key "machines", "customers"
   add_foreign_key "payments", "customers"
   add_foreign_key "project_extra_lines", "extras"
   add_foreign_key "project_extra_lines", "projects"
-  add_foreign_key "projects", "customer_machine_lines"
   add_foreign_key "projects", "customers"
   add_foreign_key "projects", "invoices"
+  add_foreign_key "projects", "machines"
   add_foreign_key "quotations", "customers"
   add_foreign_key "quotations", "projects"
   add_foreign_key "services", "projects"
   add_foreign_key "wares", "customers"
   add_foreign_key "wares", "invoices"
+  add_foreign_key "wares", "machines"
   add_foreign_key "wares", "projects"
 end
