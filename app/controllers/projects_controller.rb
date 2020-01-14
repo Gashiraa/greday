@@ -3,11 +3,14 @@
 class ProjectsController < ApplicationController
 
   before_action :set_project, only: %i[show edit update destroy]
+  before_action :set_cache_headers
+
   load_and_authorize_resource
   # GET /projects
   # GET /projects.json
   def index
     @search = Project.order(date: :desc).ransack(params[:q])
+    @total =  @search.result(distinct: true)
     @projects = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
   end
 
@@ -17,6 +20,7 @@ class ProjectsController < ApplicationController
     @company = Company.first
     @project = scope.find(params[:id])
     @machine = Machine.where(id: @project.machine_id).first
+    @machine_history = MachineHistory.order(date: :asc).where(machine_id: @project.machine_id)
     respond_to do |format|
       format.html
       format.pdf do
@@ -137,6 +141,12 @@ class ProjectsController < ApplicationController
 
   private
 
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = Time.now
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_project
     @project = Project.find(params[:id])
@@ -144,7 +154,10 @@ class ProjectsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def project_params
-    params.require(:project).permit(:invoice_id, :quotation_id, :customer_id, :name, :status, :wielding, :machining, :karcher, :total, :total_gross, :date, :description, :no_vat, :machine_id)
+    params.require(:project).permit(:invoice_id, :quotation_id, :customer_id,
+                                    :name, :status, :wielding, :machining,
+                                    :karcher, :total, :total_gross, :date,
+                                    :description, :no_vat, :machine_id)
   end
 
 end

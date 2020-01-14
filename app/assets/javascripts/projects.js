@@ -42,4 +42,7 @@ $(document).on("turbolinks:load", function () {
     $('#project_form_customer').trigger({
         type: 'select2:select'
     });
+    $('.description-cell')
+        .popup()
+    ;
 });

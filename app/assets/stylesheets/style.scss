@@ -11,6 +11,7 @@
 
 .clear-filter {
   position: relative;
+
   img {
     position: absolute;
     bottom: 0.8rem;
@@ -34,6 +35,10 @@ img {
 
 .login {
   margin: 5% auto !important;
+}
+
+#hideable-field {
+  display: none;
 }
 
 #notice {
@@ -76,8 +81,9 @@ img {
 }
 
 .invoice-report-total {
+  position: absolute;
   text-align: right;
-
+  right: 0;
   h3 {
     margin-top: 0.4em;
   }

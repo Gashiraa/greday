@@ -28,7 +28,7 @@
     <th class="three wide center aligned">
       <%= sort_link(@search, :category, t('category')) %>
     </th>
-    <th class="two wide center aligned">
+    <th class="one wide center aligned">
       <%= sort_link(@search, :unit, t('unit')) %>
     </th>
     <th class="two wide right aligned">
@@ -37,7 +37,7 @@
     <th class="two wide right aligned">
       <%= sort_link(@search, :tva_rate, t('tva_rate')) %>
     </th>
-    <th class="two wide"></th>
+    <th class="three wide center aligned"></th>
   </tr>
   </thead>
 
@@ -47,30 +47,30 @@
       <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
     </tr>
   <% end %>
-  <% @extras.each do |extra| %>
+  <% @extras.where(delete_flag: nil).each do |extra| %>
     <tr>
       <td>
         <%= extra.name %>
       </td>
-      <td class="center aligned">
+      <td class="five wide center aligned">
         <%= extra.category %>
       </td>
-      <td class="center aligned">
+      <td class="one wide center aligned">
         <%= extra.unit %>
       </td>
-      <td class="right aligned">
+      <td class="two wide right aligned">
         <%= extra.unit_price %>
       </td>
-      <td class="right aligned">
+      <td class="two wide right aligned">
         <%= extra.tva_rate %>
       </td>
-      <td class="center aligned">
+      <td class="three wide center aligned">
         <%= link_to edit_extra_path(extra), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
-        <%#= link_to extra, method: :delete, data: {confirm: t('confirm_delete')} do %>
-        <%#= image_tag("delete-icon.png", size: "30x30") %>
-        <%# end %>
+        <%= link_to extra_path(extra, extra: {delete_flag: true}), method: :put, data: {confirm: t('confirm_delete')} do %>
+          <%= image_tag("delete-icon.png", size: "30x30") %>
+        <% end %>
       </td>
     </tr>
   <% end %>

@@ -103,6 +103,13 @@ $(document).on("turbolinks:load", function () {
             window.location = $(this).data("project")
         });
 
+        $("tr[data-invoice]").click(function () {
+            if (event.target.tagName === "IMG") {
+                return
+            }
+            window.open($(this).data("invoice"), $(this).data("target"));
+        });
+
         $(".card[data-machine]").click(function () {
             if (event.target.tagName === "IMG") {
                 return
@@ -141,6 +148,18 @@ $(document).on("turbolinks:load", function () {
         });
     }
 );
+
+function showHidden() {
+    let element = document.getElementById("hideable-field");
+    if (element) {
+        if (element.style.display === "none" || element.style.display === "") {
+            element.style.display = "block"
+        } else {
+            element.style.display = "none"
+        }
+    }
+}
+
 
 function autoFormatDatePicker(picker) {
     if (document.getElementById(picker)) {

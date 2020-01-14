@@ -6,39 +6,48 @@ ________________________________________________________________________________
 PROJETS
     ✓ Défilante dans les trois tableau projets/show
     ✓ Fixer la selection de machine automatique
-    Pouvoir encoder a chaque projet pour une machine + date jour
-        Finir historique heures avant
+    ✓ Pouvoir encoder a chaque projet pour une machine + date jour
     ✓ Champ catégorie + machine segment + heures actuelles
     ✓ Dupliquer projet
+    ✓ Marchandise sans prix => rouge
+    ✓ Prestations chronologique
+    ✓ Total projet affiché
 GLOBAL
     ✓ Ajouter un bouton permettant de supprimer les filtres partout
     ✓ Surveiller comportements corbeille
     ✓ Ajuster les largeurs de colonnes PARTOUT
     ✓ Resultats recherche agencement ransack/select2
-    Description tooltip
-        Besoin de push plusview
+    ✓ Description tooltip
 MACHINES
     ✓ Ajuster vue machines/show (voir transparents)
     ✓ Historique heures machines
     ✓ Afficher un listing historique date/heures
     ✓ Afficher indication huiles
-    Ajuster le tri catégories unique
-        Finir machine avant
+    ✓ Ajuster le tri catégories unique
     ✓ Choix heures/km sur machine
-    Select2 catégorie machine
+    ✓ Select2 catégorie machine
     ✓ Ajuster marchandises d'entretien
+DEVIS
+    ✓ Les projets au statut de devis se suppriment ?
+    ✓ Désactiver la mise en page des devis pour voir les changements immédiatement
 DIVERS
     ✓ Verrouiller possiblité de modifier prix divers
     ✓ Verrouiller possiblité de supprimer divers
-    Divers supprimé sont seulement cachés
+    ✓ Divers supprimé sont seulement cachés
     ✓ Ajouter des filtres aux divers
-    Largeur colonnes
+    ✓ Largeur colonnes
 CLIENT
     Faire une vue customer/show (voir transparents)
     Prestation : projet + client, ajouter détails heures
 FACTURES
-    Recapitulatif factures si x lignes -> switch                => Demander détail de ce qu'il veut dedans
-    ✓ Bloc pied de page                                         => Pas possible, doit aller sur une page seule
+    ✓ Ordre projets chronologique
+    ✓ Recapitulatif factures si x lignes -> switch
+    ✓ Bloc pied de page
+    ✓ Clic ligne rentrer dans PDF
+    ✓ Afficher numéro projet dans encodage facture
+    ✓ Afficher/macsquer total facturé
+MARCHANDISES
+    ✓ Pouvoir encoder un nombre flottant en quantité
 
 ________________________________________________________________________________________________________________________
 

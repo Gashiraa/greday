@@ -14,6 +14,12 @@
     }
   }
 
+  .payment-compact {
+    position: absolute;
+    top: 1100px;
+    width: 100%;
+  }
+
   ol, ul {
     list-style: none;
   }
@@ -182,7 +188,7 @@
     }
   }
 
-  #items {
+  .items {
     margin: 5px 5px 0 5px;
 
     .title-project {
@@ -198,6 +204,11 @@
 
     p {
       text-align: justify;
+    }
+
+    .compact td, .compact th {
+      padding: 10px 5px;
+      font-size: medium;
     }
 
     table {

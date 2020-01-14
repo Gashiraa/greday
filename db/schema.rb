@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_191740) do
+ActiveRecord::Schema.define(version: 2020_01_14_122921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_191740) do
     t.float "tva_rate"
     t.string "category"
     t.boolean "flag_delete"
+    t.boolean "delete_flag"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -217,7 +218,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_191740) do
     t.bigint "customer_id"
     t.string "ware_name"
     t.text "comment"
-    t.integer "quantity"
+    t.float "quantity"
     t.float "provider_discount"
     t.float "margin"
     t.float "provider_price"

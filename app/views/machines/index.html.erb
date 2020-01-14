@@ -13,7 +13,7 @@
 
         <div class="two wide field">
           <%= form.label t('category') %>
-          <%= form.select :category_eq, Machine.pluck(:category), {:include_blank => t('all_machines_categories')}, {class: 'form-control', id: 'machines_brand_sort', onchange: 'this.form.submit();'} %>
+          <%= form.select :category_eq, Machine.distinct.pluck(:category), {:include_blank => t('all_machines_categories')}, {class: 'form-control', id: 'machines_brand_sort', onchange: 'this.form.submit();'} %>
         </div>
         <div class="field clear-filter">
           <%= link_to url_for + "?cancel_filter=true" do %>

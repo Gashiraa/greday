@@ -76,6 +76,6 @@ class ExtrasController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def extra_params
-    params.require(:extra).permit(:name, :unit, :category, :unit_price, :tva_rate)
+    params.require(:extra).permit(:name, :unit, :category, :unit_price, :tva_rate, :delete_flag)
   end
 end

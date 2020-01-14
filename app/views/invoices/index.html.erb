@@ -35,10 +35,10 @@
           <% end %>
         </div>
         <div class="field invoice-report-total">
-          <h5 class="ui small green compact button">
+          <h5 class="ui small green compact button" onclick="showHidden();">
             <%= t('total_invoiced') %>
           </h5>
-          <h3>
+          <h3 id="hideable-field">
             <%= @total.collect { |w| w.valid? ? w.total_gross : 0 }.sum %> €
           </h3>
         </div>
@@ -78,7 +78,7 @@
     </tr>
   <% end %>
   <% @invoices.each do |invoice| %>
-    <tr>
+    <tr data-invoice="<%= invoice_path(invoice) %>.pdf" data-target="_blank">
       <td class="center aligned">
         <%= invoice.display_number %>
       </td>

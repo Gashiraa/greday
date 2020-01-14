@@ -5,7 +5,7 @@
 %div
   #example1.ui.segment.project-content
     .left.ui.rail{style: ""}
-      .ui.sticky
+      .ui
         .ui.cards
           .card
             .content
@@ -28,11 +28,6 @@
                 - if @project.no_vat
                   %b Pas de TVA
                 %br/
-            / <div class="content center aligned">
-            / <div class="description">
-            / <br>
-            / </div>
-            / </div>
             .content.center.aligned
               %p.center.aligned
                 = t('status')
@@ -99,6 +94,29 @@
                 .description
                   = @machine.comment
                   %br/
+              .content
+                .header
+                  = t("history_machine")
+                  = link_to new_machine_history_path(:machine => @machine.id), remote: true do
+                    %button.edit-card-button.ui.compact.icon.purple.button
+                      %i.plus.icon
+                .meta
+                  = @machine.isKm ? t('km_usage') : t('hours')
+                  %br/
+                .description
+                  %table.ui.striped.selectable.table.table-to-color
+                    %tbody
+                      - @machine_history.each do |history|
+                        %tr
+                          %td
+                            = l(history.date)
+                          %td
+                            = history.amount
+                          %td
+                            = link_to edit_machine_history_path(history, :machine => @machine.id), remote: true do
+                              = image_tag("edit-icon.png", size: "15x15")
+                            = link_to history, method: :delete, data: {confirm: t('confirm_delete')} do
+                              = image_tag("delete-icon.png", size: "15x15")
     -#----[SERVICES]----
     .project-section
       %h3
@@ -128,7 +146,7 @@
             %tr
               %td.center.aligned{colspan: "9"} Aucune données à afficher
           .scrollable-project-section
-            - @project.services.each do |service|
+            - @project.services.order(date: :asc).each do |service|
               %tr{"data-link" => "#{edit_service_path(service)}"}
                 %td= service.name
                 = tag.td class: 'center aligned status-cell', status: service.status do
@@ -191,22 +209,40 @@
               %tr
                 %td.center.aligned{colspan: "9"} Aucune données à afficher
             - @project.wares.each do |ware|
-              %tr{"data-link" => "#{edit_ware_path(ware)}"}
-                %td
-                  = ware.ware_name
-                = tag.td class: 'center aligned status-cell', status: ware.status do
-                  %div
+              - if ware.total_gross > 0
+                %tr{"data-link" => "#{edit_ware_path(ware)}"}
+                  %td
+                    = ware.ware_name
+                    = tag.td class: 'center aligned status-cell', status: ware.status do
+                      %div
+                        %div
+                          = ware.translated_status
+                    %td.right.aligned
+                      = number_with_precision ware.total_gross, :precision => 2
+                    %td.right.aligned
+                      = number_with_precision ware.total_cost, :precision => 2
+                    %td.right.aligned
+                      = link_to edit_ware_path(ware), remote: true do
+                        = image_tag("edit-icon.png", size: "30x30")
+                      = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
+                        = image_tag("delete-icon.png", size: "30x30")
+              - else
+                %tr.negative{"data-link" => "#{edit_ware_path(ware)}"}
+                  %td
+                    = ware.ware_name
+                  = tag.td class: 'center aligned status-cell', status: ware.status do
                     %div
-                      = ware.translated_status
-                %td.right.aligned
-                  = number_with_precision ware.total_gross, :precision => 2
-                %td.right.aligned
-                  = number_with_precision ware.total_cost, :precision => 2
-                %td.right.aligned
-                  = link_to edit_ware_path(ware), remote: true do
-                    = image_tag("edit-icon.png", size: "30x30")
-                  = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
-                    = image_tag("delete-icon.png", size: "30x30")
+                      %div
+                        = ware.translated_status
+                  %td.right.aligned
+                    = number_with_precision ware.total_gross, :precision => 2
+                  %td.right.aligned
+                    = number_with_precision ware.total_cost, :precision => 2
+                  %td.right.aligned
+                    = link_to edit_ware_path(ware), remote: true do
+                      = image_tag("edit-icon.png", size: "30x30")
+                    = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
+                      = image_tag("delete-icon.png", size: "30x30")
       %table.ui.compact.table
         %tr
           %td.eleven.wide.right.aligned

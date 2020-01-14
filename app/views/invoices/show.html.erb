@@ -11,6 +11,7 @@
         <div>0479/26.44.17</div>
         <div>thomas.greday@gmail.com</div>
         <div>TVA: BE0810.007.903</div>
+        <div><%= @size %></div>
       </div>
     </section>
 
@@ -60,17 +61,71 @@
           <%= "Wonck le, " + l(@invoice.date).to_s %>
     </span>
     <hr>
-    <% if @size > 20 %>
+    <% if @size > 15 %>
+      <section class="items">
+        <div class="compact">
+          <div class="title-project-container">
+            <h4 class="title-project">Récapitulatif de la facture</h4>
+          </div>
+          <table class="table table-hover table-striped">
+            <tr>
+              <th class="name-cell"><%= t('Name') %></th>
+              <th class="quantity-cell"><%= t('date_locale') %></th>
+              <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
+            </tr>
+            <% if @invoice.projects.any? %>
+              <% @invoice.projects.order(date: :asc).each do |project| %>
+                <tr>
+                  <td class="name-cell"><%= project.name %></td>
+                  <td class="quantity-cell"><%= l(project.date) %></td>
+                  <td class="number-cell"><%= number_with_precision project.total_gross, :precision => 2 %></td>
+                </tr>
+              <% end %>
+              </table>
+            <% end %>
+            </div>
+      </section>
+      <section id="sums" class="avoidbreak">
+        <div class="clearfix"></div>
+        <table>
+          <tr class="amount-total">
+            <th>TOTAL HT (€)</th>
+            <td><%= number_with_precision @invoice.total_gross, :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>Total TVA (€)</th>
+            <td><%= # noinspection RubyArgumentParentheses
+                    number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>TOTAL TTC (€)</th>
+            <td class="invoice_total"><%= number_with_precision @invoice.total, :precision => 2 %></td>
+          </tr>
+        </table>
+        <div class="clearfix"></div>
+      </section>
+      <div class="payment-notes payment-compact avoidbreak">
+        <h5>
+          <%= t('invoice_account') %><b> BE47 0015 7715 0480</b>
+        </h5>
+        <h5>
+          Communication à mentionner sur votre virement
+          : <%= @invoice.display_number.to_s + " - " + l(@invoice.date).to_s %>
+        </h5>
+        <p>
+          <%= t('invoice_notice') %>
+        </p>
+      </div>
       <div class="page-break">
       </div>
-  <% end %>
+    <% end %>
     <% if @invoice.projects.any? %>
-      <% @invoice.projects.each do |project| %>
-        <section id="items" class="project">
+      <% @invoice.projects.order(date: :asc).each do |project| %>
+        <section class="items">
           <div class="title-project-container">
             <h4 class="title-project">Projet #<%= project.id %> : <%= project.name %></h4>
           </div>
-          <p><%= project.description %></p>
+          <p><%= project.description + " (" + l(project.date) + ")" %></p>
           <div class="avoidbreak">
             <% if project.services.any? %>
               <table class="table table-hover table-striped">
@@ -242,37 +297,39 @@
       <% end %>
     </section>
 
-    <section id="sums" class="avoidbreak">
+    <% if @size <= 15 %>
+      <section id="sums" class="avoidbreak">
+        <div class="clearfix"></div>
+        <table>
+          <tr class="amount-total">
+            <th>TOTAL HT (€)</th>
+            <td><%= number_with_precision @invoice.total_gross, :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>Total TVA (€)</th>
+            <td><%= # noinspection RubyArgumentParentheses
+                    number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2 %></td>
+          </tr>
+          <tr>
+            <th>TOTAL TTC (€)</th>
+            <td class="invoice_total"><%= number_with_precision @invoice.total, :precision => 2 %></td>
+          </tr>
+        </table>
+        <div class="clearfix"></div>
+      </section>
       <div class="clearfix"></div>
-      <table>
-        <tr class="amount-total">
-          <th>TOTAL HT (€)</th>
-          <td><%= number_with_precision @invoice.total_gross, :precision => 2 %></td>
-        </tr>
-        <tr>
-          <th>Total TVA (€)</th>
-          <td><%= # noinspection RubyArgumentParentheses
-                  number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2 %></td>
-        </tr>
-        <tr>
-          <th>TOTAL TTC (€)</th>
-          <td class="invoice_total"><%= number_with_precision @invoice.total, :precision => 2 %></td>
-        </tr>
-      </table>
-      <div class="clearfix"></div>
-    </section>
-    <div class="clearfix"></div>
-    <div class="payment-notes avoidbreak">
-      <h5>
-        <%= t('invoice_account') %><b> BE47 0015 7715 0480</b>
-      </h5>
-      <h5>
-        Communication à mentionner sur votre virement
-        : <%= @invoice.display_number.to_s + " - " + l(@invoice.date).to_s %>
-      </h5>
-      <p>
-        <%= t('invoice_notice') %>
-      </p>
+      <div class="payment-notes avoidbreak">
+        <h5>
+          <%= t('invoice_account') %><b> BE47 0015 7715 0480</b>
+        </h5>
+        <h5>
+          Communication à mentionner sur votre virement
+          : <%= @invoice.display_number.to_s + " - " + l(@invoice.date).to_s %>
+        </h5>
+        <p>
+          <%= t('invoice_notice') %>
+        </p>
+    <% end %>
     </div>
   </div>
 </div>

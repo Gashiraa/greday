@@ -18,7 +18,7 @@
 
       <div class="field">
         <%= form.label t('customer'), class: '' %>
-        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'project_form_customer'} %>
+        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {id: 'project_form_customer'} %>
       </div>
 
       <div class="field">
@@ -34,7 +34,7 @@
 
       <div class="field">
         <%= form.label t('category') %>
-        <%= form.text_field :category %>
+        <%= form.select :category, Machine.distinct.pluck(:category), {:include_blank => true}, {id: 'machine_form_category'} %>
       </div>
 
       <div class="field">

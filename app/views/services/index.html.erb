@@ -36,7 +36,7 @@
     <th class="three wide">
       <%= sort_link(@search, :name, t('description')) %>
     </th>
-    <th class="three wide">
+    <th class="two wide">
       <%= sort_link(@search, :comment, t('comment')) %>
     </th>
     <th class="two wide center aligned">
@@ -57,7 +57,7 @@
     <th class="one wide right aligned">
       <%= sort_link(@search, :total_cost, t('total_cost').to_s + ' (€)') %>
     </th>
-    <th class="one wide"></th>
+    <th class="two wide"></th>
   </tr>
   </thead>
 
@@ -69,38 +69,38 @@
   <% end %>
   <% @services.each do |service| %>
     <tr>
-      <td class="center aligned">
+      <td class="one wide center aligned">
         <%= service.project ? (link_to '#' + service.project.id.to_s, project_path(service.project.id), class: 'ui grey button') : '' %>
       </td>
-      <td>
-        <%= service.name %>
-      </td>
-      <td>
-        <%= service.comment %>
-      </td>
-      <%= tag.td class: 'center aligned status-cell', status: service.status do %>
+      <%= tag.td class: "three wide description-cell", data: {content: service.name} do %>
+        <%= service.name.truncate(50) %>
+      <% end %>
+      <%= tag.td class: "two wide description-cell", data: {content: service.comment} do %>
+        <%= service.comment.truncate(30) %>
+      <% end %>
+      <%= tag.td class: 'two wide center aligned status-cell', status: service.status do %>
         <div>
           <div>
             <%= service.translated_status %>
           </div>
         </div>
       <% end %>
-      <td class="center aligned">
+      <td class="one wide center aligned">
         <%= l(service.date) %>
       </td>
-      <td class="center aligned">
+      <td class="two wide center aligned">
         <%= service.hourly_rate %>
       </td>
-      <td class="center aligned">
+      <td class="one wide center aligned">
         <%= service.duration.strftime('%H:%M') %>
       </td>
-      <td class="right aligned">
+      <td class="one wide right aligned">
         <%= number_with_precision service.tva_rate, :precision => 2 %>
       </td>
-      <td class="right aligned">
+      <td class="one wide right aligned">
         <%= number_with_precision service.total_cost, :precision => 2 %>
       </td>
-      <td class="center aligned">
+      <td class="two wide center aligned">
         <%= link_to edit_service_path(service), remote: true do %>
           <%= image_tag("edit-icon.png", size: "30x30") %>
         <% end %>
