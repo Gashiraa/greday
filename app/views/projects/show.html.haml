@@ -3,7 +3,7 @@
 #project-no-vat{"data-somedata" => "#{@project.no_vat}"}
 #customer-rate{"data-somedata" => "#{@project.customer.customer_rate}"}
 %div
-  #example1.ui.segment.project-content
+  .ui.segment.project-content
     .left.ui.rail{style: ""}
       .ui
         .ui.cards
@@ -130,11 +130,14 @@
           %thead.thead-dark
             %tr
               %th= t('Name')
-              %th= t('status')
+              %th.center.aligned
+                = t('status')
               %th.center.aligned
                 = t('Date')
               %th.right.aligned
                 = t('hourly_rate').to_s
+              %th.right.aligned
+                = t('duration').to_s
               %th.two.wide.right.aligned
                 = t('total_gross')
                 (€)
@@ -157,6 +160,8 @@
                   = service.date ? l(service.date) : ""
                 %td.right.aligned
                   = number_with_precision service.hourly_rate, :precision => 2
+                %td.right.aligned
+                  = service.duration.strftime('%H:%M')
                 %td.right.aligned
                   = number_with_precision service.total_gross, :precision => 2
                 %td.right.aligned

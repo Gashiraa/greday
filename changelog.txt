@@ -48,6 +48,7 @@ FACTURES
     ✓ Afficher/macsquer total facturé
 MARCHANDISES
     ✓ Pouvoir encoder un nombre flottant en quantité
+PRESTATIONS
 
 ________________________________________________________________________________________________________________________
 

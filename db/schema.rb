@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_14_122921) do
+ActiveRecord::Schema.define(version: 2020_01_20_115212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,8 @@ ActiveRecord::Schema.define(version: 2020_01_14_122921) do
     t.datetime "updated_at", null: false
     t.boolean "isAdmin"
     t.string "locale"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -259,6 +261,7 @@ ActiveRecord::Schema.define(version: 2020_01_14_122921) do
   add_foreign_key "quotations", "customers"
   add_foreign_key "quotations", "projects"
   add_foreign_key "services", "projects"
+  add_foreign_key "users", "companies"
   add_foreign_key "wares", "customers"
   add_foreign_key "wares", "invoices"
   add_foreign_key "wares", "machines"

@@ -1,1 +1,0 @@
-$(document).on("turbolinks:load",function(){$("#project_form_customer").select2({theme:"bootstrap",width:"100%",selectOnClose:!0,language:$(".locale").data("locale")}),$("#project-id").data("somedata")&&$("#invoice_form_projects").val([$("#project-id").data("somedata")])});

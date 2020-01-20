@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   end
 
   def company
-    @company = Company.first
+    @company = current_user.company
   end
 
 end

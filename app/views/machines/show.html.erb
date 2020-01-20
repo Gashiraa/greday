@@ -103,7 +103,7 @@
   <div class="machine-section">
     <h4>
       Marchandises d'entretien
-      <%= link_to(new_ware_path(maintenance: :true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
+      <%= link_to(new_ware_path(maintenance: :true, machine: @machine.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
         <button class="ui olive compact labeled icon button">
           Ajouter une marchandise d'entretien
           <i class="plus icon"></i>
@@ -121,7 +121,7 @@
           <%= t('provider_name') %>
         </th>
         <th class="three wide">
-          <%= t('provider_invoice') %>
+          <%= t('provider_reference') %>
         </th>
         <th class="four wide">
           <%= t('comment') %>

@@ -27,7 +27,7 @@
         </div>
 
         <div class="field">
-          <%= form.label t('provider_invoice') %>
+          <%= form.label t('provider_reference') %>
           <%= form.text_field :provider_invoice, class: "form-control", autocomplete: 'nope' %>
         </div>
       </div>
@@ -38,6 +38,7 @@
       </div>
 
       <%= form.hidden_field(:is_maintenance, value: true) %>
+      <%= form.hidden_field(:machine_id, value: params[:machine]) %>
 
       <div class="field centered">
         <%= form.submit t('create'), :class => "ui green button" %>
