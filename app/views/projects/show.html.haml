@@ -197,7 +197,7 @@
             Ajouter une marchandise
             %i.plus.icon
       .scrollable-project-section
-        %table.ui.striped.compact.selectable.violet.compact.table.table-to-color
+        %table.ui.compact.selectable.violet.compact.table.table-to-color
           %thead
             %tr
               %th= t('ware_name')
@@ -232,7 +232,7 @@
                       = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
                         = image_tag("delete-icon.png", size: "30x30")
               - else
-                %tr.negative{"data-link" => "#{edit_ware_path(ware)}"}
+                %tr.red-row{"data-link" => "#{edit_ware_path(ware)}"}
                   %td
                     = ware.ware_name
                   = tag.td class: 'center aligned status-cell', status: ware.status do

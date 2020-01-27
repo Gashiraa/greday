@@ -110,6 +110,13 @@ $(document).on("turbolinks:load", function () {
             window.open($(this).data("invoice"), $(this).data("target"));
         });
 
+        $(".card[data-customer]").click(function () {
+            if (event.target.tagName === "IMG") {
+                return
+            }
+            window.location = $(this).data("customer")
+        });
+
         $(".card[data-machine]").click(function () {
             if (event.target.tagName === "IMG") {
                 return

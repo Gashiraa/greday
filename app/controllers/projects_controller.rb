@@ -9,8 +9,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @search = Project.order(date: :desc).ransack(params[:q])
-    @total =  @search.result(distinct: true)
+    @search = Project.order(date: :desc).includes(:customer).ransack(params[:q])
+    @total =  @search.result(distinct: true).sum(:total_gross)
     @projects = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
   end
 

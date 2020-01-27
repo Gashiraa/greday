@@ -32,11 +32,11 @@ class ServicesController < ApplicationController
       if @service.save
         @service.project&.update_totals_project(@service.project)
         @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects, @service.project.invoice.wares)
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('service_add_success')}
-        format.json {render :show, status: :created, location: @service}
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_add_success') }
+        format.json { render :show, status: :created, location: @service }
       else
-        format.html {render :new}
-        format.json {render json: @service.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @service.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,11 +48,11 @@ class ServicesController < ApplicationController
       if @service.update(service_params)
         @service.project&.update_totals_project(@service.project)
         @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects, @service.project.invoice.wares)
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('service_update_success')}
-        format.json {render :show, status: :ok, location: @service}
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_update_success') }
+        format.json { render :show, status: :ok, location: @service }
       else
-        format.html {render :edit}
-        format.json {render json: @service.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @service.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -64,8 +64,8 @@ class ServicesController < ApplicationController
     @service.project&.update_totals_project(@service.project)
     @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects, @service.project.invoice.wares)
     respond_to do |format|
-      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('service_destroy_success')}
-      format.json {head :no_content}
+      format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_destroy_success') }
+      format.json { head :no_content }
     end
   end
 
@@ -79,6 +79,10 @@ class ServicesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
 
   def service_params
-    params.require(:service).permit(:project_id, :total_gross, :invoice_id, :customer_id, :quotation_id, :name, :comment, :hourly_rate, :coefficient, :date, :duration, :status, :tva_rate, :total_cost)
+    params.require(:service).permit(:project_id, :total_gross, :invoice_id,
+                                    :customer_id, :quotation_id, :name, :comment,
+                                    :hourly_rate, :coefficient, :date, :duration,
+                                    :status, :tva_rate, :total_cost, :start_time,
+                                    :end_time)
   end
 end

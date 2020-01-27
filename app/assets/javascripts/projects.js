@@ -10,7 +10,6 @@ $(document).on("turbolinks:load", function () {
     if ($('#project-id').data('somedata')) {
         $("#invoice_form_projects").val([$('#project-id').data('somedata')]);
         $('#project_form_customer').select2().trigger('select2:select');
-
     }
 
     //Auto sort and select machines based on customer

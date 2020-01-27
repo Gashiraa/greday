@@ -56,6 +56,38 @@ $(document).on("turbolinks:load", function () {
             }
         });
         $('select[id="service_form_project"]').trigger('change');
+
+        //Auto-calculate duration if start_time and end_time are non-empty
+        //Auto-lock duration fields if start_time or end_time are non-empty
+        $('#service_start_time_4i, #service_start_time_5i, #service_end_time_4i, #service_end_time_5i')
+            .on('keyup keypress change', function () {
+
+                let startTime4 = document.getElementById('service_start_time_4i');
+                let startTime5 = document.getElementById('service_start_time_5i');
+
+                let endTime4 = document.getElementById('service_end_time_4i');
+                let endTime5 = document.getElementById('service_end_time_5i');
+
+                let duration4 = document.getElementById('service_duration_4i');
+                let duration5 = document.getElementById('service_duration_5i');
+
+                let totalMinutesStart = (parseInt(startTime4.options[startTime4.selectedIndex].value) * 60)
+                    + parseInt(startTime5.options[startTime5.selectedIndex].value);
+                let totalMinutesEnd = (parseInt(endTime4.options[endTime4.selectedIndex].value) * 60)
+                    + parseInt(endTime5.options[endTime5.selectedIndex].value);
+
+                if (totalMinutesStart !== 0 || totalMinutesEnd !== 0) {
+                    duration4.value = "00";
+                    duration5.value = "00";
+
+                    let durationMinutes = totalMinutesEnd - totalMinutesStart;
+
+                    console.log(pad2(durationMinutes % 60));
+
+                    duration5.value = pad2((durationMinutes % 60));
+                    duration4.value = pad2((Math.floor(durationMinutes / 60)));
+                }
+            });
     }
 );
 
@@ -63,4 +95,8 @@ function changeStatusSelectService(status) {
     if (document.getElementById('service_id').value === "0") {
         $('#status_edit_select').val(status)
     }
+}
+
+function pad2(number) {
+    return (number < 10 ? '0' : '') + number
 }

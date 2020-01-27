@@ -13,4 +13,8 @@ $(document).on("turbolinks:load", function () {
         selectOnClose: true,
         language: $('.locale').data('locale')
     });
+
+    if ($('#customer-id').data('somedata')) {
+        $("#project_form_customer").val([$('#customer-id').data('somedata')]);
+    }
 });

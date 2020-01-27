@@ -36,7 +36,7 @@
             <%= t('total_projects') %>
           </h5>
           <h3 id="hideable-field">
-            <%= @total.collect { |w| w.valid? ? w.total_gross : 0 }.sum %> €
+            <%= @total %> €
           </h3>
         </div>
       </div>
@@ -87,7 +87,7 @@
       <td class="center aligned">
         <%= link_to '#' + project.id.to_s, project_path(project.id), class: 'ui grey button' %>
       </td>
-      <td><%= project.customer ? project.customer.name : nil %></td>
+      <td><%= project.customer  ? project.customer.name : nil %></td>
       <td><%= project.name %></td>
       <%= tag.td class: "description-cell", data: {content: project.description} do %>
         <%= project.description.truncate(165) %>

@@ -35,6 +35,12 @@ class ProjectExtraLinesController < ApplicationController
   def create
     @project_extra_line = ProjectExtraLine.new(project_extra_line_params)
 
+    # update linked project
+    @project_extra_line.project&.update_totals_project(@project_extra_line.project)
+
+    # update linked project's invoice
+    @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+
     respond_to do |format|
       if @project_extra_line.save
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_add_success')}
@@ -49,6 +55,13 @@ class ProjectExtraLinesController < ApplicationController
   # PATCH/PUT /project_extra_lines/1
   # PATCH/PUT /project_extra_lines/1.json
   def update
+
+    # update linked project
+    @project_extra_line.project&.update_totals_project(@project_extra_line.project)
+
+    # update linked project's invoice
+    @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+
     respond_to do |format|
       if @project_extra_line.update(project_extra_line_params)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_update_success')}
@@ -63,6 +76,12 @@ class ProjectExtraLinesController < ApplicationController
   # DELETE /project_extra_lines/1
   # DELETE /project_extra_lines/1.json
   def destroy
+    # update linked project
+    @project_extra_line.project&.update_totals_project(@project_extra_line.project)
+
+    # update linked project's invoice
+    @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+
     @project_extra_line.destroy
     respond_to do |format|
       format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_delete_success')}

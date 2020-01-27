@@ -22,17 +22,17 @@ class Project < ApplicationRecord
   translate_enum :status
 
   def update_totals_project(project)
-    project.update(total: total, total_gross: total_gross)
+    project.update(total: get_total, total_gross: get_total_gross)
   end
 
-  def total
+  def get_total
     wares.collect {|w| w.valid? ? w.total_cost : 0}.sum +
         services.collect {|s| s.valid? ? s.total_cost : 0}.sum +
         project_extra_lines.collect {|s| s.valid? ? s.total : 0}.sum
   end
 
-  def total_gross
-    wares.collect {|w| w.valid? ? w.total_gross : 0}.sum +
+  def get_total_gross
+       wares.collect {|w| w.valid? ? w.total_gross : 0}.sum +
         services.collect {|s| s.valid? ? s.total_gross : 0}.sum +
         project_extra_lines.collect {|s| s.valid? ? s.total_gross : 0}.sum
   end

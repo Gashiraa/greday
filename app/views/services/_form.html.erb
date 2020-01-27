@@ -37,6 +37,31 @@
       </div>
     </div>
 
+    <div class="ui horizontal segments">
+      <div class="ui segment">
+        <div class="fields">
+          <div class="inline field">
+            <%= form.label t('start_time') %>
+            <%= form.time_select :start_time, {default: {hour: 0, min: 0}, minute_step: 15}, autocomplete: 'off' %>
+          </div>
+
+          <div class="inline field">
+            <%= form.label t('end_time') %>
+            <%= form.time_select :end_time, {default: {hour: 0, min: 0}, minute_step: 15}, autocomplete: 'off' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui segment">
+
+        <div class="inline field">
+          <%= form.label t('duration') %>
+          <%= form.time_select :duration, {default: {hour: 1, min: 0}, minute_step: 15}, autocomplete: 'off' %>
+        </div>
+      </div>
+    </div>
+
+
     <div class="two fields">
 
       <div class="field">
@@ -48,15 +73,6 @@
         <%= form.label t('comment') %>
         <%= form.text_area :comment, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'off' %>
       </div>
-    </div>
-
-    <div class="three fields">
-
-      <div class="field">
-        <%= form.label t('duration') %>
-        <%= form.time_select :duration, {default: {hour: 1, min: 0}, minute_step: 15}, autocomplete: 'off' %>
-      </div>
-
     </div>
 
     <div class="four fields">

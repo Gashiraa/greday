@@ -16,18 +16,18 @@
     <div class="four fields">
 
       <div class="field">
-        <%= form.label t('Name') %>
-        <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", :required => true, autocomplete: 'nope' %>
-      </div>
-
-      <div class="field">
         <%= form.label t('customer'), class: '' %>
         <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'project_form_customer'} %>
       </div>
 
       <div class="field">
+        <%= form.label t('Name') %>
+        <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", :required => true, autocomplete: 'nope' %>
+      </div>
+
+      <div class="field">
         <%= form.label t('status') %>
-        <%= form.select :status, Project.translated_statuses.map { |status| [status[0], status[1]] }, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'} %>
+        <%= form.select :status, Project.translated_statuses.map { |status| [status[0], status[1]] }, {:include_blank => true, :selected => :in_progress}, {class: 'form-control', id: 'status_edit_select'} %>
       </div>
 
       <div class="field">

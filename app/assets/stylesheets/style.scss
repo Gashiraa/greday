@@ -25,6 +25,10 @@
   }
 }
 
+.red-row {
+  background-color: #ffbaba;
+}
+
 select {
   -webkit-appearance: none;
 }
@@ -84,6 +88,7 @@ img {
   position: absolute;
   text-align: right;
   right: 0;
+
   h3 {
     margin-top: 0.4em;
   }
