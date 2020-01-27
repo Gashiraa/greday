@@ -4,7 +4,7 @@ class WaresController < ApplicationController
   # GET /wares
   # GET /wares.json
   def index
-    @search = Ware.order(id: :desc).ransack(params[:q])
+    @search = Ware.order(id: :desc).includes(:customer).includes(:project).ransack(params[:q])
     @wares = @search.result.paginate(page: params[:page], per_page: 30)
   end
 

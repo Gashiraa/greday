@@ -20,7 +20,7 @@
             </div>
             <div class="description">
               <br>
-              <%= "TVA : " + (@customer.tva_record ? @customer.tva_record : "") %>
+              <%= "TVA : " + (@customer.tva_record ? @customer.tva_record.to_s : "") %>
               <br>
               <%= @customer.street.to_s + ', ' + @customer.number.to_s %>
               <br>
@@ -28,7 +28,7 @@
               <br>
               <%= @customer.country %>
               <br>
-              <%= "Taux horaire : " + (@customer.customer_rate ? @customer.customer_rate : "") %>
+              <%= "Taux horaire : " + (@customer.customer_rate ? @customer.customer_rate.to_s : "") %>
             </div>
           </div>
           <div class="content">
