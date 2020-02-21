@@ -1,0 +1,155 @@
+<div class="pdf">
+  <div id="container">
+    <section id="memo">
+      <div class="logo">
+        <%= wicked_pdf_image_tag "plusview.png" %>
+      </div>
+
+      <div class="company-info">
+        <div>
+          <%= @company.name %>
+        </div>
+        <div>
+          <%= "BE0693763596" %>
+        </div>
+        <div>
+          <%= @company.street %>
+        </div>
+        <div>
+          <%= @company.postcode %> <%= @company.locality %>
+        </div>
+        <div>
+          <%= @company.phone %>
+        </div>
+        <div>
+          <%= @company.email %>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="client-info">
+      <div>
+        <span>
+          <%= @project.customer.name %>
+        </span>
+      </div>
+      <div>
+        <span>
+          <%= @project.customer.street + ', ' + @project.customer.number.to_s %>
+        </span>
+      </div>
+      <div>
+        <span>
+          <%= @project.customer.cp.to_s + ' ' + @project.customer.locality %>
+        </span>
+      </div>
+      <div>
+        <% if @project.customer.tva_record %>
+        <span>
+          <%= "TVA : " + @project.customer.tva_record %>
+        </span>
+        <% end %>
+      </div>
+    </section>
+    <div class="clearfix"></div>
+
+    <section id="invoice-title-number">
+      <span id="quotation-title">Devis</span>
+      <div class="clearfix"></div>
+      <span id="quotation-number">
+      <h2>
+          <%= '#' + @project.id.to_s %>
+      </h2>
+      </span>
+      <div class="clearfix"></div>
+
+    </section>
+
+
+    <div class="clearfix"></div>
+    <span id="dateInvoice">
+          <%= "Roclenge le, " + l(@project.date).to_s %>
+    </span>
+    <hr>
+
+    <% if @project %>
+      <section id="items" class="project">
+        <div class="avoidbreak">
+
+          <div class="title-project-container">
+            <h4 class="title-project">Projet : <%= @project.name %></h4>
+          </div>
+          <p><%= @project.description %>
+            <br>
+            <%= t('PO') + ":" %>
+            <%= @project.po ? @project.po : "/" %>
+            <br>
+            <%= t('applicant') + ":" %>
+            <%= @project.applicant ? @project.applicant : "/" %>
+          </p>
+          <% if @project.project_extra_lines.any? %>
+            <h5><%= t('extra').pluralize %>
+            </h5>
+
+            <table class="table table-hover table-striped">
+              <thead class=thead-dark>
+              <tr>
+                <th class="name-cell"><%= t('Name') %></th>
+                <th class="quantity-cell"><%= t('quantity') %></th>
+                <th class="number-cell"><%= t('unit_price') + ' (€)' %></th>
+                <th class="number-cell"><%= t('tva_rate') + ' (%)' %></th>
+                <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @project.project_extra_lines.each do |project_extra_line| %>
+                <% if project_extra_line.is_manual %>
+                  <tr>
+                    <td class="name-cell"><%= project_extra_line.manual_name %></td>
+                    <td class="quantity-cell"><%= number_to_human(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.unit %></td>
+                    <td class="number-cell"><%= number_with_precision project_extra_line.manual_price, :precision => 2 %></td>
+                    <td class="number-cell"><%= number_with_precision project_extra_line.tva_rate, :precision => 2 %></td>
+                    <td class="number-cell"><%= number_with_precision project_extra_line.total_gross, :precision => 2 %></td>
+                  </tr>
+                <% else %>
+                  <tr>
+                    <td class="name-cell"><%= project_extra_line.extra.name %></td>
+                    <td class="quantity-cell"><%= number_to_human(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.extra.unit %></td>
+                    <td class="number-cell"><%= number_with_precision project_extra_line.extra.unit_price, :precision => 2 %></td>
+                    <td class="number-cell"><%= number_with_precision project_extra_line.tva_rate, :precision => 2 %></td>
+                    <td class="number-cell"><%= number_with_precision project_extra_line.total_gross, :precision => 2 %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+
+    <section id="sums" class="avoidbreak">
+      <div class="clearfix"></div>
+      <div class="clearfix"></div>
+      <table>
+        <tr class="amount-total">
+          <th>TOTAL HT (€)</th>
+          <td><%= number_with_precision @project.total_gross, :precision => 2 %></td>
+        </tr>
+        <tr data-hide-on-quote="true">
+          <th>Total TVA (€)</th>
+          <td><%= # noinspection RubyArgumentParentheses
+                  number_with_precision (@project.total - @project.total_gross), :precision => 2 %></td>
+        </tr>
+        <tr data-hide-on-quote="true">
+          <th>TOTAL TTC (€)</th>
+          <td><%= number_with_precision @project.total, :precision => 2 %></td>
+        </tr>
+      </table>
+      <div class="clearfix"></div>
+    </section>
+    <b class="tva-note"> <%= @project.comment %> </b>
+  </div>
+</div>

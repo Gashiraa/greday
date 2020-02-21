@@ -3,7 +3,9 @@ ________________________________________________________________________________
 
 [16/12- réunion atelier pour ajustement machines]
 
+
 PROJETS
+    ✓ Marquer plus le rouge ligne projet
     ✓ Défilante dans les trois tableau projets/show
     ✓ Fixer la selection de machine automatique
     ✓ Pouvoir encoder a chaque projet pour une machine + date jour
@@ -12,6 +14,9 @@ PROJETS
     ✓ Marchandise sans prix => rouge
     ✓ Prestations chronologique
     ✓ Total projet affiché
+    ✓ Projet directement en réalisation
+    ✓ Intervertir client et nom dans le formulaire
+    Nom projet, supprimer select2 => DEMANDER
 GLOBAL
     ✓ Ajouter un bouton permettant de supprimer les filtres partout
     ✓ Surveiller comportements corbeille
@@ -37,8 +42,7 @@ DIVERS
     ✓ Ajouter des filtres aux divers
     ✓ Largeur colonnes
 CLIENT
-    Faire une vue customer/show (voir transparents)
-    Prestation : projet + client, ajouter détails heures
+    ✓ Faire une vue customer/show (voir transparents)
 FACTURES
     ✓ Ordre projets chronologique
     ✓ Recapitulatif factures si x lignes -> switch
@@ -49,7 +53,7 @@ FACTURES
 MARCHANDISES
     ✓ Pouvoir encoder un nombre flottant en quantité
 PRESTATIONS
-
+    ✓ Encodage prestation deux champs début et fin
 ________________________________________________________________________________________________________________________
 
 --14/10--

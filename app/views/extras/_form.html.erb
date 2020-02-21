@@ -7,9 +7,9 @@
 
     <h2 class="centered">
       <% if @extra.id %>
-        <%= t('editing_extra') %>
+        <%= @company.use_articles == false ? t('creating_extra').pluralize : t('creating_article').pluralize %>
       <% else %>
-        <%= t('creating_extra') %>
+        <%= @company.use_articles == false ? t('editing_extra').pluralize : t('editing_article').pluralize %>
       <% end %>
     </h2>
 

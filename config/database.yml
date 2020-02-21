@@ -8,9 +8,8 @@ default: &default
 
 development:
   <<: *default
-  database: opto_dev
+  database: gescoop_prod
 
 production:
   <<: *default
-  database: greday
-
+  database: gescoop_prod

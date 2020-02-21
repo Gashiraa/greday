@@ -112,7 +112,20 @@ class InvoicesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def invoice_params
-    params.require(:invoice).permit(:payment_id, :date, :status, :total, :display_number, :customer_id, ware_ids: [], project_ids: [])
+    params.require(:invoice).permit(:payment_id, :date, :status, :total, :display_number, :customer_id, :project_ids, ware_ids: [], project_ids: [])
+  end
+
+  def get_next_invoice_number
+
+    max_number = Invoice.maximum("display_number") || 0
+    for i in 19057..max_number
+      if Invoice.exists?(display_number: i)
+        next
+      else
+        return i
+      end
+    end
+    return 1 + max_number
   end
 
 end

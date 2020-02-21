@@ -288,22 +288,22 @@
           .scrollable-project-section
             - @project.project_extra_lines.each do |project_extra_line|
               - if project_extra_line.is_manual
-                -#%tr{"data-link" => "#{edit_project_extra_line_path(project_extra_line)}"}
-                -#  %td
-                -#    = project_extra_line.manual_name
-                -#  %td.center.aligned
-                -#    = project_extra_line.unit
-                -#  %td.right.aligned
-                -#    = project_extra_line.quantity
-                -#  %td.right.aligned
-                -#    = number_with_precision project_extra_line.total_gross, :precision => 2
-                -#  %td.right.aligned
-                -#    = number_with_precision project_extra_line.total, :precision => 2
-                -#  %td.center.aligned
-                -#    = link_to "project_extra_lines/edit_manual/" + project_extra_line.id.to_s, remote: true do
-                -#      = image_tag("edit-icon.png", size: "30x30")
-                -#    = link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do
-                -#      = image_tag("delete-icon.png", size: "30x30")
+                %tr{"data-link" => "#{edit_project_extra_line_path(project_extra_line)}"}
+                  %td
+                    = project_extra_line.manual_name
+                  %td.center.aligned
+                    = project_extra_line.unit
+                  %td.right.aligned
+                    = project_extra_line.quantity
+                  %td.right.aligned
+                    = number_with_precision project_extra_line.total_gross, :precision => 2
+                  %td.right.aligned
+                    = number_with_precision project_extra_line.total, :precision => 2
+                  %td.center.aligned
+                    = link_to "project_extra_lines/edit_manual/" + project_extra_line.id.to_s, remote: true do
+                      = image_tag("edit-icon.png", size: "30x30")
+                    = link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do
+                      = image_tag("delete-icon.png", size: "30x30")
               - else
                 %tr{"data-link" => "#{edit_project_extra_line_path(project_extra_line)}"}
                   %td
@@ -332,11 +332,11 @@
             %td.right.aligned
               = t('total_gross') + ' : '
               %b
-                = (number_with_precision @project.project_extra_lines.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
+                = (number_with_precision @project.project_extra_lines.collect { |s| s.total_gross }.sum, :precision => 2).to_s + "€"
             %td.right.aligned
               = t('total') + ' : '
               %b
-                = (number_with_precision @project.project_extra_lines.collect { |s| s.valid? ? s.total : 0 }.sum, :precision => 2).to_s + "€"
+                = (number_with_precision @project.project_extra_lines.collect { |s| s.total }.sum, :precision => 2).to_s + "€"
             %td
 #modal-window.ui.modal
   .content

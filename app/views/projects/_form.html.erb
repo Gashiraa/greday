@@ -27,7 +27,7 @@
 
       <div class="field">
         <%= form.label t('status') %>
-        <%= form.select :status, Project.translated_statuses.map { |status| [status[0], status[1]] }, {:include_blank => true, :selected => :in_progress}, {class: 'form-control', id: 'status_edit_select'} %>
+        <%= form.select :status, Project.status_for_form, {:include_blank => true, :selected => :in_progress}, {class: 'form-control', id: 'status_edit_select'} %>
       </div>
 
       <div class="field">
@@ -60,15 +60,16 @@
 
     </div>
 
-    <div class="two fields">
+    <% if @company.use_machines %>
+      <div class="two fields">
 
-      <div class="field">
-        <%= form.label t('machine') %>
-        <%= form.select :machine_id, Machine.all.map { |machine| [machine.brand + " " + machine.model + " (" + machine.year + ")", machine.id, {customer: machine.customer_id}] },
-                        class: "form-control", :include_blank => true, :required => true, autocomplete: 'nope' %>
+        <div class="field">
+          <%= form.label t('machine') %>
+          <%= form.select :machine_id, Machine.all.map { |machine| [machine.brand + " " + machine.model + " (" + machine.year + ")", machine.id, {customer: machine.customer_id}] },
+                          class: "form-control", :include_blank => true, :required => true, autocomplete: 'nope' %>
+        </div>
       </div>
-    </div>
-
+    <% end %>
 
     <div class="field">
       <%= form.label t('description') %>

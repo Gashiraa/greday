@@ -73,13 +73,17 @@ class Invoice < ApplicationRecord
 
   def get_size(invoice)
     total = 0
-    invoice.projects.each do |project|
-      total += project.wares.count
-      total += project.services.count
-      total += project.project_extra_lines.count
+    if invoice.projects.count == 1
+      total = 0
+    else
+      invoice.projects.each do |project|
+        total += project.wares.count
+        total += project.services.count
+        total += project.project_extra_lines.count
+      end
+      total += invoice.wares.count
+      total += (invoice.projects.count * 6)
     end
-    total += invoice.wares.count
-    total += (invoice.projects.count * 6)
   end
 
 end

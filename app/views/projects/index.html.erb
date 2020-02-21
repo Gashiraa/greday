@@ -16,7 +16,7 @@
         </div>
         <div class="two wide field">
           <%= form.label t('status') %>
-          <%= form.select :status_eq, Project.statuses.map { |status| [t(status[0]), status[1].to_i, {status: status[0]}] }, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
+          <%= form.select :status_eq, Project.status_for_sort, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
         </div>
         <div class="two wide field">
           <%= form.label t('from') %>
@@ -87,7 +87,7 @@
       <td class="center aligned">
         <%= link_to '#' + project.id.to_s, project_path(project.id), class: 'ui grey button' %>
       </td>
-      <td><%= project.customer  ? project.customer.name : nil %></td>
+      <td><%= project.customer ? project.customer.name : nil %></td>
       <td><%= project.name %></td>
       <%= tag.td class: "description-cell", data: {content: project.description} do %>
         <%= project.description.truncate(165) %>

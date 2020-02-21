@@ -401,3 +401,8 @@ fr:
   start_time: "Heure de début"
   end_time: "Heure de fin"
   serial: "Numéro de série"
+  article: "Article"
+  creating_article: "Création d'article"
+  editing_article: "Edition d'article"
+  create_new_article: "Créer un nouvel article"
+  do_accepted: "Accepter"

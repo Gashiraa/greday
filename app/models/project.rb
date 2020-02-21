@@ -18,8 +18,44 @@ class Project < ApplicationRecord
   has_many :project_extra_lines, dependent: :nullify
   has_many :extra, through: :project_extra_lines
 
-  enum status: [:quotation, :in_progress, :done, :invoiced, :paid, :bin]
+  enum status: [:quotation, :in_progress, :done, :invoiced, :paid, :bin, :created, :accepted, :canceled]
   translate_enum :status
+
+  def self.set_company(company)
+    @company = company
+  end
+
+  def self.status_for_sort
+    if @company == "PLUSVIEW"
+      options = ["Accepté", 7, {status: "accepted"}],
+          ["Créé", 6, {status: "created"}],
+          ["Facturé", 3, {status: "invoiced"}],
+          ["Corbeille", 5, {status: "bin"}]
+    else
+      options = ["Devis", 0, {status: "quotation"}],
+          ["En réalisation", 1, {status: "in_progress"}],
+          ["Terminé", 2, {status: "done"}],
+          ["Facturé", 3, {status: "invoiced"}],
+          ["Payé", 4, {status: "paid"}],
+          ["Corbeille", 5, {status: "bin"}]
+    end
+  end
+
+  def self.status_for_form
+    if @company == "PLUSVIEW"
+      options = ["Accepté", "accepted", {status: "accepted"}],
+          ["Créé", "created", {status: "created"}],
+          ["Facturé", "invoiced", {status: "invoiced"}],
+          ["Corbeille", "bin", {status: "bin"}]
+    else
+      options = ["Devis", "quotation", {status: "quotation"}],
+          ["En réalisation", "in_progress", {status: "in_progress"}],
+          ["Terminé", "done", {status: "done"}],
+          ["Facturé", "invoiced", {status: "invoiced"}],
+          ["Payé", "paid", {status: "paid"}],
+          ["Corbeille", "bin", {status: "bin"}]
+    end
+  end
 
   def update_totals_project(project)
     project.update(total: get_total, total_gross: get_total_gross)

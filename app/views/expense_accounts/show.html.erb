@@ -146,7 +146,7 @@
               <% if project.project_extra_lines.any? %>
                 <table class="table table-hover table-striped">
                   <tr>
-                    <h5><%= t('extra').pluralize %>
+                    <h5><%= @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
                     </h5>
                   </tr>
                   <thead class=thead-dark>

@@ -2,7 +2,7 @@
   <div class="ui form">
     <div class="six fields">
       <div class="two wide field add-button">
-        <%= link_to t('create_new_extra'), new_extra_path, {class: 'ui yellow button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
+        <%= link_to @company.use_articles == false ? t('create_new_extra').pluralize : t('create_new_article').pluralize, new_extra_path, {class: 'ui yellow button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'} %>
       </div>
 
       <div class="field">

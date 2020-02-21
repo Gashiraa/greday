@@ -18,6 +18,7 @@ Rails.application.config.assets.precompile += %w( payments.js )
 Rails.application.config.assets.precompile += %w( customers.js )
 Rails.application.config.assets.precompile += ['pdf.scss']
 
+
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.

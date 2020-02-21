@@ -26,7 +26,7 @@
       </div>
 
       <div class="field">
-        <%= form.label t('extra') %>
+        <%= form.label @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
         <%= form.select(:extra_id, options_for_select(Extra.all.collect { |extra| [extra.name, extra.id, {category: extra.category}] }, selected: @project_extra_line.extra_id), {class: 'form-control', id: 'extra_edit_select', autocomplete: 'nope'}) %>
       </div>
 

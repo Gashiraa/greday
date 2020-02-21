@@ -3,8 +3,7 @@
 class ProjectsController < ApplicationController
 
   before_action :set_project, only: %i[show edit update destroy]
-  before_action :set_cache_headers
-
+  before_action :set_cache_headers, :set_company
   load_and_authorize_resource
   # GET /projects
   # GET /projects.json
@@ -19,8 +18,20 @@ class ProjectsController < ApplicationController
   def show
     @company = Company.first
     @project = scope.find(params[:id])
-    @machine = Machine.where(id: @project.machine_id).first
-    @machine_history = MachineHistory.order(date: :asc).where(machine_id: @project.machine_id)
+
+    if @company.use_machines
+      @machine = Machine.where(id: @project.machine_id).first
+      @machine_history = MachineHistory.order(date: :asc).where(machine_id: @project.machine_id)
+    end
+
+    if @company.short_name == "Greday"
+      show_greday
+    elsif @company.short_name == "PLUSVIEW"
+      show_plusview
+    end
+  end
+
+  def show_greday
     respond_to do |format|
       format.html
       format.pdf do

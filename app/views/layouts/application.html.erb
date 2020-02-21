@@ -33,7 +33,7 @@
 
       <a class="purple item" href="/machines"> <%= t('machines').capitalize %> </a>
 
-      <a class="yellow item" href="/extras"> <%= t('extras').capitalize %> </a>
+      <a class="yellow item" href="/extras"> <%= @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %> </a>
 
       <a class="olive dropdown item" href="/invoices"> <%= t('invoices').capitalize %> </a>
 
