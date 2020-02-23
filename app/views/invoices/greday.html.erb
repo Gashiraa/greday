@@ -155,6 +155,29 @@
               </table>
             <% end %>
           </div>
+        </section>
+        <div class="avoidbreak">
+          <% if project.services.any? %>
+            <div class="avoidbreak">
+              <section class="sub-total">
+                <table>
+                  <tr>
+                    <th>Total TVA prestations (€)</th>
+                    <td><%= number_with_precision (project.services.collect { |p| p.valid? ? p.total_cost : 0 }.sum - project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), :precision => 2 %> </td>
+                  </tr>
+                  <tr>
+                    <th>Total HT prestations (€)</th>
+                    <td><%= number_with_precision project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum, :precision => 2 %> </td>
+                  </tr>
+                </table>
+              </section>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+          <% end %>
+        </div>
+
+        <section class="items">
           <div class="avoidbreak">
             <% if project.wares.any? %>
               <table class="table table-hover table-striped">
@@ -172,7 +195,23 @@
                 </thead>
 
                 <tbody>
-                <% project.wares.each do |ware| %>
+                <% project.wares.where("total_gross = 0").each do |ware| %>
+                  <tr>
+                    <td class="name-cell"><%= ware.ware_name %></td>
+                    <td class="quantity-cell"><%= ware.quantity %></td>
+                    <td class="number-cell"><%= number_with_precision ware.sell_price, :precision => 2 %></td>
+                    <td class="number-cell"><%= number_with_precision ware.tva_rate, :precision => 2 %></td>
+                    <td class="number-cell"><%= number_with_precision ware.total_gross, :precision => 2 %></td>
+                  </tr>
+                  <% if ware.show_desc_invoice %>
+                    <tr>
+                      <td colspan="5">
+                        <%= simple_format(ware.comment) %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+                <% project.wares.where("total_gross > 0").each do |ware| %>
                   <tr>
                     <td class="name-cell"><%= ware.ware_name %></td>
                     <td class="quantity-cell"><%= ware.quantity %></td>
@@ -192,6 +231,29 @@
               </table>
             <% end %>
           </div>
+        </section>
+        <div class="avoidbreak">
+          <% if project.wares.any? %>
+            <div class="avoidbreak">
+              <section class="sub-total">
+                <table>
+                  <tr>
+                    <th>Total TVA marchandises (€)</th>
+                    <td><%= number_with_precision (project.wares.collect { |p| p.valid? ? p.total_cost : 0 }.sum - project.wares.collect { |p| p.valid? ? p.total_gross : 0 }.sum), :precision => 2 %></td>
+                  </tr>
+                  <tr>
+                    <th>TOTAL HT marchandises (€)</th>
+                    <td><%= number_with_precision project.wares.collect { |p| p.valid? ? p.total_gross : 0 }.sum, :precision => 2 %> </td>
+                  </tr>
+                </table>
+              </section>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+          <% end %>
+        </div>
+
+        <section class="items">
           <div class="avoidbreak">
             <% if project.project_extra_lines.any? %>
               <table class="table table-hover table-striped">
@@ -229,6 +291,26 @@
             <% end %>
           </div>
         </section>
+        <div class="avoidbreak">
+          <% if project.project_extra_lines.any? %>
+            <div class="avoidbreak">
+              <section class="sub-total">
+                <table>
+                  <tr>
+                    <th>Total TVA divers (€)</th>
+                    <td><%= number_with_precision (project.project_extra_lines.collect { |p| p.valid? ? p.total : 0 }.sum - project.project_extra_lines.collect { |p| p.valid? ? p.total_gross : 0 }.sum), :precision => 2 %></td>
+                  </tr>
+                  <tr>
+                    <th>TOTAL HT divers (€)</th>
+                    <td><%= number_with_precision project.project_extra_lines.collect { |p| p.valid? ? p.total_gross : 0 }.sum, :precision => 2 %> </td>
+                  </tr>
+                </table>
+              </section>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+          <% end %>
+        </div>
 
         <% unless @invoice.projects.length == 1 && @invoice.wares.length == 0 %>
           <div class="avoidbreak">
@@ -245,7 +327,6 @@
                 <tr>
                   <th><%= "TOTAL TTC PROJET (€)" %></th>
                   <td><%= number_with_precision project.total, :precision => 2 %></td>
-
                 </tr>
               </table>
             </section>
@@ -294,6 +375,7 @@
           <% end %>
           </tbody>
         </table>
+
       <% end %>
     </section>
 

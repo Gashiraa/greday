@@ -15,10 +15,12 @@
 
     <div class="four fields">
 
-      <div class="field">
-        <%= form.label t('invoice_number') %>
-        <%= form.collection_select :display_number, Invoice.all.order(display_number: :desc), :display_number, :display_number, {:include_blank => true}, {required: true, class: 'form-control', id: 'invoice_form_number'} %>
-      </div>
+      <% if @company.use_manual_invoice_number %>
+        <div class="field">
+          <%= form.label t('invoice_number') %>
+          <%= form.collection_select :display_number, Invoice.all.order(display_number: :desc), :display_number, :display_number, {:include_blank => true}, {required: true, class: 'form-control', id: 'invoice_form_number'} %>
+        </div>
+      <% end %>
 
       <div class="field">
         <%= form.label t('customer') %>
@@ -38,17 +40,21 @@
       </div>
     </div>
 
-    <div class="field">
-      <%= form.label t('projects_done').pluralize %>
-      <% if @invoice.id %>
-        <%= form.select(:project_ids, Project.where(status: :done)
-            .or(Project.where(invoice_id: @invoice.id))
-            .collect { |project| [project.name + ' (' + project.id.to_s + ')', project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', autocomplete: 'nope', :multiple => true}) %>
-      <% else %>
-        <%= form.select(:project_ids, Project.where(status: :done)
-            .collect { |project| [project.name, project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', autocomplete: 'nope', :multiple => true}) %>
-      <% end %>
-    </div>
+    <% if @company.oto_invoice == false %>
+      <div class="field">
+        <%= form.label t('projects_done').pluralize %>
+        <% if @invoice.id %>
+          <%= form.select(:project_ids, Project.where(status: :done)
+              .or(Project.where(invoice_id: @invoice.id))
+              .collect { |project| [project.name + ' (' + project.id.to_s + ')', project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', autocomplete: 'nope', :multiple => true}) %>
+        <% else %>
+          <%= form.select(:project_ids, Project.where(status: :done)
+              .collect { |project| [project.name, project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', autocomplete: 'nope', :multiple => true}) %>
+        <% end %>
+      </div>
+    <% else %>
+      <%= form.hidden_field :project_ids, :value => params[:project] %>
+    <% end %>
 
     <div class="field centered">
       <%= form.submit t('create'), :class => "ui green button", onclick: "setTimeout(function(){location.reload()}, 3000);", formtarget: "_blank" %>

@@ -195,25 +195,41 @@ function colorTable() {
 
 //Color picker based on status enum
 function assignColor(status) {
-    switch (status) {
-        case 'done' :
-        case 'not_assigned' :
-            return "red"; //RED
-        case 'in_progress' :
-        case 'assigned' :
-        case 'assigned_project' :
-        case 'assigned_customer' :
-            return "orange"; //ORANGE
-        case 'accepted' :
-        case 'sent' :
-        case 'created' :
-        case 'invoiced' :
-            return "yellow"; //YELLOW
-        case 'paid' :
-            return "green"; //GREEN
-        case 'quotation' :
-            return "teal"; //BLUE
-        default:
+    let company = $('#company-id').data('somedata');
+
+    if (company === 'PLUSVIEW') {
+        switch (status) {
+            case 'created' :
+                return "red"; //RED
+            case 'accepted' :
+            case 'sent' :
+                return "yellow"; //YELLOW
+            case 'invoiced' :
+            case 'paid' :
+                return "green"; //GREEN
+            default:
+        }
+    } else {
+        switch (status) {
+            case 'done' :
+            case 'not_assigned' :
+                return "red"; //RED
+            case 'in_progress' :
+            case 'assigned' :
+            case 'assigned_project' :
+            case 'assigned_customer' :
+                return "orange"; //ORANGE
+            case 'accepted' :
+            case 'sent' :
+            case 'created' :
+            case 'invoiced' :
+                return "yellow"; //YELLOW
+            case 'paid' :
+                return "green"; //GREEN
+            case 'quotation' :
+                return "teal"; //TEAL
+            default:
+        }
     }
 }
 

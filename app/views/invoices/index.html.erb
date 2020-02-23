@@ -94,9 +94,9 @@
             <%= invoice.translated_status %>
           </div>
           <% if invoice.status == "created" %>
-            <!--            <div class="hidden content">-->
-            <%#= link_to "Payé", id: invoice.id, controller: :invoices, action: :paid, method: :get %>
-            <!--            </div>-->
+                        <div class="hidden content">
+            <%= link_to "Payé", id: invoice.id, controller: :invoices, action: :paid, method: :get %>
+                        </div>
           <% end %>
         </div>
       <% end %>

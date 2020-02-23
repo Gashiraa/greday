@@ -32,7 +32,11 @@ Rails.application.routes.draw do
 
   get "/pages/:page" => "pages#show"
 
+  get 'invoices/paid/:id' => 'invoices#paid', as: :paid
   get 'projects/duplicate/:id' => 'projects#duplicate', as: :duplicate
   post 'projects/duplicate/:id' => 'projects#duplicate'
+
+  get '/projects/project_extra_lines/new_manual', to: 'project_extra_lines#new_manual'
+  get '/projects/project_extra_lines/edit_manual/:id', to: 'project_extra_lines#edit_manual'
 
 end

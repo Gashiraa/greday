@@ -1,0 +1,348 @@
+@import "bootstrap";
+
+.pdf {
+
+  ol, ul {
+    list-style: none;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  caption, th, td {
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle;
+  }
+
+  q, blockquote {
+    quotes: none;
+
+    q:before, q:after, blockquote:before, blockquote:after {
+      content: none;
+    }
+  }
+
+  a img {
+    border: none;
+  }
+
+  article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, summary {
+    display: block;
+  }
+
+  section {
+    display: flow-root;
+  }
+
+  .clearfix {
+    display: block;
+    clear: both;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  b, strong, .bold {
+    font-weight: bold;
+  }
+
+  #container {
+    font: normal 13px/1.4em 'Open Sans', Sans-serif;
+    margin: 0 auto;
+    min-height: 1158px;
+    background-size: 100% auto;
+    color: #5B6165;
+    position: relative;
+  }
+
+  #memo {
+    padding-top: 50px;
+    margin: 0 110px 0 30px;
+    height: 115px;
+
+    .logo {
+      float: left;
+      margin-right: 20px;
+
+      img {
+        height: 80px;
+        z-index: 100;
+        position: relative;
+      }
+    }
+
+    .company-info {
+      float: left;
+      text-align: left;
+
+      > div:first-child {
+        line-height: 1em;
+        font-weight: bold;
+        font-size: 22px;
+      }
+
+      span {
+        font-size: 11px;
+        display: inline-block;
+        min-width: 20px;
+      }
+    }
+
+    :after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+
+  .description {
+    margin-left: 3%;
+  }
+
+  #invoice-title-number {
+    font-weight: bold;
+    margin: 30px 0;
+
+    span {
+      line-height: 0.88em;
+      display: inline;
+      min-width: 20px;
+    }
+
+    #invoice-title, #quotation-title {
+      text-transform: uppercase;
+      padding: 0 40px 0 40px;
+      font-size: 40px;
+      color: white;
+      margin-left: 3%;
+    }
+
+    #invoice-title {
+      background: rgba(12, 84, 96, 0.70);
+    }
+
+    #quotation-title {
+      background: rgba(12, 84, 96, 0.70);
+    }
+
+    #quotation-number {
+      h2 {
+        margin-left: 8%;
+        margin-top: 1%;
+      }
+
+      font-size: 25px;
+      margin-top: 4vh;
+    }
+
+    #number {
+      h2 {
+        margin-left: 14%;
+        margin-top: 1%;
+      }
+
+      font-size: 25px;
+      margin-top: 4vh;
+    }
+  }
+
+  #client-info {
+    position: absolute;
+    float: left;
+    min-width: 220px;
+    top: 40mm;
+    left: 125mm;
+    font-size: 19px;
+  }
+
+  table {
+    th, table td {
+      vertical-align: top;
+      word-break: break-word;
+      word-wrap: break-word;
+    }
+  }
+
+  #items {
+    margin: 35px 30px 0 30px;
+
+    .title-project {
+      background: rgba(12, 84, 96, 0.70);
+      color: white;
+      display: inline;
+      padding: 0% 1.5%;
+    }
+
+    .title-project-container {
+      margin-bottom: 10px;
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    table {
+      table-layout: fixed;
+      border-collapse: separate;
+      width: 100%;
+      word-break: break-word;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+
+      th {
+        background: #4e555b;
+        font-weight: bold;
+        padding: 5px 8px;
+        color: white;
+        text-transform: uppercase;
+      }
+
+      td {
+        padding: 9px 8px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .name-cell {
+        width: 40%;
+        text-align: left;
+      }
+
+      .quantity-cell {
+        text-align: right;
+        width: 15%
+      }
+
+      .number-cell {
+        text-align: right;
+        width: 15%
+      }
+    }
+  }
+
+  .sums_project#sums {
+    margin: 25px 30px 0 0;
+    background: none;
+
+    tr:last-child th, table tr:last-child td {
+      font-size: 12px;
+      font-weight: bold;
+      color: #5B6165;
+    }
+
+    tr:last-child th, tr:last-child td {
+      font-size: 12px;
+    }
+
+    tr.amount-total th, tr.amount-total td {
+      font-size: 12px;
+    }
+
+    tr th, tr td {
+      min-width: 150px;
+      padding: 3px 8px;
+      text-align: right;
+      font-size: 12px;
+    }
+
+    tr th {
+      font-weight: normal;
+    }
+  }
+
+  #sums {
+    margin: 40px 30px 0 0;
+    z-index: 100;
+    position: relative;
+    background: url("total-stripe-turquoise.png") right bottom no-repeat;
+
+    table {
+      float: right;
+
+      tr th, tr td {
+        padding: 9px 8px;
+        text-align: right;
+      }
+
+      tr th {
+        font-weight: bold;
+        text-align: left;
+        margin-right: 35px;
+      }
+
+      tr.amount-total th {
+        text-transform: uppercase;
+      }
+
+      tr.amount-total th, tr.amount-total td {
+        font-size: 15px;
+        font-weight: bold;
+      }
+
+      tr:last-child th {
+        text-transform: uppercase;
+      }
+
+      tr:last-child th, tr:last-child td {
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        width: 80%;
+      }
+    }
+  }
+
+
+
+  #notes {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    h5 {
+      margin: 0;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    p {
+      text-align: center;
+      color: grey;
+      font-size: 14px;
+      margin-left: 65px;
+      margin-right: 65px;
+    }
+  }
+
+  #dateInvoice {
+    min-width: 30%;
+    position: fixed;
+    left: 70%;
+    top: 40px;
+    font-size: 18px;
+  }
+
+  .avoidbreak {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tva-note {
+    margin-right: 2rem;
+    margin-top: 1rem;
+    float: right;
+  }
+
+  .cg {
+    font-size: 11px;
+
+    p {
+      margin: 4px !important;
+    }
+  }
+
+}

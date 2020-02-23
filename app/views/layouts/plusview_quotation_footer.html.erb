@@ -1,0 +1,51 @@
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    h5 {
+      margin: 0;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    p {
+      color: grey;
+      text-align: center;
+      font-size: 15px;
+      margin-left: 65px;
+      margin-right: 65px;
+    }
+  </style>
+  <script>
+      function number_pages() {
+          var vars = {};
+          var x = document.location.search.substring(1).split('&');
+          for (var i in x) {
+              var z = x[i].split('=', 2);
+              vars[z[0]] = decodeURIComponent(z[1]);
+          }
+          var x = ['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+          for (var i in x) {
+              var y = document.getElementsByClassName(x[i]);
+              for (var j = 0; j < y.length; ++j) y[j].textContent = vars[x[i]];
+          }
+      }
+  </script>
+</head>
+<body onload="number_pages()">
+<section id="notes">
+  <p>
+    Pour plus d'information sur ce devis, vous pouvez nous contacter directement : philippe@plusview.be ou 0476 43 30
+    04.
+    <br>
+  </p>
+  <h5>
+    Nous vous remercions de votre confiance.
+
+  </h5>
+  <h5>
+    <span class="page"></span>/<span class="topage"></span>
+  </h5>
+</section>
+</body>
+</html>

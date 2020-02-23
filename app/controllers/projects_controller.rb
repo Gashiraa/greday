@@ -5,18 +5,23 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show edit update destroy]
   before_action :set_cache_headers, :set_company
   load_and_authorize_resource
+
+  def set_company
+    Project.set_company(@company.short_name)
+  end
+
   # GET /projects
   # GET /projects.json
   def index
     @search = Project.order(date: :desc).includes(:customer).ransack(params[:q])
-    @total =  @search.result(distinct: true).sum(:total_gross)
+    @total = @search.result(distinct: true).sum(:total_gross)
     @projects = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
   end
 
   # GET /projects/1
   # GET /projects/1.json
+
   def show
-    @company = Company.first
     @project = scope.find(params[:id])
 
     if @company.use_machines
@@ -38,17 +43,37 @@ class ProjectsController < ApplicationController
         render pdf: t('quotation') + "_#{@project.id}",
                page_size: 'A4',
                template: 'quotations/show.html.erb',
-               layout: 'pdf.html',
+               layout: 'greday_pdf',
                orientation: 'Portrait',
                encoding: 'utf8',
                lowquality: true,
                zoom: 1,
                dpi: 75,
-               margin: { bottom: 20 },
+               margin: {bottom: 20},
                footer: {
                    html: {
-                       template: 'layouts/pdf_footer.html.erb'
-                   }
+                       template: 'layouts/greday_footer.html.erb'
+                   },
+               }
+      end
+    end
+  end
+
+  def show_plusview
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "plusview sprl-devis" + @project.id.to_s,
+               page_size: 'A4',
+               template: 'quotations/plusview.html.erb',
+               layout: 'plusview_pdf',
+               encoding: 'utf8',
+               show_as_html: params.key?('debug'),
+               :margin => {:bottom => 20},
+               footer: {
+                   html: {
+                       template: 'layouts/plusview_quotation_footer.html.erb'
+                   },
                }
       end
     end
@@ -80,7 +105,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-    # GET /projects/new
+  # GET /projects/new
   def new
     @project = Project.new
     respond_to(&:js)
@@ -102,11 +127,11 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('project_add_success')}
-        format.json {render :show, status: :created, location: @project}
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_add_success') }
+        format.json { render :show, status: :created, location: @project }
       else
-        format.html {render :new}
-        format.json {render json: @project.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -117,11 +142,11 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.update(project_params)
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success')}
-        format.json {render :show, status: :ok, location: @project}
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
+        format.json { render :show, status: :ok, location: @project }
       else
-        format.html {render :edit}
-        format.json {render json: @project.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -131,8 +156,8 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('project_destroy_success')}
-      format.json {head :no_content}
+      format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_destroy_success') }
+      format.json { head :no_content }
     end
   end
 
@@ -146,6 +171,13 @@ class ProjectsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def totals_project_once
+    @once_projects = Project.all
+    @once_projects.each do |project|
+      project.update_totals_project(project)
     end
   end
 

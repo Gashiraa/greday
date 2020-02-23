@@ -95,9 +95,14 @@
       <td class="center aligned"><%= project.date ? l(project.date) : "" %></td>
       <%= tag.td class: 'center aligned status-cell', status: project.status do %>
         <div>
-          <div>
+          <div class="visible content">
             <%= project.translated_status %>
           </div>
+          <% if project.status == "created" %>
+            <div class="hidden content">
+              <%= link_to "Accepté", project_path(project, project: {status: :accepted}), method: :put %>
+            </div>
+          <% end %>
         </div>
       <% end %>
       <td class="right aligned"><%= number_with_precision project.total_gross, :precision => 2 %></td>

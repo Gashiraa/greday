@@ -75,4 +75,5 @@ gem 'jquery-ui-themes'
 gem "will_paginate_semantic_ui"
 gem 'ransack_memory'
 gem 'haml'
+gem 'apartment'
 # gem 'mini_racer'

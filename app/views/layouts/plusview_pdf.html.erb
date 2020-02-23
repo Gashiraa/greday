@@ -8,7 +8,7 @@
   <% if @quotation %>
     <title><%= t('quotation') + "_#{@quotation.id}" %></title>
   <% end %>
-  <%= wicked_pdf_stylesheet_link_tag "pdf" %>
+  <%= wicked_pdf_stylesheet_link_tag "plusview_pdf" %>
 </head>
 <%= yield %>
 </html>

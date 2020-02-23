@@ -49,20 +49,24 @@
                 = button_to project_path(@project, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui teal labeled icon button" do
                   Voir le devis
                   %i.file.pdf.icon
+              %br/
               .center.aligned
                 - if @project.invoice
                   = button_to invoice_path(@project.invoice, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui yellow  labeled icon button", :target => "_blank" do
                     Voir la facture
                     %i.file.pdf.icon
-                %br/
+                  %br/
               .center.aligned
                 - case @project.status
                 - when "quotation"
                   = link_to t('switch_in_progress'), project_path(@project, project: {status: :in_progress}), method: :put, class: 'ui orange button'
                 - when "in_progress"
                   = link_to t('do_done'), project_path(@project, project: {status: :done}), method: :put, class: 'ui red button'
+                - when "created"
+                  = link_to t('do_accepted'), project_path(@project, project: {status: :accepted}), method: :put, class: 'ui red button'
                 - when "done"
-                  = link_to t('invoice_project').capitalize, new_invoice_path, {class: 'ui yellow button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}
+                - when "accepted"
+                  = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui yellow button'
                 - when "invoiced"
                   = link_to t('project_paid'), project_path(@project, project: {status: :paid}), method: :put, class: 'ui green button'
             .content
@@ -118,104 +122,107 @@
                             = link_to history, method: :delete, data: {confirm: t('confirm_delete')} do
                               = image_tag("delete-icon.png", size: "15x15")
     -#----[SERVICES]----
-    .project-section
-      %h3
-        = t('service').pluralize.capitalize
-        = link_to(new_service_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
-          %button.ui.red.compact.labeled.icon.button
-            Ajouter une prestation
-            %i.plus.icon
-      .scrollable-project-section
-        %table.ui.striped.selectable.red.compact.table.table-to-color
-          %thead.thead-dark
-            %tr
-              %th= t('Name')
-              %th.center.aligned
-                = t('status')
-              %th.center.aligned
-                = t('Date')
-              %th.right.aligned
-                = t('hourly_rate').to_s
-              %th.right.aligned
-                = t('duration').to_s
-              %th.two.wide.right.aligned
-                = t('total_gross')
-                (€)
-              %th.two.wide.right.aligned
-                = t('total_cost')
-                (€)
-              %th.two.wide
-          - unless @project.services.any?
-            %tr
-              %td.center.aligned{colspan: "9"} Aucune données à afficher
-          .scrollable-project-section
-            - @project.services.order(date: :asc).each do |service|
-              %tr{"data-link" => "#{edit_service_path(service)}"}
-                %td= service.name
-                = tag.td class: 'center aligned status-cell', status: service.status do
-                  %div
-                    %div
-                      = service.translated_status
-                %td.center.aligned
-                  = service.date ? l(service.date) : ""
-                %td.right.aligned
-                  = number_with_precision service.hourly_rate, :precision => 2
-                %td.right.aligned
-                  = service.duration.strftime('%H:%M')
-                %td.right.aligned
-                  = number_with_precision service.total_gross, :precision => 2
-                %td.right.aligned
-                  = number_with_precision service.total_cost, :precision => 2
-                %td.right.aligned
-                  = link_to edit_service_path(service), remote: true do
-                    = image_tag("edit-icon.png", size: "30x30")
-                  = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
-                    = image_tag("delete-icon.png", size: "30x30")
-      %table.ui.compact.table
-        %tr
-          %td
-          %td.right.aligned
-            = t('total_duration') + ' : '
-            %b
-              = +Service.where(project_id: @project.id).sum(:duration).to_s.chop.chop.chop
-          %td.two.wide.right.aligned
-            = t('total_gross') + ' : '
-            %b
-              = (number_with_precision @project.services.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
-          %td.two.wide.right.aligned
-            = t('total') + ' : '
-            %b
-              = (number_with_precision @project.services.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
-          %td.two.wide
-    %br
-    -#----[WARES]----
-    .project-section
-      %h3
-        = t('ware').pluralize.capitalize
-        = link_to(new_ware_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
-          %button.ui.violet.compact.labeled.icon.button
-            Ajouter une marchandise
-            %i.plus.icon
-      .scrollable-project-section
-        %table.ui.compact.selectable.violet.compact.table.table-to-color
-          %thead
-            %tr
-              %th= t('ware_name')
-              %th.center.aligned= t('status')
-              %th.right.aligned
-                = t('total_gross')
-                (€)
-              %th.three.wide.right.aligned
-                = t('total_cost')
-                (€)
-              %th.two.wide
-          %tbody
-            - unless @project.wares.any?
+    - if @company.use_services
+      .project-section
+        %h3
+          = t('service').pluralize.capitalize
+          = link_to(new_service_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+            %button.ui.red.compact.labeled.icon.button
+              Ajouter une prestation
+              %i.plus.icon
+        .scrollable-project-section
+          %table.ui.striped.selectable.red.compact.table.table-to-color
+            %thead.thead-dark
+              %tr
+                %th.four.wide
+                  = t('Name')
+                %th.two.wide.center.aligned
+                  = t('status')
+                %th.one.wide.center.aligned
+                  = t('Date')
+                %th.two.wide.right.aligned
+                  = t('hourly_rate').to_s
+                %th.one.wide.right.aligned
+                  = t('duration').to_s
+                %th.two.wide.right.aligned
+                  = t('total_gross')
+                  (€)
+                %th.two.wide.right.aligned
+                  = t('total_cost')
+                  (€)
+                %th.two.wide
+            - unless @project.services.any?
               %tr
                 %td.center.aligned{colspan: "9"} Aucune données à afficher
-            - @project.wares.each do |ware|
-              - if ware.total_gross > 0
-                %tr{"data-link" => "#{edit_ware_path(ware)}"}
+            .scrollable-project-section
+              - @project.services.order(date: :asc).each do |service|
+                %tr{"data-link" => "#{edit_service_path(service)}"}
+                  %td= service.name
+                  = tag.td class: 'center aligned status-cell', status: service.status do
+                    %div
+                      %div
+                        = service.translated_status
+                  %td.center.aligned
+                    = service.date ? l(service.date) : ""
+                  %td.right.aligned
+                    = number_with_precision service.hourly_rate, :precision => 2
+                  %td.right.aligned
+                    = service.duration.strftime('%H:%M')
+                  %td.right.aligned
+                    = number_with_precision service.total_gross, :precision => 2
+                  %td.right.aligned
+                    = number_with_precision service.total_cost, :precision => 2
+                  %td.right.aligned
+                    = link_to edit_service_path(service), remote: true do
+                      = image_tag("edit-icon.png", size: "30x30")
+                    = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
+                      = image_tag("delete-icon.png", size: "30x30")
+        %table.ui.compact.table
+          %tr
+            %td
+            %td.right.aligned
+              = t('total_duration') + ' : '
+              %b
+                = +Service.where(project_id: @project.id).sum(:duration).to_s.chop.chop.chop
+            %td.two.wide.right.aligned
+              = t('total_gross') + ' : '
+              %b
+                = (number_with_precision @project.services.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
+            %td.two.wide.right.aligned
+              = t('total') + ' : '
+              %b
+                = (number_with_precision @project.services.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
+            %td.two.wide
+      %br
+    -#----[WARES]----
+    - if @company.use_wares
+      .project-section
+        %h3
+          = t('ware').pluralize.capitalize
+          = link_to(new_ware_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+            %button.ui.violet.compact.labeled.icon.button
+              Ajouter une marchandise
+              %i.plus.icon
+        .scrollable-project-section
+          %table.ui.compact.selectable.violet.compact.table.table-to-color
+            %thead
+              %tr
+                %th.four.wide
+                  = t('ware_name')
+                %th.two.wide.center.aligned= t('status')
+                %th.six.wide.right.aligned
+                  = t('total_gross')
+                  (€)
+                %th.two.wide.right.aligned
+                  = t('total_cost')
+                  (€)
+                %th.two.wide
+            %tbody
+              - unless @project.wares.any?
+                %tr
+                  %td.center.aligned{colspan: "9"} Aucune données à afficher
+              - @project.wares.where("total_gross = 0").each do |ware|
+                %tr.red-row{"data-link" => "#{edit_ware_path(ware)}"}
                   %td
                     = ware.ware_name
                     = tag.td class: 'center aligned status-cell', status: ware.status do
@@ -231,8 +238,8 @@
                         = image_tag("edit-icon.png", size: "30x30")
                       = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
                         = image_tag("delete-icon.png", size: "30x30")
-              - else
-                %tr.red-row{"data-link" => "#{edit_ware_path(ware)}"}
+              - @project.wares.where("total_gross > 0").each do |ware|
+                %tr{"data-link" => "#{edit_ware_path(ware)}"}
                   %td
                     = ware.ware_name
                   = tag.td class: 'center aligned status-cell', status: ware.status do
@@ -248,26 +255,31 @@
                       = image_tag("edit-icon.png", size: "30x30")
                     = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
                       = image_tag("delete-icon.png", size: "30x30")
-      %table.ui.compact.table
-        %tr
-          %td.eleven.wide.right.aligned
-            = t('total_gross') + ' : '
-            %b
-              = (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
-          %td.three.wide.right.aligned
-            = t('total') + ' : '
-            %b
-              = (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
-          %td.two.wide
-    %br
+        %table.ui.compact.table
+          %tr
+            %td.twelve.wide.right.aligned
+              = t('total_gross') + ' : '
+              %b
+                = (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
+            %td.two.wide.right.aligned
+              = t('total') + ' : '
+              %b
+                = (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
+            %td.two.wide
+      %br
     -#----[EXTRAS]----
     .project-section
       %h3
-        = t('extra').pluralize.capitalize
+        = @company.use_articles == false ? t('extra').pluralize : t('article').pluralize
         = link_to(new_project_extra_line_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
           %button.ui.yellow.compact.labeled.icon.button
-            Ajouter un article
+            = @company.use_articles == false ? t('add_ extra').pluralize : t('add_article').pluralize
             %i.plus.icon
+        - if @company.use_manual_extras
+          = link_to("project_extra_lines/new_manual", :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window') do
+            %button.ui.teal.compact.labeled.icon.button
+              Ajouter un article (manuel)
+              %i.plus.icon
       %table.ui.striped.selectable.yellow.compact.table.table-to-color
         %thead
           %tr

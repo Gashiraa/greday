@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-  <% if Rails.env.development? %>
-    <title><%= "[DEV] " + company.short_name %></title>
+  <% if current_user.present? %>
+    <% if Rails.env.development? %>
+      <title><%= "[DEV] " + @company.short_name.to_s %></title>
+    <% else %>
+      <title><%= @company.short_name %></title>
+    <% end %>
+    <div data-somedata="<%= @company.short_name %>" id="company-id"></div>
   <% else %>
-    <title><%= company.short_name %></title>
+    <title>LOGIN</title>
   <% end %>
 
   <%= csrf_meta_tags %>
@@ -13,11 +17,17 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%= favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type => 'image/png' %>
+  <%= favicon_link_tag asset_path('favicon.png') %>
 
 </head>
+
 <div class="ui inverted attached menu">
-  <a class="item" href="/projects" id="logo"> <%= company.short_name.upcase %> </a>
+
+  <% if current_user.present? %>
+    <a class="item" href="/projects" id="logo"> <%= @company.short_name.to_s.upcase %> </a>
+  <% else %>
+    <a class="item" href="/projects" id="logo"> LOGIN </a>
+  <% end %>
 
   <div class="menu">
     <% if current_user %>
@@ -25,35 +35,42 @@
       <% end %>
       <a class="blue item" href="/projects"> <%= t('projects').capitalize %>  </a>
 
-      <a class="violet item" href="/wares"> <%= t('wares').capitalize %> </a>
+      <a class="olive dropdown item" href="/invoices"> <%= t('invoices').capitalize %> </a>
 
-      <a class="red item" href="/services"> <%= t('services').capitalize %> </a>
+      <% if @company.use_wares %>
+        <a class="violet item" href="/wares"> <%= t('wares').capitalize %> </a>
+      <% end %>
+
+      <% if @company.use_services %>
+        <a class="red item" href="/services"> <%= t('services').capitalize %> </a>
+      <% end %>
 
       <a class="brown item" href="/customers"> <%= t('customers').capitalize %> </a>
 
-      <a class="purple item" href="/machines"> <%= t('machines').capitalize %> </a>
+      <% if @company.use_machines %>
+        <a class="purple item" href="/machines"> <%= t('machines').capitalize %> </a>
+      <% end %>
 
       <a class="yellow item" href="/extras"> <%= @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %> </a>
 
-      <a class="olive dropdown item" href="/invoices"> <%= t('invoices').capitalize %> </a>
+      <% if @company.use_credit_notes %>
+        <a class="green item" href="/expense_accounts"> <%= t('expense_accounts').capitalize %> </a>
+      <% end %>
 
-      <a class="green item" href="/expense_accounts"> <%= t('expense_accounts').capitalize %> </a>
     <% end %>
 
   </div>
 
-
   <div class="right menu">
 
-    <%= link_to t('FR'), {:controller => '/application', :action => 'change_locale', :id => 'fr'}, class: "item" %>
+    <%#= link_to t('FR'), {:controller => '/application', :action => 'change_locale', :id => 'fr'}, class: "item" %>
 
-    <%= link_to t('EN'), {:controller => '/application', :action => 'change_locale', :id => 'en'}, class: "item" %>
+    <%#= link_to t('EN'), {:controller => '/application', :action => 'change_locale', :id => 'en'}, class: "item" %>
 
     <%= link_to(t('logout'), destroy_user_session_path, method: :delete, class: "item logout-button") %>
   </div>
 
 </div>
-
 
 <% if notice %>
   <div id="notice" class="ui success floating message">

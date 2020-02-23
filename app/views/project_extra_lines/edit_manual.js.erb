@@ -1,0 +1,7 @@
+$("#modal-window").find(".content").html("<%= j (render 'new_manual') %>");
+
+$('.ui.modal').modal('show');
+
+$(document).trigger('turbolinks:load');
+
+$("#modal-window").modal({backdrop: 'static'});

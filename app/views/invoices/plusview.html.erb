@@ -1,0 +1,325 @@
+<div class="pdf">
+  <div id="container">
+    <section id="memo">
+      <div class="logo">
+        <%= wicked_pdf_image_tag "plusview.png" %>
+      </div>
+      <div class="company-info">
+        <div>
+          <%= @company.name %>
+        </div>
+        <div>
+          <%= "BE0693763596" %>
+        </div>
+        <div>
+          <%= @company.street %>
+        </div>
+        <div>
+          <%= @company.postcode %> <%= @company.locality %>
+        </div>
+        <div>
+          <%= @company.phone %>
+        </div>
+        <div>
+          <%= @company.email %>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="client-info">
+      <div>
+        <span>
+          <%= @invoice.customer.name %>
+        </span>
+      </div>
+      <div>
+        <span>
+          <%= @invoice.customer.street + ', ' + @invoice.customer.number.to_s %>
+        </span>
+      </div>
+      <div>
+        <span>
+          <%= @invoice.customer.cp.to_s + ' ' + @invoice.customer.locality %>
+        </span>
+      </div>
+      <div>
+        <% if @invoice.customer.tva_record %>
+        <span>
+          <%= "TVA : " + @invoice.customer.tva_record %>
+        </span>
+        <% end %>
+      </div>
+    </section>
+
+    <div class="clearfix"></div>
+
+    <section id="invoice-title-number">
+      <span id="invoice-title">Facture</span>
+      <div class="clearfix"></div>
+      <span id="number">
+        <h2>
+          <%= '#' + @invoice.display_number.to_s %>
+        </h2>
+      </span>
+      <div class="clearfix"></div>
+    </section>
+
+    <div class="clearfix"></div>
+
+    <span id="dateInvoice">
+          <%= "Roclenge le, " + l(@invoice.date).to_s %>
+    </span>
+
+    <hr>
+
+    <% if @invoice.projects.any? %>
+      <% @invoice.projects.each do |project| %>
+        <section id="items" class="project">
+          <div class="avoidbreak">
+
+            <div class="title-project-container">
+              <h4 class="title-project">Devis #<%= project.id %> : <%= project.name %></h4>
+            </div>
+            <p><%= project.description %>
+              <br>
+              <%= t('PO') + ":" %>
+              <%= project.po ? project.po : "/" %>
+              <br>
+              <%= t('applicant') + ":" %>
+              <%= project.applicant ? project.applicant : "/" %>
+            </p>
+          </div>
+          <div class="avoidbreak">
+            <% if project.project_extra_lines.any? %>
+              <h5><%= @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
+              </h5>
+
+              <table class="table table-hover table-striped">
+                <thead class=thead-dark>
+                <tr>
+                  <th class="name-cell"><%= t('Name') %></th>
+                  <th class="quantity-cell"><%= t('quantity') %></th>
+                  <th class="number-cell"><%= t('unit_price') + ' (€)' %></th>
+                  <th class="number-cell"><%= t('tva_rate') + ' (%)' %></th>
+                  <th class="number-cell"><%= t('total_gross') + ' (€)' %></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <% project.project_extra_lines.order(:created_at).each do |project_extra_line| %>
+                  <% if project_extra_line.is_manual %>
+                    <tr>
+                      <td class="name-cell"><%= project_extra_line.manual_name %></td>
+                      <td class="quantity-cell"><%= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.unit %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.manual_price, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.tva_rate, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.total_gross, :precision => 2 %></td>
+                    </tr>
+                  <% else %>
+                    <tr>
+                      <td class="name-cell"><%= project_extra_line.extra.name %></td>
+                      <td class="quantity-cell"><%= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.extra.unit %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.extra.unit_price, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.tva_rate, :precision => 2 %></td>
+                      <td class="number-cell"><%= number_with_precision project_extra_line.total_gross, :precision => 2 %></td>
+                    </tr>
+                  <% end %>
+                <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </section>
+        <% unless @invoice.projects.length == 1 && @invoice.wares.length == 0 %>
+          <section id="sums" class="sums_project">
+            <table cellpadding="0" cellspacing="0">
+              <tr class="amount-total">
+              <tr data-hide-on-quote="true">
+                <th>Total TVA projet (€)</th>
+                <td><%= number_with_precision(project.total - project.total_gross, :precision => 2) %></td>
+              </tr>
+              <th>TOTAL HT PROJET (€)</th>
+              <td><%= number_with_precision project.total_gross, :precision => 2 %></td>
+              </tr>
+              <tr>
+                <th><%= "TOTAL TTC PROJET (€)" %></th>
+                <td><%= number_with_precision project.total, :precision => 2 %></td>
+              </tr>
+            </table>
+          </section>
+          <div class="clearfix"></div>
+          <hr>
+        <% end %>
+      <% end %>
+    <% end %>
+    <section id="sums" class="avoidbreak">
+      <div class="clearfix"></div>
+      <table>
+        <tr class="amount-total">
+          <th>TOTAL HT (€)</th>
+          <td><%= number_with_precision @invoice.total_gross, :precision => 2 %></td>
+        </tr>
+        <tr>
+          <th>Total TVA (€)</th>
+          <td><%= # noinspection RubyArgumentParentheses
+                  number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2 %></td>
+        </tr>
+        <tr>
+          <th>TOTAL TTC (€)</th>
+          <td class="invoice_total"><%= number_with_precision @invoice.total, :precision => 2 %></td>
+        </tr>
+      </table>
+      <div class="clearfix"></div>
+    </section>
+    <div class="clearfix"></div>
+    <b class="tva-note"> <%= @invoice.projects.first.comment %> </b>
+  </div>
+  <div class="cg avoidbreak">
+    <b>
+      CONDITIONS GENERALES
+    </b>
+    </br>
+    <b>
+      1. Dispositions générales
+    </b>
+    <p>
+      Les présentes conditions générales définissent, sans préjudice de l'application de conditions
+      particulières, les obligations respectives des parties contractantes à l’occasion de ventes effectuées par nos
+      services.
+      En signant la convention ou le bon de commande ou en acceptant la confirmation de commande, notre cocontractant
+      reconnaît expressément avoir pris connaissance des présentes conditions générales et les avoir acceptées.
+      Les dispositions auxquelles il n'est pas dérogé expressément restent d'application. Seules les dérogations
+      faisant l’objet d’un accord écrit de notre part peuvent modifier l’application des présentes conditions
+      générales.
+      En cas de contrariété entre les conditions générales de nos cocontractants et les nôtres, il est convenu que
+      ces dernières prévaudront.
+    </p>
+    <b>
+      2. Validité des offres
+    </b>
+    <p>
+      Sauf stipulations contraires et écrites, le délai de validité de nos offres est de 30 jours à dater de leur
+      émission.
+    </p>
+    <b>
+      3. Commandes
+    </b>
+    <p>
+      Toute commande qui nous est confiée ne nous engage qu’après confirmation écrite de notre part. Les
+      modifications
+      apportées par le client à son bon de commande ou à notre offre ne seront valables qu’à la condition que nous
+      les
+      ayons acceptées et confirmées par écrit. En cas d’annulation unilatérale d’une commande par le cocontractant,
+      nous nous réservons le droit d’exiger une indemnité égale à 30% du montant total de la commande.
+    </p>
+    <b>
+      4. Délais
+    </b>
+    <p>
+      Les délais fixés pour nos prestations ou livraisons ne sont donnés, sauf stipulation contraire, qu’à titre
+      indicatif.
+      Si un délai est impératif, il doit clairement être spécifié comme tel sur le bon de commande. Dans ce cas,
+      l’acheteur peut, lorsque la livraison subit un retard, prétendre à une indemnisation sans que celle-ci puisse
+      excéder 10% du prix global de la commande.
+      Même dans ce cas, les circonstances suivantes nous libèrent de nos délais :
+      1 - Les cas de force majeure (en ce compris, notamment, les grèves, incidents d'ordre technique, retard du
+      fournisseur et pénurie de main-d’oeuvre);
+      3 - Si les conditions de paiement ne sont pas respectées;
+      4 - Si des changements sont décidés par le client en cours de travail.
+      5 - Si le client ne nous fournit pas les informations souhaitées endéans le délai spécifié
+    </p>
+      <b>
+        5 Durée de conservation des œuvres audiovisuelles
+      </b>
+    <p>
+      Plusview s’engage à conserver les documents originaux à la disposition de son client durant un délai de 2 mois.
+      Tout tirage d’épreuve ou duplicata devra être commandé au photographe vidéaste.
+    </p>
+    <b>
+      6 Propriété Intellectuelle – droit à l’image
+    </b>
+    <p>
+      Les photographies et vidéos sont propriété du photographe/vidéaste à l’exception des éléments apportés par
+      le client. Toute utilisation d’une œuvre audiovisuelle, quelle qu’elle soit et quels en soient les usages :
+      diffusion, exposition, reproduction ..., faite sans l’accord écrit préalable du photographe/vidéaste constitue
+      un délit de contrefaçon. En cas d’accord du photographe elle donne lieu à une convention qui comporte les
+      droits d’utilisation. Le client sera tenu responsable de toute violation de cette interdiction.
+      Les clients sont seuls responsables du droit à l’image des personnes prises en photo/filmées lors de la
+      prestation, toute réclamation sera donc adressée directement au client. Tout élément audiovisuelle (photos,
+      vidéo, musique) demandé expressément par le client comme devant être intégré au produit final est à sa
+      charge, incluant le paiement et le respect des droits d’auteurs et de diffusion en adéquation avec l’usage final
+      des photos/vidéos.
+    </p>
+    <b>
+      7. Prix
+    </b>
+    <p>
+      Les prix fixés sont libellés en euros,(préciser TVA comprise/non comprise). Nos prix ne sont en principe pas
+      révisables, mais nous pourrons toutefois répercuter sur ceux-ci les modifications du taux de la T.V.A. qui
+      interviendraient avant la date de livraison.
+    </p>
+    <b>
+      8. Paiement
+    </b>
+    <p>
+      Les factures sont payables à notre siège social, au plus tard dans les trente jours de leur envoi. Passé ce
+      délai, toute facture impayée produira, de plein droit et sans mise en demeure, un intérêt conventionnel de 12%
+      l’an, avec un taux minimum conforme à celui prévu par l’article 5 de la loi du 2 août 2002 relative au retard
+      de
+      paiement dans les transactions commerciales .
+      Toute facture impayée à l’échéance sera, en outre, majorée, de plein droit et sans mise en demeure, d'une
+      indemnité forfaitaire et irréductible de 15% du montant resté impayé avec un minimum de 50,-€ par facture.
+      Toute
+      contestation relative à une facture devra nous parvenir par écrit, dans les quinze jours de son envoi. Le
+      consommateur tel que défini par la loi du 14/07/1991 peut exiger le bénéfice de l’application des indemnités
+      et
+      intérêts dans la mesure et les conditions fixées par la présente clause, en cas d’inexécution de nos
+      obligations.
+    </p>
+    <b>
+      9. Garantie
+    </b>
+    <p>
+      Les produits et prestations seront censés être agréés par l’acheteur cinq jours calendrier au plus tard après
+      la livraison, sauf
+      réclamation précise et détaillée qu’il nous notifierait avant l’expiration de ce délai par lettre
+      recommandée.
+    </p>
+    <b>
+      10. Résiliation-résolution aux torts d’un cocontractant
+    </b>
+    <p>
+      Les stipulations qui précèdent ne contiennent aucune renonciation à notre droit de réclamer, à notre
+      convenance, en cas de non paiement ou de non respect par notre cocontractant de ses obligations contractuelles, la
+      résolution ou la résiliation de la convention avec dommages et intérêts. En cas de résiliation-résolution du
+      contrat aux torts d’un cocontractant, il sera dû à l’autre une
+      indemnité forfaitaire de 30% du prix total.
+    </p>
+    <b>
+      11. Litiges
+    </b>
+    <p>
+      En cas de contestation entre parties ou de poursuites en paiement, sont seuls compétents les tribunaux dont
+      dépend
+      notre siège social.
+    </p>
+    <b>
+      12. Changements de la convention
+    </b>
+    <p>
+      Tout changement des conventions spécifiques ou des conditions générales présentes devra faire l'objet d'un
+      avenant écrit et signé par toutes les parties.
+    </p>
+
+    <b>
+      13. Clause salvatrice
+    </b>
+    <p>
+      La non validité ou l'illégalité d'une des clauses prévues dans les contrats (conditions spécifiques et
+      générales) convenues entre parties, n’entraîne aucunement une invalidité ou une nullité des autres
+      conditions du contrat conclu entre parties - clauses restant intégralement valables.
+    </p>
+
+  </div>
+</div>

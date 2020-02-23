@@ -62,15 +62,15 @@ class Project < ApplicationRecord
   end
 
   def get_total
-    wares.collect {|w| w.valid? ? w.total_cost : 0}.sum +
-        services.collect {|s| s.valid? ? s.total_cost : 0}.sum +
-        project_extra_lines.collect {|s| s.valid? ? s.total : 0}.sum
+    wares.collect { |w| w.valid? ? w.total_cost : 0 }.sum +
+        services.collect { |s| s.valid? ? s.total_cost : 0 }.sum +
+        project_extra_lines.collect { |s| s.total }.sum
   end
 
   def get_total_gross
-       wares.collect {|w| w.valid? ? w.total_gross : 0}.sum +
-        services.collect {|s| s.valid? ? s.total_gross : 0}.sum +
-        project_extra_lines.collect {|s| s.valid? ? s.total_gross : 0}.sum
+    wares.collect { |w| w.valid? ? w.total_gross : 0 }.sum +
+        services.collect { |s| s.valid? ? s.total_gross : 0 }.sum +
+        project_extra_lines.collect { |s| s.total_gross }.sum
   end
 
   def update_statuses_projects_content(project)

@@ -3,13 +3,14 @@
 class ApplicationController < ActionController::Base
 
   helper_method :company
+  helper_method :change_locale
+
   protect_from_forgery with: :reset_session
   include TranslateEnum
   include RansackMemory::Concern # insert this line
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :load_schema, :company
   before_action :save_and_load_filters # insert this line after Devise auth before filter (Devise gem is not necessary)
-
   before_action :set_locale
 
 
@@ -21,14 +22,12 @@ class ApplicationController < ActionController::Base
                   end
   end
 
-  helper_method :change_locale
-
   def change_locale
     locale = params[:id]
     current_user.locale = locale
     respond_to do |format|
       if current_user.save
-        format.html {redirect_to root_path, notice: t('locale_changed')}
+        format.html { redirect_to root_path, notice: t('locale_changed') }
       end
     end
   end
@@ -38,7 +37,30 @@ class ApplicationController < ActionController::Base
   end
 
   def company
-    @company = current_user.company
+    if current_user.present?
+      @company = current_user.company
+    end
+  end
+
+  private
+
+  def load_schema
+    Apartment::Tenant.switch!('public')
+    return unless current_user.present?
+
+    if current_user
+      Apartment::Tenant.switch!(current_user.company.name)
+    else
+      redirect_to root_url(subdomain: false)
+    end
+  end
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    attributes = [:display_name, :email, :password, :password_confirmation, :company_id]
+    devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
   end
 
 end
