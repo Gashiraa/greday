@@ -8,7 +8,7 @@ default: &default
 
 development:
   <<: *default
-  database: gescoop_prod
+  database: gescoop_dev
 
 production:
   <<: *default

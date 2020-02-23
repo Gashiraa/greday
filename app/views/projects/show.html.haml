@@ -271,16 +271,16 @@
       %table.ui.striped.selectable.yellow.compact.table.table-to-color
         %thead
           %tr
-            %th= t('Name')
-            %th.center.aligned= t('unit')
-            %th.right.aligned= t('quantity')
-            %th.right.aligned
+            %th.four.wide= t('Name')
+            %th.three.wide.center.aligned= t('unit')
+            %th.two.wide.right.aligned= t('quantity')
+            %th.three.wide.right.aligned
               = t('total_gross')
               (€)
-            %th.right.aligned
+            %th.two.wide.right.aligned
               = t('total_cost')
               (€)
-            %th
+            %th.two.wide
         %tbody
           - unless @project.project_extra_lines.any?
             %tr
@@ -323,12 +323,6 @@
                       = image_tag("delete-icon.png", size: "30x30")
           %tr
             %td{colspan: "3"}
-              / <br>
-              / <br>
-              / <button class="ui teal compact labeled icon button">
-              / Ajouter un article (manuel)
-              / <i class="plus icon"></i>
-              / </button>
             %td.right.aligned
               = t('total_gross') + ' : '
               %b
