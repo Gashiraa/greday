@@ -52,14 +52,14 @@ class ProjectExtraLinesController < ApplicationController
   def create
     @project_extra_line = ProjectExtraLine.new(project_extra_line_params)
 
-    # update linked project
-    @project_extra_line.project&.update_totals_project(@project_extra_line.project)
-
-    # update linked project's invoice
-    @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
-
     respond_to do |format|
       if @project_extra_line.save
+        # update linked project
+        @project_extra_line.project&.update_totals_project(@project_extra_line.project)
+
+        # update linked project's invoice
+        @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_add_success')}
         format.json {render :show, status: :created, location: @project_extra_line}
       else
@@ -73,14 +73,15 @@ class ProjectExtraLinesController < ApplicationController
   # PATCH/PUT /project_extra_lines/1.json
   def update
 
-    # update linked project
-    @project_extra_line.project&.update_totals_project(@project_extra_line.project)
-
-    # update linked project's invoice
-    @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
-
     respond_to do |format|
       if @project_extra_line.update(project_extra_line_params)
+
+        # update linked project
+        @project_extra_line.project&.update_totals_project(@project_extra_line.project)
+
+        # update linked project's invoice
+        @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_update_success')}
         format.json {render :show, status: :ok, location: @project_extra_line}
       else
@@ -93,13 +94,15 @@ class ProjectExtraLinesController < ApplicationController
   # DELETE /project_extra_lines/1
   # DELETE /project_extra_lines/1.json
   def destroy
+
+    @project_extra_line.destroy
+
     # update linked project
     @project_extra_line.project&.update_totals_project(@project_extra_line.project)
 
     # update linked project's invoice
     @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
 
-    @project_extra_line.destroy
     respond_to do |format|
       format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_delete_success')}
       format.json {head :no_content}
@@ -115,6 +118,6 @@ class ProjectExtraLinesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def project_extra_line_params
-    params.require(:project_extra_line).permit(:project_id, :extra_id, :quantity, :total, :total_gross)
+    params.require(:project_extra_line).permit(:project_id, :extra_id, :quantity, :total, :total_gross, :manual_name, :manual_price, :tva_rate, :unit, :is_manual, :manual_vat)
   end
 end

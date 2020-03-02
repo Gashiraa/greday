@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   resources :invoices
   resources :payments
   resources :expense_accounts
-  resources :customer_machine_lines
   resources :machines
   resources :companies
 

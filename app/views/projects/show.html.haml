@@ -270,10 +270,10 @@
     -#----[EXTRAS]----
     .project-section
       %h3
-        = @company.use_articles == false ? t('extra').pluralize : t('article').pluralize
+        = @company.use_articles == false ? t('extra') : t('article')
         = link_to(new_project_extra_line_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
           %button.ui.yellow.compact.labeled.icon.button
-            = @company.use_articles == false ? t('add_ extra').pluralize : t('add_article').pluralize
+            = @company.use_articles == false ? t('add_extra') : t('add_article')
             %i.plus.icon
         - if @company.use_manual_extras
           = link_to("project_extra_lines/new_manual", :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window') do
@@ -300,7 +300,7 @@
           .scrollable-project-section
             - @project.project_extra_lines.each do |project_extra_line|
               - if project_extra_line.is_manual
-                %tr{"data-link" => "#{edit_project_extra_line_path(project_extra_line)}"}
+                %tr
                   %td
                     = project_extra_line.manual_name
                   %td.center.aligned
