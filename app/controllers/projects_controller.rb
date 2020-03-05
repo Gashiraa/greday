@@ -200,7 +200,8 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:invoice_id, :quotation_id, :customer_id,
                                     :name, :status, :wielding, :machining,
                                     :karcher, :total, :total_gross, :date,
-                                    :description, :no_vat, :machine_id)
+                                    :description, :no_vat, :machine_id, :po, :applicant,
+                                    :comment)
   end
 
 end

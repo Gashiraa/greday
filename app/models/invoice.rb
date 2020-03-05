@@ -13,9 +13,14 @@ class Invoice < ApplicationRecord
   enum status: [:created, :paid]
   translate_enum :status
 
-  def update_invoice_content_on_destroy(invoice)
+  def update_invoice_content_on_destroy(invoice, company)
     invoice.wares.update(status: :assigned_customer, invoice_id: nil)
-    invoice.projects.update(status: :done, invoice_id: nil)
+
+    if company == "PLUSVIEW"
+      invoice.projects.update(status: :accepted, invoice_id: nil)
+    else
+      invoice.projects.update(status: :done, invoice_id: nil)
+    end
 
     invoice.projects.each do |project|
       project.wares.update(status: :assigned_project)
@@ -38,12 +43,19 @@ class Invoice < ApplicationRecord
         projects.collect { |p| p.valid? ? p.total_gross : 0 }.sum
   end
 
-  def update_statuses_invoice(invoice)
+  def update_statuses_invoice(invoice, company)
 
-    Project.all
-        .where(status: :invoiced)
-        .where("invoice_id IS NULL")
-        .update(status: :done)
+    if company == "PLUSVIEW"
+      Project.all
+          .where(status: :invoiced)
+          .where("invoice_id IS NULL")
+          .update(status: :accepted)
+    else
+      Project.all
+          .where(status: :invoiced)
+          .where("invoice_id IS NULL")
+          .update(status: :done)
+    end
 
     Ware.all
         .joins(:project)

@@ -27,8 +27,8 @@ class Project < ApplicationRecord
 
   def self.status_for_sort
     if @company == "PLUSVIEW"
-      options = ["Accepté", 7, {status: "accepted"}],
-          ["Créé", 6, {status: "created"}],
+      options = ["Créé", 6, {status: "created"}],
+          ["Accepté", 7, {status: "accepted"}],
           ["Facturé", 3, {status: "invoiced"}],
           ["Corbeille", 5, {status: "bin"}]
     else
@@ -43,8 +43,8 @@ class Project < ApplicationRecord
 
   def self.status_for_form
     if @company == "PLUSVIEW"
-      options = ["Accepté", "accepted", {status: "accepted"}],
-          ["Créé", "created", {status: "created"}],
+      options = ["Créé", "created", {status: "created"}],
+          ["Accepté", "accepted", {status: "accepted"}],
           ["Facturé", "invoiced", {status: "invoiced"}],
           ["Corbeille", "bin", {status: "bin"}]
     else
