@@ -97,14 +97,15 @@ $(document).on("turbolinks:load", function () {
         });
 
         $("tr[data-project]").click(function () {
-            if (event.target.tagName === "IMG") {
+            let test = event;
+            if (event.target.tagName === "IMG" || event.target.innerHTML === "Accepté") {
                 return
             }
             window.location = $(this).data("project")
         });
 
         $("tr[data-invoice]").click(function () {
-            if (event.target.tagName === "IMG") {
+            if (event.target.tagName === "IMG" || event.target.innerHTML === "Payé") {
                 return
             }
             window.open($(this).data("invoice"), $(this).data("target"));

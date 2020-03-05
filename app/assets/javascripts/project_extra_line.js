@@ -7,30 +7,38 @@ $(document).on("turbolinks:load", function () {
             language: $('.locale').data('locale')
         });
 
+        //On selection of extra, autoselect : unit and price
         $('#project_extra_line_extra_id').on('focus load trigger mouseover change', function () {
-            let extra = this.options[this.selectedIndex].value;
-            $("#extra_unit_price > option").each(function () {
-                if (this.getAttribute("extra") === extra) {
-                    this.style.display = "block";
-                    $('#extra_unit_price').val(extra);
-                } else {
-                    this.style.display = "none";
-                }
-            });
-            $("#extra_unit > option").each(function () {
-                if (this.getAttribute("extra") === extra) {
-                    this.style.display = "block";
-                    $('#extra_unit').val(extra);
-                } else {
-                    this.style.display = "none";
-                }
-            });
+            if (this.selectedIndex>=0) {
+                let extra = this.options[this.selectedIndex].value;
+                //autoselect unit
+                $("#extra_unit_price > option").each(function () {
+                    if (this.getAttribute("extra") === extra) {
+                        this.style.display = "block";
+                        $('#extra_unit_price').val(extra);
+                    } else {
+                        this.style.display = "none";
+                    }
+                });
+                //auto select price
+                $("#extra_unit > option").each(function () {
+                    if (this.getAttribute("extra") === extra) {
+                        this.style.display = "block";
+                        $('#extra_unit').val(extra);
+                    } else {
+                        this.style.display = "none";
+                    }
+                });
+            }
+            //trigger the auto calculation when we're done
             $('#extra_total').trigger('mouseover');
         });
         $('#extra_edit_select').trigger('change');
 
         //Sort extras depending on selected category
         $('#project_extra_line_id').on('load trigger change', function () {
+            let extraSelect = document.getElementById("project_extra_line_extra_id");
+            let extra =  extraSelect.options[extraSelect.selectedIndex].value;
             let category = this.options[this.selectedIndex].text;
             $("#project_extra_line_extra_id > option").each(function () {
                 if (this.getAttribute("category") === category) {
@@ -40,7 +48,11 @@ $(document).on("turbolinks:load", function () {
                     this.style.display = "none";
                 }
             });
+
+            $('#project_extra_line_extra_id').val(extra).change();
             $('#project_extra_line_extra_id').trigger('change');
+
+            //trigger the auto calculation when we're done
             $('#extra_total').trigger('mouseover');
         });
 

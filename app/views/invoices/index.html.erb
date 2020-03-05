@@ -15,7 +15,7 @@
         </div>
         <div class="two wide field">
           <%= form.label t('status') %>
-          <%= form.select :status_eq, Invoice.statuses.map { |status| [t(status[0]), status[1].to_i, {status: status[0]}] }, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
+          <%= form.select :status_eq, Invoice.statuses.map {|status| [t(status[0]), status[1].to_i, {status: status[0]}]}, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'} %>
         </div>
         <div class="two wide field">
           <%= form.label t('from') %>
@@ -39,7 +39,7 @@
             <%= t('total_invoiced') %>
           </h5>
           <h3 id="hideable-field">
-            <%= @total.collect { |w| w.valid? ? w.total_gross : 0 }.sum %> €
+            <%= @total.collect {|w| w.valid? ? w.total_gross : 0}.sum %> €
           </h3>
         </div>
       </div>
@@ -94,9 +94,9 @@
             <%= invoice.translated_status %>
           </div>
           <% if invoice.status == "created" %>
-                        <div class="hidden content">
-            <%= link_to "Payé", id: invoice.id, controller: :invoices, action: :paid, method: :get %>
-                        </div>
+            <div class="hidden content">
+              <%= link_to "Payé", invoice_path(invoice, invoice: {status: :paid}), method: :put %>
+            </div>
           <% end %>
         </div>
       <% end %>
