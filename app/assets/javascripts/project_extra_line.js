@@ -7,9 +7,26 @@ $(document).on("turbolinks:load", function () {
             language: $('.locale').data('locale')
         });
 
+        //Auto-select category on edit form
+        {
+            // if (document.getElementById("project_extra_line_extra_id")) {
+            //     let e = document.getElementById("project_extra_line_extra_id");
+            //     let category = e.options[e.selectedIndex].getAttribute("category");
+            //     document.getElementById('project_extra_line_id').value = category;
+            //     $('#project_extra_line_id').trigger('change');
+            // }
+            //
+            // if (document.getElementById("project_extra_line_extra_id")) {
+            //     //Store the OG option (edit)
+            //     let extraSelect = document.getElementById("project_extra_line_extra_id");
+            //     let extra = extraSelect.options[extraSelect.selectedIndex].value;
+            //     $('#project_extra_line_extra_id').val(extra).change();
+            // }
+        }
+
         //On selection of extra, autoselect : unit and price
         $('#project_extra_line_extra_id').on('focus load trigger mouseover change', function () {
-            if (this.selectedIndex>=0) {
+            if (this.selectedIndex >= 0) {
                 let extra = this.options[this.selectedIndex].value;
                 //autoselect unit
                 $("#extra_unit_price > option").each(function () {
@@ -30,15 +47,13 @@ $(document).on("turbolinks:load", function () {
                     }
                 });
             }
-            //trigger the auto calculation when we're done
-            $('#extra_total').trigger('mouseover');
+            //trigger auto calculation when we're done
+            $('#extra_edit_select').trigger('mouseover');
         });
-        $('#extra_edit_select').trigger('change');
 
         //Sort extras depending on selected category
         $('#project_extra_line_id').on('load trigger change', function () {
-            let extraSelect = document.getElementById("project_extra_line_extra_id");
-            let extra =  extraSelect.options[extraSelect.selectedIndex].value;
+            //check all extra options, hide ones not belonging to selected category
             let category = this.options[this.selectedIndex].text;
             $("#project_extra_line_extra_id > option").each(function () {
                 if (this.getAttribute("category") === category) {
@@ -48,23 +63,8 @@ $(document).on("turbolinks:load", function () {
                     this.style.display = "none";
                 }
             });
-
-            $('#project_extra_line_extra_id').val(extra).change();
             $('#project_extra_line_extra_id').trigger('change');
-
-            //trigger the auto calculation when we're done
-            $('#extra_total').trigger('mouseover');
         });
-
-        //Auto-select category on edit form
-        {
-            if (document.getElementById("project_extra_line_extra_id")) {
-                let e = document.getElementById("project_extra_line_extra_id");
-                let category = e.options[e.selectedIndex].getAttribute("category");
-                document.getElementById('project_extra_line_id').value = category;
-                $('#project_extra_line_id').trigger('change');
-            }
-        }
 
         //Auto-calculation
         $('#extra_edit_select,#edit_project_extra_line,#extra_total_gross,#extra_total,#extra_quantity,#extra_tva_rate,#extra_unit_price')
@@ -87,7 +87,7 @@ $(document).on("turbolinks:load", function () {
                 extra_total_gross.value = gross.toFixed(2);
                 extra_total.value = total.toFixed(2);
             });
-        $('#extra_total_gross').trigger('mouseover');
+        $('#extra_edit_select').trigger('mouseover');
 
         //Auto select project
         if ($('#project-id').data('somedata')) {
@@ -100,5 +100,28 @@ $(document).on("turbolinks:load", function () {
             $("#extra_tva_rate").val('0');
             $('select[id="extra_line_form_project"]').trigger('change');
         }
+
+        function onFormOpen() {
+            //Store the OG option (edit)
+            let extraSelect = document.getElementById("project_extra_line_extra_id");
+            let extra = extraSelect.options[extraSelect.selectedIndex].value;
+            let categories = document.getElementById("project_extra_line_id");
+            //check all extra options, hide ones not belonging to selected category
+            let category = categories.options[categories.selectedIndex].text;
+            $("#project_extra_line_extra_id > option").each(function () {
+                if (this.getAttribute("category") === category) {
+                    this.style.display = "block";
+                } else {
+                    this.style.display = "none";
+                }
+            });
+            $('#project_extra_line_extra_id').val(extra);
+        }
+
+        if (document.getElementById("project_extra_line_extra_id")) {
+            onFormOpen();
+        }
+        //auto-calculate once
+        $('#project_extra_line_extra_id').trigger('change');
     }
 );

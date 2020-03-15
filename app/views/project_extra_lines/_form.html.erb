@@ -22,7 +22,7 @@
 
       <div class="field">
         <%= form.label t('category') %>
-        <%= form.select :id, Extra.distinct.pluck(:category), {required: true, class: 'form-control', id: 'extra_line_form_category'} %>
+        <%= form.select(:id, Extra.distinct.pluck(:category), selected: @project_extra_line.extra ? @project_extra_line.extra.category : 0, required: true, class: 'form-control', id: 'extra_line_form_category')%>
       </div>
 
       <div class="field">

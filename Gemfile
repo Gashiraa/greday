@@ -76,4 +76,5 @@ gem "will_paginate_semantic_ui"
 gem 'ransack_memory'
 gem 'haml'
 gem 'apartment'
+gem 'exception_handler', '~> 0.8.0.0'
 # gem 'mini_racer'

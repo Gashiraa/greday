@@ -10,6 +10,7 @@
 //= require_tree .
 
 
+
 document.addEventListener('turbolinks:before-cache', function () {
     $('.select2-hidden-accessible').select2('destroy');
 });

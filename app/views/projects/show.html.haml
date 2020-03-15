@@ -65,6 +65,7 @@
                 - when "created"
                   = link_to t('do_accepted'), project_path(@project, project: {status: :accepted}), method: :put, class: 'ui red button'
                 - when "done"
+                  = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui yellow button'
                 - when "accepted"
                   = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui yellow button'
                 - when "invoiced"

@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <% if current_user.present? %>
-    <% if Rails.env.development? %>
-      <title><%= "[DEV] " + @company.short_name.to_s %></title>
-    <% else %>
-      <title><%= @company.short_name %></title>
-    <% end %>
-    <div data-somedata="<%= @company.short_name %>" id="company-id"></div>
-  <% else %>
-    <title>LOGIN</title>
+    <title><%= @company.short_name %></title>
   <% end %>
 
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= favicon_link_tag asset_path('favicon.png') %>
 
@@ -25,7 +19,8 @@
 
   <% if current_user.present? %>
     <a class="item" href="/projects" id="logo"> <%= @company.short_name.to_s.upcase %> </a>
-  <% else %>
+    <div data-somedata="<%= @company.short_name %>" id="company-id"></div>
+<% else %>
     <a class="item" href="/projects" id="logo"> LOGIN </a>
   <% end %>
 

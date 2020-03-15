@@ -15,5 +15,17 @@ module Greday
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    #
+    config.exception_handler = {
+
+        # The new syntax allows us to assign different values to each HTTP status code
+        # At the moment, only 'layout' & 'notification' are supported
+        # We plan to include several more in the future...
+
+        exceptions: {
+            all: { layout: "public/400.html" } # -> this will inherit from ApplicationController's layout
+        }
+    }
   end
 end
+
