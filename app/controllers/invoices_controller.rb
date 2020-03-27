@@ -27,12 +27,12 @@ class InvoicesController < ApplicationController
   def show
     @invoice = scope.find(params[:id])
     @size = @invoice.get_size(@invoice)
-    show_gescoop
-    # if @company.short_name == "Greday"
-    #   show_greday
-    # elsif @company.short_name == "PLUSVIEW"
-    #   show_plusview
-    # end
+    # show_gescoop
+    if @company.short_name == "Greday"
+      show_greday
+    elsif @company.short_name == "PLUSVIEW"
+      show_plusview
+    end
   end
 
   def show_gescoop
