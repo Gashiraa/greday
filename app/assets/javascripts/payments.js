@@ -1,6 +1,7 @@
 $(document).on("turbolinks:load", function () {
 
-        $('#customer_select_invoice').on('focus load trigger mouseover change', function () {
+    //auto display created invoices on customer selection
+    $('#customer_select_invoice').on('focus load trigger mouseover change', function () {
             let invoice = this.options[this.selectedIndex].value;
             $("#select_invoices_payment > option").each(function () {
                 if (this.getAttribute("invoice") === invoice) {

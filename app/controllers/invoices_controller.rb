@@ -27,11 +27,26 @@ class InvoicesController < ApplicationController
   def show
     @invoice = scope.find(params[:id])
     @size = @invoice.get_size(@invoice)
+    show_gescoop
+    # if @company.short_name == "Greday"
+    #   show_greday
+    # elsif @company.short_name == "PLUSVIEW"
+    #   show_plusview
+    # end
+  end
 
-    if @company.short_name == "Greday"
-      show_greday
-    elsif @company.short_name == "PLUSVIEW"
-      show_plusview
+  def show_gescoop
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: t('invoice') + "_#{@invoice.display_number}",
+               page_size: 'A4',
+               template: 'invoices/gescoop.html.erb',
+               layout: 'gescoop_pdf',
+               encoding: 'utf8',
+               show_as_html: params.key?('debug'),
+               :margin => {:bottom => 15,:top => 10,:left => 15,:right => 15,}
+      end
     end
   end
 

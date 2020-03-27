@@ -1,0 +1,125 @@
+@import "semantic-ui";
+
+.pdf {
+  line-height: 1.7rem;
+
+  table {
+    width: 100%;
+  }
+
+  .header {
+    font-size: 1.4rem;
+
+    .company-infos {
+      line-height: 1.8rem;
+
+      .invoice-date {
+        vertical-align: middle;
+        text-align: right;
+      }
+    }
+
+    .second-row {
+      .customer-infos {
+        padding-left: 6rem;
+        width: 60%;
+      }
+
+      .invoice-number {
+        width: 40%;
+        vertical-align: bottom;
+        text-align: center;
+
+        .invoice-header {
+          background-color: #f2711c;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .content {
+    margin-top: 4rem;
+
+    .total-table, .total-table > tbody > tr > td {
+      line-height: 1.3rem;
+      font-weight: bold;
+      border: none;
+      font-size: 1.2rem;
+      text-align: right;
+    }
+
+    .ui.table > thead > tr:first-child > th:first-child, .ui.table {
+      border-radius: 0;
+    }
+
+    .ui.stripped.table {
+      border-top: 0.2em solid #1B1C1D;
+    }
+  }
+
+  /* Use .unstackable to remove table auto-stacking behavior!  Issue #947. */
+  .ui.unstackable {
+    &.table {
+      display: table;
+
+      thead {
+        display: table-header-group;
+      }
+
+      tbody {
+        display: table-row-group;
+      }
+
+      tfoot {
+        display: table-footer-group;
+      }
+
+      tr {
+        display: table-row;
+      }
+
+      td:first-child {
+        font-weight: normal;
+      }
+
+      tr > td {
+        width: auto !important;
+        display: table-cell;
+        padding: 0.4em 0.7em;
+        box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+      }
+    }
+
+    &.celled.table {
+      th, td {
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      }
+
+      &.segment {
+        th:first-child, td:first-child {
+          border-left: none !important;
+        }
+
+        th:last-child, td:last-child {
+          border-right: none !important;
+        }
+
+        > * {
+          &:first-child > tr:first-child > {
+            th, td {
+              border-top: none !important;
+            }
+          }
+
+          &:last-child > tr:last-child > {
+            th, td {
+              border-bottom: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

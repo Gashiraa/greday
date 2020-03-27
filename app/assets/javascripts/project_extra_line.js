@@ -1,29 +1,5 @@
 $(document).on("turbolinks:load", function () {
 
-        $("#extra_line_form_project").select2({
-            theme: "bootstrap",
-            width: '100%',
-            sselectOnClose: true,
-            language: $('.locale').data('locale')
-        });
-
-        //Auto-select category on edit form
-        {
-            // if (document.getElementById("project_extra_line_extra_id")) {
-            //     let e = document.getElementById("project_extra_line_extra_id");
-            //     let category = e.options[e.selectedIndex].getAttribute("category");
-            //     document.getElementById('project_extra_line_id').value = category;
-            //     $('#project_extra_line_id').trigger('change');
-            // }
-            //
-            // if (document.getElementById("project_extra_line_extra_id")) {
-            //     //Store the OG option (edit)
-            //     let extraSelect = document.getElementById("project_extra_line_extra_id");
-            //     let extra = extraSelect.options[extraSelect.selectedIndex].value;
-            //     $('#project_extra_line_extra_id').val(extra).change();
-            // }
-        }
-
         //On selection of extra, autoselect : unit and price
         $('#project_extra_line_extra_id').on('focus load trigger mouseover change', function () {
             if (this.selectedIndex >= 0) {

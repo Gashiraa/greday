@@ -1,6 +1,6 @@
-<div class="ui segment project-content" id="example1">
-  <div class="left ui rail" style="">
-    <div class="ui sticky">
+<div class="project-content" id="example1">
+  <div class="ui left rail" style="">
+    <div class="ui">
       <div class="ui cards">
         <div class="card">
           <div class="content">
@@ -100,7 +100,7 @@
       </div>
     </div>
   </div>
-  <div class="machine-section">
+  <div class="ui segment">
     <h4>
       Marchandises d'entretien
       <%= link_to(new_ware_path(maintenance: :true, machine: @machine.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
@@ -162,6 +162,9 @@
       <% end %>
       </tbody>
     </table>
+  </div>
+
+  <div class="ui segment">
     <table class="ui striped selectable red table table-to-color">
       <h4>Marchandises spécifiques à cette machine</h4>
       <thead class=thead-dark>
@@ -198,6 +201,9 @@
       <% end %>
       </tbody>
     </table>
+  </div>
+
+  <div class="ui segment">
     <table class="ui striped selectable blue table table-to-color">
       <h4>Projets concernant cette machine</h4>
       <thead class=thead-dark>

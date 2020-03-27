@@ -24,7 +24,7 @@
 
       <div class="field">
         <%= form.label t('customer') %>
-        <%= form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, {required: true, class: 'form-control', id: 'invoice_form_customer'} %>
+        <%= form.collection_select :customer_id , Customer.all, :id, :name, {:include_blank => true}, {required: true, class: 'form-control', id: 'invoice_form_customer'} %>
       </div>
 
       <div class="field">

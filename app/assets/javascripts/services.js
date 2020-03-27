@@ -1,12 +1,5 @@
 $(document).on("turbolinks:load", function () {
 
-        $("#service_form_project").select2({
-            theme: "bootstrap",
-            width: '100%',
-            selectOnClose: true,
-            language: $('.locale').data('locale')
-        }); //PICKING A PROJECT IN SERVICE FORM
-
         //SERVICES TOTAL auto-complete
         $('#servicesForm, #total_cost_s, #total_gross_s, #hourly_rate, #tva_rate_s, #coefficient, #_duration_4i, #_duration_5i, #service_duration_4i, #service_duration_5i')
             .on('keyup keypress mouseover change', function () {
@@ -34,10 +27,6 @@ $(document).on("turbolinks:load", function () {
                 }
             );
         $('#servicesForm').trigger('mouseover');
-
-        if ($('#project-id').data('somedata')) {
-            $("#service_form_project").val($('#project-id').data('somedata'));
-        }
 
         if (document.getElementById('service_id')) {
             if ($('#customer-rate').data('somedata')) {

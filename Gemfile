@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 git_source(:github) {|repo| "https://github.com/#{repo}.git"}
 
-ruby '2.5.3'
+ruby '2.5.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -73,8 +73,14 @@ gem 'cancancan', '~> 1.10'
 gem 'fomantic-ui-sass'
 gem 'jquery-ui-themes'
 gem "will_paginate_semantic_ui"
-gem 'ransack_memory'
+gem 'ransack_memory', '~> 0.0.7'
 gem 'haml'
 gem 'apartment'
 gem 'exception_handler', '~> 0.8.0.0'
+gem 'rake'
+gem 'rack'
+gem 'nokogiri', '~>1.10.8'
+gem 'to_words'
+
+
 # gem 'mini_racer'

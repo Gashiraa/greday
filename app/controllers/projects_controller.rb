@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
 
   before_action :set_project, only: %i[show edit update destroy]
   before_action :set_cache_headers, :set_company
+
   load_and_authorize_resource
 
   def set_company

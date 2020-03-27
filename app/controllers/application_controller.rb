@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
   include RansackMemory::Concern # insert this line
 
   before_action :authenticate_user!, :load_schema, :company
-  before_action :save_and_load_filters # insert this line after Devise auth before filter (Devise gem is not necessary)
   before_action :set_locale
+  before_action :save_and_load_filters # insert this line after Devise auth before filter (Devise gem is not necessary)
 
 
   def set_locale

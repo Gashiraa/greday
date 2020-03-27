@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <% if @invoice %>
+    <title><%= t('invoice') + "_#{@invoice.display_number}" %></title>
+  <% end %>
+  <% if @quotation %>
+    <title><%= t('quotation') + "_#{@quotation.id}" %></title>
+  <% end %>
+  <%= wicked_pdf_stylesheet_link_tag "gescoop" %>
+</head>
+<%= yield %>
+</html>

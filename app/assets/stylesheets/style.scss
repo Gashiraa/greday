@@ -1,12 +1,16 @@
 @import "semantic-ui";
 
-.content {
-  padding: 1%;
+body {
+  height: calc(100% - 6rem);
 }
 
 .scrollable-project-section {
   max-height: 25vh;
   overflow-y: auto;
+}
+
+#primary-content {
+  margin-top: 4rem;
 }
 
 .clear-filter {
@@ -23,6 +27,19 @@
     color: white !important;
     text-decoration: none;
   }
+}
+
+.ui.cards {
+  h3, h4 {
+    margin: 0 !important;
+  }
+}
+
+.ui.attached.menu {
+  height: 3rem;
+  z-index: 20;
+  position: fixed;
+  top: 0;
 }
 
 .red-row {
@@ -84,13 +101,23 @@ img {
   width: 10rem;
 }
 
+.card-button {
+  width: 12rem;
+}
+
+.bold {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
 .invoice-report-total {
   position: absolute;
   text-align: right;
   right: 0;
 
   h3 {
-    margin-top: 0.4em;
+    text-align: center;
+    margin-top: 0.3rem;
   }
 }
 
@@ -126,11 +153,6 @@ img {
   font-size: 1.2em;
 }
 
-.project-content {
-  width: calc(100vw - 380px);
-  float: right;
-}
-
 .project-section, .machine-section {
   a {
     margin-left: 1vw;
@@ -144,5 +166,21 @@ img {
 }
 
 .ui.left.rail {
-  padding: 0;
+  right: calc(100% - 26rem);
+  top: calc(4rem);
+  height: 70%;
+}
+
+.project-content {
+  margin-right: 2rem;
+  width: calc(100vw - 380px);
+  float: right;
+
+  .ui.segment {
+    margin-bottom: 2rem;
+  }
+}
+
+.ui.table.total-section {
+  border: none;
 }

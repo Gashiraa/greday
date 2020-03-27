@@ -1,19 +1,5 @@
 $(document).on("turbolinks:load", function () {
 
-        $("#ware_form_project").select2({
-            theme: "bootstrap",
-            width: '100%',
-            selectOnClose: true,
-            language: $('.locale').data('locale')
-        }); //PICKING A PROJECT IN WARE FORM
-
-        $("#ware_form_customer").select2({
-            theme: "bootstrap",
-            width: '100%',
-            selectOnClose: true,
-            language: $('.locale').data('locale')
-        }); //PICKING A CUSTOMER IN WARE FORM
-
         //Disabling dropdowns for ware forms
         $('select[id="ware_form_project"]').on('focus trigger mouseover change', function () {
             if ($(this).val()) {

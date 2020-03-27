@@ -15,55 +15,77 @@
 
 </head>
 
-<div class="ui inverted attached menu">
+<div class="ui <%= (@company&.use_credit_notes.to_i +
+    @company&.use_wares.to_i +
+    @company&.use_services.to_i +
+    @company&.use_machines.to_i + 5).to_words %> item inverted attached menu">
+
+  <% if current_user %>
+
+    <%= content_tag :div, class: "locale", data: {locale: current_user.locale} do %>
+    <% end %>
+    <a class="blue item" href="/projects">
+      <i class="large folder icon"></i>
+      <%= t('projects').capitalize %>
+    </a>
+
+    <a class="olive dropdown item" href="/invoices">
+      <i class="large file alternate icon"></i>
+      <%= t('invoices').capitalize %>
+    </a>
+
+    <% if @company.use_wares %>
+      <a class="violet item" href="/wares">
+        <i class="large dolly flatbed icon"></i>
+        <%= t('wares').capitalize %> </a>
+    <% end %>
+
+    <% if @company.use_services %>
+      <a class="red item" href="/services">
+        <i class="large wrench icon"></i>
+        <%= t('services').capitalize %> </a>
+    <% end %>
+
+    <a class="brown item" href="/customers">
+      <i class="large address card icon"></i>
+      <%= t('customers').capitalize %> </a>
+
+    <% if @company.use_machines %>
+      <a class="purple item" href="/machines">
+        <i class="large truck icon"></i>
+        <%= t('machines').capitalize %> </a>
+    <% end %>
+
+    <a class="yellow item" href="/extras">
+      <i class="large pallet icon"></i>
+      <%= @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
+    </a>
+
+    <% if @company.use_credit_notes %>
+      <a class="green item" href="/expense_accounts">
+        <i class="large clipboard icon"></i>
+        <%= t('expense_accounts').capitalize %> </a>
+    <% end %>
+
+  <% end %>
 
   <% if current_user.present? %>
-    <a class="item" href="/projects" id="logo"> <%= @company.short_name.to_s.upcase %> </a>
+    <div class="ui dropdown item">
+      <i class="user icon"></i>
+      <%= current_user.email %>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <%= link_to(t('logout'), destroy_user_session_path, method: :delete, class: "item logout-button") %>
+      </div>
+    </div>
+
     <div data-somedata="<%= @company.short_name %>" id="company-id"></div>
-<% else %>
+  <% else %>
     <a class="item" href="/projects" id="logo"> LOGIN </a>
   <% end %>
 
-  <div class="menu">
-    <% if current_user %>
-      <%= content_tag :div, class: "locale", data: {locale: current_user.locale} do %>
-      <% end %>
-      <a class="blue item" href="/projects"> <%= t('projects').capitalize %>  </a>
-
-      <a class="olive dropdown item" href="/invoices"> <%= t('invoices').capitalize %> </a>
-
-      <% if @company.use_wares %>
-        <a class="violet item" href="/wares"> <%= t('wares').capitalize %> </a>
-      <% end %>
-
-      <% if @company.use_services %>
-        <a class="red item" href="/services"> <%= t('services').capitalize %> </a>
-      <% end %>
-
-      <a class="brown item" href="/customers"> <%= t('customers').capitalize %> </a>
-
-      <% if @company.use_machines %>
-        <a class="purple item" href="/machines"> <%= t('machines').capitalize %> </a>
-      <% end %>
-
-      <a class="yellow item" href="/extras"> <%= @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %> </a>
-
-      <% if @company.use_credit_notes %>
-        <a class="green item" href="/expense_accounts"> <%= t('expense_accounts').capitalize %> </a>
-      <% end %>
-
-    <% end %>
-
-  </div>
-
-  <div class="right menu">
-
-    <%#= link_to t('FR'), {:controller => '/application', :action => 'change_locale', :id => 'fr'}, class: "item" %>
-
-    <%#= link_to t('EN'), {:controller => '/application', :action => 'change_locale', :id => 'en'}, class: "item" %>
-
-    <%= link_to(t('logout'), destroy_user_session_path, method: :delete, class: "item logout-button") %>
-  </div>
+  <%#= link_to t('FR'), {:controller => '/application', :action => 'change_locale', :id => 'fr'}, class: "item" %>
+  <%#= link_to t('EN'), {:controller => '/application', :action => 'change_locale', :id => 'en'}, class: "item" %>
 
 </div>
 
