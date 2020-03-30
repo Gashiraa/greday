@@ -17,5 +17,11 @@ $(document).on("turbolinks:load", function () {
             $("#invoice_form_customer").val([$('#project-customer-id').data('somedata')]);
             $('#invoice_form_customer').select2({theme: "bootstrap", width: '100%', selectOnClose: true}).trigger('change');
         }
+
+        if ($("#sortProjectFrom").val() === '' || $("#sortProjectTo").val() === '') {
+            $('#invoice-recap-button').addClass("disabled");
+        } else {
+            $('#invoice-recap-button').removeClass("disabled");
+        }
     }
 );

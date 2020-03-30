@@ -20,7 +20,7 @@
 
       <div class="field">
         <%= form.label t('project') %>
-        <%= form.collection_select :project_id, Project.all, :id, :name, {:include_blank => true}, {class: 'form-control', id: 'service_form_project'} %>
+        <%= form.collection_select :project_id, Project.all, :id, :name, {:include_blank => true, :required => true}, {class: 'form-control', id: 'service_form_project'} %>
       </div>
 
       <div class="field">

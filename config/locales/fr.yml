@@ -408,3 +408,6 @@ fr:
   do_accepted: "Accepter"
   add_extra: "Ajouter un divers"
   add_article: "Ajouter un article"
+  invoice_report: "Rapport de facturation"
+  invoices_amount: "Nombre de factures : "
+  total_amount: "Montant total : "

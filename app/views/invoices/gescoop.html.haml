@@ -1,0 +1,66 @@
+.pdf
+  %table.header
+    %tr.company-infos
+      %td
+        = @company.name
+        %br/
+        = @company.street
+        %br/
+        = @company.postcode + ' ' + @company.locality
+        %br/
+        = @company.phone
+        %br/
+        = @company.email
+        %br/
+        = "TVA: BE0810.007.903"
+      %td.invoice-date
+        = @company.locality + " le, " + l(@invoice.date).to_s
+    %tr.second-row
+      %td.invoice-number
+        .ui.huge.header
+          .invoice-header
+            = t('invoice').upcase
+          = '#' + @invoice.display_number.to_s
+      %td.customer-infos
+        = @invoice.customer.name
+        %br/
+        = @invoice.customer.street.to_s + ', ' + @invoice.customer.number.to_s
+        %br/
+        = @invoice.customer.cp.to_s + ' ' + @invoice.customer.locality
+        %br/
+        = @invoice.customer.country
+        %br/
+        = "TVA : " + @invoice.customer.tva_record
+  .content
+    - if @size > 15
+      %h2 Récapitulatif de la facture
+      %table.ui.unstackable.black.celled.striped.table
+        %thead
+          %tr
+            %th.eight.wide
+              = t('project')
+            %th.four.wide.center.aligned
+              = t('date_locale')
+            %th.four.wide.right.aligned
+              = t('total_gross') + ' (€)'
+        %tbody
+          - @invoice.projects.order(date: :asc).each do |project|
+            %tr
+              %td
+                = project.name
+              %td.center.aligned
+                = l(project.date)
+              %td.right.aligned
+                = number_with_precision project.total_gross, :precision => 2
+      %table.ui.unstackable.compact.table.total-table
+        %th.twelve.wide
+        %tr
+          %td TOTAL HT (€)
+          %td= number_with_precision @invoice.total_gross, :precision => 2
+        %tr
+          %td Total TVA (€)
+          %td= number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2
+        %tr
+          %td TOTAL TTC (€)
+          %td= number_with_precision @invoice.total, :precision => 2
+      .page-break

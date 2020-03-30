@@ -36,6 +36,10 @@ $(document).on("turbolinks:load", function () {
             }
         }
 
+        if ($('#project-id').data('somedata')) {
+            $("#service_form_project").val($('#project-id').data('somedata'));
+        }
+
         //Disabling dropdowns for ware forms
         $('select[id="service_form_project"]').on('focus trigger mouseover change', function () {
             if ($(this).val()) {

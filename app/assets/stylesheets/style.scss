@@ -74,7 +74,7 @@ img {
 }
 
 .ui-widget {
-  font-family: "Lato";
+  font-family: "Lato", serif;
 }
 
 .close {
@@ -82,6 +82,7 @@ img {
   right: 3%;
   top: 3%;
   z-index: 999;
+  cursor: pointer;
 }
 
 .button {
@@ -95,6 +96,11 @@ img {
 
 .centered {
   text-align: center;
+  margin-bottom: 1rem;
+}
+
+.ui.compact.button {
+  padding: 0.58928571em 1em 0.58928571em;
 }
 
 .status-button {
@@ -112,7 +118,7 @@ img {
 
 .invoice-report-total {
   position: absolute;
-  text-align: right;
+  text-align: center;
   right: 0;
 
   h3 {

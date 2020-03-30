@@ -17,6 +17,23 @@
         vertical-align: middle;
         text-align: right;
       }
+
+      .invoice-report-details {
+        h1 {
+          background-color: #21ba45;
+          color: white;
+          width: 22rem;
+          text-align: center;
+        }
+        vertical-align: bottom;
+        width: 50%
+      }
+
+      .invoice-report-company {
+        b {
+          font-size: 1.7rem
+        }
+      }
     }
 
     .second-row {
@@ -43,7 +60,7 @@
 
     .total-table, .total-table > tbody > tr > td {
       line-height: 1.3rem;
-      font-weight: bold;
+      font-weight: bold !important;
       border: none;
       font-size: 1.2rem;
       text-align: right;

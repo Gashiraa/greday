@@ -4,19 +4,34 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: %i[show edit update destroy]
 
   before_action :set_cache_headers
-
-
   load_and_authorize_resource
+
   # GET /invoices
   # GET /invoices.json
   def index
-    @search = Invoice.order(date: :desc).ransack(params[:q])
-    @total = @search.result(distinct: true)
-    @invoices = @search.result(distinct: true).order(:status).paginate(page: params[:page], per_page: 30)
+    respond_to do |format|
+      format.html
+      @search = Invoice.order(date: :desc).ransack(params[:q])
+      @total = @search.result(distinct: true)
+      @invoices = @search.result(distinct: true).order(:status).paginate(page: params[:page], per_page: 30)
+      format.pdf do
+        @search = Invoice.order(date: :asc).ransack(params[:q])
+        @invoices = @search.result(distinct: true)
+        render pdf: t('invoice_report'),
+               page_size: 'A4',
+               template: 'invoices/report.html.haml',
+               layout: 'pdf/invoice/report',
+               encoding: 'utf8',
+               show_as_html: false,
+               margin: {:bottom => 15, :top => 15, :left => 15, :right => 15},
+               footer: {
+                   html: {
+                       template: 'layouts/pdf/report/footer.html.erb'
+                   },
+               }
+      end
+    end
   end
-
-  # GET /invoices/1
-  # GET /invoices/1.json
 
   # GET /invoices/new
   def new
@@ -24,6 +39,8 @@ class InvoicesController < ApplicationController
     respond_to(&:js)
   end
 
+  # GET /invoices/1
+  # GET /invoices/1.json
   def show
     @invoice = scope.find(params[:id])
     @size = @invoice.get_size(@invoice)
@@ -41,11 +58,11 @@ class InvoicesController < ApplicationController
       format.pdf do
         render pdf: t('invoice') + "_#{@invoice.display_number}",
                page_size: 'A4',
-               template: 'invoices/gescoop.html.erb',
-               layout: 'gescoop_pdf',
+               template: 'invoices/gescoop.html.haml',
+               layout: 'pdf/gescoop',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 15,:top => 10,:left => 15,:right => 15,}
+               :margin => {:bottom => 15, :top => 15, :left => 15, :right => 15}
       end
     end
   end
@@ -57,13 +74,13 @@ class InvoicesController < ApplicationController
         render pdf: t('invoice') + "_#{@invoice.display_number}",
                page_size: 'A4',
                template: 'invoices/greday.html.erb',
-               layout: 'greday_pdf',
+               layout: 'pdf/greday',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                :margin => {:bottom => 20},
                footer: {
                    html: {
-                       template: 'layouts/greday_footer.html.erb'
+                       template: 'layouts/pdf/greday_footer.html.erb'
                    },
                }
       end
@@ -77,13 +94,13 @@ class InvoicesController < ApplicationController
         render pdf: "plusview sprl-facture" + @invoice.display_number.to_s,
                page_size: 'A4',
                template: 'invoices/plusview.html.erb',
-               layout: 'plusview_pdf',
+               layout: '/pdf/plusview',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                :margin => {:bottom => 20},
                footer: {
                    html: {
-                       template: 'layouts/plusview_invoice_footer.html.erb'
+                       template: 'layouts/pdf/invoice/plusview_footer.html.erb'
                    },
                }
       end

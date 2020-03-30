@@ -1,0 +1,71 @@
+.pdf
+  %table.header
+    %tr.company-infos
+      %td.invoice-report-company
+        %b
+          = @company.name
+        %br/
+        = @company.street
+        %br/
+        = @company.postcode + ' ' + @company.locality
+        %br/
+        = @company.phone
+        %br/
+        = @company.email
+        %br/
+        = "TVA: BE0810.007.903"
+      %td.invoice-report-details
+        %h1
+          = t('invoice_report')
+        = "Période du " + params[:q][:date_gteq].to_s + " au " + params[:q][:date_lteq].to_s
+        %br/
+        = t("invoices_amount") + @invoices.length.to_s
+        %br/
+        = t("total_amount") + (number_with_precision @invoices.collect { |w| w.valid? ? w.total_gross : 0 }.sum.to_s, :precision => 2) + "€"
+  .content
+    %table.ui.unstackable.black.celled.striped.table
+      %thead
+        %tr
+          %th.two.wide.center.aligned
+            = t('date_locale')
+          %th.two.wide.center.aligned
+            = t('invoice_number')
+          %th.four.wide
+            = t('customer')
+          %th.three.wide
+            = t('project')
+          %th.one.wide.center.aligned
+            = t('status')
+          %th.two.wide.right.aligned
+            = t('total_gross') + ' (€)'
+          %th.two.wide.right.aligned
+            = t('total') + ' (€)'
+      %tbody
+        - @invoices.each do |invoice|
+          %tr
+            %td.center.aligned
+              = l(invoice.date)
+            %td.center.aligned
+              = invoice.display_number
+            %td
+              = invoice.projects.first.customer.name
+            %td
+              = invoice.projects.first.name.truncate(20)
+            %td.center.aligned
+              = invoice.translated_status
+            %td.right.aligned
+              = number_with_precision invoice.total_gross, :precision => 2
+            %td.right.aligned
+              = number_with_precision invoice.total, :precision => 2
+    %table.ui.unstackable.compact.table.total-table
+      %th.eleven.wide
+      %th.three.wide.right.aligned
+      %th.two.wide.right.aligned
+      %tr
+        %td
+          = "TOTAL (€)"
+        %td.right.aligned
+          = number_with_precision  @invoices.collect { |w| w.valid? ? w.total_gross : 0 }.sum, :precision => 2
+        %td.right.aligned
+          = number_with_precision  @invoices.collect { |w| w.valid? ? w.total : 0 }.sum, :precision => 2
+

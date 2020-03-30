@@ -15,7 +15,6 @@ $(document).on("turbolinks:load", function () {
 
     //clickable project row
     $("tr[data-project]").click(function () {
-        let test = event;
         if (event.target.tagName === "IMG" || event.target.innerHTML === "Accepté") {
             return
         }
@@ -24,7 +23,8 @@ $(document).on("turbolinks:load", function () {
 
     //clickable invoice row
     $("tr[data-invoice]").click(function () {
-        if (event.target.tagName === "IMG" || event.target.innerHTML === "Payé") {
+        let test = event;
+        if (event.target.tagName === "A" ||event.target.tagName === "IMG" || event.target.innerHTML === "Payé") {
             return
         }
         window.open($(this).data("invoice"), $(this).data("target"));

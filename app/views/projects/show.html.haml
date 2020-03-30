@@ -8,9 +8,6 @@
       .ui
         .ui.cards
           .card
-            = link_to(:back, class: "ui top attached grey button") do
-              %i.left.arrow.icon
-              =t('back')
             .content
               .header
                 = @project.name
@@ -68,6 +65,9 @@
                 = link_to project_path(@project, project: {status: :paid}), method: :put, class: 'ui bottom attached green button' do
                   %i.euro.sign.icon
                   =t('project_paid')
+            = link_to(:projects, class: "ui top attached grey button") do
+              %i.left.arrow.icon
+              =t('back')
           - if @project.machine_id
             .card
               .content
@@ -291,7 +291,7 @@
               - unless @project.project_extra_lines.any?
                 %tr
                   %td.center.aligned{colspan: "9"}= t('no_data_display')
-              - @project.project_extra_lines.each do |project_extra_line|
+              - @project.project_extra_lines.order(:updated_at).each do |project_extra_line|
                 - if project_extra_line.is_manual
                   %tr
                     %td

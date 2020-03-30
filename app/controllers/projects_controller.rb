@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
         render pdf: t('quotation') + "_#{@project.id}",
                page_size: 'A4',
                template: 'quotations/show.html.erb',
-               layout: 'greday_pdf',
+               layout: '/pdf/greday',
                orientation: 'Portrait',
                encoding: 'utf8',
                lowquality: true,
@@ -53,7 +53,7 @@ class ProjectsController < ApplicationController
                margin: {bottom: 20},
                footer: {
                    html: {
-                       template: 'layouts/greday_footer.html.erb'
+                       template: 'layouts/pdf/greday_footer.html.erb'
                    },
                }
       end
@@ -67,13 +67,13 @@ class ProjectsController < ApplicationController
         render pdf: "plusview sprl-devis" + @project.id.to_s,
                page_size: 'A4',
                template: 'quotations/plusview.html.erb',
-               layout: 'plusview_pdf',
+               layout: '/pdf/plusview',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                :margin => {:bottom => 20},
                footer: {
                    html: {
-                       template: 'layouts/plusview_quotation_footer.html.erb'
+                       template: 'layouts/pdf/quote/plusview_footer.html.erb'
                    },
                }
       end

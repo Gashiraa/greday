@@ -38,9 +38,14 @@
           <h5 class="ui small green compact button" onclick="showHidden();">
             <%= t('total_invoiced') %>
           </h5>
-          <h3 id="hideable-field">
-            <%= @total.collect { |w| w.valid? ? w.total_gross : 0 }.sum %> €
-          </h3>
+          <div id="hideable-field">
+            <h3>
+              <%= (number_with_precision @invoices.collect { |w| w.valid? ? w.total_gross : 0 }.sum.to_s, :precision => 2) %> €
+            </h3>
+            <%= link_to invoices_path(q: params[:q], format: :pdf), class: 'ui blue compact button', id:'invoice-recap-button' do %>
+              <i class="file pdf icon"></i> Voir le récap
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -80,7 +85,7 @@
   <% @invoices.each do |invoice| %>
     <tr data-invoice="<%= invoice_path(invoice) %>.pdf" data-target="_blank">
       <td class="center aligned">
-        <%= link_to(invoice_path(invoice.id), {class: 'ui olive compact button'}) do %>
+        <%= link_to(invoice_path(invoice.id, :format => :pdf), {class: 'ui olive compact button', target: "_blank"}) do %>
           <i class="file alternate icon"></i>
           <%= invoice.display_number.to_s %>
         <% end %>
