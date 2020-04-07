@@ -267,12 +267,12 @@
       .project-section
         %h3
           = @company.use_articles == false ? t('extra') : t('article')
-          = link_to(new_project_extra_line_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+          = link_to(new_project_extra_line_path(manual: false), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
             %button.ui.yellow.compact.labeled.icon.button
               = @company.use_articles == false ? t('add_extra') : t('add_article')
               %i.plus.icon
           - if @company.use_manual_extras
-            = link_to("project_extra_lines/new_manual", :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window') do
+            = link_to(new_project_extra_line_path(manual: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
               %button.ui.teal.compact.labeled.icon.button
                 Ajouter un article (manuel)
                 %i.plus.icon
@@ -308,7 +308,7 @@
                     %td.right.aligned
                       = number_with_precision project_extra_line.total, :precision => 2
                     %td.center.aligned
-                      = link_to "project_extra_lines/edit_manual/" + project_extra_line.id.to_s, remote: true do
+                      = link_to edit_project_extra_line_path(project_extra_line, manual: true), remote: true do
                         = image_tag("edit-icon.png", size: "30x30")
                       = link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do
                         = image_tag("delete-icon.png", size: "30x30")
@@ -325,7 +325,7 @@
                     %td.right.aligned
                       = number_with_precision project_extra_line.total, :precision => 2
                     %td.center.aligned
-                      = link_to edit_project_extra_line_path(project_extra_line), remote: true do
+                      = link_to edit_project_extra_line_path(project_extra_line, manual: false), remote: true do
                         = image_tag("edit-icon.png", size: "30x30")
                       = link_to project_extra_line, method: :delete, data: {confirm: t('confirm_delete')} do
                         = image_tag("delete-icon.png", size: "30x30")

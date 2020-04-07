@@ -60,13 +60,7 @@
 
         <div class="field">
           <%= form.label t('project') %>
-          <%= form.select :project_id, Project.all.map { |project| [
-              if project.customer
-                project.name + ' - ' + project.customer.name
-              else
-                project.name
-              end, project.id
-          ] }, {:include_blank => true}, {class: 'form-control', id: 'ware_form_project'} %>
+          <%= form.select :project_id, Project.includes(:customer).all.map { |project| [project.name + ' - ' + project.customer&.name, project.id] }, {:include_blank => true}, {class: 'form-control', id: 'ware_form_project'} %>
         </div>
         <div class="field">
           <%= form.label t('customer') %>

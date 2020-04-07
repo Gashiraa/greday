@@ -2,79 +2,157 @@
   <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
 </div>
 
-<%= form_for(@project_extra_line) do |form| %>
-  <div class="ui form">
+<% if manual == "true" %>
 
-    <h2 class="centered">
-      <% if @project_extra_line.id %>
-        <%= t('editing_extra_line') %>
-      <% else %>
-        <%= t('creating_extra_line') %>
-      <% end %>
-    </h2>
+  <%= form_for(@project_extra_line) do |form| %>
+    <div class="ui form">
 
-    <div class="three fields">
+      <h2 class="centered">
+        <% if @project_extra_line.id %>
+          <%= t('editing_extra_line') %>
+        <% else %>
+          <%= t('creating_extra_line') %>
+        <% end %>
+      </h2>
 
-      <div class="field">
-        <%= form.label t('project') %>
-        <%= form.collection_select :project_id, Project.all, :id, :name, {:include_blank => true}, {:required => true, diasbled: true, class: 'form-control', id: 'extra_line_form_project'} %>
+      <div class="three fields">
+
+        <%= form.hidden_field :is_manual, value: true %>
+
+
+        <div class="field">
+          <%= form.label t('project') %>
+          <%= form.collection_select :project_id, Project.all, :id, :name, {:include_blank => true}, {:required => true, diasbled: true, class: 'form-control', id: 'extra_line_form_project'} %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('extra') %>
+          <%= form.text_field :manual_name, class: 'form-control', id: 'extra_manual_edit_select', autocomplete: 'nope' %>
+        </div>
+        <div class="field">
+          <%= form.label t('unit') %>
+          <%= form.text_field :unit, class: 'form-control', id: 'extra_unit', autocomplete: 'nope' %>
+        </div>
+
+      </div>
+
+      <div class="three fields">
+
+        <div class="field">
+          <%= form.label t('Quantity') %>
+          <%= form.text_field :quantity, class: "form-control", autocomplete: 'nope', id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('extra_price') %>
+          <%= form.text_field :manual_price, class: 'form-control', onkeyup: "javascript:replaceComma(this.id, this.value);", id: 'extra_unit_price', autocomplete: 'nope' %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('tva_rate') %>
+          <%= form.text_field :tva_rate, class: "form-control", autocomplete: 'nope', id: 'extra_tva_rate', value: @project_extra_line.tva_rate ? @project_extra_line.tva_rate : "21" %>
+        </div>
+
+      </div>
+
+      <div class="two fields">
+
+        <div class="field">
+          <%= form.label t('total_gross') %>
+          <%= form.text_field :total_gross, readonly: true, class: 'form-control', id: 'extra_total_gross' %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('total_cost') %>
+          <%= form.text_field :total, readonly: true, class: 'form-control', id: 'extra_total' %>
+        </div>
       </div>
 
       <div class="field">
-        <%= form.label t('category') %>
-        <%= form.select(:id, Extra.distinct.pluck(:category), selected: @project_extra_line.extra ? @project_extra_line.extra.category : 0, required: true, class: 'form-control', id: 'extra_line_form_category')%>
-      </div>
-
-      <div class="field">
-        <%= form.label @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
-        <%= form.select(:extra_id, options_for_select(Extra.all.collect { |extra| [extra.name, extra.id, {category: extra.category}] }, selected: @project_extra_line.extra_id), {class: 'form-control', id: 'extra_edit_select', autocomplete: 'nope'}) %>
-      </div>
-
-    </div>
-
-    <div class="four fields">
-
-      <div class="field">
-        <%= form.label t('unit') %>
-        <%= form.select(:id, Extra.all
-            .collect { |extra| [extra.unit, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit', autocomplete: 'nope', :disabled => true}) %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('Quantity') %>
-        <%= form.number_field :quantity, step: :any, class: "form-control", autocomplete: 'nope', id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('extra_price') %>
-        <%= form.select(:id, Extra.all
-            .collect { |extra| [extra.unit_price, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit_price', autocomplete: 'nope', :disabled => true}) %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('tva_rate') %>
-        <%= form.text_field :tva_rate, class: "form-control", autocomplete: 'nope', id: 'extra_tva_rate', value: @project_extra_line.tva_rate ? @project_extra_line.tva_rate : "21" %>
-      </div>
-
-    </div>
-
-    <div class="two fields">
-
-      <div class="field">
-        <%= form.label t('total_gross') %>
-        <%= form.text_field :total_gross, readonly: true, class: 'form-control', id: 'extra_total_gross' %>
-      </div>
-
-      <div class="field">
-        <%= form.label t('total_cost') %>
-        <%= form.text_field :total, readonly: true, class: 'form-control', id: 'extra_total' %>
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="centered">
-        <%= form.submit t('create'), :class => "ui green button" %>
+        <div class="centered">
+          <%= form.submit t('create'), :class => "ui green button" %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
+
+<% else %>
+
+  <%= form_for(@project_extra_line) do |form| %>
+    <div class="ui form">
+
+      <h2 class="centered">
+        <% if @project_extra_line.id %>
+          <%= t('editing_extra_line') %>
+        <% else %>
+          <%= t('creating_extra_line') %>
+        <% end %>
+      </h2>
+
+      <div class="three fields">
+
+        <div class="field">
+          <%= form.label t('project') %>
+          <%= form.collection_select :project_id, Project.all, :id, :name, {:include_blank => true}, {:required => true, diasbled: true, class: 'form-control', id: 'extra_line_form_project'} %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('category') %>
+          <%= form.select(:id, Extra.distinct.pluck(:category), selected: @project_extra_line.extra ? @project_extra_line.extra.category : 0, required: true, class: 'form-control', id: 'extra_line_form_category') %>
+        </div>
+
+        <div class="field">
+          <%= form.label @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
+          <%= form.select(:extra_id, options_for_select(Extra.all.collect { |extra| [extra.name, extra.id, {category: extra.category}] }, selected: @project_extra_line.extra_id), {class: 'form-control', id: 'extra_edit_select', autocomplete: 'nope'}) %>
+        </div>
+
+      </div>
+
+      <div class="four fields">
+
+        <div class="field">
+          <%= form.label t('unit') %>
+          <%= form.select(:id, Extra.all
+              .collect { |extra| [extra.unit, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit', autocomplete: 'nope', :disabled => true}) %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('Quantity') %>
+          <%= form.number_field :quantity, step: :any, class: "form-control", autocomplete: 'nope', id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('extra_price') %>
+          <%= form.select(:id, Extra.all
+              .collect { |extra| [extra.unit_price, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit_price', autocomplete: 'nope', :disabled => true}) %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('tva_rate') %>
+          <%= form.text_field :tva_rate, class: "form-control", autocomplete: 'nope', id: 'extra_tva_rate', value: @project_extra_line.tva_rate ? @project_extra_line.tva_rate : "21" %>
+        </div>
+
+      </div>
+
+      <div class="two fields">
+
+        <div class="field">
+          <%= form.label t('total_gross') %>
+          <%= form.text_field :total_gross, readonly: true, class: 'form-control', id: 'extra_total_gross' %>
+        </div>
+
+        <div class="field">
+          <%= form.label t('total_cost') %>
+          <%= form.text_field :total, readonly: true, class: 'form-control', id: 'extra_total' %>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="centered">
+          <%= form.submit t('create'), :class => "ui green button" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
 <% end %>

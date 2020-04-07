@@ -14,14 +14,7 @@ class ProjectExtraLinesController < ApplicationController
 
   # GET /project_extra_lines/new
   def new
-    @project_extra_line = ProjectExtraLine.new
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
-  def new_manual
+    @manual = params[:manual]
     @project_extra_line = ProjectExtraLine.new
     respond_to do |format|
       format.html
@@ -32,14 +25,7 @@ class ProjectExtraLinesController < ApplicationController
 
   # GET /project_extra_lines/1/edit
   def edit
-    @extra = ProjectExtraLine.find(params[:id])
-    respond_to do |format|
-      format.js
-      format.html
-    end
-  end
-
-  def edit_manual
+    @manual = params[:manual]
     @extra = ProjectExtraLine.find(params[:id])
     respond_to do |format|
       format.js
