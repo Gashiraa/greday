@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   root to: 'projects#index'
 
+  get 'wares/list' => 'wares#list', as: :list
+
   resources :services
   resources :extras
   resources :projects
@@ -27,15 +29,17 @@ Rails.application.routes.draw do
 
   get '/change_locale', to: 'application#change_locale', as: :change_locale
 
+  # A SUPPRIMER
   get 'projects/bin/:id' => 'projects#bin', as: :bin
+  get 'invoices/paid/:id' => 'invoices#paid', as: :paid
 
   get "/pages/:page" => "pages#show"
 
-  get 'invoices/paid/:id' => 'invoices#paid', as: :paid
   get 'projects/duplicate/:id' => 'projects#duplicate', as: :duplicate
   post 'projects/duplicate/:id' => 'projects#duplicate'
 
   get '/projects/project_extra_lines/new_manual', to: 'project_extra_lines#new_manual'
   get '/projects/project_extra_lines/edit_manual/:id', to: 'project_extra_lines#edit_manual'
+
 
 end

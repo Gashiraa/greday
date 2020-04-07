@@ -3,7 +3,7 @@
 class ProjectsController < ApplicationController
 
   before_action :set_project, only: %i[show edit update destroy]
-  before_action :set_cache_headers, :set_company
+  before_action :set_company
 
   load_and_authorize_resource
 
@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
 
     if @company.short_name == "Greday"
       show_greday
-    elsif @company.short_name == "PLUSVIEW"
+    elsif @company.short_name == "PLUSVIEW" || "Philippe Doutrewé"
       show_plusview
     end
   end
@@ -64,13 +64,13 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "plusview sprl-devis" + @project.id.to_s,
+        render pdf: @company.name.downcase + "-devis" + @project.id.to_s,
                page_size: 'A4',
-               template: 'quotations/plusview.html.erb',
-               layout: '/pdf/plusview',
+               template: 'projects/gescoop.html.haml',
+               layout: 'pdf/gescoop',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 20},
+               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
                footer: {
                    html: {
                        template: 'layouts/pdf/quote/plusview_footer.html.erb'

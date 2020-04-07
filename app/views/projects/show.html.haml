@@ -196,6 +196,9 @@
               %button.ui.violet.compact.labeled.icon.button
                 Ajouter une marchandise
                 %i.plus.icon
+            =link_to({controller: :wares, action: :list, project: @project.id, remote: true}) do
+              %button.edit-card-button.ui.compact.icon.violet.button
+                %i.expand.icon
           .scrollable-project-section
             %table.ui.compact.selectable.violet.compact.table.table-to-color
               %thead
@@ -337,5 +340,7 @@
                 %b
                   = (number_with_precision @project.project_extra_lines.collect { |s| s.total }.sum, :precision => 2).to_s + "€"
               %td.two.wide.right.aligned
-#modal-window.ui.modal
+#modal-window.ui.long.modal
   .content
+#expand-wares.ui.long.modal
+  .expand-wares

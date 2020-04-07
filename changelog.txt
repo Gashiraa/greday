@@ -1,8 +1,14 @@
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
 
-[16/12- réunion atelier pour ajustement machines]
+Condition en DB pour le choix de format des pdf
+Agrandir affichage marchandises dans le projet (modal)
+Adapter nouveau layout pdf à Greday
+Bypasser le _new partout
+Convertir les méthodes custom en update, clean les routes
+Cleaner manual extra_line avec une condition et pas une autre methode/route
 
+[16/12- réunion atelier pour ajustement machines]
 
 PROJETS
     ✓ Marquer plus le rouge ligne projet

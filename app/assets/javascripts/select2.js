@@ -37,7 +37,7 @@ $(document).on("turbolinks:load", function () {
         language: $('.locale').data('locale')
     });
 
-    $("#extra_form_category").select2({
+    $("#extra_category").select2({
         theme: "bootstrap",
         width: '100%',
         tags: true,

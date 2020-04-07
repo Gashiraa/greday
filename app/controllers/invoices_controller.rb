@@ -3,7 +3,6 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: %i[show edit update destroy]
 
-  before_action :set_cache_headers
   load_and_authorize_resource
 
   # GET /invoices
@@ -47,8 +46,8 @@ class InvoicesController < ApplicationController
     # show_gescoop
     if @company.short_name == "Greday"
       show_greday
-    elsif @company.short_name == "PLUSVIEW"
-      show_plusview
+    elsif @company.short_name == "PLUSVIEW" || "Philippe Doutrewé"
+      show_gescoop
     end
   end
 
@@ -56,13 +55,18 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: t('invoice') + "_#{@invoice.display_number}",
+        render pdf: @company.name.downcase + "-facture" + @invoice.display_number.to_s,
                page_size: 'A4',
                template: 'invoices/gescoop.html.haml',
                layout: 'pdf/gescoop',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 15, :top => 15, :left => 15, :right => 15}
+               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
+               footer: {
+                   html: {
+                       template: 'layouts/pdf/invoice/plusview_footer.html.erb'
+                   },
+               }
       end
     end
   end
@@ -81,26 +85,6 @@ class InvoicesController < ApplicationController
                footer: {
                    html: {
                        template: 'layouts/pdf/greday_footer.html.erb'
-                   },
-               }
-      end
-    end
-  end
-
-  def show_plusview
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "plusview sprl-facture" + @invoice.display_number.to_s,
-               page_size: 'A4',
-               template: 'invoices/plusview.html.erb',
-               layout: '/pdf/plusview',
-               encoding: 'utf8',
-               show_as_html: params.key?('debug'),
-               :margin => {:bottom => 20},
-               footer: {
-                   html: {
-                       template: 'layouts/pdf/invoice/plusview_footer.html.erb'
                    },
                }
       end

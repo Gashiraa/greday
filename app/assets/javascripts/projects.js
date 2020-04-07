@@ -38,5 +38,4 @@ $(document).on("turbolinks:load", function () {
             $("#project_comment").val("");
         }
     });
-
 });

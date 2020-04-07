@@ -1,0 +1,85 @@
+.pdf
+  %table.header
+    %tr.company-infos
+      %td
+        = @company.name
+        %br/
+        = @company.street
+        %br/
+        = @company.postcode + ' ' + @company.locality
+        %br/
+        = @company.phone
+        %br/
+        = @company.email
+        %br/
+        = @company.vat
+      %td.invoice-date
+        = @company.locality + " le, " + l(@project.date).to_s
+    %tr.second-row
+      %td.invoice-number
+        .ui.huge.header
+          .quotation-header
+            = t('quotation').upcase
+          = '#' + @project.id.to_s
+      %td.customer-infos
+        = @project.customer.name
+        %br/
+        = @project.customer.street.to_s + ', ' + @project.customer.number.to_s
+        %br/
+        = @project.customer.cp.to_s + ' ' + @project.customer.locality
+        %br/
+        = @project.customer.country
+        %br/
+        = "TVA : " + @project.customer.tva_record
+  .content
+    %h3
+      Devis ##{@project.id} : #{@project.name}
+    %p
+      = @project.description
+      %br/
+      = t('PO') + ":"
+      %b
+        = @project.po ? @project.po : "/"
+      %br/
+      = t('applicant') + ":"
+      %b
+        = @project.applicant ? @project.applicant : "/"
+    - if @project.project_extra_lines.any?
+      %h4
+        = @company.use_articles == false ? t('extra').pluralize : t('article').pluralize
+      %table.ui.unstackable.black.celled.striped.table
+        %thead
+          %tr
+            %th.six.wide= t('Name')
+            %th.one.wide.center.aligned= t('quantity')
+            %th.three.wide.right.aligned= t('unit_price') + ' (€)'
+            %th.three.wide.right.aligned= t('tva_rate') + ' (%)'
+            %th.three.wide.right.aligned= t('total_gross') + ' (€)'
+        %tbody
+          - @project.project_extra_lines.order(:updated_at).each do |project_extra_line|
+            %tr
+            - if project_extra_line.is_manual
+              %td= project_extra_line.manual_name
+              %td.center.aligned= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.unit
+              %td.right.aligned= number_with_precision project_extra_line.manual_price, :precision => 2
+            - else
+              %td= project_extra_line.extra.name
+              %td.center.aligned= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.extra.unit
+              %td.right.aligned= number_with_precision project_extra_line.extra.unit_price, :precision => 2
+            %td.right.aligned= number_with_precision project_extra_line.tva_rate, :precision => 2
+            %td.right.aligned= number_with_precision project_extra_line.total_gross, :precision => 2
+        %table.ui.unstackable.compact.table.total-table
+          %tr
+            %th.thirteen.wide
+            %th.three.wide
+          %tr
+            %td TOTAL HT (€)
+            %td= number_with_precision @project.total_gross, :precision => 2
+          %tr
+            %td Total TVA (€)
+            %td= number_with_precision (@project.total - @project.total_gross), :precision => 2
+          %tr.ttc-total
+            %td TOTAL TTC (€)
+            %td= number_with_precision @project.total, :precision => 2
+        %b
+          = @project.comment

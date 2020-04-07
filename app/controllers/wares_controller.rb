@@ -13,6 +13,10 @@ class WaresController < ApplicationController
   def show;
   end
 
+  def list
+    @wares = Ware.where(project_id: params[:project])
+  end
+
   # GET /wares/new
   def new
     @ware = Ware.new

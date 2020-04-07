@@ -25,6 +25,7 @@
           width: 22rem;
           text-align: center;
         }
+
         vertical-align: bottom;
         width: 50%
       }
@@ -51,6 +52,11 @@
           background-color: #f2711c;
           color: white;
         }
+
+        .quotation-header {
+          background-color: #2185d0;
+          color: white;
+        }
       }
     }
   }
@@ -60,19 +66,36 @@
 
     .total-table, .total-table > tbody > tr > td {
       line-height: 1.3rem;
-      font-weight: bold !important;
       border: none;
       font-size: 1.2rem;
       text-align: right;
+    }
+
+    .ttc-total {
+      font-weight: bold !important;
     }
 
     .ui.table > thead > tr:first-child > th:first-child, .ui.table {
       border-radius: 0;
     }
 
+    .ui.table > thead:first-child {
+      line-height: 0.5rem;
+    }
+
     .ui.stripped.table {
       border-top: 0.2em solid #1B1C1D;
     }
+
+    .cg {
+      font-size: 0.85rem;
+    }
+
+    .avoidbreak {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
   }
 
   /* Use .unstackable to remove table auto-stacking behavior!  Issue #947. */
@@ -97,7 +120,7 @@
       }
 
       td:first-child {
-        font-weight: normal;
+        //font-weight: normal;
       }
 
       tr > td {

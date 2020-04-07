@@ -10,18 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_101654) do
+ActiveRecord::Schema.define(version: 2020_04_03_102807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "admins", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "pwd"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -41,6 +33,7 @@ ActiveRecord::Schema.define(version: 2020_02_21_101654) do
     t.boolean "use_machines", default: true
     t.boolean "use_credit_notes", default: true
     t.boolean "use_manual_invoice_number", default: true
+    t.string "vat"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -80,7 +73,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_101654) do
     t.datetime "updated_at", null: false
     t.float "tva_rate"
     t.string "category"
-    t.boolean "flag_delete"
     t.boolean "delete_flag"
   end
 
@@ -191,6 +183,9 @@ ActiveRecord::Schema.define(version: 2020_02_21_101654) do
 
   create_table "services", force: :cascade do |t|
     t.bigint "project_id"
+    t.bigint "invoice_id"
+    t.bigint "customer_id"
+    t.bigint "quotation_id"
     t.string "name"
     t.string "comment"
     t.float "hourly_rate"
@@ -228,8 +223,9 @@ ActiveRecord::Schema.define(version: 2020_02_21_101654) do
     t.bigint "project_id"
     t.bigint "invoice_id"
     t.bigint "customer_id"
+    t.bigint "quotation_id"
     t.string "ware_name"
-    t.text "comment"
+    t.string "comment"
     t.float "quantity"
     t.float "provider_discount"
     t.float "margin"
@@ -245,7 +241,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_101654) do
     t.float "provider_gross"
     t.float "total_gross"
     t.float "sell_price"
-    t.boolean "show_desc_quot"
     t.boolean "show_desc_invoice"
     t.boolean "machine_specific"
     t.boolean "is_maintenance"
@@ -258,7 +253,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_101654) do
 
   add_foreign_key "expense_accounts", "customers"
   add_foreign_key "expense_accounts", "invoices"
-  add_foreign_key "invoices", "customers"
   add_foreign_key "invoices", "payments"
   add_foreign_key "machine_histories", "machines"
   add_foreign_key "machines", "customers"
@@ -270,10 +264,14 @@ ActiveRecord::Schema.define(version: 2020_02_21_101654) do
   add_foreign_key "projects", "machines"
   add_foreign_key "quotations", "customers"
   add_foreign_key "quotations", "projects"
+  add_foreign_key "services", "customers"
+  add_foreign_key "services", "invoices"
   add_foreign_key "services", "projects"
+  add_foreign_key "services", "quotations"
   add_foreign_key "users", "companies"
   add_foreign_key "wares", "customers"
   add_foreign_key "wares", "invoices"
   add_foreign_key "wares", "machines"
   add_foreign_key "wares", "projects"
+  add_foreign_key "wares", "quotations"
 end

@@ -1,0 +1,10 @@
+$("#expand-wares").find(".expand-wares").html("<%= j(render 'list') %>");
+
+$('#expand-wares').modal('show');
+
+$(document).trigger('turbolinks:load');
+
+$("#expand-wares").modal(
+    {
+        backdrop: 'static'
+    });
