@@ -1,6 +1,6 @@
-$("#modal-window").find(".content").html("<%= j (render 'new') %>");
+$("#modal-window").find(".content").html("<%= j (render 'form') %>");
 
-$('.ui.modal').modal('show');
+$('#modal-window').modal('show');
 
 $(document).trigger('turbolinks:load');
 

@@ -31,7 +31,6 @@ class WaresController < ApplicationController
   # POST /wares.json
   def create
     @ware = Ware.new(ware_params)
-
     respond_to do |format|
       if @ware.save
         # update linked project
@@ -86,7 +85,7 @@ class WaresController < ApplicationController
     # update linked project's invoice
     @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects, @ware.project.invoice.wares)
     respond_to do |format|
-      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('ware_destroy_success')}
+      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('ware_destroy_success'), modal: true}
       format.json {head :no_content}
     end
   end

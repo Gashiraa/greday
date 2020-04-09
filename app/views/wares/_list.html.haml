@@ -5,7 +5,7 @@
   .project-section
     %h3
       = t('ware').pluralize.capitalize
-      = link_to(new_ware_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+      = link_to(new_ware_path(modal: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
         %button.ui.violet.compact.labeled.icon.button
           Ajouter une marchandise
           %i.plus.icon
@@ -63,12 +63,12 @@
             %td.right.aligned
               = number_with_precision ware.total_cost, :precision => 2
             %td.right.aligned
-              = link_to edit_ware_path(ware), remote: true do
+              = link_to edit_ware_path(ware, modal: true), remote: true do
                 = image_tag("edit-icon.png", size: "30x30")
-              = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
+              = link_to ware_path(ware, modal: true), method: :delete, data: {confirm: t('confirm_delete')} do
                 = image_tag("delete-icon.png", size: "30x30")
         - @wares.where("total_gross > 0").each do |ware|
-          %tr{"data-link" => "#{edit_ware_path(ware)}"}
+          %tr{"data-link" => "#{edit_ware_path(ware, modal: true)}"}
             %td
               = ware.ware_name
             = tag.td class: 'center aligned status-cell', status: ware.status do

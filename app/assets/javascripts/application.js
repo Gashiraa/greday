@@ -25,6 +25,15 @@ $(document).on("turbolinks:load", function () {
         setTimeout(function () {
             $('#notice').fadeOut();
         }, 3000);
+
+        if (($('#notice').css("display") === "block") && ($('#project-id').length)) {
+            let searchParams = new URLSearchParams(window.location.search);
+            let param = searchParams.get('modal');
+            if (param === "true") {
+                $('#wares-modal').trigger('click');
+                window.history.pushState('page2', 'Title', document.referrer);
+            }
+        }
     }
 );
 

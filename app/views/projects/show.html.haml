@@ -197,7 +197,7 @@
                 Ajouter une marchandise
                 %i.plus.icon
             =link_to({controller: :wares, action: :list, project: @project.id, remote: true}) do
-              %button.edit-card-button.ui.compact.icon.violet.button
+              %button#wares-modal.edit-card-button.ui.compact.icon.violet.button
                 %i.expand.icon
           .scrollable-project-section
             %table.ui.compact.selectable.violet.compact.table.table-to-color
