@@ -411,3 +411,5 @@ fr:
   invoice_report: "Rapport de facturation"
   invoices_amount: "Nombre de factures : "
   total_amount: "Montant total : "
+  provider: "Prestataire"
+  totals: "totaux"

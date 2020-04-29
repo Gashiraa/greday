@@ -16,7 +16,7 @@
 
     <%= form.hidden_field :id, value: @service.id || 0, id: "service_id" %>
 
-    <div class="three fields">
+    <div class="four fields">
 
       <div class="field">
         <%= form.label t('project') %>
@@ -34,6 +34,11 @@
           <%= form.text_field :date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", value: @service.date ? l(@service.date) : Time.zone.now.to_date.strftime("%d/%m/%Y"), autocomplete: 'off', id: "dateProject", class: "form-control" %>
           <i class="calendar icon"></i>
         </div>
+      </div>
+
+      <div class="field">
+        <%= form.label t('provider') %>
+        <%= form.select :provider, Service.providers_for_form, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'} %>
       </div>
     </div>
 

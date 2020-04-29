@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_03_102807) do
+ActiveRecord::Schema.define(version: 2020_04_29_123043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 2020_04_03_102807) do
     t.float "total_gross"
     t.time "start_time"
     t.time "end_time"
+    t.string "provider"
     t.index ["project_id"], name: "index_services_on_project_id"
   end
 

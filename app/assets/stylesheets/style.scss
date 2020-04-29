@@ -29,7 +29,7 @@ body {
   }
 }
 
-#expand-wares{
+#expand{
   padding: 1rem;
   width: 85%;
 }
@@ -192,6 +192,6 @@ img {
   }
 }
 
-.ui.table.total-section {
+.ui.table.total-section, .ui.table.total-section td {
   border: none;
 }

@@ -10,4 +10,10 @@ class Service < ApplicationRecord
   enum status: [:assigned, :invoiced, :paid]
   translate_enum :status
 
+  def self.providers_for_form
+    options = ["Thomas G."],
+        ["Thomas O."],
+        ["Benoît"],
+        ["Autres"]
+  end
 end

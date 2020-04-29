@@ -13,6 +13,10 @@ class ServicesController < ApplicationController
   def show
   end
 
+  def list
+    @services = Service.where(project_id: params[:project])
+  end
+
   # GET /services/new
   def new
     @service = Service.new
@@ -83,6 +87,6 @@ class ServicesController < ApplicationController
                                     :customer_id, :quotation_id, :name, :comment,
                                     :hourly_rate, :coefficient, :date, :duration,
                                     :status, :tva_rate, :total_cost, :start_time,
-                                    :end_time)
+                                    :end_time, :provider)
   end
 end

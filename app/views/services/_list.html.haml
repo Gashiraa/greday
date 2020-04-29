@@ -1,0 +1,96 @@
+-#----[SERVICES]----
+.close
+  %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+.project-section
+  %h3
+    = t('service').pluralize.capitalize
+    = link_to(new_service_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+      %button.ui.red.compact.labeled.icon.button
+        Ajouter une prestation
+        %i.plus.icon
+  %table.ui.striped.selectable.red.compact.table.table-to-color
+    %thead.thead-dark
+      %tr
+        %th.four.wide
+          = t('Name')
+        %th.two.wide.center.aligned
+          = t('status')
+        %th.one.wide.center.aligned
+          = t('Date')
+        %th.one.wide.right.aligned
+          = t('hourly_rate').to_s
+        %th.one.wide.center.aligned
+          = t('provider').to_s
+        %th.one.wide.right.aligned
+          = t('duration').to_s
+        %th.two.wide.right.aligned
+          = t('total_gross')
+          (€)
+        %th.two.wide.right.aligned
+          = t('total_cost')
+          (€)
+        %th.two.wide
+    - unless @services.any?
+      %tr
+        %td.center.aligned{colspan: "9"} Aucune données à afficher
+    - @services.order(date: :asc).each do |service|
+      %tr{"data-link" => "#{edit_service_path(service)}"}
+        %td= service.name
+        = tag.td class: 'center aligned status-cell', status: service.status do
+          %div
+            %div
+              = service.translated_status
+        %td.center.aligned
+          = service.date ? l(service.date) : ""
+        %td.right.aligned
+          = number_with_precision service.hourly_rate, :precision => 2
+        %td.center.aligned
+          = service.provider
+        %td.right.aligned
+          = service.duration.strftime('%H:%M')
+        %td.right.aligned
+          = number_with_precision service.total_gross, :precision => 2
+        %td.right.aligned
+          = number_with_precision service.total_cost, :precision => 2
+        %td.right.aligned
+          = link_to edit_service_path(service), remote: true do
+            = image_tag("edit-icon.png", size: "30x30")
+          = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
+            = image_tag("delete-icon.png", size: "30x30")
+  %table.ui.compact.table.total-section
+    - @services.distinct(:provider).order(:provider).pluck(:provider).each do |provider|
+      %tr
+        %td.right.aligned
+          = provider
+        %td.two.wide.right.aligned
+          = t('total_duration') + ' : '
+          %b
+            = Service.where(provider: provider).where(project_id: params[:project]).sum(:duration).to_s.chop.chop.chop
+        %td.two.wide.right.aligned
+          = t('total_gross') + ' : '
+          %b
+            = (number_with_precision @services.where(provider: provider).collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
+        %td.two.wide.right.aligned.description-cell
+          = t('total') + ' : '
+          %b
+            = (number_with_precision @services.where(provider: provider).collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
+        %td.two.wide
+  %hr
+  %table.ui.compact.table.total-section
+    %tr
+      %td.right.aligned
+        %b
+          = t("totals").upcase
+      %td.two.wide.right.aligned
+        = t('total_duration') + ' : '
+        %b
+          = Service.where(project_id: params[:project]).sum(:duration).to_s.chop.chop.chop
+      %td.two.wide.right.aligned
+        = t('total_gross') + ' : '
+        %b
+          = (number_with_precision @services.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
+      %td.two.wide.right.aligned.description-cell
+        = t('total') + ' : '
+        %b
+          = (number_with_precision @services.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
+      %td.two.wide

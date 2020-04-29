@@ -53,11 +53,11 @@
         <% end %>
       </div>
     <% else %>
-      <%= form.hidden_field :project_ids, :value => params[:project] %>
+      <%= form.hidden_field :project_ids, :value => params[:project] || @invoice.projects.first.id %>
     <% end %>
 
     <div class="field centered">
-      <%= form.submit t('create'), :class => "ui green button", onclick: "setTimeout(function(){location.reload()}, 3000);", formtarget: "_blank" %>
+      <%= form.submit t('create'), :class => "ui green button", onclick: "setTimeout(function(){location.reload()}, 3000);", formtarget: params[:project] ? "_blank" : "" %>
     </div>
   </div>
 <% end %>

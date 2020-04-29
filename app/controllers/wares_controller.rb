@@ -41,11 +41,11 @@ class WaresController < ApplicationController
 
         # update linked project's invoice
         @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects, @ware.project.invoice.wares)
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('ware_add_success')}
-        format.json {render :show, status: :created, location: @ware}
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('ware_add_success') }
+        format.json { render :show, status: :created, location: @ware }
       else
-        format.html {render :new}
-        format.json {render json: @ware.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @ware.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,11 +63,11 @@ class WaresController < ApplicationController
 
         # update linked project's invoice
         @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects, @ware.project.invoice.wares)
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('ware_update_success')}
-        format.json {render :show, status: :ok, location: @ware}
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('ware_update_success') }
+        format.json { render :show, status: :ok, location: @ware }
       else
-        format.html {render :edit}
-        format.json {render json: @ware.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @ware.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -75,6 +75,7 @@ class WaresController < ApplicationController
   # DELETE /wares/1
   # DELETE /wares/1.json
   def destroy
+    @project = @ware.project
     @ware.destroy
     # update linked project
     @ware.project&.update_totals_project(@ware.project)
@@ -85,8 +86,8 @@ class WaresController < ApplicationController
     # update linked project's invoice
     @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects, @ware.project.invoice.wares)
     respond_to do |format|
-      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('ware_destroy_success'), modal: true}
-      format.json {head :no_content}
+      format.html { redirect_to request.env["HTTP_REFERER"], notice: t('ware_destroy_success') }
+      format.js
     end
   end
 

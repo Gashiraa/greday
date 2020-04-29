@@ -2,7 +2,7 @@
   <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
 </div>
 
-<%= form_with(model: @ware, id: 'waresForm', html: {autocomplete: 'off'}) do |form| %>
+<%= form_for(@ware, remote: true) do |form| %>
   <div class="ui form">
 
     <% if params[:maintenance] %>

@@ -77,11 +77,11 @@ class InvoicesController < ApplicationController
       format.pdf do
         render pdf: t('invoice') + "_#{@invoice.display_number}",
                page_size: 'A4',
-               template: 'invoices/greday.html.erb',
-               layout: 'pdf/greday',
+               template: 'invoices/gescoop.html.haml',
+               layout: 'pdf/gescoop',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 20},
+               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
                footer: {
                    html: {
                        template: 'layouts/pdf/greday_footer.html.erb'

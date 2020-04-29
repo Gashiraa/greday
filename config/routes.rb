@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   root to: 'projects#index'
 
   get 'wares/list' => 'wares#list', as: :list
+  get 'services/list' => 'services#list', as: :services_list
 
   resources :services
   resources :extras
