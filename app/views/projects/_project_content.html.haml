@@ -104,7 +104,7 @@
             - unless @project.wares.any?
               %tr
                 %td.center.aligned{colspan: "9"} Aucune données à afficher
-            - @project.wares.where("total_gross = 0").each do |ware|
+            - @project.wares.where("total_gross = 0").or(@project.wares.where(total_gross: nil )).each do |ware|
               %tr.red-row{"data-link" => "#{edit_ware_path(ware)}"}
                 %td
                   = ware.ware_name
@@ -143,11 +143,11 @@
             %td.twelve.wide.right.aligned
               = t('total_gross') + ' : '
               %b
-                = (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
+                = (number_with_precision @project.wares.sum(:total_gross), :precision => 2).to_s + "€"
             %td.two.wide.right.aligned
               = t('total') + ' : '
               %b
-                = (number_with_precision @project.wares.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
+                = (number_with_precision @project.wares.sum(:total_cost), :precision => 2).to_s + "€"
             %td.two.wide
 -#----[EXTRAS]----
 .ui.segment
@@ -220,9 +220,9 @@
         %td.twelve.wide.right.aligned
           = t('total_gross') + ' : '
           %b
-            = (number_with_precision @project.project_extra_lines.collect { |s| s.total_gross }.sum, :precision => 2).to_s + "€"
+            = (number_with_precision @project.project_extra_lines.sum(:total_gross), :precision => 2).to_s + "€"
         %td.two.wide.right.aligned
           = t('total') + ' : '
           %b
-            = (number_with_precision @project.project_extra_lines.collect { |s| s.total }.sum, :precision => 2).to_s + "€"
+            = (number_with_precision @project.project_extra_lines.sum(:total), :precision => 2).to_s + "€"
         %td.two.wide.right.aligned

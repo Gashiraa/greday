@@ -1,6 +1,36 @@
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
 
+--26/05--
+
+GLOBAL
+    Enlever présaisie
+PROJET
+    Nom projet -> Intitulé
+    Cliqué-glissé pour orgraniser les items du projet
+    Toujours voir les totaux (marchandises)
+    Garder la fenêtre de listing ouverte après opération
+    Aligner les +, supprimer ajouter
+    Insérer un historique des machines à la création d'un projet
+    Afficher uniquement l'historique récent
+FACTURE
+    Afficher le taux de TVA dans le récapitulatif
+    Revoir disposition du logo
+    Afficher les totaux par taux de TVA sur facture
+MARCHANDISES
+    Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
+    Listing agrandit des machines
+PRESTATIONS
+    Commentaire à inclure ou non
+    Marquer comme déplacement
+MACHINES
+    Colonne et tri par client dans les machines
+    Encodage des huiles par catégorie, type, quantité
+    Ajouter un tri par réference
+DIVERS
+    Maj-auto sur catégorie
+________________________________________________________________________________________________________________________
+
 Condition en DB pour le choix de format des pdf
 Adapter nouveau layout pdf à Greday
 Bypasser le _new partout

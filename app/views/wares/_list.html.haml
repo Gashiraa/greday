@@ -101,9 +101,9 @@
         %td.twelve.wide.right.aligned
           = t('total_gross') + ' : '
           %b
-            = (number_with_precision @wares.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
+            = (number_with_precision @wares.sum(:total_gross), :precision => 2).to_s + "€"
         %td.two.wide.right.aligned
           = t('total') + ' : '
           %b
-            = (number_with_precision @wares.collect { |s| s.valid? ? s.total_cost : 0 }.sum, :precision => 2).to_s + "€"
+            = (number_with_precision @wares.sum(:total_cost), :precision => 2).to_s + "€"
         %td.two.wide

@@ -2,6 +2,8 @@
   %table.header
     %tr.company-infos
       %td
+        = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
+        %br/
         = @company.name
         %br/
         = @company.street
@@ -75,16 +77,16 @@
             = (@company.short_name =="Greday" ? t('project') : t('quotation')) + " #" +project.id.to_s + " : " + project.name
           %p
             = project.description
-            - if project.po
+            - if project.po.present?
               %br
-              = t('PO') + ":"
+              = t('PO') + " : "
               %b
                 = project.po
-            - if project.po
+            - if project.applicant.present?
               %br
-              = t('applicant') + ":"
-            %b
-              = project.applicant
+              = t('applicant') + " : "
+              %b
+                = project.applicant
           - if project.services.any?
             .avoidbreak
               %h4
@@ -131,6 +133,10 @@
                     %td.right.aligned= number_with_precision ware.sell_price, :precision => 2
                     %td.right.aligned= number_with_precision ware.tva_rate, :precision => 2
                     %td.right.aligned= number_with_precision ware.total_gross, :precision => 2
+                  - if ware.show_desc_invoice
+                    %tr
+                      %td{colspan: "5"}
+                        = simple_format(ware.comment)
               %tfoot
                 %tr
                   %th.right.aligned{colspan: 4}

@@ -81,7 +81,7 @@ class InvoicesController < ApplicationController
                layout: 'pdf/gescoop',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
+               :margin => {:bottom => 20, :top => 15, :left => 15, :right => 15},
                footer: {
                    html: {
                        template: 'layouts/pdf/greday_footer.html.erb'
