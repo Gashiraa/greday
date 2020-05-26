@@ -43,14 +43,14 @@ class ProjectsController < ApplicationController
       format.pdf do
         render pdf: t('quotation') + "_#{@project.id}",
                page_size: 'A4',
-               template: 'quotations/show.html.erb',
-               layout: '/pdf/greday',
+               template: 'projects/gescoop.html.haml',
+               layout: 'pdf/gescoop',
                orientation: 'Portrait',
                encoding: 'utf8',
                lowquality: true,
                zoom: 1,
                dpi: 75,
-               margin: {bottom: 20},
+               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
                footer: {
                    html: {
                        template: 'layouts/pdf/greday_footer.html.erb'
