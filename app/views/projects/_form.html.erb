@@ -26,7 +26,7 @@
 
     <div class="field">
       <%= form.label t('project_title') %>
-      <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", :required => true, autocomplete: 'nope' %>
+      <%= form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", :required => true, autocomplete: 'off' %>
     </div>
 
     <% if @project.id %>
