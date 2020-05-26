@@ -4,17 +4,17 @@ ________________________________________________________________________________
 --26/05--
 
 GLOBAL
-    Enlever présaisie
+    ✓ Enlever présaisie
 PROJET
-    Nom projet -> Intitulé
+    ✓ Nom projet -> Intitulé
     Cliqué-glissé pour orgraniser les items du projet
-    Toujours voir les totaux (marchandises)
+    ✓ Toujours voir les totaux (marchandises)
     Garder la fenêtre de listing ouverte après opération
     Aligner les +, supprimer ajouter
     Insérer un historique des machines à la création d'un projet
     Afficher uniquement l'historique récent
 FACTURE
-    Afficher le taux de TVA dans le récapitulatif
+    ✓ Afficher le taux de TVA dans le récapitulatif
     Revoir disposition du logo
     Afficher les totaux par taux de TVA sur facture
 MARCHANDISES

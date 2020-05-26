@@ -39,14 +39,16 @@
       %table.ui.unstackable.black.celled.striped.table
         %thead
           %tr
-            %th.ten.wide= t('project')
+            %th.seven.wide= t('project')
             %th.three.wide.center.aligned= t('date_locale')
+            %th.three.wide.right.aligned= t('total_vat')
             %th.three.wide.right.aligned= t('total_gross') + ' (€)'
         - if @invoice.projects.any?
           - @invoice.projects.order(date: :asc).each do |project|
             %tr
               %td= project.name
               %td.center.aligned= l(project.date)
+              %td.right.aligned= number_with_precision project.total - project.total_gross, :precision => 2
               %td.right.aligned= number_with_precision project.total_gross, :precision => 2
       %table.ui.unstackable.compact.table.total-table
         %tr
@@ -177,7 +179,9 @@
         %br
         %b
           = project.comment
-    - if @size <= 15
+    - if @size <= 15 || @one_project
+      - if @size >= 12
+        .page-break
       %table.ui.unstackable.compact.table.total-table
         %tr
           %th.thirteen.wide

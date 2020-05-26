@@ -42,6 +42,7 @@ class InvoicesController < ApplicationController
   # GET /invoices/1.json
   def show
     @invoice = scope.find(params[:id])
+    @one_project = (@invoice.projects.count == 1)
     @size = @invoice.get_size(@invoice)
     # show_gescoop
     if @company.short_name == "Greday"

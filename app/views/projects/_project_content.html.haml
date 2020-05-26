@@ -138,17 +138,17 @@
                     = image_tag("edit-icon.png", size: "30x30")
                   = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
                     = image_tag("delete-icon.png", size: "30x30")
-        %table.ui.compact.table.total-section
-          %tr
-            %td.twelve.wide.right.aligned
-              = t('total_gross') + ' : '
-              %b
-                = (number_with_precision @project.wares.sum(:total_gross), :precision => 2).to_s + "€"
-            %td.two.wide.right.aligned
-              = t('total') + ' : '
-              %b
-                = (number_with_precision @project.wares.sum(:total_cost), :precision => 2).to_s + "€"
-            %td.two.wide
+      %table.ui.compact.table.total-section
+        %tr
+          %td.twelve.wide.right.aligned
+            = t('total_gross') + ' : '
+            %b
+              = (number_with_precision @project.wares.sum(:total_gross), :precision => 2).to_s + "€"
+          %td.two.wide.right.aligned
+            = t('total') + ' : '
+            %b
+              = (number_with_precision @project.wares.sum(:total_cost), :precision => 2).to_s + "€"
+          %td.two.wide
 -#----[EXTRAS]----
 .ui.segment
   .project-section

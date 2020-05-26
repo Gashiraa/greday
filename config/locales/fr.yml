@@ -17,7 +17,7 @@ fr:
   payment: Paiement
   payments: Paiements
 
-  project_title: Intitulé du projet
+  project_title: Intitulé
   Name: Nom
   ware_name: Dénomination
   comment: Commentaire
@@ -413,3 +413,4 @@ fr:
   total_amount: "Montant total : "
   provider: "Prestataire"
   totals: "totaux"
+  total_vat: "Total TVA"
