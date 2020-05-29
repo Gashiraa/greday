@@ -3,8 +3,9 @@
     %tr.company-infos
       %td
         = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
-        %br/
-        = @company.name
+        - if @company.short_name == "PLUSVIEW"
+          %br/
+          = @company.name
         %br/
         = @company.street
         %br/
@@ -15,6 +16,8 @@
         = @company.email
         %br/
         = @company.vat
+        -# = @one_project
+        -# = @size
       %td.invoice-date
         = @company.locality + " le, " + l(@invoice.date).to_s
     %tr.second-row
@@ -34,7 +37,7 @@
         %br/
         = "TVA : " + @invoice.customer.tva_record
   .content
-    - if @size > 15
+    - if @size > 15 && @one_project == false
       %h3 Récapitulatif de la facture
       %table.ui.unstackable.black.celled.striped.table
         %thead
@@ -50,19 +53,17 @@
               %td.center.aligned= l(project.date)
               %td.right.aligned= number_with_precision project.total - project.total_gross, :precision => 2
               %td.right.aligned= number_with_precision project.total_gross, :precision => 2
-      %table.ui.unstackable.compact.table.total-table
-        %tr
-          %th.thirteen.wide
-          %th.three.wide
-        %tr
-          %td TOTAL HT (€)
-          %td= number_with_precision @invoice.total_gross, :precision => 2
-        %tr
-          %td Total TVA (€)
-          %td= number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2
-        %tr.ttc-total
-          %td TOTAL TTC (€)
-          %td= number_with_precision @invoice.total, :precision => 2
+      %table.ui.unstackable.compact.table.total-table.avoidbreak
+        %tbody
+          %tr
+            %td TOTAL HT (€)
+            %td.three.wide= number_with_precision @invoice.total_gross, :precision => 2
+          %tr
+            %td Total TVA (€)
+            %td= number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2
+          %tr.ttc-total
+            %td TOTAL TTC (€)
+            %td= number_with_precision @invoice.total, :precision => 2
       .payment-notes.top-notes.avoidbreak
         %h4
           = t('invoice_account') + " BE47 0015 7715 0480"
@@ -176,33 +177,49 @@
                     %b= "TOTAL"
                   %th.right.aligned
                     %b= number_with_precision project.project_extra_lines.collect { |p| p.valid? ? p.total_gross : 0 }.sum, :precision => 2
-        %br
-        %b
-          = project.comment
-    - if @size <= 15 || @one_project
-      - if @size >= 12
-        .page-break
-      %table.ui.unstackable.compact.table.total-table
-        %tr
-          %th.thirteen.wide
-          %th.three.wide
-        %tr
-          %td TOTAL HT (€)
-          %td= number_with_precision @invoice.total_gross, :precision => 2
-        %tr
-          %td Total TVA (€)
-          %td= number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2
-        %tr.ttc-total
-          %td TOTAL TTC (€)
-          %td= number_with_precision @invoice.total, :precision => 2
+        - if project.comment.length > 0
+          %br
+            %b
+            = project.comment
+    - if @size <= 15 || @one_project == true
+      %table.ui.unstackable.compact.table.total-table.avoidbreak
+        %tbody
+          %tr
+            %td TOTAL HT (€)
+            %td.three.wide= number_with_precision @invoice.total_gross, :precision => 2
+          %tr
+            %td Total TVA (€)
+            %td= number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2
+          %tr.ttc-total
+            %td TOTAL TTC (€)
+            %td= number_with_precision @invoice.total, :precision => 2
       - if @company.short_name == "Greday"
-        .payment-notes.bottom-notes.avoidbreak
-          %h4
-            = t('invoice_account') + " BE47 0015 7715 0480"
-            %br
-            = "Communication à mentionner sur votre virement"
-            \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
-          %p
-            = t('invoice_notice')
+        - if @size <= 15
+          .payment-notes.bottom-notes.avoidbreak
+            %h4
+              = t('invoice_account') + " BE47 0015 7715 0480"
+              %br
+              = "Communication à mentionner sur votre virement"
+              \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
+            %p
+              = t('invoice_notice')
+        - elsif  @size <= 35
+          .payment-notes.far-bottom-notes.avoidbreak
+            %h4
+              = t('invoice_account') + " BE47 0015 7715 0480"
+              %br
+              = "Communication à mentionner sur votre virement"
+              \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
+            %p
+              = t('invoice_notice')
+        - else
+          .payment-notes.very-far-bottom-notes.avoidbreak
+            %h4
+              = t('invoice_account') + " BE47 0015 7715 0480"
+              %br
+              = "Communication à mentionner sur votre virement"
+              \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
+            %p
+              = t('invoice_notice')
     - if @company.short_name == "PLUSVIEW" || @company.short_name =="Philippe Doutrewé"
       = render "/layouts/pdf/tos"

@@ -115,6 +115,13 @@ $(document).on("turbolinks:load", function () {
         language: $('.locale').data('locale')
     });
 
+    $('#extra_category').on('select2:open', function (e) {
+        $('.select2-search__field').each(function (i, obj) {
+            $(obj).attr("id", i);
+            $(obj).attr("onkeyup","javascript:capitalize(this.id, this.value);")
+        });
+    });
+
     function matchStart(params, data) {
         params.term = params.term || '';
         table = data.text.split(" ");

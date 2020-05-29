@@ -47,10 +47,6 @@
     }
 
     .second-row {
-      .customer-infos {
-        padding-left: 6rem;
-        width: 60%;
-      }
 
       .invoice-number {
         width: 40%;
@@ -58,6 +54,7 @@
         text-align: center;
 
         .invoice-header {
+          margin-top: 1rem;
           background-color: #f2711c;
           color: white;
         }
@@ -70,8 +67,16 @@
     }
   }
 
+  .customer-infos {
+    font-size: 1.4rem;
+    position: absolute;
+    left: 400px;
+    top: 165px;
+  }
+
   .content {
     margin-top: 4rem;
+    line-height: 0.93rem;
 
     h4 {
       margin: 0.4rem 0;
@@ -95,13 +100,19 @@
       text-align: right;
     }
 
+    .total-table {
+      width: 17rem;
+      float: right;
+    }
+
     .payment-notes {
       text-align: justify;
       position: absolute;
       width: 100%;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
 
       h4 {
+        font-size: 0.9rem;
         text-align: center;
       }
     }
@@ -114,8 +125,20 @@
       bottom: 10px;
     }
 
+    .far-bottom-notes {
+      top: 2375px;
+    }
+
+    .very-far-bottom-notes {
+      top: 3600px;
+    }
+
     .ttc-total {
-      font-weight: bold !important;
+      td {
+        background-color: #DB2828;
+        font-weight: bold !important;
+        color: white;
+      }
     }
 
     .ui.table > thead > tr:first-child > th:first-child, .ui.table {

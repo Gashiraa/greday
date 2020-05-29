@@ -87,11 +87,14 @@ class Invoice < ApplicationRecord
     total = 0
     invoice.projects.each do |project|
       total += project.wares.count
-      total += project.services.count
       total += project.project_extra_lines.count
+      project.services.each do |service|
+        total += (service.name.length/40).ceil
+      end
     end
     total += invoice.wares.count
     total += (invoice.projects.count * 6)
   end
+
 
 end
