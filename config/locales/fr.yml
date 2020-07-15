@@ -45,7 +45,7 @@ fr:
   mail: Email
   tva_record: Num. TVA
   street: Rue
-  number: Numéro
+  num: Numéro
   zip: Code postal
   locality: Ville
   country: Pays
@@ -414,3 +414,16 @@ fr:
   provider: "Prestataire"
   totals: "totaux"
   total_vat: "Total TVA"
+  number:
+    currency:
+      format:
+        unit: '€'
+        delimiter: ' '
+        separator: ','
+        precision: 2
+        format: '%n %u'
+  is_displacement: "Déplacement"
+  services_recap: "Prestations résumées"
+  services_non_recap: "Prestations détaillées"
+  services_recap_label: "Résumé des prestations"
+  displacement: "Déplacements"

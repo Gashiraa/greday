@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_123043) do
+ActiveRecord::Schema.define(version: 2020_07_15_171101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2020_04_29_123043) do
     t.boolean "use_credit_notes", default: true
     t.boolean "use_manual_invoice_number", default: true
     t.string "vat"
+    t.string "mode"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -163,6 +164,9 @@ ActiveRecord::Schema.define(version: 2020_04_29_123043) do
     t.boolean "no_vat"
     t.text "comment"
     t.bigint "machine_id"
+    t.boolean "services_recap"
+    t.text "services_recap_text"
+    t.text "displacement_recap"
     t.index ["customer_id"], name: "index_projects_on_customer_id"
     t.index ["invoice_id"], name: "index_projects_on_invoice_id"
     t.index ["machine_id"], name: "index_projects_on_machine_id"
@@ -201,6 +205,9 @@ ActiveRecord::Schema.define(version: 2020_04_29_123043) do
     t.time "start_time"
     t.time "end_time"
     t.string "provider"
+    t.boolean "show_desc_invoice"
+    t.boolean "show_desc_quote"
+    t.boolean "is_displacement"
     t.index ["project_id"], name: "index_services_on_project_id"
   end
 

@@ -44,10 +44,15 @@ class InvoicesController < ApplicationController
     @invoice = scope.find(params[:id])
     @one_project = (@invoice.projects.count == 1)
     @size = @invoice.get_size(@invoice)
+    @tva_rates = @invoice.get_tva_rates(@invoice)
+    @tva_amounts = []
+    @tva_rates.each do |tva_rate|
+      @tva_amounts.push(@invoice.get_tva_amounts(tva_rate, @invoice))
+    end
     # show_gescoop
-    if @company.short_name == "Greday"
+    if @company.mode == "Greday"
       show_greday
-    elsif @company.short_name == "PLUSVIEW" || "Philippe Doutrewé"
+    elsif @company.mode == "Plusview"
       show_gescoop
     end
   end

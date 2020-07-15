@@ -3,7 +3,7 @@
     %tr.company-infos
       %td
         = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
-        - if @company.short_name == "PLUSVIEW"
+        - if @company.mode == "Plusview"
           %br/
           = @company.name
         %br/
@@ -45,25 +45,41 @@
             %th.seven.wide= t('project')
             %th.three.wide.center.aligned= t('date_locale')
             %th.three.wide.right.aligned= t('total_vat')
-            %th.three.wide.right.aligned= t('total_gross') + ' (€)'
+            %th.three.wide.right.aligned= t('total_gross')
         - if @invoice.projects.any?
           - @invoice.projects.order(date: :asc).each do |project|
             %tr
               %td= project.name
               %td.center.aligned= l(project.date)
-              %td.right.aligned= number_with_precision project.total - project.total_gross, :precision => 2
-              %td.right.aligned= number_with_precision project.total_gross, :precision => 2
-      %table.ui.unstackable.compact.table.total-table.avoidbreak
-        %tbody
-          %tr
-            %td TOTAL HT (€)
-            %td.three.wide= number_with_precision @invoice.total_gross, :precision => 2
-          %tr
-            %td Total TVA (€)
-            %td= number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2
-          %tr.ttc-total
-            %td TOTAL TTC (€)
-            %td= number_with_precision @invoice.total, :precision => 2
+              %td.right.aligned= number_to_currency( (project.total - project.total_gross), locale: :fr)
+              %td.right.aligned= number_to_currency( (project.total_gross), locale: :fr)
+      %table
+        %tr
+          %td
+            %table.ui.unstackable.striped.compact.table.tva-table.avoidbreak
+              %thead
+                %tr
+                  %th.right.aligned Base HT
+                  %th.right.aligned Taux TVA
+                  %th.right.aligned Montant TVA
+              %tbody
+                -@tva_rates.each_with_index  do |tva_rate, index|
+                  %tr
+                    %td.right.aligned= (number_to_currency @tva_amounts[index][1], locale: :fr)
+                    %td.right.aligned= tva_rate.to_s&.+('%')
+                    %td.right.aligned= (number_to_currency @tva_amounts[index][0], locale: :fr)
+          %td
+            %table.ui.unstackable.compact.table.total-table.avoidbreak
+              %tbody
+                %tr
+                  %td TOTAL HT
+                  %td.three.wide= number_to_currency( (@invoice.total_gross), locale: :fr)
+                %tr
+                  %td Total TVA
+                  %td= number_to_currency( (@invoice.total - @invoice.total_gross), locale: :fr)
+                %tr.ttc-total
+                  %td TOTAL TTC
+                  %td= number_to_currency(@invoice.total, locale: :fr)
       .payment-notes.top-notes.avoidbreak
         %h4
           = t('invoice_account') + " BE47 0015 7715 0480"
@@ -77,7 +93,7 @@
       - @invoice.projects.order(:id).each do |project|
         .avoidbreak
           %h3.project-header
-            = (@company.short_name =="Greday" ? t('project') : t('quotation')) + " #" +project.id.to_s + " : " + project.name
+            = (@company.mode =="Greday" ? t('project') : t('quotation')) + " #" +project.id.to_s + " : " + project.name
           %p
             = project.description
             - if project.po.present?
@@ -95,27 +111,57 @@
               %h4
                 = t('services').pluralize
               %table.ui.unstackable.black.celled.striped.table
-                %thead
-                  %tr
-                    %th.six.wide= t('Name')
-                    %th.one.wide.center.aligned= t('duration')
-                    %th.three.wide.right.aligned= t('hourly_rate') + ' (€)'
-                    %th.three.wide.right.aligned= t('tva_rate') + ' (%)'
-                    %th.three.wide.right.aligned= t('total_gross') + ' (€)'
-                %tbody
-                  - project.services.each do |service|
+                - if project.services_recap
+                  %thead
                     %tr
-                      %td= service.name
-                      %td.center.aligned= service.duration.strftime('%H:%M')
-                      %td.right.aligned= number_with_precision service.hourly_rate, :precision => 2
-                      %td.right.aligned= number_with_precision service.tva_rate, :precision => 2
-                      %td.right.aligned= number_with_precision service.total_gross, :precision => 2
-                %tfoot
-                  %tr
-                    %th.right.aligned{colspan: 4}
-                      %b= "TOTAL"
-                    %th.right.aligned
-                      %b= number_with_precision project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum, :precision => 2
+                      %th.nine.wide= t('Name')
+                      %th.two.wide.center.aligned= t('duration')
+                      %th.two.wide.right.aligned= t('tva_rate')
+                      %th.three.wide.right.aligned= t('total_gross')
+                  %tbody
+                    %tr
+                      %td= project.services_recap_text
+                      %td.center.aligned= project.services.where(is_displacement: [nil, false]).sum(:duration).to_s.chop.chop.chop
+                      %td.right.aligned= "21%"
+                      %td.right.aligned= number_to_currency((project.services.where(is_displacement: [nil, false]).sum(:total_gross)), locale: :fr)
+                    - if project.services.where(is_displacement: true).any?
+                      %tr
+                        %td= project.displacement_recap
+                        %td.center.aligned= project.services.where(is_displacement: true).sum(:duration).to_s.chop.chop.chop
+                        %td.right.aligned= "21%"
+                        %td.right.aligned= number_to_currency((project.services.where(is_displacement:true).sum(:total_gross)), locale: :fr)
+                  %tfoot
+                    %tr
+                      %th.right.aligned{colspan: 3}
+                        %b= "TOTAL"
+                      %th.right.aligned
+                        %b= number_to_currency(( project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+                - else
+                  %thead
+                    %tr
+                      %th.seven.wide= t('Name')
+                      %th.one.wide.center.aligned= t('duration')
+                      %th.three.wide.right.aligned= t('hourly_rate')
+                      %th.two.wide.right.aligned= t('tva_rate')
+                      %th.three.wide.right.aligned= t('total_gross')
+                  %tbody
+                    - project.services.each do |service|
+                      %tr
+                        %td= service.name
+                        %td.center.aligned= service.duration.strftime('%H:%M')
+                        %td.right.aligned= number_to_currency((service.hourly_rate), locale: :fr)
+                        %td.right.aligned= (number_with_precision service.tva_rate, :precision => 0).to_s&.+('%')
+                        %td.right.aligned= number_to_currency((service.total_gross), locale: :fr)
+                      - if service.show_desc_invoice
+                        %tr
+                          %td{colspan: "5"}
+                            = simple_format(service.comment)
+                  %tfoot
+                    %tr
+                      %th.right.aligned{colspan: 4}
+                        %b= "TOTAL"
+                      %th.right.aligned
+                        %b= number_to_currency(( project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
         - if project.wares.any?
           .avoidbreak
             %h4
@@ -123,19 +169,19 @@
             %table.ui.unstackable.black.celled.striped.table
               %thead
                 %tr
-                  %th.six.wide= t('ware_name')
+                  %th.seven.wide= t('ware_name')
                   %th.one.wide.center.aligned= t('quantity')
-                  %th.three.wide.right.aligned= t('sell_price') + ' (€)'
-                  %th.three.wide.right.aligned= t('tva_rate') + ' (%)'
-                  %th.three.wide.right.aligned= t('total_gross') + ' (€)'
+                  %th.three.wide.right.aligned= t('sell_price')
+                  %th.two.wide.right.aligned= t('tva_rate')
+                  %th.three.wide.right.aligned= t('total_gross')
               %tbody
                 - project.wares.each do |ware|
                   %tr
                     %td= ware.ware_name
                     %td.center.aligned= number_with_precision(ware.quantity, strip_insignificant_zeros: true).to_s
-                    %td.right.aligned= number_with_precision ware.sell_price, :precision => 2
-                    %td.right.aligned= number_with_precision ware.tva_rate, :precision => 2
-                    %td.right.aligned= number_with_precision ware.total_gross, :precision => 2
+                    %td.right.aligned= number_to_currency((ware.sell_price), locale: :fr)
+                    %td.right.aligned= (number_with_precision ware.tva_rate, :precision => 0).to_s&.+('%')
+                    %td.right.aligned= number_to_currency((ware.total_gross), locale: :fr)
                   - if ware.show_desc_invoice
                     %tr
                       %td{colspan: "5"}
@@ -145,7 +191,7 @@
                   %th.right.aligned{colspan: 4}
                     %b= "TOTAL"
                   %th.right.aligned
-                    %b= number_with_precision project.wares.collect { |p| p.valid? ? p.total_gross : 0 }.sum, :precision => 2
+                    %b= number_to_currency( (project.wares.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
         - if project.project_extra_lines.any?
           .avoidbreak
             %h4
@@ -153,47 +199,63 @@
             %table.ui.unstackable.black.celled.striped.table
               %thead
                 %tr
-                  %th.six.wide= t('Name')
+                  %th.seven.wide= t('Name')
                   %th.one.wide.center.aligned= t('quantity')
-                  %th.three.wide.right.aligned= t('unit_price') + ' (€)'
-                  %th.three.wide.right.aligned= t('tva_rate') + ' (%)'
-                  %th.three.wide.right.aligned= t('total_gross') + ' (€)'
+                  %th.three.wide.right.aligned= t('unit_price')
+                  %th.two.wide.right.aligned= t('tva_rate')
+                  %th.three.wide.right.aligned= t('total_gross')
               %tbody
                 - project.project_extra_lines.order(:updated_at).each do |project_extra_line|
                   %tr
                   - if project_extra_line.is_manual
                     %td= project_extra_line.manual_name
                     %td.center.aligned= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.unit
-                    %td.right.aligned= number_with_precision project_extra_line.manual_price, :precision => 2
+                    %td.right.aligned= number_to_currency((project_extra_line.manual_price), locale: :fr)
                   - else
                     %td= project_extra_line.extra.name
                     %td.center.aligned= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.extra.unit
-                    %td.right.aligned= number_with_precision project_extra_line.extra.unit_price, :precision => 2
-                  %td.right.aligned= number_with_precision project_extra_line.tva_rate, :precision => 2
-                  %td.right.aligned= number_with_precision project_extra_line.total_gross, :precision => 2
+                    %td.right.aligned= number_to_currency((project_extra_line.extra.unit_price), locale: :fr)
+                  %td.right.aligned= (number_with_precision project_extra_line.tva_rate, :precision => 0).to_s&.+('%')
+                  %td.right.aligned= number_to_currency((project_extra_line.total_gross), locale: :fr)
               %tfoot
                 %tr
                   %th.right.aligned{colspan: 4}
                     %b= "TOTAL"
                   %th.right.aligned
-                    %b= number_with_precision project.project_extra_lines.collect { |p| p.valid? ? p.total_gross : 0 }.sum, :precision => 2
-        - if project.comment.length > 0
-          %br
-            %b
+                    %b= number_to_currency( (project.project_extra_lines.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+        %br
+        - if project.comment
+          .project-comment
             = project.comment
     - if @size <= 15 || @one_project == true
-      %table.ui.unstackable.compact.table.total-table.avoidbreak
-        %tbody
-          %tr
-            %td TOTAL HT (€)
-            %td.three.wide= number_with_precision @invoice.total_gross, :precision => 2
-          %tr
-            %td Total TVA (€)
-            %td= number_with_precision (@invoice.total - @invoice.total_gross), :precision => 2
-          %tr.ttc-total
-            %td TOTAL TTC (€)
-            %td= number_with_precision @invoice.total, :precision => 2
-      - if @company.short_name == "Greday"
+      %table
+        %tr
+          %td
+            %table.ui.unstackable.striped.compact.table.tva-table.avoidbreak
+              %thead
+                %tr
+                  %th.right.aligned Base HT
+                  %th.right.aligned Taux TVA
+                  %th.right.aligned Montant TVA
+              %tbody
+                -@tva_rates.each_with_index  do |tva_rate, index|
+                  %tr
+                    %td.right.aligned= (number_to_currency @tva_amounts[index][1], locale: :fr)
+                    %td.right.aligned= tva_rate.to_s&.+('%')
+                    %td.right.aligned= (number_to_currency @tva_amounts[index][0], locale: :fr)
+          %td
+            %table.ui.unstackable.compact.table.total-table.avoidbreak
+              %tbody
+                %tr
+                  %td TOTAL HT
+                  %td.three.wide= number_to_currency( (@invoice.total_gross), locale: :fr)
+                %tr
+                  %td Total TVA
+                  %td= number_to_currency( (@invoice.total - @invoice.total_gross), locale: :fr)
+                %tr.ttc-total
+                  %td TOTAL TTC
+                  %td= number_to_currency(@invoice.total, locale: :fr)
+      - if @company.mode == "Greday"
         - if @size <= 15
           .payment-notes.bottom-notes.avoidbreak
             %h4
@@ -221,5 +283,5 @@
               \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
             %p
               = t('invoice_notice')
-    - if @company.short_name == "PLUSVIEW" || @company.short_name =="Philippe Doutrewé"
+    - if @company.mode == "Plusview"
       = render "/layouts/pdf/tos"

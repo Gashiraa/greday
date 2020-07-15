@@ -28,6 +28,28 @@ class Invoice < ApplicationRecord
     end
   end
 
+  def get_tva_rates(invoice)
+    Service.joins(project: :invoice).select(:tva_rate).where("invoices.id = "+invoice.id.to_s)
+        .union(ProjectExtraLine.joins(project: :invoice).select(:tva_rate).where("invoices.id = "+invoice.id.to_s))
+        .union(Ware.joins(project: :invoice).select(:tva_rate).where("invoices.id = "+invoice.id.to_s)).pluck(:tva_rate)
+  end
+
+  def get_tva_amounts(tva_rate, invoice)
+    tva = []
+    amount = 0
+    base = 0
+    invoice.projects.each do |project|
+      amount += project.services.where(tva_rate: tva_rate).collect { |s| s.valid? ? s.total_cost - s.total_gross : 0 }.sum
+      base += project.services.where(tva_rate: tva_rate).collect { |s| s.valid? ? s.total_gross : 0 }.sum
+      amount += project.wares.where(tva_rate: tva_rate).collect { |w| w.valid? ? w.total_cost - w.total_gross : 0 }.sum
+      base += project.wares.where(tva_rate: tva_rate).collect { |w| w.valid? ? w.total_gross : 0 }.sum
+      amount += project.project_extra_lines.where(tva_rate: tva_rate).collect { |pel| pel.valid? ? pel.total - pel.total_gross : 0 }.sum
+      base += project.project_extra_lines.where(tva_rate: tva_rate).collect { |pel| pel.valid? ? pel.total_gross : 0 }.sum
+    end
+    tva.push(amount)
+    tva.push(base)
+  end
+
   def update_totals_invoice(invoice, projects, wares)
     invoice.update(total: do_total(projects, wares),
                    total_gross: do_total_gross(projects, wares))

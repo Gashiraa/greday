@@ -93,6 +93,11 @@
       color: white;
     }
 
+    .project-comment{
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
     .total-table, .total-table > tbody > tr > td {
       line-height: 1.3rem;
       border: none;
@@ -103,6 +108,10 @@
     .total-table {
       width: 17rem;
       float: right;
+    }
+
+    .tva-table {
+      //border: none;
     }
 
     .payment-notes {
@@ -118,7 +127,7 @@
     }
 
     .top-notes {
-      top: 1080px;
+      top: 1150px;
     }
 
     .bottom-notes {

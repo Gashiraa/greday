@@ -10,27 +10,30 @@ PROJET
     Cliqué-glissé pour orgraniser les items du projet
     ✓ Toujours voir les totaux (marchandises)
     Garder la fenêtre de listing ouverte après opération
-    Aligner les +, supprimer ajouter et adapter pou plusview
+    Aligner les +, supprimer ajouter et adapter pour plusview
     Insérer un historique des machines à la création d'un projet
     Afficher uniquement l'historique récent
 FACTURE
     ✓ Afficher le taux de TVA dans le récapitulatif
     ✓ Revoir disposition du logo
-    Afficher les totaux par taux de TVA sur facture
-    Réduire les interlignes
-    Notes de bas de page réduire
+    ✓ Afficher les totaux par taux de TVA sur facture
+    ✓ Réduire les interlignes
+    ✓ Notes de bas de page réduire
 MARCHANDISES
     Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
 PRESTATIONS
-    Commentaire à inclure ou non
-    Marquer comme déplacement
+    ✓ Commentaire à inclure ou non
+    ✓ Marquer comme déplacement
+    ✓ Affichage détaillé ou non sur facture
 MACHINES
     ✓ Colonne et tri par client dans les machines
+    Listing agrandit dans les machines
         Encodage des huiles par catégorie, type, quantité
         Ajouter un tri par réference
-    Listing agrandit dans les machines
 DIVERS
     ✓ Maj-auto sur catégorie
+CLIENTS
+    Revoir mise en page
 ________________________________________________________________________________________________________________________
 
 Condition en DB pour le choix de format des pdf

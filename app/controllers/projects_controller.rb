@@ -30,9 +30,9 @@ class ProjectsController < ApplicationController
       @machine_history = MachineHistory.order(date: :asc).where(machine_id: @project.machine_id)
     end
 
-    if @company.short_name == "Greday"
+    if @company.mode == "Greday"
       show_greday
-    elsif @company.short_name == "PLUSVIEW" || "Philippe Doutrewé"
+    elsif @company.mode == "Plusview"
       show_plusview
     end
   end
@@ -202,7 +202,7 @@ class ProjectsController < ApplicationController
                                     :name, :status, :wielding, :machining,
                                     :karcher, :total, :total_gross, :date,
                                     :description, :no_vat, :machine_id, :po, :applicant,
-                                    :comment)
+                                    :comment, :services_recap, :services_recap_text, :displacement_recap)
   end
 
 end
