@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   def set_company
-    Project.set_company(@company.short_name)
+    Project.set_company(@company.mode)
   end
 
   # GET /projects

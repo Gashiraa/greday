@@ -16,7 +16,7 @@ class Invoice < ApplicationRecord
   def update_invoice_content_on_destroy(invoice, company)
     invoice.wares.update(status: :assigned_customer, invoice_id: nil)
 
-    if company == "PLUSVIEW"
+    if company == "Plusview"
       invoice.projects.update(status: :accepted, invoice_id: nil)
     else
       invoice.projects.update(status: :done, invoice_id: nil)
@@ -67,7 +67,7 @@ class Invoice < ApplicationRecord
 
   def update_statuses_invoice(invoice, company)
 
-    if company == "PLUSVIEW"
+    if company == "Plusview"
       Project.all
           .where(status: :invoiced)
           .where("invoice_id IS NULL")

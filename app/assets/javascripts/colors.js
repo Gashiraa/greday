@@ -37,7 +37,7 @@ function colorTable() {
 function assignColor(status) {
     let company = $('#company-id').data('somedata');
 
-    if (company === 'PLUSVIEW') {
+    if (company === 'Plusview') {
         switch (status) {
             case 'created' :
                 return "red"; //RED
