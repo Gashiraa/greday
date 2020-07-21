@@ -37,7 +37,7 @@ $(document).on("turbolinks:load", function () {
         $('#provider_price').trigger('mouseover');
 
         //WARES TOTAL auto-complete
-        $('#waresForm,#total_cost,#total_gross,#quantity,#bought_price,#tva_rate,#margin')
+        $('#provider_discount,#provider_price,#waresForm,#total_cost,#total_gross,#quantity,#bought_price,#tva_rate,#margin')
             .on('keyup keypress mouseover change', function () {
                 let total_cost = document.getElementById('total_cost');
                 let total_gross = document.getElementById('total_gross');
@@ -67,7 +67,6 @@ $(document).on("turbolinks:load", function () {
 function changeStatusSelect(status) {
     console.log(document.getElementById('ware_id').value);
     if (document.getElementById('ware_id').value === "0") {
-        console.log(status);
         $('#status_edit_select').val(status)
     }
 }
