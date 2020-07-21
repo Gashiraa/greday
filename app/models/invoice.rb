@@ -14,9 +14,8 @@ class Invoice < ApplicationRecord
   translate_enum :status
 
   def update_invoice_content_on_destroy(invoice, company)
-    invoice.wares.update(status: :assigned_customer, invoice_id: nil)
 
-    if company == "Plusview"
+    if company == "PLUSVIEW"
       invoice.projects.update(status: :accepted, invoice_id: nil)
     else
       invoice.projects.update(status: :done, invoice_id: nil)
@@ -67,7 +66,7 @@ class Invoice < ApplicationRecord
 
   def update_statuses_invoice(invoice, company)
 
-    if company == "Plusview"
+    if company == "PLUSVIEW"
       Project.all
           .where(status: :invoiced)
           .where("invoice_id IS NULL")
@@ -85,19 +84,12 @@ class Invoice < ApplicationRecord
         .where("projects.invoice_id IS NULL")
         .update(status: :assigned_project)
 
-    Ware.all
-        .where(status: :invoiced)
-        .where("invoice_id IS NULL")
-        .where(project_id: nil)
-        .update(status: :assigned_customer)
-
     Service.all
         .joins(:project)
         .where(status: :invoiced)
         .where("projects.invoice_id IS NULL")
         .update(status: :assigned)
 
-    invoice.wares.update(status: :invoiced)
     invoice.projects.update(status: :invoiced)
     invoice.projects.each do |project|
       project.wares.update(status: :invoiced)
@@ -114,7 +106,6 @@ class Invoice < ApplicationRecord
         total += (service.name.length/40).ceil
       end
     end
-    total += invoice.wares.count
     total += (invoice.projects.count * 6)
   end
 

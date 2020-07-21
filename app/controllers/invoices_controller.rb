@@ -98,7 +98,7 @@ class InvoicesController < ApplicationController
   end
 
   def scope
-    ::Invoice.all.includes(:wares)
+    ::Invoice.all
   end
 
   # GET /invoices/1/edit
@@ -114,7 +114,7 @@ class InvoicesController < ApplicationController
     end
     respond_to do |format|
       if @invoice.save
-        @invoice.update_statuses_invoice(@invoice, @company.mode)
+        @invoice.update_statuses_invoice(@invoice, @company.short_name)
         @invoice.update_totals_invoice(@invoice, @invoice.projects, @invoice.wares)
         format.html { redirect_to invoice_path(@invoice.id, :format => :pdf), notice: 'Invoice was successfully created.' }
       else
@@ -128,7 +128,7 @@ class InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update(invoice_params)
-        @invoice.update_statuses_invoice(@invoice, @company.mode)
+        @invoice.update_statuses_invoice(@invoice, @company.short_name)
         @invoice.update_totals_invoice(@invoice, @invoice.projects, @invoice.wares)
         format.html { redirect_to invoices_url, notice: 'Invoice was successfully updated.' }
         format.json { render :show, status: :ok, location: @invoice }
@@ -142,7 +142,7 @@ class InvoicesController < ApplicationController
   # DELETE /invoices/1
   # DELETE /invoices/1.json
   def destroy
-    @invoice.update_invoice_content_on_destroy(@invoice, @company.mode)
+    @invoice.update_invoice_content_on_destroy(@invoice, @company.short_name)
     @invoice.destroy
     respond_to do |format|
       format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
@@ -153,7 +153,7 @@ class InvoicesController < ApplicationController
   def paid
     respond_to do |format|
       if @invoice.update(status: 1)
-        @invoice.update_statuses_invoice(@invoice, @company.mode)
+        @invoice.update_statuses_invoice(@invoice, @company.short_name)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @invoice }
       else

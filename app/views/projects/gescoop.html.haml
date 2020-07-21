@@ -3,8 +3,9 @@
     %tr.company-infos
       %td
         = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
-        %br/
-        = @company.name
+        - if @company.mode == "Plusview"
+          %br/
+          = @company.name
         %br/
         = @company.street
         %br/

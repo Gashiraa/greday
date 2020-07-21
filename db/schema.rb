@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_171101) do
+ActiveRecord::Schema.define(version: 2020_07_17_082707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 2020_07_15_171101) do
     t.bigint "customer_id"
     t.float "total_gross"
     t.integer "display_number"
-    t.boolean "services_details_flag"
     t.index ["customer_id"], name: "index_invoices_on_customer_id"
     t.index ["payment_id"], name: "index_invoices_on_payment_id"
   end
@@ -139,7 +138,6 @@ ActiveRecord::Schema.define(version: 2020_07_15_171101) do
     t.string "manual_name"
     t.float "manual_price"
     t.string "unit"
-    t.float "manual_vat"
     t.float "tva_rate"
     t.index ["extra_id"], name: "index_project_extra_lines_on_extra_id"
     t.index ["project_id"], name: "index_project_extra_lines_on_project_id"
@@ -149,9 +147,6 @@ ActiveRecord::Schema.define(version: 2020_07_15_171101) do
     t.bigint "invoice_id"
     t.bigint "customer_id"
     t.integer "status"
-    t.integer "wielding"
-    t.integer "machining"
-    t.integer "karcher"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
@@ -172,24 +167,9 @@ ActiveRecord::Schema.define(version: 2020_07_15_171101) do
     t.index ["machine_id"], name: "index_projects_on_machine_id"
   end
 
-  create_table "quotations", force: :cascade do |t|
-    t.date "date"
-    t.integer "status"
-    t.float "total"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.float "total_gross"
-    t.bigint "customer_id"
-    t.bigint "project_id"
-    t.index ["customer_id"], name: "index_quotations_on_customer_id"
-    t.index ["project_id"], name: "index_quotations_on_project_id"
-  end
-
   create_table "services", force: :cascade do |t|
     t.bigint "project_id"
-    t.bigint "invoice_id"
     t.bigint "customer_id"
-    t.bigint "quotation_id"
     t.string "name"
     t.string "comment"
     t.float "hourly_rate"
@@ -229,9 +209,7 @@ ActiveRecord::Schema.define(version: 2020_07_15_171101) do
 
   create_table "wares", force: :cascade do |t|
     t.bigint "project_id"
-    t.bigint "invoice_id"
     t.bigint "customer_id"
-    t.bigint "quotation_id"
     t.string "ware_name"
     t.string "comment"
     t.float "quantity"
@@ -253,8 +231,8 @@ ActiveRecord::Schema.define(version: 2020_07_15_171101) do
     t.boolean "machine_specific"
     t.boolean "is_maintenance"
     t.bigint "machine_id"
+    t.boolean "show_desc_quot"
     t.index ["customer_id"], name: "index_wares_on_customer_id"
-    t.index ["invoice_id"], name: "index_wares_on_invoice_id"
     t.index ["machine_id"], name: "index_wares_on_machine_id"
     t.index ["project_id"], name: "index_wares_on_project_id"
   end
@@ -270,16 +248,10 @@ ActiveRecord::Schema.define(version: 2020_07_15_171101) do
   add_foreign_key "projects", "customers"
   add_foreign_key "projects", "invoices"
   add_foreign_key "projects", "machines"
-  add_foreign_key "quotations", "customers"
-  add_foreign_key "quotations", "projects"
   add_foreign_key "services", "customers"
-  add_foreign_key "services", "invoices"
   add_foreign_key "services", "projects"
-  add_foreign_key "services", "quotations"
   add_foreign_key "users", "companies"
   add_foreign_key "wares", "customers"
-  add_foreign_key "wares", "invoices"
   add_foreign_key "wares", "machines"
   add_foreign_key "wares", "projects"
-  add_foreign_key "wares", "quotations"
 end

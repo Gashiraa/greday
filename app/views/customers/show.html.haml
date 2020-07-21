@@ -1,0 +1,95 @@
+#customer-id{"data-somedata" => "#{@customer.id}"}
+%div
+  .project-content
+    .ui.left.rail
+      .ui
+        .ui.cards
+          .card
+            .content
+              .header
+                = @customer.name
+                = link_to edit_customer_path(@customer), remote: true do
+                  %button.edit-card-button.ui.compact.icon.brown.button
+                    %i.edit.icon
+              .meta
+                = @customer.mail
+                %br/
+              .description
+                %br/
+                = "TVA : " + (@customer.tva_record ? @customer.tva_record.to_s : "")
+                %br/
+                = @customer.street.to_s + ', ' + @customer.number.to_s
+                %br/
+                = @customer.cp.to_s + ' ' + @customer.locality
+                %br/
+                = @customer.country
+                %br/
+                = "Taux horaire : " + (@customer.customer_rate ? @customer.customer_rate.to_s : "")
+            .content
+              .center.aligned
+                = link_to(customers_path) do
+                  %button.ui.brown.compact.labeled.icon.button
+                    Retour aux clients
+                    %i.arrow.left.icon
+    .project-section
+      %h4
+        Machines du client
+        = link_to(new_machine_path(customer: @customer.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+          %button.ui.purple.compact.labeled.icon.button
+            Ajouter une machine
+            %i.plus.icon
+      %table.ui.striped.selectable.violet.table.table-to-color
+        %thead.thead-dark
+          %tr
+            %th.center.aligned
+              = t('category')
+            %th.center.aligned
+              = t('model')
+            %th.center.aligned
+              = t('brand')
+            %th.center.aligned
+              = t('year')
+            %th
+        %tbody
+          - unless @customer.machines.any?
+            %tr
+              %td.center.aligned{colspan: "10"}= t('no_data_display')
+          - @customer.machines.each do |machine|
+            %tr{"data-project" => "#{machine_path(machine)}"}
+              %td.center.aligned
+                = machine.category
+              %td.center.aligned
+                = machine.model
+              %td.center.aligned
+                = machine.brand
+              %td.center.aligned
+                = machine.year
+              %td.center.aligned
+                = link_to edit_machine_path(machine), remote: true do
+                  = image_tag("edit-icon.png", size: "30x30")
+                = link_to machine, method: :delete, data: {confirm: t('confirm_delete')} do
+                  = image_tag("delete-icon.png", size: "30x30")
+      %table.ui.striped.selectable.blue.table.table-to-color
+        %h4 Projets du client
+        %thead.thead-dark
+          %tr
+            %th.four.wide
+              = t('Name')
+            %th.four.wide
+              = t('date_locale')
+            %th.four.wide
+              = t('customer')
+        %tbody
+          - unless @customer.projects.any?
+            %tr
+              %td.center.aligned{colspan: "9"} Aucune données à afficher
+          - @customer.projects.each do |project|
+            %tr{"data-project" => "#{project_path(project)}"}
+              %td.four.wide
+                = project.name
+              %td.four.wide
+                = l(project.date)
+              %td.four.wide
+                = project.customer.name
+#modal-window.ui.modal
+  .content
