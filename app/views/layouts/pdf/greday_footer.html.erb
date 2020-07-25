@@ -50,13 +50,13 @@
         <div style="text-align:center">
           RPM LIEGE
           </br>
-          TVA : BE 08110.007.903
+          <%= "TVA :  " + @company.vat %>         </br>
         </div>
       </td>
       <td style="width:33.3%">
         <div style="text-align:right">
-          IBAN BE47 0015 7715 0480         </br>
-          BIC GEBABEBB
+          <%= "IBAN " + @company.account %>         </br>
+          <%= "BIC " + @company.bic %>
         </div>
       </td>
     </tr>

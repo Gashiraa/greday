@@ -18,8 +18,18 @@
 
       img {
         margin: auto;
-        height: 100px;
         position: relative;
+      }
+
+      .normal-logo {
+        img{
+          height: 100px;
+        }
+      }
+      .ago-logo {
+        img{
+          width: 300px;
+        }
       }
 
       .invoice-date {
@@ -49,7 +59,7 @@
     .second-row {
 
       .invoice-number {
-        width: 40%;
+        width: 300px;
         vertical-align: bottom;
         text-align: center;
 

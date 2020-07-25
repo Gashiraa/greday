@@ -3,12 +3,14 @@ ________________________________________________________________________________
 
 --26/05--
 
+
 GLOBAL
+    ✓ SEQUENCES A RECALER
     ✓ Enlever présaisie
 PROJET
     ✓ Nom projet -> Intitulé
-    Cliqué-glissé pour orgraniser les items du projet
     ✓ Toujours voir les totaux (marchandises)
+    Cliqué-glissé pour orgraniser les items du projet
     Garder la fenêtre de listing ouverte après opération
     Aligner les +, supprimer ajouter et adapter pour plusview
     Insérer un historique des machines à la création d'un projet
@@ -33,7 +35,7 @@ MACHINES
 DIVERS
     ✓ Maj-auto sur catégorie
 CLIENTS
-    Revoir mise en page
+    ✓ Revoir mise en page
 ________________________________________________________________________________________________________________________
 
 Condition en DB pour le choix de format des pdf

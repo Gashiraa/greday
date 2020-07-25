@@ -2,20 +2,26 @@
   %table.header
     %tr.company-infos
       %td
-        = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
-        - if @company.mode == "Plusview"
-          %br/
-          = @company.name
-        %br/
-        = @company.street
-        %br/
-        = @company.postcode + ' ' + @company.locality
-        %br/
-        = @company.phone
-        %br/
-        = @company.email
-        %br/
-        = @company.vat
+        -if @company.short_name == "AGO Tech"
+          %div.ago-logo
+            = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
+        -else
+          %div.normal-logo
+            = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
+          - if @company.short_name == "Plusview"
+            %br/
+            = @company.name
+          - if @company.short_name == "Plusview" || @company.short_name == "Greday"
+            %br/
+            = @company.street
+            %br/
+            = @company.postcode + ' ' + @company.locality
+            %br/
+            = @company.phone
+            %br/
+            = @company.email
+            %br/
+            = @company.vat
       %td.invoice-date
         = @company.locality + " le, " + l(@project.date).to_s
     %tr.second-row

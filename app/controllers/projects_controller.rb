@@ -48,6 +48,7 @@ class ProjectsController < ApplicationController
                orientation: 'Portrait',
                encoding: 'utf8',
                lowquality: true,
+               show_as_html: params.key?('debug'),
                zoom: 1,
                dpi: 75,
                :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},

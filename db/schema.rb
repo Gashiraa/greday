@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_082707) do
+ActiveRecord::Schema.define(version: 2020_07_23_164211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_082707) do
     t.boolean "use_manual_invoice_number", default: true
     t.string "vat"
     t.string "mode"
+    t.string "account"
+    t.string "bic"
   end
 
   create_table "customers", force: :cascade do |t|
