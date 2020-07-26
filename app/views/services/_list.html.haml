@@ -1,6 +1,6 @@
 -#----[SERVICES]----
 .close
-  %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+  %i.big.close.icon{onclick: "$('.partial-content').load('/projects/refresh_content/#{params[:project]}'); $('.ui.modal').modal('hide');"}
 .project-section
   %h3
     = t('service').pluralize.capitalize
@@ -30,33 +30,34 @@
           = t('total_cost')
           (€)
         %th.two.wide
-    - unless @services.any?
-      %tr
-        %td.center.aligned{colspan: "9"} Aucune données à afficher
-    - @services.order(date: :asc).each do |service|
-      %tr{"data-link" => "#{edit_service_path(service)}"}
-        %td= service.name
-        = tag.td class: 'center aligned status-cell', status: service.status do
-          %div
+    %tbody.sortable{"data-url" => sort_services_path}
+      - unless @services.any?
+        %tr
+          %td.center.aligned{colspan: "9"} Aucune données à afficher
+      - @services.order(:position).each do |service|
+        %tr{"data-link" => "#{edit_service_path(service)}", id: dom_id(service)}
+          %td= service.name
+          = tag.td class: 'center aligned status-cell', status: service.status do
             %div
-              = service.translated_status
-        %td.center.aligned
-          = service.date ? l(service.date) : ""
-        %td.right.aligned
-          = number_with_precision service.hourly_rate, :precision => 2
-        %td.center.aligned
-          = service.provider
-        %td.right.aligned
-          = service.duration.strftime('%H:%M')
-        %td.right.aligned
-          = number_with_precision service.total_gross, :precision => 2
-        %td.right.aligned
-          = number_with_precision service.total_cost, :precision => 2
-        %td.right.aligned
-          = link_to edit_service_path(service), remote: true do
-            = image_tag("edit-icon.png", size: "30x30")
-          = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
-            = image_tag("delete-icon.png", size: "30x30")
+              %div
+                = service.translated_status
+          %td.center.aligned
+            = service.date ? l(service.date) : ""
+          %td.right.aligned
+            = number_with_precision service.hourly_rate, :precision => 2
+          %td.center.aligned
+            = service.provider
+          %td.right.aligned
+            = service.duration.strftime('%H:%M')
+          %td.right.aligned
+            = number_with_precision service.total_gross, :precision => 2
+          %td.right.aligned
+            = number_with_precision service.total_cost, :precision => 2
+          %td.right.aligned
+            = link_to edit_service_path(service), remote: true do
+              = image_tag("edit-icon.png", size: "30x30")
+            = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
+              = image_tag("delete-icon.png", size: "30x30")
   %table.ui.compact.table.total-section
     - @services.distinct(:provider).order(:provider).pluck(:provider).each do |provider|
       %tr

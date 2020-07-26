@@ -12,6 +12,13 @@ class ProjectExtraLinesController < ApplicationController
   def show
   end
 
+  def sort
+    params[:project_extra_line].each_with_index do |id, index|
+      ProjectExtraLine.where(id: id).update_all(position: index + 1)
+    end
+    head :ok
+  end
+
   # GET /project_extra_lines/new
   def new
     @manual = params[:manual]

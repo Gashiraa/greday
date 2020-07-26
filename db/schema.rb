@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_23_164211) do
+ActiveRecord::Schema.define(version: 2020_07_26_131121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 2020_07_23_164211) do
     t.float "manual_price"
     t.string "unit"
     t.float "tva_rate"
+    t.integer "position"
     t.index ["extra_id"], name: "index_project_extra_lines_on_extra_id"
     t.index ["project_id"], name: "index_project_extra_lines_on_project_id"
   end
@@ -190,6 +191,7 @@ ActiveRecord::Schema.define(version: 2020_07_23_164211) do
     t.boolean "show_desc_invoice"
     t.boolean "show_desc_quote"
     t.boolean "is_displacement"
+    t.integer "position"
     t.index ["project_id"], name: "index_services_on_project_id"
   end
 
@@ -234,6 +236,7 @@ ActiveRecord::Schema.define(version: 2020_07_23_164211) do
     t.boolean "is_maintenance"
     t.bigint "machine_id"
     t.boolean "show_desc_quot"
+    t.integer "position"
     t.index ["customer_id"], name: "index_wares_on_customer_id"
     t.index ["machine_id"], name: "index_wares_on_machine_id"
     t.index ["project_id"], name: "index_wares_on_project_id"

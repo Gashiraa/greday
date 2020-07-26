@@ -57,6 +57,9 @@ class Project < ApplicationRecord
 
   def update_totals_project(project)
     project.update(total: get_total, total_gross: get_total_gross)
+    if project.total.nil?
+      project.update(total: 0, total_gross: 0)
+    end
   end
 
   def get_total

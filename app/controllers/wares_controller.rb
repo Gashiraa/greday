@@ -17,6 +17,13 @@ class WaresController < ApplicationController
     @wares = Ware.where(project_id: params[:project])
   end
 
+  def sort
+    params[:ware].each_with_index do |id, index|
+      Ware.where(id: id).update_all(position: index + 1)
+    end
+    head :ok
+  end
+
   # GET /wares/new
   def new
     @ware = Ware.new

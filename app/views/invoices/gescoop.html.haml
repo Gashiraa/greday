@@ -149,7 +149,7 @@
                       %th.two.wide.right.aligned= t('tva_rate')
                       %th.three.wide.right.aligned= t('total_gross')
                   %tbody
-                    - project.services.each do |service|
+                    - project.services.order(:position).each do |service|
                       %tr
                         %td= service.name
                         %td.center.aligned= service.duration.strftime('%H:%M')
@@ -179,7 +179,7 @@
                   %th.two.wide.right.aligned= t('tva_rate')
                   %th.three.wide.right.aligned= t('total_gross')
               %tbody
-                - project.wares.each do |ware|
+                - project.wares.order(:position).each do |ware|
                   %tr
                     %td= ware.ware_name
                     %td.center.aligned= number_with_precision(ware.quantity, strip_insignificant_zeros: true).to_s
@@ -209,7 +209,7 @@
                   %th.two.wide.right.aligned= t('tva_rate')
                   %th.three.wide.right.aligned= t('total_gross')
               %tbody
-                - project.project_extra_lines.order(:updated_at).each do |project_extra_line|
+                - project.project_extra_lines.order(:position).each do |project_extra_line|
                   %tr
                   - if project_extra_line.is_manual
                     %td= project_extra_line.manual_name

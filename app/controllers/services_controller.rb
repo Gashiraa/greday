@@ -17,6 +17,13 @@ class ServicesController < ApplicationController
     @services = Service.where(project_id: params[:project])
   end
 
+  def sort
+    params[:service].each_with_index do |id, index|
+      Service.where(id: id).update_all(position: index + 1)
+    end
+    head :ok
+  end
+
   # GET /services/new
   def new
     @service = Service.new

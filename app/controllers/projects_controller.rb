@@ -19,6 +19,12 @@ class ProjectsController < ApplicationController
     @projects = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
   end
 
+  def refresh_content
+    respond_to do |format|
+      format.js
+    end
+  end
+
   # GET /projects/1
   # GET /projects/1.json
 
@@ -129,6 +135,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
+        @project.update_totals_project(@project)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_add_success') }
         format.json { render :show, status: :created, location: @project }
       else
@@ -144,6 +151,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.update(project_params)
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
+        @project.update_totals_project(@project)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @project }
       else

@@ -82,6 +82,7 @@ gem 'rack'
 gem 'nokogiri', '~>1.10.8'
 gem 'to_words'
 gem 'active_record_union'
+gem 'acts_as_list'
 
 
 

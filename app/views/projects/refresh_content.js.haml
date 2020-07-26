@@ -1,0 +1,3 @@
+:javascript
+ $(".project-content").find(".partial-content").html("#{escape_javascript(render 'projects/project_content')}");
+ $(document).trigger('turbolinks:load');

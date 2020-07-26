@@ -15,11 +15,23 @@ Rails.application.routes.draw do
   get 'wares/list' => 'wares#list', as: :list
   get 'services/list' => 'services#list', as: :services_list
 
-  resources :services
+  resources :services do
+    collection do
+      patch :sort
+    end
+  end
   resources :extras
   resources :projects
-  resources :wares
-  resources :project_extra_lines
+  resources :wares do
+    collection do
+      patch :sort
+    end
+  end
+  resources :project_extra_lines do
+    collection do
+      patch :sort
+    end
+  end
   resources :customers
   resources :quotations
   resources :invoices
@@ -35,6 +47,8 @@ Rails.application.routes.draw do
   get 'invoices/paid/:id' => 'invoices#paid', as: :paid
 
   get "/pages/:page" => "pages#show"
+
+  get "/projects/refresh_content/:id" => "projects#refresh_content"
 
   get 'projects/duplicate/:id' => 'projects#duplicate', as: :duplicate
   post 'projects/duplicate/:id' => 'projects#duplicate'

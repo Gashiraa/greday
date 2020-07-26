@@ -1,6 +1,6 @@
 -#----[WARES]----
 .close
-  %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+  %i.big.close.icon{onclick: "$('.partial-content').load('/projects/refresh_content/#{params[:project]}'); $('.ui.modal').modal('hide');"}
 - if @company.use_wares
   .project-section
     %h3
@@ -34,12 +34,12 @@
             = t('total_cost')
             (€)
           %th.two.wide
-      %tbody
+      %tbody.sortable{"data-url" => sort_wares_path}
         - unless @wares.any?
           %tr
             %td.center.aligned{colspan: "11"} Aucune données à afficher
-        - @wares.where("total_gross = 0").each do |ware|
-          %tr.red-row{"data-link" => "#{edit_ware_path(ware)}"}
+        - @wares.where("total_gross = 0").order(:position).each do |ware|
+          %tr.red-row{"data-link" => "#{edit_ware_path(ware)}", id: dom_id(ware)}
             %td
               = ware.ware_name
               = tag.td class: 'center aligned status-cell', status: ware.status do
@@ -67,8 +67,8 @@
                 = image_tag("edit-icon.png", size: "30x30")
               = link_to ware_path(ware, modal: true), method: :delete, data: {confirm: t('confirm_delete')} do
                 = image_tag("delete-icon.png", size: "30x30")
-        - @wares.where("total_gross > 0").each do |ware|
-          %tr{"data-link" => "#{edit_ware_path(ware, modal: true)}"}
+        - @wares.where("total_gross > 0").order(:position).each do |ware|
+          %tr{"data-link" => "#{edit_ware_path(ware, modal: true)}", id: dom_id(ware)}
             %td
               = ware.ware_name
             = tag.td class: 'center aligned status-cell', status: ware.status do

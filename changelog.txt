@@ -14,7 +14,7 @@ PROJET
     Garder la fenêtre de listing ouverte après opération
     Aligner les +, supprimer ajouter et adapter pour plusview
     Insérer un historique des machines à la création d'un projet
-    Afficher uniquement l'historique récent
+    Afficher le dernier historique
 FACTURE
     ✓ Afficher le taux de TVA dans le récapitulatif
     ✓ Revoir disposition du logo
@@ -29,7 +29,7 @@ PRESTATIONS
     ✓ Affichage détaillé ou non sur facture
 MACHINES
     ✓ Colonne et tri par client dans les machines
-    Listing agrandit dans les machines
+    Listing agrandi dans les machines
         Encodage des huiles par catégorie, type, quantité
         Ajouter un tri par réference
 DIVERS

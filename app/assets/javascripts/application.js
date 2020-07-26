@@ -34,6 +34,16 @@ $(document).on("turbolinks:load", function () {
                 window.history.pushState('page2', 'Title', document.referrer);
             }
         }
+        $('.sortable').sortable({
+            update: function (e, ui) {
+                Rails.ajax({
+                        url: $(this).data("url"),
+                        type: "PATCH",
+                        data: $(this).sortable('serialize'),
+                    }
+                )
+            }
+        });
     }
 );
 
