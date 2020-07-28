@@ -7,6 +7,9 @@ body {
 .scrollable-project-section {
   max-height: 25vh;
   overflow-y: auto;
+  .ui.table {
+    border-radius: 0 ;
+  }
 }
 
 #primary-content {
