@@ -1,8 +1,6 @@
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
-
 --26/05--
-
 
 GLOBAL
     ✓ SEQUENCES A RECALER
@@ -10,9 +8,9 @@ GLOBAL
 PROJET
     ✓ Nom projet -> Intitulé
     ✓ Toujours voir les totaux (marchandises)
-    Cliqué-glissé pour orgraniser les items du projet
+    ✓ Cliqué-glissé pour orgraniser les items du projet
     Garder la fenêtre de listing ouverte après opération
-    Aligner les +, supprimer ajouter et adapter pour plusview
+    ✓ Aligner les +, supprimer ajouter et adapter pour plusview
     Insérer un historique des machines à la création d'un projet
     Afficher le dernier historique
 FACTURE
