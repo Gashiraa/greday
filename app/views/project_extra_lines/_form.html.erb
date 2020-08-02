@@ -4,7 +4,7 @@
 
 <% if manual == "true" %>
 
-  <%= form_for(@project_extra_line) do |form| %>
+  <%= form_for(@project_extra_line, html: {autocomplete: "off"}) do |form| %>
     <div class="ui form">
 
       <h2 class="centered">
@@ -26,11 +26,11 @@
 
         <div class="field">
           <%= form.label t('extra') %>
-          <%= form.text_field :manual_name, class: 'form-control', id: 'extra_manual_edit_select', autocomplete: 'nope' %>
+          <%= form.text_field :manual_name, class: 'form-control', id: 'extra_manual_edit_select' %>
         </div>
         <div class="field">
           <%= form.label t('unit') %>
-          <%= form.text_field :unit, class: 'form-control', id: 'extra_unit', autocomplete: 'nope' %>
+          <%= form.text_field :unit, class: 'form-control', id: 'extra_unit' %>
         </div>
 
       </div>
@@ -39,17 +39,17 @@
 
         <div class="field">
           <%= form.label t('Quantity') %>
-          <%= form.text_field :quantity, class: "form-control", autocomplete: 'nope', id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
+          <%= form.text_field :quantity, class: "form-control", id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
         </div>
 
         <div class="field">
           <%= form.label t('extra_price') %>
-          <%= form.text_field :manual_price, class: 'form-control', onkeyup: "javascript:replaceComma(this.id, this.value);", id: 'extra_unit_price', autocomplete: 'nope' %>
+          <%= form.text_field :manual_price, class: 'form-control', onkeyup: "javascript:replaceComma(this.id, this.value);", id: 'extra_unit_price' %>
         </div>
 
         <div class="field">
           <%= form.label t('tva_rate') %>
-          <%= form.text_field :tva_rate, class: "form-control", autocomplete: 'nope', id: 'extra_tva_rate', value: @project_extra_line.tva_rate ? @project_extra_line.tva_rate : "21" %>
+          <%= form.text_field :tva_rate, class: "form-control", id: 'extra_tva_rate', value: @project_extra_line.tva_rate ? @project_extra_line.tva_rate : "21" %>
         </div>
 
       </div>
@@ -77,7 +77,7 @@
 
 <% else %>
 
-  <%= form_for(@project_extra_line) do |form| %>
+  <%= form_for(@project_extra_line, html: {autocomplete: "off"}) do |form| %>
     <div class="ui form">
 
       <h2 class="centered">
@@ -102,7 +102,7 @@
 
         <div class="field">
           <%= form.label @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
-          <%= form.select(:extra_id, options_for_select(Extra.all.collect { |extra| [extra.name, extra.id, {category: extra.category}] }, selected: @project_extra_line.extra_id), {class: 'form-control', id: 'extra_edit_select', autocomplete: 'nope'}) %>
+          <%= form.select(:extra_id, options_for_select(Extra.all.collect { |extra| [extra.name, extra.id, {category: extra.category}] }, selected: @project_extra_line.extra_id), {class: 'form-control', id: 'extra_edit_select'}) %>
         </div>
 
       </div>
@@ -112,23 +112,23 @@
         <div class="field">
           <%= form.label t('unit') %>
           <%= form.select(:id, Extra.all
-              .collect { |extra| [extra.unit, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit', autocomplete: 'nope', :disabled => true}) %>
+              .collect { |extra| [extra.unit, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit', :disabled => true}) %>
         </div>
 
         <div class="field">
           <%= form.label t('Quantity') %>
-          <%= form.number_field :quantity, step: :any, class: "form-control", autocomplete: 'nope', id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
+          <%= form.number_field :quantity, step: :any, class: "form-control", id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
         </div>
 
         <div class="field">
           <%= form.label t('extra_price') %>
           <%= form.select(:id, Extra.all
-              .collect { |extra| [extra.unit_price, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit_price', autocomplete: 'nope', :disabled => true}) %>
+              .collect { |extra| [extra.unit_price, extra.id, {extra: extra.id}] }, {}, {class: 'form-control', id: 'extra_unit_price', :disabled => true}) %>
         </div>
 
         <div class="field">
           <%= form.label t('tva_rate') %>
-          <%= form.text_field :tva_rate, class: "form-control", autocomplete: 'nope', id: 'extra_tva_rate', value: @project_extra_line.tva_rate ? @project_extra_line.tva_rate : "21" %>
+          <%= form.text_field :tva_rate, class: "form-control", id: 'extra_tva_rate', value: @project_extra_line.tva_rate ? @project_extra_line.tva_rate : "21" %>
         </div>
 
       </div>

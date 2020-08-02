@@ -29,7 +29,7 @@
 
       <div class="field">
         <%= form.label t('status') %>
-        <%= form.select(:status, Invoice.translated_statuses.map { |status| [status[0], status[1]] }, {}, {class: 'form-control', autocomplete: 'nope'}) %>
+        <%= form.select(:status, Invoice.translated_statuses.map { |status| [status[0], status[1]] }, {}, {class: 'form-control'}) %>
       </div>
 
       <div class="field">
@@ -46,10 +46,10 @@
         <% if @invoice.id %>
           <%= form.select(:project_ids, Project.where(status: :done)
               .or(Project.where(invoice_id: @invoice.id))
-              .collect { |project| [project.name + ' (' + project.id.to_s + ')', project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', autocomplete: 'nope', :multiple => true}) %>
+              .collect { |project| [project.name + ' (' + project.id.to_s + ')', project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', :multiple => true}) %>
         <% else %>
           <%= form.select(:project_ids, Project.where(status: :done)
-              .collect { |project| [project.name, project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', autocomplete: 'nope', :multiple => true}) %>
+              .collect { |project| [project.name, project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', :multiple => true}) %>
         <% end %>
       </div>
     <% else %>

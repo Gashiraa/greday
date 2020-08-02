@@ -39,10 +39,10 @@
       <% if @payment.id %>
         <%= form.select(:invoice_ids, Invoice.where(status: :created)
             .or(Invoice.where(payment_id: @payment.id))
-            .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', autocomplete: 'nope', :multiple => true}) %>
+            .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', :multiple => true}) %>
       <% else %>
         <%= form.select(:invoice_ids, Invoice.where(status: :created)
-            .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', autocomplete: 'nope', :multiple => true}) %>
+            .collect {|invoice| [invoice.display_number.to_s + ": " + invoice.customer.name + ' - ' + invoice.total.to_s + ' €' + ' - ' + l(invoice.date).to_s, invoice.id, {invoice: invoice.customer.id}]}, {}, {class: 'form-control', id: 'select_invoices_payment', :multiple => true}) %>
       <% end %>
     </div>
 

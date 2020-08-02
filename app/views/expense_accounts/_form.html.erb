@@ -31,7 +31,7 @@
 
     <div class="field">
       <%= form.label t('description') %>
-      <%= form.text_area(:description, {class: 'form-control', rows: "5", autocomplete: 'nope'}) %>
+      <%= form.text_area(:description, {class: 'form-control', rows: "5"}) %>
     </div>
 
     <div class="ui segment">
@@ -39,12 +39,12 @@
 
         <div class="field">
           <%= form.label t('total_gross') %>
-          <%= form.text_field(:total_gross, {class: 'form-control', autocomplete: 'nope'}) %>
+          <%= form.text_field(:total_gross, {class: 'form-control'}) %>
         </div>
 
         <div class="field">
           <%= form.label t('total') %>
-          <%= form.text_field(:total, {class: 'form-control', autocomplete: 'nope'}) %>
+          <%= form.text_field(:total, {class: 'form-control'}) %>
         </div>
 
       </div>
