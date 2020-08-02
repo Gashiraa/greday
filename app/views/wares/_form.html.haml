@@ -1,0 +1,120 @@
+.close
+  %i.big.close.icon{onclick: "$('#modal-window').modal('hide');"}
+= form_for(@ware, remote: true, html: {autocomplete: "off"}) do |form|
+  .ui.form
+    - if params[:maintenance]
+      %h2.centered
+        - if @ware.id
+          = t('editing_maintenance_wares')
+        - else
+          = t('creating_maintenance_wares')
+      .three.fields
+        .field
+          = form.label t('ware_name')
+          = form.text_field :ware_name, {class: 'form-control', onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'}
+        .field
+          = form.label t('provider_name')
+          = form.text_field :provider_name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+        .field
+          = form.label t('provider_reference')
+          = form.text_field :provider_invoice, class: "form-control"
+      .field
+        = form.label t('comment')
+        = form.text_area :comment, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+      = form.hidden_field(:is_maintenance, value: true)
+      = form.hidden_field(:machine_id, value: params[:machine])
+      .field.centered
+        = form.submit t('create'), :class => "ui green button"
+    - else
+      %h2.centered
+        - if @ware.id
+          = t('editing_wares')
+        - else
+          = t('creating_wares')
+      = form.hidden_field :id, value: @ware.id || 0, id: "ware_id"
+      .three.fields
+        .field
+          = form.label t('project')
+          = form.select :project_id, Project.includes(:customer).all.map { |project| [project.name + ' - ' + project.customer&.name, project.id] }, {:include_blank => true}, {id: 'ware_form_project'}
+        .field
+          = form.label t('customer')
+          = form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, { id: 'ware_form_customer'}
+        .field
+          = form.label t('status')
+          = form.select :status, Ware.translated_statuses.map { |status| [status[0], status[1], {status: status[1]}] }, {:include_blank => true}, { id: 'status_edit_select'}
+      .three.fields
+        .field
+          = form.label t('ware_name')
+          = form.text_field :ware_name, { onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'}
+        .field
+          = form.label t('provider_name')
+          = form.text_field :provider_name, onkeyup: "javascript:capitalize(this.id, this.value);"
+        .field
+          = form.label t('provider_invoice')
+          = form.text_field :provider_invoice
+      .ui.segment
+        .field
+          = form.label t('comment')
+          = form.text_area :comment,  onkeyup: "javascript:capitalize(this.id, this.value);"
+        .field
+          .ui.toggle.checkbox
+            = form.check_box :show_desc_quot, class: "form-check-input", id: "show_desc_quot"
+            = form.label t('showInQuot'), class: "form-check-label", for: "show_desc_quot"
+        .field
+          .ui.toggle.checkbox
+            = form.check_box :show_desc_invoice, class: "form-check-input", id: "show_desc_invoice"
+            = form.label t('showInInv'), class: "form-check-label", for: "show_desc_invoice"
+        .field
+          .ui.toggle.checkbox
+            = form.check_box :machine_specific, class: "form-check-input", id: "machine_specific"
+            = form.label t('machineSpecific'), class: "form-check-label", for: "machine_specific"
+      .three.fields
+        .field
+          = form.label t('provider_price')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} €
+            = form.text_field :provider_price, id: 'provider_price'
+        .field
+          = form.label t('provider_discount')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} %
+            = form.text_field :provider_discount, id: 'provider_discount'
+        .field
+          = form.label t('bought_price')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} €
+            = form.text_field :bought_price, readonly: true, id: 'bought_price'
+      .three.fields
+        .field
+          = form.label t('Quantity')
+          = form.text_field :quantity, step: :any, :onclick => 'this.select();',  id: 'quantity', value: @ware.quantity || "1"
+        .field
+          = form.label t('sell_price')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} €
+            = form.text_field :sell_price, readonly: true, id: 'sell_price'
+        .field
+          = form.label t('margin')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} %
+            = form.text_field :margin, id: 'margin'
+      .three.fields
+        .field
+          = form.label t('tva_rate')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} %
+            = form.text_field :tva_rate, value: @ware.tva_rate || '21', id: 'tva_rate'
+        .field
+          = form.label t('gross_cost')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} €
+            = form.text_field :total_gross, readonly: true, id: 'total_gross'
+        .field
+          = form.label t('total_cost')
+          .ui.labeled.input
+            %label.ui.label{for: "amount"} €
+            = form.text_field :total_cost, readonly: true, id: 'total_cost'
+      .field
+        .centered
+          = form.submit t('create'),
+            :class => "ui green button"

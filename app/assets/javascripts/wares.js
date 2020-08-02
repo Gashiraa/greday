@@ -65,7 +65,6 @@ $(document).on("turbolinks:load", function () {
 );
 
 function changeStatusSelect(status) {
-    console.log(document.getElementById('ware_id').value);
     if (document.getElementById('ware_id').value === "0") {
         $('#status_edit_select').val(status)
     }

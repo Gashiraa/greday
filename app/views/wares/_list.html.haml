@@ -1,6 +1,6 @@
 -#----[WARES]----
 .close
-  %i.big.close.icon{onclick: "$('.partial-content').load('/projects/refresh_content/#{params[:project]}'); $('.ui.modal').modal('hide');"}
+  %i.big.close.icon{onclick: "$('.partial-content').load('/projects/refresh_content/#{@project.id}'); $('.ui.modal').modal('hide');"}
 - if @company.use_wares
   .project-section
     %h3
@@ -65,7 +65,7 @@
             %td.right.aligned
               = link_to edit_ware_path(ware, modal: true), remote: true do
                 = image_tag("edit-icon.png", size: "30x30")
-              = link_to ware_path(ware, modal: true), method: :delete, data: {confirm: t('confirm_delete')} do
+              = link_to ware_path(ware, modal: true), method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
                 = image_tag("delete-icon.png", size: "30x30")
         - @wares.where("total_gross > 0").order(:position).each do |ware|
           %tr{"data-link" => "#{edit_ware_path(ware, modal: true)}", id: dom_id(ware)}
@@ -94,7 +94,7 @@
             %td.right.aligned
               = link_to edit_ware_path(ware), remote: true do
                 = image_tag("edit-icon.png", size: "30x30")
-              = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
+              = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
                 = image_tag("delete-icon.png", size: "30x30")
     %table.ui.compact.table.total-section
       %tr

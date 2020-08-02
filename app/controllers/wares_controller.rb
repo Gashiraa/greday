@@ -15,6 +15,7 @@ class WaresController < ApplicationController
 
   def list
     @wares = Ware.where(project_id: params[:project])
+    @project =  Project.find(params[:project])
   end
 
   def sort
@@ -38,18 +39,16 @@ class WaresController < ApplicationController
   # POST /wares.json
   def create
     @ware = Ware.new(ware_params)
+    @project = @ware.project
+    @wares = @project.wares
     respond_to do |format|
       if @ware.save
         # update linked project
         @ware.project&.update_totals_project(@ware.project)
-
-        # update linked invoice
-        @ware.invoice&.update_totals_invoice(@ware.invoice, @ware.invoice.projects, @ware.invoice.wares)
-
         # update linked project's invoice
-        @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects, @ware.project.invoice.wares)
+        @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('ware_add_success') }
-        format.json { render :show, status: :created, location: @ware }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @ware.errors, status: :unprocessable_entity }
@@ -60,17 +59,17 @@ class WaresController < ApplicationController
   # PATCH/PUT /wares/1
   # PATCH/PUT /wares/1.json
   def update
+    @project = @ware.project
+    @wares = @project.wares
     respond_to do |format|
       if @ware.update(ware_params)
         # update linked project
         @ware.project&.update_totals_project(@ware.project)
 
-        # update linked invoice
-        @ware.invoice&.update_totals_invoice(@ware.invoice, @ware.invoice.projects, @ware.invoice.wares)
-
         # update linked project's invoice
-        @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects, @ware.project.invoice.wares)
+        @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('ware_update_success') }
+        format.js
         format.json { render :show, status: :ok, location: @ware }
       else
         format.html { render :edit }
@@ -83,15 +82,14 @@ class WaresController < ApplicationController
   # DELETE /wares/1.json
   def destroy
     @project = @ware.project
+    @wares = @project.wares
+
     @ware.destroy
     # update linked project
     @ware.project&.update_totals_project(@ware.project)
 
-    # update linked invoice
-    @ware.invoice&.update_totals_invoice(@ware.invoice, @ware.invoice.projects, @ware.invoice.wares)
-
     # update linked project's invoice
-    @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects, @ware.project.invoice.wares)
+    @ware.project&.invoice&.update_totals_invoice(@ware.project.invoice, @ware.project.invoice.projects)
     respond_to do |format|
       format.html { redirect_to request.env["HTTP_REFERER"], notice: t('ware_destroy_success') }
       format.js
