@@ -42,7 +42,7 @@ class ServicesController < ApplicationController
     respond_to do |format|
       if @service.save
         @service.project&.update_totals_project(@service.project)
-        @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects, @service.project.invoice.wares)
+        @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_add_success') }
         format.json { render :show, status: :created, location: @service }
       else
@@ -58,7 +58,7 @@ class ServicesController < ApplicationController
     respond_to do |format|
       if @service.update(service_params)
         @service.project&.update_totals_project(@service.project)
-        @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects, @service.project.invoice.wares)
+        @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_update_success') }
         format.json { render :show, status: :ok, location: @service }
       else
@@ -73,7 +73,7 @@ class ServicesController < ApplicationController
   def destroy
     @service.destroy
     @service.project&.update_totals_project(@service.project)
-    @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects, @service.project.invoice.wares)
+    @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects)
     respond_to do |format|
       format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_destroy_success') }
       format.json { head :no_content }

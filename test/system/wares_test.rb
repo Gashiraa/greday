@@ -16,7 +16,6 @@ class WaresTest < ApplicationSystemTestCase
 
     fill_in "Comment", with: @ware.comment
     fill_in "Customer", with: @ware.customer_id
-    fill_in "Invoice", with: @ware.invoice_id
     fill_in "Margin", with: @ware.margin
     fill_in "Name", with: @ware.name
     fill_in "Project", with: @ware.project_id
@@ -39,7 +38,6 @@ class WaresTest < ApplicationSystemTestCase
 
     fill_in "Comment", with: @ware.comment
     fill_in "Customer", with: @ware.customer_id
-    fill_in "Invoice", with: @ware.invoice_id
     fill_in "Margin", with: @ware.margin
     fill_in "Name", with: @ware.name
     fill_in "Project", with: @ware.project_id

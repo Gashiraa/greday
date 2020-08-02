@@ -1,3 +1,4 @@
+%div{"data-somedata": @size}
 .pdf
   %table.header
     %tr.company-infos
@@ -260,7 +261,7 @@
                   %td TOTAL TTC
                   %td= number_to_currency(@invoice.total, locale: :fr)
       - if @company.mode == "Greday"
-        - if @size <= 15
+        - if @size <= 19
           .payment-notes.bottom-notes.avoidbreak
             %h4
               = t('invoice_account') + @company.account

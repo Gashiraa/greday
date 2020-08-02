@@ -7,7 +7,6 @@ class Invoice < ApplicationRecord
   belongs_to :customer, optional: true
 
   has_many :projects, dependent: :nullify
-  has_many :wares, dependent: :nullify
   has_many :expense_accounts, dependent: :nullify
 
   enum status: [:created, :paid]
@@ -49,18 +48,16 @@ class Invoice < ApplicationRecord
     tva.push(base)
   end
 
-  def update_totals_invoice(invoice, projects, wares)
-    invoice.update(total: do_total(projects, wares),
-                   total_gross: do_total_gross(projects, wares))
+  def update_totals_invoice(invoice, projects)
+    invoice.update(total: do_total(projects),
+                   total_gross: do_total_gross(projects))
   end
 
-  def do_total(projects, wares)
-    wares.collect { |w| w.valid? ? w.total_cost : 0 }.sum +
+  def do_total(projects)
         projects.collect { |p| p.valid? ? p.total : 0 }.sum
   end
 
-  def do_total_gross(projects, wares)
-    wares.collect { |w| w.valid? ? w.total_gross : 0 }.sum +
+  def do_total_gross(projects)
         projects.collect { |p| p.valid? ? p.total_gross : 0 }.sum
   end
 
@@ -106,7 +103,7 @@ class Invoice < ApplicationRecord
         total += (service.name.length/40).ceil
       end
     end
-    total += (invoice.projects.count * 6)
+    total += (invoice.projects.count * 5)
   end
 
 

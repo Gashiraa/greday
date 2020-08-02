@@ -17,7 +17,7 @@ class WaresControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ware" do
     assert_difference('Ware.count') do
-      post wares_url, params: { ware: { comment: @ware.comment, customer_id: @ware.customer_id, invoice_id: @ware.invoice_id, margin: @ware.margin, name: @ware.name, project_id: @ware.project_id, provider_discount: @ware.provider_discount, quantity: @ware.quantity, quotation_id: @ware.quotation_id, status: @ware.status, total_cost: @ware.total_cost, tva_rate: @ware.tva_rate, unit_price: @ware.unit_price } }
+      post wares_url, params: { ware: { comment: @ware.comment, customer_id: @ware.customer_id, margin: @ware.margin, name: @ware.name, project_id: @ware.project_id, provider_discount: @ware.provider_discount, quantity: @ware.quantity, quotation_id: @ware.quotation_id, status: @ware.status, total_cost: @ware.total_cost, tva_rate: @ware.tva_rate, unit_price: @ware.unit_price } }
     end
 
     assert_redirected_to ware_url(Ware.last)
@@ -34,7 +34,7 @@ class WaresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update ware" do
-    patch ware_url(@ware), params: { ware: { comment: @ware.comment, customer_id: @ware.customer_id, invoice_id: @ware.invoice_id, margin: @ware.margin, name: @ware.name, project_id: @ware.project_id, provider_discount: @ware.provider_discount, quantity: @ware.quantity, quotation_id: @ware.quotation_id, status: @ware.status, total_cost: @ware.total_cost, tva_rate: @ware.tva_rate, unit_price: @ware.unit_price } }
+    patch ware_url(@ware), params: { ware: { comment: @ware.comment, customer_id: @ware.customer_id, margin: @ware.margin, name: @ware.name, project_id: @ware.project_id, provider_discount: @ware.provider_discount, quantity: @ware.quantity, quotation_id: @ware.quotation_id, status: @ware.status, total_cost: @ware.total_cost, tva_rate: @ware.tva_rate, unit_price: @ware.unit_price } }
     assert_redirected_to ware_url(@ware)
   end
 

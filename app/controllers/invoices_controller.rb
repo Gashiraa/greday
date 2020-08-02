@@ -115,7 +115,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.save
         @invoice.update_statuses_invoice(@invoice, @company.short_name)
-        @invoice.update_totals_invoice(@invoice, @invoice.projects, @invoice.wares)
+        @invoice.update_totals_invoice(@invoice, @invoice.projects)
         format.html { redirect_to invoice_path(@invoice.id, :format => :pdf), notice: 'Invoice was successfully created.' }
       else
         format.html { render :new }
@@ -129,7 +129,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.update(invoice_params)
         @invoice.update_statuses_invoice(@invoice, @company.short_name)
-        @invoice.update_totals_invoice(@invoice, @invoice.projects, @invoice.wares)
+        @invoice.update_totals_invoice(@invoice, @invoice.projects)
         format.html { redirect_to invoices_url, notice: 'Invoice was successfully updated.' }
         format.json { render :show, status: :ok, location: @invoice }
       else
@@ -178,7 +178,7 @@ class InvoicesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def invoice_params
-    params.require(:invoice).permit(:payment_id, :date, :status, :total, :display_number, :customer_id, :project_ids, ware_ids: [], project_ids: [])
+    params.require(:invoice).permit(:payment_id, :date, :status, :total, :display_number, :customer_id, :project_ids, project_ids: [])
   end
 
   def get_next_invoice_number

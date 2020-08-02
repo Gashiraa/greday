@@ -1,10 +1,11 @@
+$("#expand").modal(
+    {
+        allowMultiple: true,
+        detachable: false
+    });
+
 $("#expand").find(".expand").html("<%= j(render 'list') %>");
 
 $('#expand').modal('show');
 
 $(document).trigger('turbolinks:load');
-
-$("#expand").modal(
-    {
-        backdrop: 'static'
-    });

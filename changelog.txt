@@ -1,5 +1,45 @@
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
+--02/08--
+
+GLOBAL
+    ✓ ERADIQUER pré-saisie
+PROJET
+    Garder la fenêtre de listing ouverte après opération
+    Insérer un historique des machines à la création d'un projet
+    Afficher le dernier historique
+    Ajouter un lien entre projet et historique
+    Filtrer par client et statut, sur index projet
+    Pouvoir changer le statut, trouver une solution
+    Voir quantité marchandises sans zoom projet
+    Voir le numéro de projet dans l'encart gauche du projet
+    Aligner toutes les icones
+    Format projet : AGOPxxxx
+FACTURE
+    Remonter l'encart d'adresse
+    Format facture : AGOF20xxxx
+MARCHANDISES
+    Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
+    Pouvoir copier rapidement une référence
+PRESTATIONS
+    Prestations détaillées à passer en checkbox, pouvoir voir le contenu et éventuellement éditer
+MACHINES
+    Listing agrandi dans les machines
+        Encodage des huiles par catégorie, type, quantité
+        Ajouter un tri par réference
+    Défilante dans les machines
+    Marchandise d'entretien disparait apres modification + ajouter corbeille
+DEVIS
+    Pouvoir mettre plusieurs projet dans un devis
+    Format devis : AGODxxxx
+MAGASIN
+DIVERS
+    Vérifier préselection extras
+NOTE DE CREDIT
+    Format note credit : AGONCAAxxx
+
+________________________________________________________________________________________________________________________
+
 --26/05--
 
 GLOBAL
@@ -9,10 +49,7 @@ PROJET
     ✓ Nom projet -> Intitulé
     ✓ Toujours voir les totaux (marchandises)
     ✓ Cliqué-glissé pour orgraniser les items du projet
-    Garder la fenêtre de listing ouverte après opération
     ✓ Aligner les +, supprimer ajouter et adapter pour plusview
-    Insérer un historique des machines à la création d'un projet
-    Afficher le dernier historique
 FACTURE
     ✓ Afficher le taux de TVA dans le récapitulatif
     ✓ Revoir disposition du logo
@@ -27,9 +64,6 @@ PRESTATIONS
     ✓ Affichage détaillé ou non sur facture
 MACHINES
     ✓ Colonne et tri par client dans les machines
-    Listing agrandi dans les machines
-        Encodage des huiles par catégorie, type, quantité
-        Ajouter un tri par réference
 DIVERS
     ✓ Maj-auto sur catégorie
 CLIENTS

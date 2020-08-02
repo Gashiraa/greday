@@ -37,6 +37,10 @@ body {
   width: 85%;
 }
 
+#modal-window {
+  z-index: 1002;
+}
+
 .ui.cards {
   h3, h4 {
     margin: 0 !important;
@@ -71,6 +75,7 @@ img {
 }
 
 #notice {
+  display: none;
   text-align: center;
   position: absolute;
   max-width: 20%;
