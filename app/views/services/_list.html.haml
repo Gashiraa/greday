@@ -1,6 +1,5 @@
--#----[SERVICES]----
 .close
-  %i.big.close.icon{onclick: "$('.partial-content').load('/projects/refresh_content/#{params[:project]}'); $('.ui.modal').modal('hide');"}
+  %i.big.close.icon{onclick: "$('.partial-content').load('/projects/refresh_content/#{@project.id}'); $('.ui.modal').modal('hide');"}
 .project-section
   %h3
     = t('service').pluralize.capitalize
@@ -56,7 +55,7 @@
           %td.right.aligned
             = link_to edit_service_path(service), remote: true do
               = image_tag("edit-icon.png", size: "30x30")
-            = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
+            = link_to service, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
               = image_tag("delete-icon.png", size: "30x30")
   %table.ui.compact.table.total-section
     - @services.distinct(:provider).order(:provider).pluck(:provider).each do |provider|

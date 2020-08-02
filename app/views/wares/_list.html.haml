@@ -5,7 +5,7 @@
   .project-section
     %h3
       = t('ware').pluralize.capitalize
-      = link_to(new_ware_path(modal: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+      = link_to(new_ware_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
         %button.ui.violet.compact.labeled.icon.button
           Ajouter une marchandise
           %i.plus.icon

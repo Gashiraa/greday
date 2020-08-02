@@ -15,6 +15,7 @@ class ServicesController < ApplicationController
 
   def list
     @services = Service.where(project_id: params[:project])
+    @project =  Project.find(params[:project])
   end
 
   def sort
@@ -38,11 +39,13 @@ class ServicesController < ApplicationController
   # POST /services.json
   def create
     @service = Service.new(service_params)
-
+    @project = @service.project
+    @services = @project.services
     respond_to do |format|
       if @service.save
-        @service.project&.update_totals_project(@service.project)
-        @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects)
+        @service.project&.update_totals_project(@project)
+        @service.project&.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
+        format.js
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_add_success') }
         format.json { render :show, status: :created, location: @service }
       else
@@ -55,10 +58,13 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1
   # PATCH/PUT /services/1.json
   def update
+    @project = @service.project
+    @services = @project.services
     respond_to do |format|
       if @service.update(service_params)
-        @service.project&.update_totals_project(@service.project)
-        @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects)
+        @service.project&.update_totals_project(@project)
+        @service.project&.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
+        format.js
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_update_success') }
         format.json { render :show, status: :ok, location: @service }
       else
@@ -71,10 +77,13 @@ class ServicesController < ApplicationController
   # DELETE /services/1
   # DELETE /services/1.json
   def destroy
+    @project = @service.project
+    @services = @project.services
     @service.destroy
-    @service.project&.update_totals_project(@service.project)
-    @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @service.project.invoice.projects)
+    @service.project&.update_totals_project(@project)
+    @service.project&.invoice&.update_totals_invoice(@service.project.invoice, @project.invoice.projects)
     respond_to do |format|
+      format.js
       format.html { redirect_to request.env["HTTP_REFERER"], notice: t('service_destroy_success') }
       format.json { head :no_content }
     end
