@@ -40,7 +40,7 @@ class WaresController < ApplicationController
   def create
     @ware = Ware.new(ware_params)
     @project = @ware.project
-    @wares = @project.wares
+    @wares = @project&.wares
     respond_to do |format|
       if @ware.save
         # update linked project
@@ -60,7 +60,7 @@ class WaresController < ApplicationController
   # PATCH/PUT /wares/1.json
   def update
     @project = @ware.project
-    @wares = @project.wares
+    @wares = @project&.wares
     respond_to do |format|
       if @ware.update(ware_params)
         # update linked project

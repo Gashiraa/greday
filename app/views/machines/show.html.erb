@@ -58,24 +58,24 @@
             <div class="description">
               <table class="ui striped selectable table table-to-color">
                 <tbody>
-                <% @machine_history.each do |history| %>
-                  <tr>
-                    <td>
-                      <%= l(history.date) %>
-                    </td>
-                    <td>
-                      <%= history.amount %>
-                    </td>
-                    <td>
-                      <%= link_to edit_machine_history_path(history, :machine => @machine.id), remote: true do %>
+                <tr>
+                  <td>
+                    <%= @machine_history ? l(@machine_history.date) : "" %>
+                  </td>
+                  <td>
+                    <%= @machine_history ? @machine_history.amount : "" %>
+                  </td>
+                  <td>
+                    <% if @machine_history %>
+                      <%= link_to edit_machine_history_path(@machine_history, :machine => @machine.id), remote: true do %>
                         <%= image_tag("edit-icon.png", size: "15x15") %>
                       <% end %>
-                      <%= link_to history, method: :delete, data: {confirm: t('confirm_delete')} do %>
+                      <%= link_to @machine_history, method: :delete, data: {confirm: t('confirm_delete')} do %>
                         <%= image_tag("delete-icon.png", size: "15x15") %>
                       <% end %>
-                    </td>
-                  </tr>
-                <% end %>
+                    <% end %>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -151,7 +151,7 @@
             <%= ware.comment %>
           </td>
           <td class="two wide">
-            <%= link_to edit_ware_path(ware, maintenance: :true), remote: true do %>
+            <%= link_to edit_ware_path(ware, maintenance: :tru, machine: @machine.id), remote: true do %>
               <%= image_tag("edit-icon.png", size: "30x30") %>
             <% end %>
             <%= link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do %>

@@ -103,17 +103,11 @@
                 .description
                   %table.ui.striped.selectable.table.table-to-color
                     %tbody
-                      - @machine_history.each do |history|
-                        %tr
-                          %td
-                            = l(history.date)
-                          %td
-                            = history.amount
-                          %td
-                            = link_to edit_machine_history_path(history, :machine => @machine.id), remote: true do
-                              = image_tag("edit-icon.png", size: "15x15")
-                            = link_to history, method: :delete, data: {confirm: t('confirm_delete')} do
-                              = image_tag("delete-icon.png", size: "15x15")
+                      %tr
+                        %td
+                          = @machine_history ? l(@machine_history.date) : ""
+                        %td
+                          = @machine_history ? @machine_history.amount : ""
     .partial-content
       =render 'project_content'
 #modal-window.ui.long.modal

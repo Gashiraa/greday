@@ -58,7 +58,7 @@
     </tr>
   <% end %>
   <% @machines.each do |machine| %>
-    <tr data-project="<%= machine_path(machine) %>">
+    <tr data-machine="<%= machine_path(machine) %>">
       <td class="center aligned">
         <%= machine.customer&.name %>
       </td>

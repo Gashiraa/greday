@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
 
   before_action :set_project, only: %i[show edit update destroy]
   before_action :set_company
+  require 'date'
 
   load_and_authorize_resource
 
@@ -32,8 +33,8 @@ class ProjectsController < ApplicationController
     @project = scope.find(params[:id])
 
     if @company.use_machines
-      @machine = Machine.where(id: @project.machine_id).first
-      @machine_history = MachineHistory.order(date: :asc).where(machine_id: @project.machine_id)
+      @machine = @project.machine
+      @machine_history = MachineHistory.order(date: :desc).where(machine_id: params[:id]).first
     end
 
     if @company.mode == "Greday"
@@ -131,10 +132,10 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-
+    MachineHistory.create(date: Date.today, amount: params[:machine_histories][:amount], machine_id: params[:project][:machine_id])
     respond_to do |format|
       if @project.save
-        @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
+        @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
         @project.update_totals_project(@project)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_add_success') }
         format.json { render :show, status: :created, location: @project }
@@ -150,7 +151,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
+        @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
         @project.update_totals_project(@project)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @project }
@@ -174,7 +175,7 @@ class ProjectsController < ApplicationController
   def bin
     respond_to do |format|
       if @project.update(status: 5)
-        @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects, @project.invoice.wares)
+        @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -211,7 +212,7 @@ class ProjectsController < ApplicationController
                                     :name, :status, :wielding, :machining,
                                     :karcher, :total, :total_gross, :date,
                                     :description, :no_vat, :machine_id, :po, :applicant,
-                                    :comment, :services_recap, :services_recap_text, :displacement_recap)
+                                    :comment, :services_recap, :services_recap_text, :displacement_recap, machine_attributes: [machine_histories_attributes: [:amount]])
   end
 
 end

@@ -8,13 +8,13 @@ class Project < ApplicationRecord
   belongs_to :invoice, optional: true
   belongs_to :machine, optional: true
 
-  belongs_to :customer, optional: true
-
   has_many :wares, dependent: :nullify
   has_many :services, dependent: :nullify
 
   has_many :project_extra_lines, dependent: :nullify
   has_many :extra, through: :project_extra_lines
+
+  accepts_nested_attributes_for :machine
 
   enum status: [:quotation, :in_progress, :done, :invoiced, :paid, :bin, :created, :accepted, :canceled]
   translate_enum :status

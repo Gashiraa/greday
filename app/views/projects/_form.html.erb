@@ -79,6 +79,14 @@
           <%= form.select :machine_id, Machine.all.map { |machine| [machine.brand + " " + machine.model + " (" + machine.year + ")", machine.id, {customer: machine.customer_id}] },
                           class: "form-control", :include_blank => true, :required => true %>
         </div>
+        <%= fields_for :machine do |machine| %>
+          <%= fields_for :machine_histories do |machine_history| %>
+            <div class="field">
+              <%= machine_history.label t('hours/km') %>
+              <%= machine_history.text_field :amount %>
+            </div>
+          <% end %>
+        <% end %>
 
       </div>
     <% end %>

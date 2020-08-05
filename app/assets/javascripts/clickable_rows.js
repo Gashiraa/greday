@@ -15,7 +15,7 @@ $(document).on("turbolinks:load", function () {
 
     //clickable project row
     $("tr[data-project]").click(function () {
-        if (event.target.tagName === "IMG" || event.target.innerHTML === "Accepté") {
+        if (event.target.tagName === "A" || target.tagName === "IMG" || event.target.innerHTML === "Accepté") {
             return
         }
         window.location = $(this).data("project")
@@ -24,7 +24,7 @@ $(document).on("turbolinks:load", function () {
     //clickable invoice row
     $("tr[data-invoice]").click(function () {
         let test = event;
-        if (event.target.tagName === "A" ||event.target.tagName === "IMG" || event.target.innerHTML === "Payé") {
+        if (event.target.tagName === "A" || event.target.tagName === "IMG" || event.target.innerHTML === "Payé") {
             return
         }
         window.open($(this).data("invoice"), $(this).data("target"));
@@ -39,7 +39,7 @@ $(document).on("turbolinks:load", function () {
     });
 
     //clickable machine row
-    $(".card[data-machine]").click(function () {
+    $(".card[data-machine],tr[data-machine] ").click(function () {
         if (event.target.tagName === "IMG") {
             return
         }

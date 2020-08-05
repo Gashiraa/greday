@@ -14,7 +14,7 @@ class MachinesController < ApplicationController
     @search_projects = Project.where(machine_id: params[:id]).ransack(params[:q])
     @projects = @search_projects.result.paginate(page: params[:page], per_page: 10)
 
-    @machine_history = MachineHistory.order(date: :asc).where(machine_id: params[:id])
+    @machine_history = MachineHistory.order(date: :desc).where(machine_id: params[:id]).first
     @maintenance_wares = Ware.where(machine_id: params[:id]).where(is_maintenance: true)
 
     @search_wares = Ware.where(project_id: @projects.ids).where(machine_specific: true).ransack(params[:q])

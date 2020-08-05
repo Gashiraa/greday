@@ -24,7 +24,7 @@ $(document).on("turbolinks:load", function () {
                 });
             }
             //trigger auto calculation when we're done
-            $('#extra_edit_select').trigger('mouseover');
+            $('#extra_total_gross').trigger('mouseover');
         });
 
         //Sort extras depending on selected category
@@ -98,6 +98,13 @@ $(document).on("turbolinks:load", function () {
             onFormOpen();
         }
         //auto-calculate once
+    $('#project_extra_line_extra_id option').each(function () {
+        if ($(this).css('display') != 'none') {
+            $(this).prop("selected", true);
+            return false;
+        }
+    });
         $('#project_extra_line_extra_id').trigger('change');
+        $('#extra_total_gross').trigger('mouseover');
     }
 );

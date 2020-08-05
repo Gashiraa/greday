@@ -42,91 +42,92 @@
       </div>
     </div>
   </div>
-<% end %>
 
-<table class="ui striped selectable blue table table-to-color">
-  <thead class=thead-dark>
-  <tr>
-    <th class="one wide center aligned">
-      <%= sort_link(@search, :id, t('id_locale')) %>
-    </th>
-    <th class="two wide">
-      <%= sort_link(@search, :customer_id, t('customer')) %>
-    </th>
-    <th class="two wide">
-      <%= sort_link(@search, :name, t('project_title')) %>
-    </th>
-    <th class="five wide">
-      <%= sort_link(@search, :description, t('description')) %>
-    </th>
-    <th class="one wide center aligned">
-      <%= sort_link(@search, :date, t('date_locale')) %>
-    </th>
-    <th class="two wide center aligned">
-      <%= sort_link(@search, :status, t('status')) %>
-    </th>
-    <th class="one wide right aligned">
-      <%= sort_link(@search, :total_gross, t('gross_cost').to_s + ' (€)') %>
-    </th>
-    <th class="one wide right aligned">
-      <%= sort_link(@search, :total, t('total').to_s + ' (€)') %>
-    </th>
-    <th class="one wide"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% unless @projects.any? %>
+  <table class="ui striped selectable blue table table-to-color">
+    <thead class=thead-dark>
     <tr>
-      <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
+      <th class="one wide center aligned">
+        <%= sort_link(@search, :id, t('id_locale')) %>
+      </th>
+      <th class="two wide">
+        <%= sort_link(@search, :customer_id, t('customer')) %>
+      </th>
+      <th class="two wide">
+        <%= sort_link(@search, :name, t('project_title')) %>
+      </th>
+      <th class="five wide">
+        <%= sort_link(@search, :description, t('description')) %>
+      </th>
+      <th class="one wide center aligned">
+        <%= sort_link(@search, :date, t('date_locale')) %>
+      </th>
+      <th class="two wide center aligned">
+        <%= sort_link(@search, :status, t('status')) %>
+      </th>
+      <th class="one wide right aligned">
+        <%= sort_link(@search, :total_gross, t('gross_cost').to_s + ' (€)') %>
+      </th>
+      <th class="one wide right aligned">
+        <%= sort_link(@search, :total, t('total').to_s + ' (€)') %>
+      </th>
+      <th class="one wide"></th>
     </tr>
-  <% end %>
-  <% @projects.each do |project| %>
-    <tr data-project="<%= project_path(project) %>">
-      <td class="center aligned">
-        <%= link_to(project_path(project.id), {class: 'ui blue compact button'}) do %>
-          <i class="folder icon"></i>
-          <%= project.id.to_s %>
+    </thead>
+
+    <tbody>
+    <% unless @projects.any? %>
+      <tr>
+        <td class="center aligned" colspan="9"><%= t('no_data_display') %></td>
+      </tr>
+    <% end %>
+    <% @projects.each do |project| %>
+      <tr data-project="<%= project_path(project) %>">
+        <td class="center aligned">
+          <%= link_to(project_path(project.id), {class: 'ui blue compact button'}) do %>
+            <i class="folder icon"></i>
+            <%= project.id.to_s %>
+          <% end %>
+        </td>
+        <td><%= link_to project.customer ? project.customer.name : nil, "/projects?&q%5Bcustomer_id_eq%5D="+project.customer&.id.to_s %></td>
+
+        <td><%= project.name %></td>
+        <%= tag.td class: "description-cell", data: {content: project.description} do %>
+          <%= project.description.truncate(165) %>
         <% end %>
-      </td>
-      <td><%= project.customer ? project.customer.name : nil %></td>
-      <td><%= project.name %></td>
-      <%= tag.td class: "description-cell", data: {content: project.description} do %>
-        <%= project.description.truncate(165) %>
-      <% end %>
-      <td class="center aligned"><%= project.date ? l(project.date) : "" %></td>
-      <%= tag.td class: 'center aligned status-cell', status: project.status do %>
-        <div>
-          <div class="visible content">
-            <%= project.translated_status %>
-          </div>
-          <% if project.status == "created" %>
-            <div class="hidden content">
-              <%= link_to "Accepté", project_path(project, project: {status: :accepted}), method: :put %>
+        <td class="center aligned"><%= project.date ? l(project.date) : "" %></td>
+        <%= tag.td class: 'center aligned status-cell', status: project.status do %>
+          <div>
+            <div class="visible content">
+              <%= link_to  project.translated_status, "/projects?&q%5Bstatus_eq%5D="+Project.statuses[project.status].to_s   %>
             </div>
-          <% end %>
-        </div>
-      <% end %>
-      <td class="right aligned bold"><%= number_with_precision project.total_gross, :precision => 2 %></td>
-      <td class="right aligned bold"><%= number_with_precision project.total, :precision => 2 %></td>
-      <td class="center aligned">
-        <%= link_to project_path(project) do %>
-          <%= image_tag("edit-icon.png", size: "27x27") %>
+            <% if project.status == "created" %>
+              <div class="hidden content">
+                <%= link_to "Accepté", project_path(project, project: {status: :accepted}), method: :put %>
+              </div>
+            <% end %>
+          </div>
         <% end %>
-        <% if project.status == "bin" %>
-          <%= link_to project, method: :delete, data: {confirm: t('confirm_delete')} do %>
-            <%= image_tag("delete-icon.png", size: "27x27") %>
+        <td class="right aligned bold"><%= number_with_precision project.total_gross, :precision => 2 %></td>
+        <td class="right aligned bold"><%= number_with_precision project.total, :precision => 2 %></td>
+        <td class="center aligned">
+          <%= link_to project_path(project) do %>
+            <%= image_tag("edit-icon.png", size: "27x27") %>
           <% end %>
-        <% else %>
-          <%= link_to(controller: :projects, action: :bin, id: project.id) do %>
-            <%= image_tag("bin-icon.png", size: "30x30") %>
+          <% if project.status == "bin" %>
+            <%= link_to project, method: :delete, data: {confirm: t('confirm_delete')} do %>
+              <%= image_tag("delete-icon.png", size: "27x27") %>
+            <% end %>
+          <% else %>
+            <%= link_to(controller: :projects, action: :bin, id: project.id) do %>
+              <%= image_tag("bin-icon.png", size: "30x30") %>
+            <% end %>
           <% end %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
 
 <%= will_paginate @projects %>
 

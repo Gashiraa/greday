@@ -2,21 +2,12 @@ ________________________________________________________________________________
                                                     --A FAIRE--
 --02/08--
 
-GLOBAL
-    ✓ ERADIQUER pré-saisie
 PROJET
-    Garder la fenêtre de listing ouverte après opération
-    Insérer un historique des machines à la création d'un projet
-    Afficher le dernier historique
-    Ajouter un lien entre projet et historique
-    Filtrer par client et statut, sur index projet
     Pouvoir changer le statut, trouver une solution
-    Voir quantité marchandises sans zoom projet
     Voir le numéro de projet dans l'encart gauche du projet
-    Aligner toutes les icones
     Format projet : AGOPxxxx
 FACTURE
-    Remonter l'encart d'adresse
+    **A TESTER** Remonter l'encart d'adresse
     Format facture : AGOF20xxxx
 MARCHANDISES
     Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
@@ -28,17 +19,31 @@ MACHINES
         Encodage des huiles par catégorie, type, quantité
         Ajouter un tri par réference
     Défilante dans les machines
-    Marchandise d'entretien disparait apres modification + ajouter corbeille
 DEVIS
     Pouvoir mettre plusieurs projet dans un devis
     Format devis : AGODxxxx
 MAGASIN
-DIVERS
-    Vérifier préselection extras
 NOTE DE CREDIT
     Format note credit : AGONCAAxxx
 
 ________________________________________________________________________________________________________________________
+--05/08--
+
+GLOBAL
+    ✓ ERADIQUER pré-saisie
+PROJET
+    ✓ Garder la fenêtre de listing ouverte après opération
+    ✓ Insérer un historique des machines à la création d'un projet
+    ✓ Afficher uniquement le dernier historique
+    ✓ Filtrer par client et statut, sur index projet
+    ✓ Voir quantité marchandises sans zoom projet
+    ✓ Aligner toutes les icones
+FACTURE
+    **A TESTER** Remonter l'encart d'adresse
+MACHINES
+    ✓ Marchandise d'entretien disparait apres modification + ajouter corbeille
+DIVERS
+    ✓ Vérifier préselection divers
 
 --26/05--
 

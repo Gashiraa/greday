@@ -7,8 +7,9 @@ body {
 .scrollable-project-section {
   max-height: 25vh;
   overflow-y: auto;
+
   .ui.table {
-    border-radius: 0 ;
+    border-radius: 0;
   }
 }
 
@@ -32,7 +33,7 @@ body {
   }
 }
 
-#expand{
+#expand {
   padding: 1rem;
   width: 85%;
 }
@@ -100,6 +101,11 @@ img {
 
 .button {
   margin: auto;
+
+  a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: white;
+  }
 }
 
 .add-button {

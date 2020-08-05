@@ -3,10 +3,10 @@
   .project-section
     %table.ui.unstackable.small.compact.table{style: "margin-bottom: 0"}
       %thead
-        %th.one.wide
+        %th.two.wide
           %h3
             = t('service').pluralize.capitalize
-        %th.eleven.wide
+        %th.ten.wide
           = link_to(new_service_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
             %button.ui.red.compact.icon.button
               %i.plus.icon
@@ -91,10 +91,10 @@
   .project-section
     %table.ui.unstackable.small.table{style: "margin-bottom: 0"}
       %thead
-        %th.one.wide
+        %th.two.wide
           %h3
             = t('ware').pluralize.capitalize
-        %th.eleven.wide
+        %th.ten.wide
           = link_to(new_ware_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
             %button.ui.violet.compact.icon.button
               %i.plus.icon
@@ -108,8 +108,9 @@
           %tr
             %th.four.wide
               = t('ware_name')
-            %th.two.wide.center.aligned= t('status')
-            %th.six.wide.right.aligned
+            %th.three.wide.center.aligned= t('status')
+            %th.two.wide.right.aligned= t('quantity')
+            %th.three.wide.right.aligned
               = t('total_gross')
               (€)
             %th.two.wide.right.aligned
@@ -129,6 +130,8 @@
                     %div
                       = ware.translated_status
                 %td.right.aligned
+                  = ware.quantity
+                %td.right.aligned
                   = number_with_precision ware.total_gross, :precision => 2
                 %td.right.aligned
                   = number_with_precision ware.total_cost, :precision => 2
@@ -145,6 +148,8 @@
                 %div
                   %div
                     = ware.translated_status
+              %td.right.aligned
+                = ware.quantity
               %td.right.aligned
                 = number_with_precision ware.total_gross, :precision => 2
               %td.right.aligned
@@ -169,10 +174,10 @@
 .project-section
   %table.ui.unstackable.small.table{style: "margin-bottom: 0"}
     %thead
-      %th.one.wide
+      %th.two.wide
         %h3
           = @company.use_articles == false ? t('extra') : t('article')
-      %th.eleven.wide
+      %th.fourteen.wide
         = link_to(new_project_extra_line_path(manual: false), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
           %button.ui.yellow.compact.icon.button
             %i.plus.icon
