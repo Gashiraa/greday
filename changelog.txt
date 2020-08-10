@@ -1,24 +1,29 @@
+                                                    --QUESTIONS--
+
+Est-ce que vous vous servez des statuts dans marchandises/prestations ?
+Projet-Devis 1-1
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
 --02/08--
-
+Global
+    Ajouter corbeille marchandises
 PROJET
     Pouvoir changer le statut, trouver une solution
     Voir le numéro de projet dans l'encart gauche du projet
     Format projet : AGOPxxxx
 FACTURE
-    **A TESTER** Remonter l'encart d'adresse
     Format facture : AGOF20xxxx
 MARCHANDISES
     Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
     Pouvoir copier rapidement une référence
 PRESTATIONS
-    Prestations détaillées à passer en checkbox, pouvoir voir le contenu et éventuellement éditer
+    ✓ Prestations détaillées à passer en checkbox, pouvoir voir le contenu et éventuellement éditer
 MACHINES
     Listing agrandi dans les machines
         Encodage des huiles par catégorie, type, quantité
         Ajouter un tri par réference
     Défilante dans les machines
+    Historique machine lié à un projet
 DEVIS
     Pouvoir mettre plusieurs projet dans un devis
     Format devis : AGODxxxx
@@ -44,6 +49,7 @@ MACHINES
     ✓ Marchandise d'entretien disparait apres modification + ajouter corbeille
 DIVERS
     ✓ Vérifier préselection divers
+________________________________________________________________________________________________________________________
 
 --26/05--
 

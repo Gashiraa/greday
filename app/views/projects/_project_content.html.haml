@@ -6,24 +6,30 @@
         %th.two.wide
           %h3
             = t('service').pluralize.capitalize
-        %th.ten.wide
+        %th.nine.wide
           = link_to(new_service_path, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
             %button.ui.red.compact.icon.button
               %i.plus.icon
-        %th.four.wide
+        %th.four.wide.right.aligned
+          = form_with(model: @project, remote: true) do |form|
+            .ui.toggle.checkbox
+              = form.check_box :services_recap, onchange:"this.form.submit();"
+              = form.label :services_recap, class: "description-cell", data: {content: @project.services_recap_text} do
+                = link_to t("services_recap"), edit_project_path(@project), remote: true
+        %th.one.wide
           =link_to({controller: :services, action: :list, project: @project.id, remote: true}) do
             %button.edit-card-button.ui.compact.icon.red.button
               %i.expand.icon
-          - if @project.services_recap
-            =link_to(project_path(@project, project: {services_recap: :false}), method: :put) do
-              %button.edit-card-button.ui.compact.icon.red.button
-                =t("services_recap")
-                %i.wrench.icon
-          -else
-            =link_to(project_path(@project, project: {services_recap: :true}), method: :put) do
-              %button.edit-card-button.ui.compact.icon.red.button
-                =t("services_non_recap")
-                %i.wrench.icon
+          -# - if @project.services_recap
+          -#   =link_to(project_path(@project, project: {services_recap: :false}), method: :put) do
+          -#     %button.edit-card-button.ui.compact.icon.red.button
+          -#       =t("services_recap")
+          -#       %i.wrench.icon
+          -# -else
+          -#   =link_to(project_path(@project, project: {services_recap: :true}), method: :put) do
+          -#     %button.edit-card-button.ui.compact.icon.red.button
+          -#       =t("services_non_recap")
+          -#       %i.wrench.icon
     .scrollable-project-section
       %table.ui.striped.selectable.red.compact.table.table-to-color
         %thead.thead-dark

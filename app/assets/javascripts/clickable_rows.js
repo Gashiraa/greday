@@ -15,7 +15,7 @@ $(document).on("turbolinks:load", function () {
 
     //clickable project row
     $("tr[data-project]").click(function () {
-        if (event.target.tagName === "A" || target.tagName === "IMG" || event.target.innerHTML === "Accepté") {
+        if (event.target.tagName === "A" || event.target.tagName === "IMG" || event.target.innerHTML === "Accepté") {
             return
         }
         window.location = $(this).data("project")
