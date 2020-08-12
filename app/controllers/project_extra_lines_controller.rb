@@ -51,7 +51,7 @@ class ProjectExtraLinesController < ApplicationController
         @project_extra_line.project&.update_totals_project(@project_extra_line.project)
 
         # update linked project's invoice
-        @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+        @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects)
 
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_add_success')}
         format.json {render :show, status: :created, location: @project_extra_line}
@@ -73,7 +73,7 @@ class ProjectExtraLinesController < ApplicationController
         @project_extra_line.project&.update_totals_project(@project_extra_line.project)
 
         # update linked project's invoice
-        @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+        @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects)
 
         format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_update_success')}
         format.json {render :show, status: :ok, location: @project_extra_line}
@@ -94,7 +94,7 @@ class ProjectExtraLinesController < ApplicationController
     @project_extra_line.project&.update_totals_project(@project_extra_line.project)
 
     # update linked project's invoice
-    @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects, @project_extra_line.project.invoice.wares)
+    @project_extra_line.project&.invoice&.update_totals_invoice(@project_extra_line.project.invoice, @project_extra_line.project.invoice.projects)
 
     respond_to do |format|
       format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_extra_line_delete_success')}

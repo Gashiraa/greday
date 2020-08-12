@@ -15,14 +15,14 @@ FACTURE
     Format facture : AGOF20xxxx
 MARCHANDISES
     Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
-    Pouvoir copier rapidement une référence
+    ✓ Pouvoir copier rapidement une référence
 PRESTATIONS
     ✓ Prestations détaillées à passer en checkbox, pouvoir voir le contenu et éventuellement éditer
 MACHINES
     Listing agrandi dans les machines
         Encodage des huiles par catégorie, type, quantité
         Ajouter un tri par réference
-    Défilante dans les machines
+    ✓ Défilante dans les machines
     Historique machine lié à un projet
 DEVIS
     Pouvoir mettre plusieurs projet dans un devis

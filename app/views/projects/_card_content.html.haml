@@ -1,0 +1,101 @@
+.card
+  .content
+    .header
+      = @project.name
+      = link_to edit_project_path(@project), remote: true do
+        %button.edit-card-button.ui.compact.icon.blue.button
+          %i.edit.icon
+    .meta
+      - if @project.customer
+        = @project.customer.name
+        = link_to edit_customer_path(@project.customer), remote: true do
+          = image_tag("edit-icon.png", size: "20x20")
+      %br/
+      = l(@project.date)
+    .description
+      = @project.description
+      %br/
+    .description
+      - if @project.no_vat
+        %b Pas de TVA
+      %br/
+  .content.center.aligned
+    %p.center.aligned
+      = t('status')
+    .color-table
+      = tag.div class: 'center aligned status-cell', status: @project.status do
+        %div
+          = @project.translated_status
+  .content
+    .center.aligned
+      %h3
+        = t('project_total_gross') + ' : ' + (number_with_precision @project.total_gross, :precision => 2).to_s + ' €'
+      %h4
+        = t('project_total') + ' : ' + (number_with_precision @project.total, :precision => 2).to_s + ' €'
+  = link_to "Dupliquer le projet", {id: @project.id, action: :duplicate, controller: :projects, :method => :get}, {class: "ui bottom attached olive button card-button"}
+  = link_to project_path(@project, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom attached teal button" do
+    %i.file.pdf.icon
+    Voir le devis
+    %br/
+  - case @project.status
+    - when "quotation"
+      = link_to t('switch_in_progress'), project_path(@project, project: {status: :in_progress}), method: :put, class: 'ui bottom attached orange button'
+    - when "in_progress"
+      = link_to t('do_done'), project_path(@project, project: {status: :done}), method: :put, class: 'ui bottom attached red button'
+    - when "created"
+      = link_to t('do_accepted'), project_path(@project, project: {status: :accepted}), method: :put, class: 'ui bottom attached red button card-button'
+    - when "done"
+      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
+    - when "accepted"
+      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
+    - when "invoiced"
+      - if @project.invoice
+        = link_to invoice_path(@project.invoice, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom attached yellow button", :target => "_blank" do
+          %i.file.pdf.icon
+          Voir la facture
+      = link_to project_path(@project, project: {status: :paid}), method: :put, class: 'ui bottom attached green button' do
+        %i.euro.sign.icon
+        =t('project_paid')
+  = link_to(:projects, class: "ui top attached grey button") do
+    %i.left.arrow.icon
+    =t('back')
+- if @project.machine_id
+  .card
+    .content
+      .header
+        = link_to machine_path(@machine) do
+          = @machine.brand + " " + @machine.model
+        = link_to edit_machine_path(@machine), remote: true do
+          %button.edit-card-button.ui.compact.icon.purple.button
+            %i.edit.icon
+      .meta
+        = @machine.category
+        %br/
+      .description
+        = @machine.customer ? @machine.customer.name : ""
+        %br/
+        = "Année : " + (@machine.year ? @machine.year : "")
+        %br/
+        = "Numéro de série : " + (@machine.serial ? @machine.serial : "")
+        %br/
+    .content
+      .description
+        = @machine.comment
+        %br/
+    .content
+      .header
+        = t("history_machine")
+        = link_to new_machine_history_path(:machine => @machine.id), remote: true do
+          %button.edit-card-button.ui.compact.icon.purple.button
+            %i.plus.icon
+      .meta
+        = @machine.isKm ? t('km_usage') : t('hours')
+        %br/
+      .description
+        %table.ui.striped.selectable.table.table-to-color
+          %tbody
+            %tr
+              %td
+                = @machine_history ? l(@machine_history.date) : ""
+              %td
+                = @machine_history ? @machine_history.amount : ""

@@ -50,7 +50,7 @@
             %th.two.wide.right.aligned
               = t('total_cost')
               (€)
-            %th.two.wide
+            %th.two.wide.center.aligned
         %tbody.sortable{"data-url" => sort_services_path}
           - unless @project.services.any?
             %tr
@@ -72,7 +72,7 @@
                 = number_with_precision service.total_gross, :precision => 2
               %td.right.aligned
                 = number_with_precision service.total_cost, :precision => 2
-              %td.right.aligned
+              %td.center.aligned
                 = link_to edit_service_path(service), remote: true do
                   = image_tag("edit-icon.png", size: "30x30")
                 = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
@@ -122,7 +122,7 @@
             %th.two.wide.right.aligned
               = t('total_cost')
               (€)
-            %th.two.wide
+            %th.two.wide.center.aligned
         %tbody.sortable{"data-url" => sort_wares_path}
           - unless @project.wares.any?
             %tr
@@ -141,7 +141,7 @@
                   = number_with_precision ware.total_gross, :precision => 2
                 %td.right.aligned
                   = number_with_precision ware.total_cost, :precision => 2
-                %td.right.aligned
+                %td.center.aligned
                   = link_to edit_ware_path(ware), remote: true do
                     = image_tag("edit-icon.png", size: "30x30")
                   = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
@@ -160,7 +160,7 @@
                 = number_with_precision ware.total_gross, :precision => 2
               %td.right.aligned
                 = number_with_precision ware.total_cost, :precision => 2
-              %td.right.aligned
+              %td.center.aligned
                 = link_to edit_ware_path(ware), remote: true do
                   = image_tag("edit-icon.png", size: "30x30")
                 = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do

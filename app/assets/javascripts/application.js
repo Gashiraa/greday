@@ -21,10 +21,7 @@ $(document).on("turbolinks:load", function () {
             )
         });
 
-        //notification fader
-        setTimeout(function () {
-            $('#notice').fadeOut();
-        }, 3000);
+        noticeFader();
 
         $('.sortable').sortable({
             update: function (e, ui) {
@@ -51,6 +48,26 @@ function showHidden() {
     }
 }
 
+function copyStringToClipboard(string) {
+    // Create new element
+    var element = document.createElement('textarea');
+    // Set value (string to be copied)
+    element.value = string;
+    // Set non-editable to avoid focus and move outside of view
+    element.setAttribute('readonly', '');
+    element.style = {position: 'absolute', left: '-9999px'};
+    document.body.appendChild(element);
+    // Select text inside element
+    element.select();
+    // Copy text to clipboard
+    document.execCommand('copy');
+    // Remove temporary element
+    document.body.removeChild(element);
+    $('#notice').text("Référence copiée!").css("display", "block");
+    //notification fader
+    noticeFader();
+}
+
 //autocapitalize field input
 function capitalize(textboxid, str) {
     // string with alteast one character
@@ -60,4 +77,11 @@ function capitalize(textboxid, str) {
         str = firstChar.toUpperCase() + remainingStr;
     }
     document.getElementById(textboxid).value = str;
+}
+
+function noticeFader() {
+    //notification fader
+    setTimeout(function () {
+        $('#notice').fadeOut();
+    }, 3000);
 }

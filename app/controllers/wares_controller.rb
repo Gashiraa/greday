@@ -82,7 +82,7 @@ class WaresController < ApplicationController
   # DELETE /wares/1.json
   def destroy
     @project = @ware.project
-    @wares = @project.wares
+    @wares = @project&.wares
 
     @ware.destroy
     # update linked project

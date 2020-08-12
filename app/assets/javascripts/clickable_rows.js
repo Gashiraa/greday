@@ -2,8 +2,8 @@ $(document).on("turbolinks:load", function () {
 
     //clickable rows (remote true) Not used ATM
     $("tr[data-link]").click(function () {
-        if (event.target.tagName === "IMG") {
-            return
+        if (event.target.tagName === "IMG" || event.target.classList.contains('no-link')) {
+            return;
         }
         $.ajax({
             url: this.getAttribute('data-link'),
