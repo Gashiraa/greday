@@ -30,7 +30,10 @@
         .ui.huge.header
           .invoice-header
             = t('invoice').upcase
-          = '#' + @invoice.display_number.to_s
+        .ui.medium.header
+          - unless @company.prefix
+            = '#'
+          = display_invoice_id(@invoice.display_number)
       %td.customer-infos
         = @invoice.customer.name
         %br/
@@ -90,7 +93,7 @@
           = t('invoice_account') + @company.account
           %br
           = "Communication à mentionner sur votre virement"
-          \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
+          \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
         %p
           = t('invoice_notice')
       .page-break
@@ -98,7 +101,9 @@
       - @invoice.projects.order(:id).each do |project|
         .avoidbreak
           %h3.project-header
-            = (@company.mode =="Greday" ? t('project') : t('quotation')) + " #" +project.id.to_s + " : " + project.name
+            - if @company.mode !="Greday"
+              = t('quotation') + " #"
+            = @company&.prefix ? @company.prefix+'P'+ display_id(project.id) + " : " + project.name : project.id.to_s + " : " + project.name
           %p
             = project.description
             - if project.po.present?
@@ -267,7 +272,7 @@
               = t('invoice_account') + @company.account
               %br
               = "Communication à mentionner sur votre virement"
-              \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
+              \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
             %p
               = t('invoice_notice')
         - elsif  @size <= 35
@@ -276,7 +281,7 @@
               = t('invoice_account') + @company.account
               %br
               = "Communication à mentionner sur votre virement"
-              \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
+              \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
             %p
               = t('invoice_notice')
         - else
@@ -285,7 +290,7 @@
               = t('invoice_account') + @company.account
               %br
               = "Communication à mentionner sur votre virement"
-              \: #{@invoice.display_number.to_s + " - " + l(@invoice.date).to_s}
+              \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
             %p
               = t('invoice_notice')
     - if @company.mode == "Plusview"

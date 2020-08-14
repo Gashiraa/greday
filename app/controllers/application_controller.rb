@@ -42,6 +42,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def display_id(id)
+    id = id.to_s
+    id.length < 5 ? id = id.rjust(4, "0") : ""
+    value = id.last(4)
+  end
+  helper_method :display_id
+
+  def display_invoice_id(id)
+    if @company&.prefix
+      id = id.to_s
+      id = @company.prefix+'F'+id
+    else
+      id.to_s
+    end
+  end
+  helper_method :display_invoice_id
+
   private
 
   def load_schema

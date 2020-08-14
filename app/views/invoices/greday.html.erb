@@ -49,7 +49,7 @@
       <div class="clearfix"></div>
       <span id="number">
         <h2>
-          <%= '#' + @invoice.display_number.to_s %>
+          <%= '#' + display_invoice_id(@invoice.display_number) %>
         </h2>
       </span>
       <div class="clearfix"></div>
@@ -109,7 +109,7 @@
         </h5>
         <h5>
           Communication à mentionner sur votre virement
-          : <%= @invoice.display_number.to_s + " - " + l(@invoice.date).to_s %>
+          : <%= display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s %>
         </h5>
         <p>
           <%= t('invoice_notice') %>
@@ -405,7 +405,7 @@
         </h5>
         <h5>
           Communication à mentionner sur votre virement
-          : <%= @invoice.display_number.to_s + " - " + l(@invoice.date).to_s %>
+          : <%= display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s %>
         </h5>
         <p>
           <%= t('invoice_notice') %>

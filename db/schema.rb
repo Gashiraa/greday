@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_26_131121) do
+ActiveRecord::Schema.define(version: 2020_08_14_165032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_07_26_131121) do
     t.string "mode"
     t.string "account"
     t.string "bic"
+    t.string "prefix"
   end
 
   create_table "customers", force: :cascade do |t|

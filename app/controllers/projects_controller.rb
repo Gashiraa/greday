@@ -192,7 +192,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-
   private
 
   def set_cache_headers

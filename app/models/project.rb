@@ -80,4 +80,5 @@ class Project < ApplicationRecord
       Service.all.where(project_id: project.id).update(status: :invoiced)
     end
   end
+
 end

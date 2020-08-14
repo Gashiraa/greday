@@ -68,7 +68,7 @@
   <% @services.each do |service| %>
     <tr>
       <td class="one wide center aligned">
-        <%= service.project ? (link_to '#' + service.project.id.to_s, project_path(service.project.id), class: 'ui grey button') : '' %>
+        <%= service.project ? (link_to '#' + @company&.prefix ? @company.prefix+'D'+  display_id(service.project.id) : ' #'+service.project.id.to_s, project_path(service.project.id), class: 'ui blue button') : '' %>
       </td>
       <%= tag.td class: "three wide description-cell", data: {content: service.name} do %>
         <%= service.name.truncate(50) %>

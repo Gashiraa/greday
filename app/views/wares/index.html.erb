@@ -59,11 +59,7 @@
     <tr>
       <td class="center aligned">
         <% if ware.project %>
-          <% if current_user.isAdmin %>
-            <%= (link_to '#' + ware.project.id.to_s, project_path(ware.project.id), class: 'ui grey button') %>
-          <% else %>
-            <%= '#' + ware.project.id.to_s %>
-          <% end %>
+          <%= (link_to '#' + @company&.prefix ? @company.prefix+'D'+  display_id(ware.project.id) : ' #'+ware.project.id.to_s, project_path(ware.project.id), class: 'ui blue button') %>
         <% end %>
       </td>
       <td>
