@@ -75,8 +75,12 @@
               %td.center.aligned
                 = link_to edit_service_path(service), remote: true do
                   = image_tag("edit-icon.png", size: "30x30")
-                = link_to service, method: :delete, data: {confirm: t('confirm_delete')} do
-                  = image_tag("delete-icon.png", size: "30x30")
+                - unless service.status == "bin"
+                  = link_to service_path(service, service: {status: :bin}), method: :put, remote: true do
+                    = image_tag("bin-icon.png", size: "30x30")
+                - else
+                  = link_to service, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
+                    = image_tag("delete-icon.png", size: "30x30")
     %table.ui.compact.table.total-section
       %tr
         %td.ten.wide.right.aligned
@@ -144,8 +148,12 @@
                 %td.center.aligned
                   = link_to edit_ware_path(ware), remote: true do
                     = image_tag("edit-icon.png", size: "30x30")
-                  = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
-                    = image_tag("delete-icon.png", size: "30x30")
+                  - unless ware.status == "bin"
+                    = link_to ware_path(ware, ware: {status: :bin}), method: :put, remote: true do
+                      = image_tag("bin-icon.png", size: "30x30")
+                  - else
+                    = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
+                      = image_tag("delete-icon.png", size: "30x30")
           - @project.wares.where("total_gross > 0").order(:position).each do |ware|
             %tr{"data-link" => "#{edit_ware_path(ware)}", id: dom_id(ware)}
               %td
@@ -163,8 +171,12 @@
               %td.center.aligned
                 = link_to edit_ware_path(ware), remote: true do
                   = image_tag("edit-icon.png", size: "30x30")
-                = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
-                  = image_tag("delete-icon.png", size: "30x30")
+                - unless ware.status == "bin"
+                  = link_to ware_path(ware, ware: {status: :bin}), method: :put, remote: true do
+                    = image_tag("bin-icon.png", size: "30x30")
+                - else
+                  = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
+                    = image_tag("delete-icon.png", size: "30x30")
     %table.ui.compact.table.total-section
       %tr
         %td.twelve.wide.right.aligned

@@ -4,11 +4,12 @@
   <meta charset="UTF-8"/>
   <% if @invoice %>
     <title><%= t('invoice') + "_#{@invoice.display_number}" %></title>
-  <% end %>
-  <% if @quotation %>
+  <% elsif @quotation %>
     <title><%= t('quotation') + "_#{@quotation.id}" %></title>
-  <% end %>
-  <%= wicked_pdf_stylesheet_link_tag "plusview_pdf" %>
+  <% elsif @invoices %>
+    <title><%= t('invoice_report')%></title>
+<% end %>
+<%= wicked_pdf_stylesheet_link_tag "gescoop" %>
 </head>
 <%= yield %>
 </html>

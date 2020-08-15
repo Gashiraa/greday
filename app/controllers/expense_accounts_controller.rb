@@ -19,13 +19,13 @@ class ExpenseAccountsController < ApplicationController
         render pdf: t('expense_accounts') + "_#{@expense_account.id}",
                page_size: 'A4',
                template: 'expense_accounts/show.html.erb',
-               layout: 'pdf.html',
+               layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                :margin => {:bottom => 20},
                footer: {
                    html: {
-                       template: 'layouts/pdf_footer.html.erb'
+                       template: 'layouts/pdf/invoice/greday_footer.html.erb'
                    },
                }
       end
@@ -48,11 +48,11 @@ class ExpenseAccountsController < ApplicationController
 
     respond_to do |format|
       if @expense_account.save
-        format.html {redirect_to expense_account_path(@expense_account.id, :format => :pdf), notice: t('expense_add_success')}
-        format.json {render :show, status: :created, location: @expense_account}
+        format.html { redirect_to expense_account_path(@expense_account.id, :format => :pdf), notice: t('expense_add_success') }
+        format.json { render :show, status: :created, location: @expense_account }
       else
-        format.html {render :new}
-        format.json {render json: @expense_account.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @expense_account.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,11 +62,11 @@ class ExpenseAccountsController < ApplicationController
   def update
     respond_to do |format|
       if @expense_account.update(expense_account_params)
-        format.html {redirect_to request.env["HTTP_REFERER"], notice: t('expense_update_success')}
-        format.json {render :show, status: :ok, location: @expense_account}
+        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('expense_update_success') }
+        format.json { render :show, status: :ok, location: @expense_account }
       else
-        format.html {render :edit}
-        format.json {render json: @expense_account.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @expense_account.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,8 +76,8 @@ class ExpenseAccountsController < ApplicationController
   def destroy
     @expense_account.destroy
     respond_to do |format|
-      format.html {redirect_to request.env["HTTP_REFERER"], notice: t('expense_destroy_success')}
-      format.json {head :no_content}
+      format.html { redirect_to request.env["HTTP_REFERER"], notice: t('expense_destroy_success') }
+      format.json { head :no_content }
     end
   end
 

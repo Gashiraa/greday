@@ -18,8 +18,8 @@ class InvoicesController < ApplicationController
         @invoices = @search.result(distinct: true)
         render pdf: t('invoice_report'),
                page_size: 'A4',
-               template: 'invoices/report.html.haml',
-               layout: 'pdf/invoice/report',
+               template: 'layouts/pdf/report/template.html.haml',
+               layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: false,
                margin: {:bottom => 15, :top => 15, :left => 15, :right => 15},
@@ -63,8 +63,8 @@ class InvoicesController < ApplicationController
       format.pdf do
         render pdf: @company.name.downcase + "-facture" + @invoice.display_number.to_s,
                page_size: 'A4',
-               template: 'invoices/gescoop.html.haml',
-               layout: 'pdf/gescoop',
+               template: 'layouts/pdf/invoice/template.html.haml',
+               layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
@@ -83,14 +83,14 @@ class InvoicesController < ApplicationController
       format.pdf do
         render pdf: t('invoice') + "_#{@invoice.display_number}",
                page_size: 'A4',
-               template: 'invoices/gescoop.html.haml',
-               layout: 'pdf/gescoop',
+               template: 'layouts/pdf/invoice/template.html.haml',
+               layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                :margin => {:bottom => 20, :top => 15, :left => 15, :right => 15},
                footer: {
                    html: {
-                       template: 'layouts/pdf/greday_footer.html.erb'
+                       template: 'layouts/pdf/invoice/greday_footer.html.erb'
                    },
                }
       end
@@ -102,8 +102,7 @@ class InvoicesController < ApplicationController
   end
 
   # GET /invoices/1/edit
-  def edit;
-  end
+  def edit; end
 
   # POST /invoices
   # POST /invoices.json

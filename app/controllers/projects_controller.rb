@@ -34,7 +34,6 @@ class ProjectsController < ApplicationController
 
     if @company.use_machines
       @machine = @project.machine
-      @machine_history = MachineHistory.order(date: :desc).where(machine_id: params[:id]).first
     end
 
     if @company.mode == "Greday"
@@ -50,8 +49,8 @@ class ProjectsController < ApplicationController
       format.pdf do
         render pdf: t('quotation') + "_#{@project.id}",
                page_size: 'A4',
-               template: 'projects/gescoop.html.haml',
-               layout: 'pdf/gescoop',
+               template: 'layouts/pdf/quote/template.html.haml',
+               layout: 'pdf/layout',
                orientation: 'Portrait',
                encoding: 'utf8',
                lowquality: true,
@@ -61,7 +60,7 @@ class ProjectsController < ApplicationController
                :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
                footer: {
                    html: {
-                       template: 'layouts/pdf/greday_footer.html.erb'
+                       template: 'layouts/pdf/quote/greday_footer.html.erb'
                    },
                }
       end
@@ -74,8 +73,8 @@ class ProjectsController < ApplicationController
       format.pdf do
         render pdf: @company.name.downcase + "-devis" + @project.id.to_s,
                page_size: 'A4',
-               template: 'projects/gescoop.html.haml',
-               layout: 'pdf/gescoop',
+               template: 'layouts/pdf/quote/template.html.haml',
+               layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
@@ -132,7 +131,6 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-    MachineHistory.create(date: Date.today, amount: params[:machine_histories][:amount], machine_id: params[:project][:machine_id])
     respond_to do |format|
       if @project.save
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
@@ -211,7 +209,7 @@ class ProjectsController < ApplicationController
                                     :name, :status, :wielding, :machining,
                                     :karcher, :total, :total_gross, :date,
                                     :description, :no_vat, :machine_id, :po, :applicant,
-                                    :comment, :services_recap, :services_recap_text, :displacement_recap, machine_attributes: [machine_histories_attributes: [:amount]])
+                                    :comment, :services_recap, :services_recap_text, :displacement_recap, :machine_history)
   end
 
 end

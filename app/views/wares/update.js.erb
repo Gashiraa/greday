@@ -1,9 +1,20 @@
 $('#modal-window').modal('hide');
+
 if ($("#expand").hasClass("visible")) {
+    <% if @model == "machine" %>
+    $(".expand").html("<%= j(render 'wares/machine_list') %>");
+    <% else %>
     $(".expand").html("<%= j(render 'wares/list') %>");
+    <% end %>
 }
+
+<% if @model == "machine" %>
+$('.partial-content').html("<%= j(render partial: 'machines/machine_content') %>");
+<% else %>
 $('.partial-content').html("<%= j(render partial: 'projects/project_content') %>");
 $('.card-content').html("<%= j(render partial: 'projects/card_content') %>");
-$('#notice').text("<%= t('ware_update_success') %>").css("display","block");
+<% end %>
+
+$('#notice').text("<%= t('ware_update_success') %>").css("display", "block");
 
 $(document).trigger('turbolinks:load');

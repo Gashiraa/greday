@@ -427,3 +427,5 @@ fr:
   services_non_recap: "Prestations détaillées"
   services_recap_label: "Résumé des prestations"
   displacement: "Déplacements"
+  for_project_date: "en date de ce projet"
+  machine_history: "Historique"

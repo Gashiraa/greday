@@ -1,0 +1,105 @@
+-#----[WARES]----
+.close
+  %i.big.close.icon{onclick: "$('.partial-content').load('/machines/refresh_machine/#{@machine.id}'); $('.ui.modal').modal('hide');"}
+- if @company.use_wares
+  .project-section
+    %h3
+      = t('ware').pluralize.capitalize
+    %table.ui.compact.selectable.red.compact.table.table-to-color
+      %thead
+        %tr
+          %th.two.wide
+            = t('ware_name')
+          %th.one.wide.center.aligned= t('status')
+          %th.one.wide.right.aligned
+            = t('provider_discount')+ ' %'
+          %th.one.wide.right.aligned
+            = t('bought_price')
+          %th.one.wide.right.aligned
+            = t('quantity')
+          %th.one.wide.right.aligned
+            = t('sell_price')
+          %th.one.wide.right.aligned
+            = t('margin') + ' %'
+          %th.one.wide.right.aligned
+            = t('tva_rate')+ ' %'
+          %th.two.wide.right.aligned
+            = t('total_gross')
+            (€)
+          %th.two.wide.right.aligned
+            = t('total_cost')
+            (€)
+          %th.two.wide
+      %tbody.sortable{"data-url" => sort_wares_path}
+        - unless @wares.any?
+          %tr
+            %td.center.aligned{colspan: "11"} Aucune données à afficher
+        - @wares.where("total_gross = 0").order(:position).each do |ware|
+          %tr.red-row{"data-link" => "#{edit_ware_path(ware)}", id: dom_id(ware)}
+            %td
+              = ware.ware_name
+              = tag.td class: 'center aligned status-cell', status: ware.status do
+                %div
+                  %div
+                    = ware.translated_status
+            %td.right.aligned
+              = ware.provider_discount
+            %td.right.aligned
+              = ware.bought_price
+            %td.right.aligned
+              = ware.quantity
+            %td.right.aligned
+              = ware.sell_price
+            %td.right.aligned
+              = ware.margin
+            %td.right.aligned
+              = ware.tva_rate
+            %td.right.aligned
+              = number_with_precision ware.total_gross, :precision => 2
+            %td.right.aligned
+              = number_with_precision ware.total_cost, :precision => 2
+            %td.right.aligned
+              = link_to edit_ware_path(ware, model: "machine"), remote: true do
+                = image_tag("edit-icon.png", size: "30x30")
+              = link_to ware_path(ware, modal: true), method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
+                = image_tag("delete-icon.png", size: "30x30")
+        - @wares.where("total_gross > 0").order(:position).each do |ware|
+          %tr{"data-link" => "#{edit_ware_path(ware, modal: true)}", id: dom_id(ware)}
+            %td
+              = ware.ware_name
+            = tag.td class: 'center aligned status-cell', status: ware.status do
+              %div
+                %div
+                  = ware.translated_status
+            %td.right.aligned
+              = ware.provider_discount
+            %td.right.aligned
+              = ware.bought_price
+            %td.right.aligned
+              = ware.quantity
+            %td.right.aligned
+              = ware.sell_price
+            %td.right.aligned
+              = ware.margin
+            %td.right.aligned
+              = ware.tva_rate
+            %td.right.aligned
+              = number_with_precision ware.total_gross, :precision => 2
+            %td.right.aligned
+              = number_with_precision ware.total_cost, :precision => 2
+            %td.right.aligned
+              = link_to edit_ware_path(ware, model: "machine"), remote: true do
+                = image_tag("edit-icon.png", size: "30x30")
+              = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
+                = image_tag("delete-icon.png", size: "30x30")
+    %table.ui.compact.table.total-section
+      %tr
+        %td.twelve.wide.right.aligned
+          = t('total_gross') + ' : '
+          %b
+            = (number_with_precision @wares.sum(:total_gross), :precision => 2).to_s + "€"
+        %td.two.wide.right.aligned
+          = t('total') + ' : '
+          %b
+            = (number_with_precision @wares.sum(:total_cost), :precision => 2).to_s + "€"
+        %td.two.wide

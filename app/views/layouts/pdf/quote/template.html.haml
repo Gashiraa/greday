@@ -30,7 +30,7 @@
           .quotation-header
             = t('quotation').upcase
         .ui.medium.header
-          = @company&.prefix ? @company.prefix+'D'+display_id(@project.id) : ' #'+@project.id.to_s
+          = @company&.prefix ? display_id(@project.id) : ' #'+@project.id.to_s
       %td.customer-infos
         = @project.customer.name
         %br/

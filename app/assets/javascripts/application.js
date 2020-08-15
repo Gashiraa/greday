@@ -11,6 +11,7 @@
 
 $(document).on("turbolinks:load", function () {
 
+
         //navbar active (also handling locale)
         $.each($('.ui.menu').find('a'), function () {
             $(this).toggleClass('active',

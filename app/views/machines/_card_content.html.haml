@@ -1,0 +1,36 @@
+.card
+  .content
+    .header
+      = @machine.brand + " " + @machine.model
+      = link_to edit_machine_path(@machine), remote: true do
+        %button.edit-card-button.ui.compact.icon.purple.button
+          %i.edit.icon
+    .meta
+      = @machine.category
+      %br/
+    .description
+      = @machine.customer ? @machine.customer.name : ""
+      %br/
+      = "Année : " + (@machine.year ? @machine.year : "")
+      %br/
+      = "Numéro de série : " + (@machine.serial ? @machine.serial : "")
+      %br/
+  .content
+    .description
+      = @machine.comment
+  .content
+    .center.aligned
+      = link_to(machines_path) do
+        %button.ui.purple.compact.labeled.icon.button
+          Retour aux machines
+          %i.arrow.left.icon
+.card
+  .content
+    .header
+      = t("oils")
+      = link_to edit_machine_path(@machine), remote: true do
+        %button.edit-card-button.ui.compact.icon.purple.button
+          %i.edit.icon
+      %br/
+    .description
+      = simple_format(@machine.oils_text)

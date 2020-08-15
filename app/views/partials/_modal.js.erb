@@ -8,6 +8,5 @@ $("#modal-window").find(".content").html("<%= j(render 'form') %>");
 $('#modal-window').modal('show');
 
 <%  if @ware&.is_maintenance != true  %>
-  console.log("reload")
   $(document).trigger('turbolinks:load');
 <% end %>

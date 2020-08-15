@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_14_165032) do
+ActiveRecord::Schema.define(version: 2020_08_15_070056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 2020_08_14_165032) do
     t.boolean "services_recap"
     t.text "services_recap_text"
     t.text "displacement_recap"
+    t.integer "machine_history"
     t.index ["customer_id"], name: "index_projects_on_customer_id"
     t.index ["invoice_id"], name: "index_projects_on_invoice_id"
     t.index ["machine_id"], name: "index_projects_on_machine_id"

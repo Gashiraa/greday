@@ -11,11 +11,11 @@ class MachinesController < ApplicationController
   # GET /machines/1
   # GET /machines/1.json
   def show
+    @machine =  Machine.find(params[:id])
     @search_projects = Project.where(machine_id: params[:id]).ransack(params[:q])
     @projects = @search_projects.result.paginate(page: params[:page], per_page: 10)
 
-    @machine_history = MachineHistory.order(date: :desc).where(machine_id: params[:id]).first
-    @maintenance_wares = Ware.where(machine_id: params[:id]).where(is_maintenance: true)
+    @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
 
     @search_wares = Ware.where(project_id: @projects.ids).where(machine_specific: true).ransack(params[:q])
     @wares = @search_wares.result.paginate(page: params[:page], per_page: 10)
@@ -28,6 +28,16 @@ class MachinesController < ApplicationController
 
   # GET /machines/1/edit
   def edit
+  end
+
+  def refresh_content
+    @machine = Machine.find(params[:id])
+    @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
+    @projects = Project.where(machine_id: params[:id])
+    @wares = Ware.where(project_id: @projects.ids).where(machine_specific: true)
+    respond_to do |format|
+      format.js
+    end
   end
 
   # POST /machines
@@ -68,6 +78,10 @@ class MachinesController < ApplicationController
       format.html {redirect_to request.env["HTTP_REFERER"], notice: t('machine_detroy_success')}
       format.json { head :no_content }
     end
+  end
+
+  def scope
+    ::Machine.all
   end
 
   private

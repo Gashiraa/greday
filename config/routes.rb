@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
 
-  resources :machine_histories
   devise_for :users, skip: [:registrations]
 
   as :user do
@@ -13,6 +12,8 @@ Rails.application.routes.draw do
   root to: 'projects#index'
 
   get 'wares/list' => 'wares#list', as: :list
+  get 'wares/machine_list' => 'wares#machine_list', as: :machine_list
+
   get 'services/list' => 'services#list', as: :services_list
 
   resources :services do
@@ -48,7 +49,8 @@ Rails.application.routes.draw do
 
   get "/pages/:page" => "pages#show"
 
-  get "/projects/refresh_content/:id" => "projects#refresh_content"
+  get "/machines/refresh_content/:id" => "machines#refresh_content", as: :refresh_machine
+  get "/projects/refresh_content/:id" => "projects#refresh_content", as: :refresh_project
 
   get 'projects/duplicate/:id' => 'projects#duplicate', as: :duplicate
   post 'projects/duplicate/:id' => 'projects#duplicate'

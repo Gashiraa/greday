@@ -2,7 +2,7 @@
   %i.big.close.icon{onclick: "$('#modal-window').modal('hide');"}
 .ui.form
   - if params[:maintenance]
-    = form_for(@ware, local: true, html: {autocomplete: "off"}) do |form|
+    = form_for(@ware, remote: true, html: {autocomplete: "off"}) do |form|
       .ui.form
         %h2.centered
           - if @ware.id
@@ -22,8 +22,8 @@
         .field
           = form.label t('comment')
           = form.text_area :comment, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
-        = form.hidden_field(:is_maintenance, value: true)
-        = form.hidden_field(:machine_id, value: params[:machine])
+          = form.hidden_field(:is_maintenance, value: true)
+          = form.hidden_field(:machine_id, value: params[:machine])
         .field.centered
           = form.submit t('create'), :class => "ui green button"
   - else
@@ -117,6 +117,8 @@
             .ui.labeled.input
               %label.ui.label{for: "amount"} €
               = form.text_field :total_cost, readonly: true, id: 'total_cost'
+          = form.hidden_field(:model, value: params[:model])
+
         .field
           .centered
             = form.submit t('create'),

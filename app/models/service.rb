@@ -7,7 +7,7 @@ class Service < ApplicationRecord
   belongs_to :customer, optional: true
   belongs_to :quotation, optional: true
 
-  enum status: [:assigned, :invoiced, :paid]
+  enum status: [:assigned, :invoiced, :paid, :bin]
   translate_enum :status
 
   def self.providers_for_form

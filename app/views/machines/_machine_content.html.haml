@@ -1,0 +1,106 @@
+%table.ui.unstackable.small.table{style: "margin-bottom: 0"}
+  %thead
+    %th.three.wide
+      %h4
+        Marchandises d'entretien
+    %th.thirteen.wide
+      =link_to(new_ware_path(maintenance: :true, machine: @machine.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+        %button.ui.olive.compact.icon.button
+          %i.plus.icon
+.scrollable-project-section
+  %table.ui.striped.selectable.olive.table.table-to-color
+    %thead.thead-dark
+      %tr
+        %th.four.wide
+          = t('ware_name')
+        %th.three.wide
+          = t('provider_name')
+        %th.three.wide
+          = t('provider_reference')
+        %th.four.wide
+          = t('comment')
+        %th.two.wide.center.aligned
+    %tbody
+      - unless @maintenance_wares.any?
+        %tr
+          %td.center.aligned{colspan: "9"} Aucune données à afficher
+      - @maintenance_wares.each do |ware|
+        %tr{"data-link" => "#{edit_ware_path(ware, maintenance: :true, machine: @machine.id)}"}
+          %td.four.wide
+            = ware.ware_name
+          %td.three.wide
+            = ware.provider_name
+          %td.three.wide.no-link{onclick: "copyStringToClipboard(this.innerHTML);"}
+            = ware.provider_invoice
+          %td.four.wide
+            = ware.comment
+          %td.two.wide
+            = link_to edit_ware_path(ware, maintenance: :true, machine: @machine.id), remote: true do
+              = image_tag("edit-icon.png", size: "30x30")
+            = link_to ware, method: :delete, data: {confirm: t('confirm_delete')} do
+              = image_tag("delete-icon.png", size: "30x30")
+%table.ui.unstackable.small.table{style: "margin-bottom: 0"}
+  %thead
+    %th.twelve.wide
+      %h4
+        Marchandises spécifiques à cette machine
+    %th.four.wide
+      =link_to({controller: :wares, action: :machine_list, projects: @projects, machine: @machine.id, remote: true}) do
+        %button#wares-modal.edit-card-button.ui.compact.icon.red.button
+          %i.expand.icon
+.scrollable-project-section
+  %table.ui.striped.selectable.red.table.table-to-color
+    %thead.thead-dark
+      %tr
+        %th.four.wide
+          = t('ware_name')
+        %th.four.wide.right.aligned
+          = t('total_gross')
+          (€)
+        %th.four.wide.right.aligned
+          = t('total_cost')
+          (€)
+    %tbody
+      - unless @wares.any?
+        %tr
+          %td.center.aligned{colspan: "9"} Aucune données à afficher
+      - @wares.each do |ware|
+        %tr{"data-link" => "#{edit_ware_path(ware)}"}
+          %td.four.wide
+            = ware.ware_name
+          %td.four.wide.right.aligned
+            = number_with_precision ware.total_gross, :precision => 2
+          %td.four.wide.right.aligned
+            = number_with_precision ware.total_cost, :precision => 2
+%table.ui.unstackable.small.table{style: "margin-bottom: 0"}
+  %thead
+    %th.sixteen.wide
+      %h4
+        Projets concernant cette machine
+.scrollable-project-section
+  %table.ui.striped.selectable.blue.table.table-to-color
+    %thead.thead-dark
+      %tr
+        %th.four.wide
+          = t('Name')
+        %th.four.wide
+          = t('date_locale')
+        %th.four.wide
+          = t('machine_history')
+        %th.four.wide
+          = t('customer')
+    %tbody
+      - unless @projects.any?
+        %tr
+          %td.center.aligned{colspan: "9"} Aucune données à afficher
+      - @projects.each do |project|
+        %tr{"data-project" => "#{project_path(project)}"}
+          %td
+            = project.name
+          %td
+            = l(project.date)
+          %td
+            - if project.machine_history
+              = (project.machine_history.to_s + ' ' + (@machine.isKm ? t('km_usage') : t('hours'))).downcase
+          %td
+            = project.customer.name

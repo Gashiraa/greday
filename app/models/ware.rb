@@ -7,7 +7,7 @@ class Ware < ApplicationRecord
   belongs_to :quotation, optional: true
   belongs_to :machine, optional: true
 
-  enum status: [:not_assigned, :assigned_project, :assigned_customer, :invoiced, :paid]
+  enum status: [:not_assigned, :assigned_project, :assigned_customer, :invoiced, :paid, :bin]
   translate_enum :status
 
 end

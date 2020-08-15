@@ -1,32 +1,25 @@
                                                     --QUESTIONS--
 
-Est-ce que vous vous servez des statuts dans marchandises/prestations ?
 Projet-Devis 1-1
+Note de crédit à revoir
+Pouvoir changer le statut, trouver une solution
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
 --02/08--
-Global
-    Ajouter corbeille marchandises
-PROJET
-    Pouvoir changer le statut, trouver une solution
-    Voir le numéro de projet dans l'encart gauche du projet
 MARCHANDISES
     Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
 MACHINES
     Listing agrandi dans les machines
         Encodage des huiles par catégorie, type, quantité
         Ajouter un tri par réference
-    Historique machine lié à un projet
-DEVIS
-    Pouvoir mettre plusieurs projet dans un devis
 MAGASIN
-NOTE DE CREDIT
-    Format note credit : AGONCAAxxx
 ________________________________________________________________________________________________________________________
 --14/08--
-
+Global
+    ✓ Ajouter corbeille marchandises & prestations
 PROJET
     ✓ Format projet : AGOPxxxx
+    ✓ Voir le numéro de projet dans l'encart gauche du projet
 FACTURE
     ✓ Format facture : AGOF20xxxx
 MARCHANDISES
@@ -35,6 +28,7 @@ PRESTATIONS
     ✓ Prestations détaillées à passer en checkbox, pouvoir voir le contenu et éventuellement éditer
 MACHINES
     ✓ Défilante dans les machines
+    ✓ Historique machine lié à un projet
 DEVIS
     ✓ Format devis : AGODxxxx
 ________________________________________________________________________________________________________________________
