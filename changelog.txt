@@ -1,17 +1,14 @@
                                                     --QUESTIONS--
 
-Projet-Devis 1-1
 Note de crédit à revoir
-Pouvoir changer le statut, trouver une solution
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
 --02/08--
 MARCHANDISES
     Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
 MACHINES
-    Listing agrandi dans les machines
-        Encodage des huiles par catégorie, type, quantité
-        Ajouter un tri par réference
+    Encodage des huiles par catégorie, type, quantité
+    Ajouter un tri par réference
 MAGASIN
 ________________________________________________________________________________________________________________________
 --14/08--
@@ -27,6 +24,7 @@ MARCHANDISES
 PRESTATIONS
     ✓ Prestations détaillées à passer en checkbox, pouvoir voir le contenu et éventuellement éditer
 MACHINES
+    ✓ Listing agrandi dans les machines
     ✓ Défilante dans les machines
     ✓ Historique machine lié à un projet
 DEVIS

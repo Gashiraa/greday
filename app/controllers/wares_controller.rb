@@ -21,8 +21,8 @@ class WaresController < ApplicationController
   end
 
   def list
-    @project = Project.find(params[:project])
     @wares = Ware.where(project_id: params[:project])
+    @project =  Project.find(params[:project])
   end
 
   def sort
@@ -45,18 +45,9 @@ class WaresController < ApplicationController
   # POST /wares
   # POST /wares.json
   def create
+    @ware = Ware.new(ware_params)
     @project = @ware.project
-
-    @machine = @project.machine
-    if @machine
-      @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
-      @projects = @machine.projects
-      @wares = Ware.where(project_id: @projects).where(machine_specific: true)
-    else
-      @wares = @project.wares
-    end
-    @model = params[:ware][:model]
-
+    @wares = @project&.wares
     respond_to do |format|
       if @ware.save
         # update linked project
@@ -76,19 +67,9 @@ class WaresController < ApplicationController
   # PATCH/PUT /wares/1.json
   def update
     @project = @ware.project
-
-    @machine = @project.machine
-    if @machine
-      @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
-      @projects = @machine.projects
-      @wares = Ware.where(project_id: @projects).where(machine_specific: true)
-    else
-      @wares = @project.wares
-    end
-    @model = params[:ware][:model]
-
+    @wares = @project&.wares
     respond_to do |format|
-      if @ware.update(ware_params.except(:model))
+      if @ware.update(ware_params)
         # update linked project
         @ware.project&.update_totals_project(@ware.project)
 
@@ -108,16 +89,7 @@ class WaresController < ApplicationController
   # DELETE /wares/1.json
   def destroy
     @project = @ware.project
-
-    @machine = @project.machine
-    if @machine
-      @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
-      @projects = @machine.projects
-      @wares = Ware.where(project_id: @projects).where(machine_specific: true)
-    else
-      @wares = @project.wares
-    end
-    @model = params[:ware][:model]
+    @wares = @project&.wares
 
     @ware.destroy
     # update linked project
@@ -147,7 +119,7 @@ class WaresController < ApplicationController
                                  :provider_name, :provider_discount, :sell_price,
                                  :provider_invoice, :ware_name, :show_desc_quot,
                                  :show_desc_invoice, :machine_specific,
-                                 :is_maintenance, :machine_id, :model)
+                                 :is_maintenance, :machine_id)
   end
 
 end

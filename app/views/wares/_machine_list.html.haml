@@ -29,7 +29,7 @@
           %th.two.wide.right.aligned
             = t('total_cost')
             (€)
-          %th.two.wide
+          %th.two.wide.center.aligned
       %tbody.sortable{"data-url" => sort_wares_path}
         - unless @wares.any?
           %tr
@@ -58,11 +58,9 @@
               = number_with_precision ware.total_gross, :precision => 2
             %td.right.aligned
               = number_with_precision ware.total_cost, :precision => 2
-            %td.right.aligned
-              = link_to edit_ware_path(ware, model: "machine"), remote: true do
-                = image_tag("edit-icon.png", size: "30x30")
-              = link_to ware_path(ware, modal: true), method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
-                = image_tag("delete-icon.png", size: "30x30")
+            -#%td.center.aligned
+            -#  = link_to edit_ware_path(ware, model: "machine"), remote: true do
+            -#    = image_tag("edit-icon.png", size: "30x30")
         - @wares.where("total_gross > 0").order(:position).each do |ware|
           %tr{"data-link" => "#{edit_ware_path(ware, modal: true)}", id: dom_id(ware)}
             %td
@@ -87,11 +85,9 @@
               = number_with_precision ware.total_gross, :precision => 2
             %td.right.aligned
               = number_with_precision ware.total_cost, :precision => 2
-            %td.right.aligned
-              = link_to edit_ware_path(ware, model: "machine"), remote: true do
-                = image_tag("edit-icon.png", size: "30x30")
-              = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
-                = image_tag("delete-icon.png", size: "30x30")
+            -#%td.center.aligned
+            -#  = link_to edit_ware_path(ware, model: "machine"), remote: true do
+            -#    = image_tag("edit-icon.png", size: "30x30")
     %table.ui.compact.table.total-section
       %tr
         %td.twelve.wide.right.aligned

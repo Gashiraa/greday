@@ -117,7 +117,8 @@
             .ui.labeled.input
               %label.ui.label{for: "amount"} €
               = form.text_field :total_cost, readonly: true, id: 'total_cost'
-          = form.hidden_field(:model, value: params[:model])
+              - if @ware.id
+                = form.hidden_field(:model, value: params[:model])
 
         .field
           .centered
