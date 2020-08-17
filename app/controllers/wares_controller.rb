@@ -121,7 +121,7 @@ class WaresController < ApplicationController
   def get_machine_data(id)
     @machine = Machine.find(id)
     @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
-    @projects = Project.where(machine_id: params[:id])
+    @projects = Project.where(machine_id: id)
     @wares = Ware.where(project_id: @projects.ids).where(machine_specific: true)
   end
 
