@@ -6,6 +6,7 @@ ________________________________________________________________________________
 --02/08--
 MARCHANDISES
     Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
+    Listing marchandise d'entretien
 MACHINES
     Encodage des huiles par catégorie, type, quantité
     Ajouter un tri par réference

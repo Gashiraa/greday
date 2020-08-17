@@ -22,7 +22,7 @@ en:
   ware_name: Ware name
   comment: Commentary
   Quantity: Quantity
-  provider_invoice: Provider invoice
+  reference_1: Provider invoice
   provider_discount: Discount
   provider_price: Provider price
   bought_price: Bouhght price
@@ -31,7 +31,7 @@ en:
   unit_price: Unit price
   gross_cost: Gross cost
   total_gross: Total cost
-  provider_name: Provider
+  provider_1: Provider
 
   hourly_rate: hourly rate
   coefficient: Coefficent

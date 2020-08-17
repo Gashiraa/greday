@@ -46,8 +46,8 @@ class ApplicationController < ActionController::Base
     if @company&.prefix
       id = id.to_s
       id.length < 5 ? id = id.rjust(4, "0") : ""
-      value = id.last(4)
-      @company.prefix + 'P' + id
+      id = id.last(4)
+      @company.prefix + 'P20' + id
     else
       id.to_s
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_15_070056) do
+ActiveRecord::Schema.define(version: 2020_08_16_130910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,8 +227,8 @@ ActiveRecord::Schema.define(version: 2020_08_15_070056) do
     t.float "total_cost"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "provider_name"
-    t.string "provider_invoice"
+    t.string "provider_1"
+    t.string "reference_1"
     t.float "bought_price"
     t.float "provider_gross"
     t.float "total_gross"
@@ -239,6 +239,10 @@ ActiveRecord::Schema.define(version: 2020_08_15_070056) do
     t.bigint "machine_id"
     t.boolean "show_desc_quot"
     t.integer "position"
+    t.string "provider_2"
+    t.string "reference_2"
+    t.string "provider_3"
+    t.string "reference_3"
     t.index ["customer_id"], name: "index_wares_on_customer_id"
     t.index ["machine_id"], name: "index_wares_on_machine_id"
     t.index ["project_id"], name: "index_wares_on_project_id"

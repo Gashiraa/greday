@@ -38,7 +38,7 @@
       <%= sort_link(@search, :ware_name, t('ware_name')) %>
     </th>
     <th class="two wide">
-      <%= sort_link(@search, :provider_name, t('provider_name')) %>
+      <%= sort_link(@search, :provider_1, t('provider_1')) %>
     </th>
     <th class="five wide">
       <%= sort_link(@search, :comment, t('comment')) %>
@@ -59,7 +59,7 @@
     <tr>
       <td class="center aligned">
         <% if ware.project %>
-          <%= (link_to '#' + @company&.prefix ? @company.prefix+'D'+  display_id(ware.project.id) : ' #'+ware.project.id.to_s, project_path(ware.project.id), class: 'ui blue button') %>
+          <%= (link_to '#' + @company&.prefix ? display_id(ware.project.id) : ' #'+ware.project.id.to_s, project_path(ware.project.id), class: 'ui blue button') %>
         <% end %>
       </td>
       <td>
@@ -67,7 +67,7 @@
             ware.customer ? ware.customer.name : (ware.project ? ware.project.customer.name : '') %>
       </td>
       <td><%= ware.ware_name %></td>
-      <td><%= ware.provider_name %></td>
+      <td><%= ware.provider_1 %></td>
       <td><%= ware.comment.truncate(100) %></td>
       <%= tag.td class: 'center aligned status-cell', status: ware.status do %>
         <div>

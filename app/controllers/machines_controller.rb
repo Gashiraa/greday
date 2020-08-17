@@ -31,7 +31,7 @@ class MachinesController < ApplicationController
   end
 
   def refresh_content
-    @machine = Machine.find(params[:id])
+    @machine = Machine.find(params[:machine])
     @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
     @projects = Project.where(machine_id: params[:id])
     @wares = Ware.where(project_id: @projects.ids).where(machine_specific: true)

@@ -22,7 +22,6 @@ fr:
   ware_name: Dénomination
   comment: Commentaire
   Quantity: Quantité
-  provider_invoice: Facture fournisseur
   provider_discount: Remise
   provider_price: Prix brut
   bought_price: Prix net
@@ -31,7 +30,12 @@ fr:
   unit_price: Prix unit.
   gross_cost: Total HT
   total_gross: Total HT
-  provider_name: Fournisseur
+  reference_1: Référence fournisseur 1
+  provider_1: Fournisseur 1
+  reference_2: Référence fournisseur 2
+  provider_2: Fournisseur 2
+  reference_3: Référence fournisseur 3
+  provider_3: Fournisseur 3
 
   hourly_rate: Taux horaire
   coefficient: Coefficent
@@ -397,7 +401,6 @@ fr:
   editing_maintenance_wares: "Edition d'une marchandise de maintenance"
   creating_maintenance_wares: "Création d'une marchandise de maintenance"
   total_projects: "Total des projets filtrés"
-  provider_reference: "Réference fournisseur"
   start_time: "Heure de début"
   end_time: "Heure de fin"
   serial: "Numéro de série"
@@ -429,3 +432,4 @@ fr:
   displacement: "Déplacements"
   for_project_date: "en date de ce projet"
   machine_history: "Historique"
+  providers: "Fournisseurs"

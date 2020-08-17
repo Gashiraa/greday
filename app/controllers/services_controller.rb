@@ -40,6 +40,7 @@ class ServicesController < ApplicationController
   def create
     @service = Service.new(service_params)
     @project = @service.project
+    @machine = @service.project.machine
     @services = @project.services
     respond_to do |format|
       if @service.save
@@ -59,6 +60,7 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1.json
   def update
     @project = @service.project
+    @machine = @service.project.machine
     @services = @project.services
     respond_to do |format|
       if @service.update(service_params)
@@ -78,6 +80,7 @@ class ServicesController < ApplicationController
   # DELETE /services/1.json
   def destroy
     @project = @service.project
+    @machine = @service.project.machine
     @services = @project.services
     @service.destroy
     @service.project&.update_totals_project(@project)

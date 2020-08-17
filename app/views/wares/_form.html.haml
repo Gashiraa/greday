@@ -2,7 +2,7 @@
   %i.big.close.icon{onclick: "$('#modal-window').modal('hide');"}
 .ui.form
   - if params[:maintenance]
-    = form_for(@ware, remote: true, html: {autocomplete: "off"}) do |form|
+    = form_with(model: @ware, remote: true, html: {autocomplete: "off"}) do |form|
       .ui.form
         %h2.centered
           - if @ware.id
@@ -14,18 +14,33 @@
             = form.label t('ware_name')
             = form.text_field :ware_name, {class: 'form-control', onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'}
           .field
-            = form.label t('provider_name')
-            = form.text_field :provider_name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+            = form.label t('provider_1')
+            = form.text_field :provider_1, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
           .field
-            = form.label t('provider_reference')
-            = form.text_field :provider_invoice, class: "form-control"
+            = form.label t('reference_1')
+            = form.text_field :reference_1, class: "form-control"
+        .two.fields
+          .field
+            = form.label t('provider_2')
+            = form.text_field :provider_2, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+          .field
+            = form.label t('reference_2')
+            = form.text_field :reference_2, class: "form-control"
+        .two.fields
+          .field
+            = form.label t('provider_3')
+            = form.text_field :provider_3, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+          .field
+            = form.label t('reference_3')
+            = form.text_field :reference_3, class: "form-control"
         .field
           = form.label t('comment')
           = form.text_area :comment, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
           = form.hidden_field(:is_maintenance, value: true)
           = form.hidden_field(:machine_id, value: params[:machine])
+          = form.hidden_field(:machine_specific, value: params[:model])
         .field.centered
-          = form.submit t('create'), :class => "ui green button"
+          = form.submit t('create'), remote: true, :class => "ui green button"
   - else
     = form_for(@ware, remote: true, html: {autocomplete: "off"}) do |form|
       .ui.form
@@ -50,11 +65,11 @@
             = form.label t('ware_name')
             = form.text_field :ware_name, { onkeyup: "javascript:capitalize(this.id, this.value);", id: 'ware_form_name'}
           .field
-            = form.label t('provider_name')
-            = form.text_field :provider_name, onkeyup: "javascript:capitalize(this.id, this.value);"
+            = form.label t('provider_1')
+            = form.text_field :provider_1, onkeyup: "javascript:capitalize(this.id, this.value);"
           .field
-            = form.label t('provider_invoice')
-            = form.text_field :provider_invoice
+            = form.label t('reference_1')
+            = form.text_field :reference_1
         .ui.segment
           .field
             = form.label t('comment')
@@ -119,7 +134,6 @@
               = form.text_field :total_cost, readonly: true, id: 'total_cost'
               - if @ware.id
                 = form.hidden_field(:model, value: params[:model])
-
         .field
           .centered
             = form.submit t('create'),
