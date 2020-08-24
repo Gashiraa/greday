@@ -10,6 +10,8 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w( pages.css )
 Rails.application.config.assets.precompile += %w( gescoop.scss )
+Rails.application.config.assets.precompile += %w( azshara.scss )
+
 
 
 # Precompile additional assets.

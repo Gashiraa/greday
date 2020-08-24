@@ -28,9 +28,18 @@
   .content
     .header
       = t("oils")
-      = link_to edit_machine_path(@machine), remote: true do
-        %button.edit-card-button.ui.compact.icon.purple.button
-          %i.edit.icon
-      %br/
-    .description
-      = simple_format(@machine.oils_text)
+      = link_to new_oil_path(machine: @machine), remote: true do
+        %button.edit-card-button.ui.compact.icon.red.button
+          %i.plus.icon
+    %table.ui.striped.selectable.red.table.table-to-color
+      - @oils.each do |oil|
+        %tr{"data-oil" => "#{edit_oil_path(oil, machine: @machine)}"}
+          %td
+            =oil.category
+          %td
+            =oil.oil_type
+          %td
+            =oil.quantity
+          %td
+            = link_to oil, method: :delete, data: {confirm: t('confirm_delete')} do
+              = image_tag("delete-icon.png", size: "15x15")

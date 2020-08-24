@@ -45,4 +45,17 @@ $(document).on("turbolinks:load", function () {
         }
         window.location = $(this).data("machine")
     });
+
+    //clickable machine row
+    $("tr[data-oil] ").click(function () {
+        if (event.target.tagName === "IMG") {
+            return
+        }
+        $.ajax({
+            url: this.getAttribute('data-oil'),
+            dataType: "script",
+            type: "GET"
+        });
+        event.preventDefault();
+    });
 });

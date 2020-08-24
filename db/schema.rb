@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_130910) do
+ActiveRecord::Schema.define(version: 2020_08_22_124455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,16 @@ ActiveRecord::Schema.define(version: 2020_08_16_130910) do
     t.text "oils_text"
     t.boolean "isKm"
     t.index ["customer_id"], name: "index_machines_on_customer_id"
+  end
+
+  create_table "oils", force: :cascade do |t|
+    t.bigint "machine_id"
+    t.string "category"
+    t.string "oil_type"
+    t.string "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["machine_id"], name: "index_oils_on_machine_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -253,6 +263,7 @@ ActiveRecord::Schema.define(version: 2020_08_16_130910) do
   add_foreign_key "invoices", "payments"
   add_foreign_key "machine_histories", "machines"
   add_foreign_key "machines", "customers"
+  add_foreign_key "oils", "machines"
   add_foreign_key "payments", "customers"
   add_foreign_key "project_extra_lines", "extras"
   add_foreign_key "project_extra_lines", "projects"

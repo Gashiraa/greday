@@ -1,0 +1,26 @@
+= form_with(model: @oil, remote: true, html: {autocomplete: "off"}) do |form|
+  .close
+    %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+  .ui.form
+    .centered
+      .ui.big.red.button
+        - if @oil.id
+          %i.tint.icon
+          = t('editing_oil')
+        - else
+          %i.tint.icon
+          = t('creating_oil')
+    .three.fields
+      .field
+        = form.label t('category')
+        = form.select :category, Oil.distinct.pluck(:category), {:include_blank => true}, {required: true, id: "oil_category",onkeyup: "javascript:capitalize(this.id, this.value);"}
+      .field
+        = form.label t('type')
+        = form.select :oil_type, Oil.distinct.pluck(:oil_type), {:include_blank => true}, {required: true, id: "oil_type", onkeyup: "javascript:capitalize(this.id, this.value);"}
+      .field
+        = form.label t('quantity')
+        = form.text_field :quantity
+      = form.hidden_field(:machine_id, value: params[:machine])
+    .field
+      .centered
+        = form.submit t('create'), :class => "ui green button"

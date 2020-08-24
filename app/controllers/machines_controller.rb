@@ -18,7 +18,9 @@ class MachinesController < ApplicationController
     @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
 
     @search_wares = Ware.where(project_id: @projects.ids).where(machine_specific: true).ransack(params[:q])
-    @wares = @search_wares.result.paginate(page: params[:page], per_page: 10)
+    @specific_wares = @search_wares.result.paginate(page: params[:page], per_page: 10)
+
+    @oils = Oil.where(machine_id: @machine.id)
   end
 
   # GET /machines/new
@@ -31,10 +33,10 @@ class MachinesController < ApplicationController
   end
 
   def refresh_content
-    @machine = Machine.find(params[:machine])
+    @machine = Machine.find(params[:id])
     @maintenance_wares = Ware.where(machine_id: @machine.id).where(is_maintenance: true)
     @projects = Project.where(machine_id: params[:id])
-    @wares = Ware.where(project_id: @projects.ids).where(machine_specific: true)
+    @specific_wares = Ware.where(project_id: @projects.ids).where(machine_specific: true)
     respond_to do |format|
       format.js
     end

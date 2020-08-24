@@ -433,3 +433,6 @@ fr:
   for_project_date: "en date de ce projet"
   machine_history: "Historique"
   providers: "Fournisseurs"
+  type: "Type"
+  editing_oil: "Edition huile"
+  creating_oil: "Création huile"

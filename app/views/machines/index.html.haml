@@ -33,7 +33,7 @@
     - unless @machines.any?
       %tr
         %td.center.aligned{colspan: "10"}= t('no_data_display')
-    - @machines.each do |machine|
+    - @machines.order(created_at: :desc).each do |machine|
       %tr{"data-machine" => "#{machine_path(machine)}"}
         %td
           = link_to (machine.customer ? machine.customer.name : ""), "/machines?&q%5Bcustomer_id_eq%5D=" + machine.customer&.id.to_s

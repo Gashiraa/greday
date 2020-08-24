@@ -20,16 +20,6 @@
           =link_to({controller: :services, action: :list, project: @project.id, remote: true}) do
             %button.edit-card-button.ui.compact.icon.red.button
               %i.expand.icon
-          -# - if @project.services_recap
-          -#   =link_to(project_path(@project, project: {services_recap: :false}), method: :put) do
-          -#     %button.edit-card-button.ui.compact.icon.red.button
-          -#       =t("services_recap")
-          -#       %i.wrench.icon
-          -# -else
-          -#   =link_to(project_path(@project, project: {services_recap: :true}), method: :put) do
-          -#     %button.edit-card-button.ui.compact.icon.red.button
-          -#       =t("services_non_recap")
-          -#       %i.wrench.icon
     .scrollable-project-section
       %table.ui.striped.selectable.red.compact.table.table-to-color
         %thead.thead-dark
@@ -105,7 +95,7 @@
           %h3
             = t('ware').pluralize.capitalize
         %th.ten.wide
-          = link_to(new_ware_path(model: "ware"), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+          = link_to(new_ware_path(model: "ware", remote: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
             %button.ui.violet.compact.icon.button
               %i.plus.icon
         %th.four.wide
@@ -149,7 +139,7 @@
                   = link_to edit_ware_path(ware), remote: true do
                     = image_tag("edit-icon.png", size: "30x30")
                   - unless ware.status == "bin"
-                    = link_to ware_path(ware, ware: {status: :bin}), method: :put, remote: true do
+                    = link_to ware_path(ware, ware: {status: :bin}, remote: true), method: :put, remote: true do
                       = image_tag("bin-icon.png", size: "30x30")
                   - else
                     = link_to ware, method: :delete, data: {confirm: t('confirm_delete'), remote: true} do

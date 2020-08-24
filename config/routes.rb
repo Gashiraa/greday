@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
 
+  resources :oils
   devise_for :users, skip: [:registrations]
 
   as :user do
@@ -12,7 +13,9 @@ Rails.application.routes.draw do
   root to: 'projects#index'
 
   get 'wares/list' => 'wares#list', as: :list
-  get 'wares/machine_list' => 'wares#machine_list', as: :machine_list
+  get 'wares/specific_list' => 'wares#specific_list', as: :specific_list
+  get 'wares/maintenance_list' => 'wares#maintenance_list', as: :maintenance_list
+
 
   get 'services/list' => 'services#list', as: :services_list
 

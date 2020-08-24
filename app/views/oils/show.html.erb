@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Machine:</strong>
+  <%= @oil.machine %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @oil.category %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @oil.type %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @oil.quantity %>
+</p>
+
+<%= link_to 'Edit', edit_oil_path(@oil) %> |
+<%= link_to 'Back', oils_path %>

@@ -3,5 +3,6 @@ class Machine < ApplicationRecord
 
   has_many :projects, dependent: :nullify
   has_many :wares, dependent: :nullify
+  has_many :oils, dependent: :nullify
 
 end

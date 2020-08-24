@@ -1,9 +1,16 @@
 $('#modal-window').modal('hide');
 
-<% if @model == "maintenance" %>
+<% if params[:ware][:is_maintenance] || params[:is_maintenance] %>
 
 if ($("#expand").hasClass("visible")) {
-    $(".expand").html("<%= j(render 'wares/machine_list') %>");
+    $(".expand").html("<%= j(render 'wares/maintenance_list') %>");
+}
+$('.partial-content').html("<%= j(render partial: 'machines/machine_content') %>");
+
+<% elsif  params[:ware][:is_specific] %>
+
+if ($("#expand").hasClass("visible")) {
+    $(".expand").html("<%= j(render 'wares/specific_list') %>");
 }
 $('.partial-content').html("<%= j(render partial: 'machines/machine_content') %>");
 

@@ -1,12 +1,18 @@
 $('#modal-window').modal('hide');
 
-<% if @model == "maintenance" %>
+<% if params[:ware][:is_maintenance] || params[:is_maintenance] %>
 
 if ($("#expand").hasClass("visible")) {
-    $(".expand").html("<%= j(render 'wares/machine_list') %>");
+    $(".expand").html("<%= j(render 'wares/maintenance_list') %>");
 }
 $('.partial-content').html("<%= j(render partial: 'machines/machine_content') %>");
-$('#notice').text("<%= t('ware_update_success') %>").css("display","block");
+
+<% elsif  params[:ware][:is_specific] %>
+
+if ($("#expand").hasClass("visible")) {
+    $(".expand").html("<%= j(render 'wares/specific_list') %>");
+}
+$('.partial-content').html("<%= j(render partial: 'machines/machine_content') %>");
 
 <% else %>
 
@@ -15,7 +21,6 @@ if ($("#expand").hasClass("visible")) {
 }
 $('.partial-content').html("<%= j(render partial: 'projects/project_content') %>");
 $('.card-content').html("<%= j(render partial: 'projects/card_content') %>");
-$('#notice').text("<%= t('ware_update_success') %>").css("display","block");
 
 <% end %>
 

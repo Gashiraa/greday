@@ -45,6 +45,22 @@ $(document).on("turbolinks:load", function () {
         language: $('.locale').data('locale')
     });
 
+    $("#oil_category").select2({
+        theme: "bootstrap",
+        width: '100%',
+        tags: true,
+        selectOnClose: true,
+        language: $('.locale').data('locale')
+    });
+
+    $("#oil_type").select2({
+        theme: "bootstrap",
+        width: '100%',
+        tags: true,
+        selectOnClose: true,
+        language: $('.locale').data('locale')
+    });
+
     $("#invoice_form_customer").select2({
         theme: "bootstrap",
         width: '100%',

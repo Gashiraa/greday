@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  machine: one
+  category: MyString
+  type: 
+  quantity: MyString
+
+two:
+  machine: two
+  category: MyString
+  type: 
+  quantity: MyString

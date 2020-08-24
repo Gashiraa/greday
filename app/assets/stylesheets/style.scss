@@ -26,6 +26,11 @@ body {
   }
 }
 
+.references-table td {
+  padding-top: 0.1em !important;
+  padding-bottom: 0.1em !important;
+}
+
 .hidden {
   a {
     color: white !important;
@@ -36,10 +41,6 @@ body {
 #expand {
   padding: 1rem;
   width: 85%;
-}
-
-#modal-window {
-  z-index: 1002;
 }
 
 .ui.cards {

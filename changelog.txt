@@ -5,11 +5,11 @@ ________________________________________________________________________________
                                                     --A FAIRE--
 --02/08--
 MARCHANDISES
-    Ajouter des champs de référence pour les marchandises de maintenance, y ajouter une quantité
-    Listing marchandise d'entretien
+    ✓ Ajouter des champs de référence pour les marchandises de maintenance
 MACHINES
-    Encodage des huiles par catégorie, type, quantité
-    Ajouter un tri par réference
+    ✓ Encodage des huiles par catégorie, type, quantité
+    ✓ Réparer anciennes machines
+    ✓ listing marchandises d'entretien
 MAGASIN
 ________________________________________________________________________________________________________________________
 --14/08--

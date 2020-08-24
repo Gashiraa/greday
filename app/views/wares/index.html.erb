@@ -68,7 +68,7 @@
       </td>
       <td><%= ware.ware_name %></td>
       <td><%= ware.provider_1 %></td>
-      <td><%= ware.comment.truncate(100) %></td>
+      <td><%= ware.comment&.truncate(100) %></td>
       <%= tag.td class: 'center aligned status-cell', status: ware.status do %>
         <div>
           <div>

@@ -1,0 +1,57 @@
+-#----[WARES]----
+.close
+  %i.big.close.icon{onclick: "$('.partial-content').load('/machines/refresh_content/#{@machine.id}'); $('.ui.modal').modal('hide');"}
+- if @company.use_wares
+  .project-section
+    %h4
+      Marchandises d'entretien
+      = link_to(new_ware_path(is_maintenance: :true, machine: @machine.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+        %button.ui.olive.compact.icon.button
+          %i.plus.icon
+    %table.ui.striped.selectable.olive.table.table-to-color
+      %thead.thead-dark
+        %tr
+          %th.four.wide
+            = t('ware_name')
+          %th.three.wide
+            = t('fournisseurs')
+          %th.three.wide
+            = t('references')
+          %th.four.wide
+            = t('comment')
+          %th.two.wide.center.aligned
+      %tbody
+        - unless @maintenance_wares.any?
+          %tr
+            %td.center.aligned{colspan: "9"} Aucune données à afficher
+        - @maintenance_wares.each do |ware|
+          %tr{"data-link" => "#{edit_ware_path(ware, machine: @machine, is_maintenance: true, remote: true)}"}
+            %td
+              = ware.ware_name
+            %td{style:"padding-top:0; padding-bottom: 0;",colspan:2}
+              - if ware.provider_1.present? || ware.reference_1.present?
+                %table.ui.striped.compact.table.references-table
+                  %tr
+                    %td.eight.wide
+                      = ware.provider_1
+                    %td.no-link{onclick: "copyStringToClipboard(this.innerHTML);"}
+                      = ware.reference_1
+                  - if ware.provider_2.present? || ware.reference_2.present?
+                    %tr
+                      %td.eight.wide
+                        = ware.provider_2
+                      %td.no-link{onclick: "copyStringToClipboard(this.innerHTML);"}
+                        = ware.reference_2
+                  - if ware.provider_3.present? || ware.reference_3.present?
+                    %tr
+                      %td.eight.wide
+                        = ware.provider_3
+                      %td.no-link{onclick: "copyStringToClipboard(this.innerHTML);"}
+                        = ware.reference_3
+            %td
+              = ware.comment
+            %td
+              = link_to edit_ware_path(ware, machine: @machine, is_maintenance: true), remote: true do
+                = image_tag("edit-icon.png", size: "30x30")
+              = link_to ware_path(ware, is_maintenance: true, machine: @machine), method: :delete, remote: true, data: {confirm: t('confirm_delete')} do
+                = image_tag("delete-icon.png", size: "30x30")

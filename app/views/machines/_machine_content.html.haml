@@ -3,10 +3,14 @@
     %th.three.wide
       %h4
         Marchandises d'entretien
-    %th.thirteen.wide
-      =link_to(new_ware_path(maintenance: :true, machine: @machine.id, model: "maintenance"), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
+    %th.nine.wide
+      =link_to(new_ware_path(is_maintenance: :true, machine: @machine.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
         %button.ui.olive.compact.icon.button
           %i.plus.icon
+    %th.four.wide
+      =link_to({controller: :wares, action: :maintenance_list, machine: @machine.id, remote: true}) do
+        %button#wares-modal.edit-card-button.ui.compact.icon.olive.button
+          %i.expand.icon
 .scrollable-project-section
   %table.ui.striped.selectable.olive.table.table-to-color
     %thead.thead-dark
@@ -28,21 +32,21 @@
         %tr{"data-link" => "#{edit_ware_path(ware, maintenance: :true, model: "maintenance", machine: @machine.id)}"}
           %td
             = ware.ware_name
-          %td{colspan:2}
-            - if !ware.provider_1.empty? || !ware.reference_1.empty?
-              %table.ui.striped.compact.table
+          %td{style:"padding-top:0; padding-bottom: 0;",colspan:2}
+            - if ware.provider_1.present? || ware.reference_1.present?
+              %table.ui.striped.compact.table.references-table
                 %tr
                   %td.eight.wide
                     = ware.provider_1
                   %td.no-link{onclick: "copyStringToClipboard(this.innerHTML);"}
                     = ware.reference_1
-                - if !ware.provider_2.empty? || !ware.reference_2.empty?
+                - if ware.provider_2.present? || ware.reference_2.present?
                   %tr
                     %td.eight.wide
                       = ware.provider_2
                     %td.no-link{onclick: "copyStringToClipboard(this.innerHTML);"}
                       = ware.reference_2
-                - if !ware.provider_3.empty? || !ware.reference_3.empty?
+                - if ware.provider_3.present? || ware.reference_3.present?
                   %tr
                     %td.eight.wide
                       = ware.provider_3
@@ -51,9 +55,9 @@
           %td
             = ware.comment
           %td
-            = link_to edit_ware_path(ware, model: "maintenance", machine: @machine, maintenance: true), remote: true do
+            = link_to edit_ware_path(ware, machine: @machine, is_maintenance: true), remote: true do
               = image_tag("edit-icon.png", size: "30x30")
-            = link_to ware_path(ware, model: "maintenance", machine: @machine), method: :delete, remote: true, data: {confirm: t('confirm_delete')} do
+            = link_to ware_path(ware, is_maintenance: true, machine: @machine), method: :delete, remote: true, data: {confirm: t('confirm_delete')} do
               = image_tag("delete-icon.png", size: "30x30")
 %table.ui.unstackable.small.table{style: "margin-bottom: 0"}
   %thead
@@ -61,7 +65,7 @@
       %h4
         Marchandises spécifiques à cette machine
     %th.four.wide
-      =link_to({controller: :wares, action: :machine_list, projects: @projects, machine: @machine.id, remote: true}) do
+      =link_to({controller: :wares, action: :specific_list, projects: @projects, machine: @machine.id, remote: true}) do
         %button#wares-modal.edit-card-button.ui.compact.icon.red.button
           %i.expand.icon
 .scrollable-project-section
@@ -77,11 +81,11 @@
           = t('total_cost')
           (€)
     %tbody
-      - unless @wares.any?
+      - unless @specific_wares.any?
         %tr
           %td.center.aligned{colspan: "9"} Aucune données à afficher
-      - @wares.each do |ware|
-        %tr{"data-link" => "#{edit_ware_path(ware)}"}
+      - @specific_wares.each do |ware|
+        %tr
           %td.four.wide
             = ware.ware_name
           %td.four.wide.right.aligned

@@ -1,8 +1,8 @@
 .close
   %i.big.close.icon{onclick: "$('#modal-window').modal('hide');"}
 .ui.form
-  - if params[:maintenance]
-    = form_with(model: @ware, remote: true, html: {autocomplete: "off"}) do |form|
+  - if params[:is_maintenance]
+    = form_with(model: @ware, remote: params[:remote], html: {autocomplete: "off"}) do |form|
       .ui.form
         %h2.centered
           - if @ware.id
@@ -38,11 +38,10 @@
           = form.text_area :comment, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
           = form.hidden_field(:is_maintenance, value: true)
           = form.hidden_field(:machine_id, value: params[:machine])
-          = form.hidden_field(:machine_specific, value: params[:model])
         .field.centered
           = form.submit t('create'), remote: true, :class => "ui green button"
   - else
-    = form_for(@ware, remote: true, html: {autocomplete: "off"}) do |form|
+    = form_for(@ware, remote: params[:remote], html: {autocomplete: "off"}) do |form|
       .ui.form
         %h2.centered
           - if @ware.id
@@ -100,7 +99,7 @@
           .field
             = form.label t('bought_price')
             .ui.labeled.input
-              %label.ui.label{for: "amount"} €
+              %label.ui.red.label{for: "amount"} €
               = form.text_field :bought_price, readonly: true, id: 'bought_price'
         .three.fields
           .field
@@ -109,7 +108,7 @@
           .field
             = form.label t('sell_price')
             .ui.labeled.input
-              %label.ui.label{for: "amount"} €
+              %label.ui.red.label{for: "amount"} €
               = form.text_field :sell_price, readonly: true, id: 'sell_price'
           .field
             = form.label t('margin')
@@ -125,15 +124,13 @@
           .field
             = form.label t('gross_cost')
             .ui.labeled.input
-              %label.ui.label{for: "amount"} €
+              %label.ui.red.label{for: "amount"} €
               = form.text_field :total_gross, readonly: true, id: 'total_gross'
           .field
             = form.label t('total_cost')
             .ui.labeled.input
-              %label.ui.label{for: "amount"} €
+              %label.ui.red.label{for: "amount"} €
               = form.text_field :total_cost, readonly: true, id: 'total_cost'
-              - if @ware.id
-                = form.hidden_field(:model, value: params[:model])
         .field
           .centered
             = form.submit t('create'),

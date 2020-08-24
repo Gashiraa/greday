@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Oils</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Machine</th>
+      <th>Category</th>
+      <th>Type</th>
+      <th>Quantity</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @oils.each do |oil| %>
+      <tr>
+        <td><%= oil.machine %></td>
+        <td><%= oil.category %></td>
+        <td><%= oil.type %></td>
+        <td><%= oil.quantity %></td>
+        <td><%= link_to 'Show', oil %></td>
+        <td><%= link_to 'Edit', edit_oil_path(oil) %></td>
+        <td><%= link_to 'Destroy', oil, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Oil', new_oil_path %>
