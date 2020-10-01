@@ -52,7 +52,7 @@ class WaresController < ApplicationController
     @ware = Ware.new(ware_params)
     respond_to do |format|
       if @ware.save
-        if params[:ware][:is_maintenance] || params[:ware][:machine_specific]
+        if params[:ware][:is_maintenance] || params[:ware][:machine_specific] == true
           get_machine_data(params[:ware][:machine_id])
         else
           get_project_data
@@ -73,7 +73,7 @@ class WaresController < ApplicationController
   def update
     respond_to do |format|
       if @ware.update(ware_params)
-        if params[:ware][:is_maintenance] || params[:ware][:machine_specific]
+        if params[:ware][:is_maintenance] || params[:ware][:machine_specific] == true
           get_machine_data(params[:ware][:machine_id])
         else
           get_project_data
@@ -95,7 +95,7 @@ class WaresController < ApplicationController
   def destroy
     @ware.destroy
     respond_to do |format|
-      if params[:is_maintenance] || params[:machine_specific]
+      if params[:is_maintenance] || params[:machine_specific] == true
         get_machine_data(params[:machine])
       else
         get_project_data

@@ -4,7 +4,7 @@
 
 <% if manual == "true" %>
 
-  <%= form_for(@project_extra_line, html: {autocomplete: "off"}) do |form| %>
+  <%= form_for(@project_extra_line, html: {autocomplete: @company.autocomplete}) do |form| %>
     <div class="ui form">
 
       <h2 class="centered">
@@ -77,7 +77,7 @@
 
 <% else %>
 
-  <%= form_for(@project_extra_line, html: {autocomplete: "off"}) do |form| %>
+  <%= form_for(@project_extra_line, html: {autocomplete: @company.autocomplete}) do |form| %>
     <div class="ui form">
 
       <h2 class="centered">

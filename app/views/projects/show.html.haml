@@ -1,7 +1,7 @@
 #project-id{"data-somedata" => "#{@project.id}"}
-#project-customer-id{"data-somedata" => "#{@project.customer.id}"}
+#project-customer-id{"data-somedata" => "#{@project.customer&.id}"}
 #project-no-vat{"data-somedata" => "#{@project.no_vat}"}
-#customer-rate{"data-somedata" => "#{@project.customer.customer_rate}"}
+#customer-rate{"data-somedata" => "#{@project.customer&.customer_rate}"}
 %div
   .project-content
     .ui.left.rail

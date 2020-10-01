@@ -2,7 +2,7 @@
   %i.big.close.icon{onclick: "$('#modal-window').modal('hide');"}
 .ui.form
   - if params[:is_maintenance]
-    = form_with(model: @ware, remote: params[:remote], html: {autocomplete: "off"}) do |form|
+    = form_with(model: @ware, remote: params[:remote], html: {autocomplete: @company.autocomplete}) do |form|
       .ui.form
         %h2.centered
           - if @ware.id
@@ -41,7 +41,7 @@
         .field.centered
           = form.submit t('create'), remote: true, :class => "ui green button"
   - else
-    = form_for(@ware, remote: params[:remote], html: {autocomplete: "off"}) do |form|
+    = form_for(@ware, remote: params[:remote], html: {autocomplete: @company.autocomplete}) do |form|
       .ui.form
         %h2.centered
           - if @ware.id

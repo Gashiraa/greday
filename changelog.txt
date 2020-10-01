@@ -3,14 +3,15 @@
 Note de crédit à revoir
 ________________________________________________________________________________________________________________________
                                                     --A FAIRE--
---02/08--
+MAGASIN
+________________________________________________________________________________________________________________________
+--24/08--
 MARCHANDISES
     ✓ Ajouter des champs de référence pour les marchandises de maintenance
 MACHINES
     ✓ Encodage des huiles par catégorie, type, quantité
     ✓ Réparer anciennes machines
     ✓ listing marchandises d'entretien
-MAGASIN
 ________________________________________________________________________________________________________________________
 --14/08--
 Global

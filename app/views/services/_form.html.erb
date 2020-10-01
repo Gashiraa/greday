@@ -2,7 +2,7 @@
   <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
 </div>
 
-<%= form_with(model: @service, remote: true, html: {autocomplete: "off"}, id: "servicesForm") do |form| %>
+<%= form_with(model: @service, remote: true, html: {autocomplete: @company.autocomplete}, id: "servicesForm") do |form| %>
 
   <div class="ui form">
 

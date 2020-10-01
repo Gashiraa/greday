@@ -2,7 +2,7 @@
   <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
 </div>
 
-<%= form_with(model: @extra, local: true, html: {autocomplete: "off"}) do |form| %>
+<%= form_with(model: @extra, local: true, html: {autocomplete: @company.autocomplete}) do |form| %>
   <div class="ui form">
 
     <h2 class="centered">

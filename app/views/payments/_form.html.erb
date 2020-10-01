@@ -2,7 +2,7 @@
   <i class="big close icon" onclick="$('.ui.modal').modal('hide');"></i>
 </div>
 
-<%= form_with(model: @payment, local: true, html: {autocomplete: 'off'}) do |form| %>
+<%= form_with(model: @payment, local: true, html: {autocomplete: @company.autocomplete}) do |form| %>
   <div class="ui form">
 
     <h2 class="centered">
@@ -29,7 +29,7 @@
       <div class="field">
         <%= form.label t('payment_reference') %>
         <div class="picker-container">
-          <%= form.text_field :reference, autocomplete: 'off', id: "payment_reference", class: "form-control" %>
+          <%= form.text_field :reference, id: "payment_reference", class: "form-control" %>
         </div>
       </div>
     </div>
