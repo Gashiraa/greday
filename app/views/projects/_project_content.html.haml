@@ -194,7 +194,7 @@
             %button.ui.teal.compact.labeled.icon.button
               Ajouter un article (manuel)
               %i.plus.icon
-  .scrollable-project-section
+  %div{:class => ("scrollable-project-section" unless @company.mode == "Plusview")}
     %table.ui.striped.selectable.yellow.compact.table.table-to-color
       %thead
         %tr
