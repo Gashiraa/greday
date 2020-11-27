@@ -1,3 +1,4 @@
 :javascript
  $(".project-content").find(".partial-content").html("#{escape_javascript(render 'projects/project_content')}");
+ $(".project-content").find(".card-content").html("#{escape_javascript(render 'projects/card_content')}");
  $(document).trigger('turbolinks:load');

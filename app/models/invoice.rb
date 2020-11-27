@@ -9,7 +9,7 @@ class Invoice < ApplicationRecord
   has_many :projects, dependent: :nullify
   has_many :expense_accounts, dependent: :nullify
 
-  enum status: [:created, :paid]
+  enum status: [:created, :paid, :mailed, :emailed]
   translate_enum :status
 
   def update_invoice_content_on_destroy(invoice, company)
@@ -101,6 +101,7 @@ class Invoice < ApplicationRecord
       total += project.project_extra_lines.count
       project.services.each do |service|
         total += (service.name.length/40).ceil
+        total += (service.comment.length/70).ceil
       end
     end
     total += (invoice.projects.count * 5)

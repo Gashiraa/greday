@@ -58,4 +58,7 @@ Rails.application.routes.draw do
   get 'projects/duplicate/:id' => 'projects#duplicate', as: :duplicate
   post 'projects/duplicate/:id' => 'projects#duplicate'
 
+  get 'machines/duplicate/:id' => 'machines#duplicate', as: :duplicate_machine
+  post 'machines/duplicate/:id' => 'machines#duplicate'
+
 end

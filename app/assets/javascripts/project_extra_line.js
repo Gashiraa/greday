@@ -100,7 +100,7 @@ $(document).on("turbolinks:load", function () {
         //auto-calculate once
     $('#project_extra_line_extra_id option').each(function () {
         if ($(this).css('display') != 'none') {
-            $(this).prop("selected", true);
+            // $(this).prop("selected", true);
             return false;
         }
     });

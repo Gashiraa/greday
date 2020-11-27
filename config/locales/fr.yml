@@ -112,6 +112,10 @@ fr:
       quotation: "Devis"
       accepted: "Accepté"
       bin: "Corbeille"
+      mailed: "Envoyée (mail)"
+      emailed: "Envoyée (poste)"
+      verified: "Vérifié"
+
   activerecord:
     attributes:
       user:
@@ -352,7 +356,7 @@ fr:
   create_new_invoice: "Créer une nouvelle facture"
   create_new_extra: "Créer un nouveau divers"
   create_new_customer: "Créer un nouveau client"
-  invoice_notice: "Le montant de la facture est payable dans les 8 jours. Toute réclamation devra être formulée au plus tard dans les huit jours de la réception par lettre recommandée. En cas de retard de paiement, un intérêt de 1% par mois est dû de plein droit, ainsi qu'une indemnité égale à 15% du montant de la facture avec un minimum de 50€, sans sommation ni mise en demeure. Pour tous litiges, seuls les tribunaux de Liège sont compétents."
+  invoice_notice: "Voir condition générales en annexe."
   invoice_account: "Les paiements se feront au compte CBC : IBAN "
   total_duration: "Durée totale"
   showInQuot: "Afficher dans devis"
@@ -436,3 +440,6 @@ fr:
   type: "Type"
   editing_oil: "Edition huile"
   creating_oil: "Création huile"
+  emailed_project: "Envoyé (email)"
+  mailed_project: "Envoyé (poste)"
+  verify_project: "Vérifier projet"

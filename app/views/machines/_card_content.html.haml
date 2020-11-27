@@ -24,6 +24,8 @@
         %button.ui.purple.compact.labeled.icon.button
           Retour aux machines
           %i.arrow.left.icon
+  = link_to "Dupliquer la machine", {id: @machine.id, action: :duplicate, controller: :machines, :method => :get}, {class: "ui bottom attached olive button card-button"}
+
 .card
   .content
     .header

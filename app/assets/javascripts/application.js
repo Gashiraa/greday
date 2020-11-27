@@ -50,6 +50,7 @@ function showHidden() {
 }
 
 function copyStringToClipboard(string) {
+    string = string.replace(/\r?\n|\r/g, '');
     // Create new element
     var element = document.createElement('textarea');
     // Set value (string to be copied)

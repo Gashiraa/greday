@@ -23,6 +23,29 @@ class MachinesController < ApplicationController
     @oils = Oil.where(machine_id: @machine.id)
   end
 
+  def duplicate
+    respond_to do |format|
+      @machine =  Machine.find(params[:id])
+      @clone = @machine.dup
+      @clone.customer_id = nil
+
+      @machine.wares.where(is_maintenance: true).each do |ware|
+        @clone.wares.push(ware.dup)
+      end
+      @machine.oils.each do |oil|
+        @clone.oils.push(oil.dup)
+      end
+
+      if @clone.save!
+        format.html { redirect_to machine_path(@clone), notice: t('project_update_success') }
+        format.json { render :show, status: :ok, location: @machine }
+      else
+        format.html { render :edit }
+        format.json { render json: @machine.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # GET /machines/new
   def new
     @machine = Machine.new

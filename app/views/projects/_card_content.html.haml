@@ -2,13 +2,15 @@
   .content
     .header.centered{style: "margin-bottom:0"}
       = display_id(@project.id)
+  .ui.two.buttons
+    = button_tag  class: "ui icon compact olive button",type: :button, data: {invoice: project_path(@project, method: 'label', :format => :pdf), target: "_blank"} do
+      %i.tag.icon
+    = button_tag class: "ui icon compact blue button", type: :button, data: {link: edit_project_path(@project)} do
+      %i.edit.icon
   .content
     .header
       = @project.name
-      = link_to edit_project_path(@project), remote: true do
-        %button.edit-card-button.ui.compact.icon.blue.button
-          %i.edit.icon
-    .meta
+      .meta
       - if @project.customer
         = @project.customer.name
         = link_to edit_customer_path(@project.customer), remote: true do
@@ -48,6 +50,10 @@
     - when "created"
       = link_to t('do_accepted'), project_path(@project, project: {status: :accepted}), method: :put, class: 'ui bottom attached red button card-button'
     - when "done"
+      - if @company.mode == "Greday"
+        = link_to t('verify_project').capitalize, project_path(@project, project: {status: :verified}), method: :put, class: 'ui bottom attached violet button card-button'
+      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
+    - when "verified"
       = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
     - when "accepted"
       = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
@@ -56,9 +62,6 @@
         = link_to invoice_path(@project.invoice, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom attached yellow button", :target => "_blank" do
           %i.file.pdf.icon
           Voir la facture
-      = link_to project_path(@project, project: {status: :paid}), method: :put, class: 'ui bottom attached green button' do
-        %i.euro.sign.icon
-        =t('project_paid')
   = link_to(:projects, class: "ui top attached grey button") do
     %i.left.arrow.icon
     =t('back')

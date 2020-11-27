@@ -30,10 +30,10 @@
               = t('status')
             %th.one.wide.center.aligned
               = t('Date')
-            %th.two.wide.right.aligned
-              = t('hourly_rate').to_s
             %th.one.wide.right.aligned
               = t('duration').to_s
+            %th.two.wide.right.aligned
+              = t('hourly_rate').to_s
             %th.two.wide.right.aligned
               = t('total_gross')
               (€)
@@ -55,9 +55,9 @@
               %td.center.aligned
                 = service.date ? l(service.date) : ""
               %td.right.aligned
-                = number_with_precision service.hourly_rate, :precision => 2
-              %td.right.aligned
                 = service.duration.strftime('%H:%M')
+              %td.right.aligned
+                = number_with_precision service.hourly_rate, :precision => 2
               %td.right.aligned
                 = number_with_precision service.total_gross, :precision => 2
               %td.right.aligned
@@ -73,11 +73,11 @@
                     = image_tag("delete-icon.png", size: "30x30")
     %table.ui.compact.table.total-section
       %tr
-        %td.ten.wide.right.aligned
+        %td.eight.wide.right.aligned
           = t('total_duration') + ' : '
           %b
             = +Service.where(project_id: @project.id).sum(:duration).to_s.chop.chop.chop
-        %td.two.wide.right.aligned
+        %td.four.wide.right.aligned
           = t('total_gross') + ' : '
           %b
             = (number_with_precision @project.services.collect { |s| s.valid? ? s.total_gross : 0 }.sum, :precision => 2).to_s + "€"
@@ -108,9 +108,10 @@
           %tr
             %th.four.wide
               = t('ware_name')
-            %th.three.wide.center.aligned= t('status')
+            %th.two.wide.center.aligned= t('status')
             %th.two.wide.right.aligned= t('quantity')
-            %th.three.wide.right.aligned
+            %th.two.wide.right.aligned= t('sell_price')
+            %th.two.wide.right.aligned
               = t('total_gross')
               (€)
             %th.two.wide.right.aligned
@@ -131,6 +132,8 @@
                       = ware.translated_status
                 %td.right.aligned
                   = ware.quantity
+                %td.right.aligned
+                  = number_with_precision ware.sell_price, :precision => 2
                 %td.right.aligned
                   = number_with_precision ware.total_gross, :precision => 2
                 %td.right.aligned
@@ -154,6 +157,8 @@
                     = ware.translated_status
               %td.right.aligned
                 = ware.quantity
+              %td.right.aligned
+                = number_with_precision ware.sell_price, :precision => 2
               %td.right.aligned
                 = number_with_precision ware.total_gross, :precision => 2
               %td.right.aligned
@@ -198,10 +203,10 @@
     %table.ui.striped.selectable.yellow.compact.table.table-to-color
       %thead
         %tr
-          %th.four.wide= t('Name')
-          %th.three.wide.center.aligned= t('unit')
-          %th.two.wide.right.aligned= t('quantity')
-          %th.three.wide.right.aligned
+          %th.seven.wide= t('Name')
+          %th.one.wide.right.aligned= t('quantity')
+          %th.two.wide.right.aligned= t('unit')
+          %th.two.wide.right.aligned
             = t('total_gross')
             (€)
           %th.two.wide.right.aligned
@@ -217,10 +222,10 @@
             %tr{"data-link" => "#{edit_project_extra_line_path(project_extra_line)}", id: dom_id(project_extra_line)}
               %td
                 = project_extra_line.manual_name
-              %td.center.aligned
-                = project_extra_line.unit
               %td.right.aligned
                 = project_extra_line.quantity
+              %td.right.aligned
+                = project_extra_line.unit
               %td.right.aligned
                 = number_with_precision project_extra_line.total_gross, :precision => 2
               %td.right.aligned
@@ -234,10 +239,10 @@
             %tr{"data-link" => "#{edit_project_extra_line_path(project_extra_line)}", id: dom_id(project_extra_line)}
               %td
                 = project_extra_line.extra.name
-              %td.center.aligned
-                = project_extra_line.extra.unit
               %td.right.aligned
                 = project_extra_line.quantity
+              %td.right.aligned
+                = project_extra_line.extra.unit
               %td.right.aligned
                 = number_with_precision project_extra_line.total_gross, :precision => 2
               %td.right.aligned

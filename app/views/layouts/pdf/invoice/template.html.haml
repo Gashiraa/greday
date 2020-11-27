@@ -34,7 +34,7 @@
           - unless @company.prefix
             = '#'
           = display_invoice_id(@invoice.display_number)
-      %td.customer-infos
+      %td.customer-infos{style: "width: 100%;"}
         = @invoice.customer.name
         %br/
         = @invoice.customer.street.to_s + ', ' + @invoice.customer.number.to_s
@@ -43,7 +43,7 @@
         %br/
         = @invoice.customer.country
         %br/
-        = "TVA : " + @invoice.customer.tva_record
+        = "TVA : " + @invoice.customer.tva_record.gsub("\n",'')
   .content
     - if @size > 15 && @one_project == false
       %h3 Récapitulatif de la facture
@@ -275,7 +275,7 @@
               \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
             %p
               = t('invoice_notice')
-        - elsif  @size <= 35
+        - elsif  @size <= 45
           .payment-notes.far-bottom-notes.avoidbreak
             %h4
               = t('invoice_account') + @company.account

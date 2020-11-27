@@ -1,0 +1,23 @@
+.label
+  %b
+    = "Client : "
+  %i
+    = @project.customer.name
+  %br/
+  %b
+    = "Intitulé : "
+  %i
+    = @project.name
+  %br/
+  %table
+    %tr
+      %td
+        %b
+          = "Description : "
+        %br/
+        %i
+          = @project.description
+        %br/
+  .project-id
+    = display_id(@project.id)
+  = wicked_pdf_image_tag "logo_ago_black.png" ,:width => "95"

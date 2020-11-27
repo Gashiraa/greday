@@ -16,7 +16,7 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :machine
 
-  enum status: [:quotation, :in_progress, :done, :invoiced, :paid, :bin, :created, :accepted, :canceled]
+  enum status: [:quotation, :in_progress, :done, :invoiced, :paid, :bin, :created, :accepted, :canceled, :verified]
   translate_enum :status
 
   def self.set_company(company)
@@ -35,7 +35,8 @@ class Project < ApplicationRecord
           ["Terminé", 2, {status: "done"}],
           ["Facturé", 3, {status: "invoiced"}],
           ["Payé", 4, {status: "paid"}],
-          ["Corbeille", 5, {status: "bin"}]
+          ["Corbeille", 5, {status: "bin"}],
+          ["Vérifié", 8, {status: "verified"}]
     end
   end
 
@@ -51,7 +52,8 @@ class Project < ApplicationRecord
           ["Terminé", "done", {status: "done"}],
           ["Facturé", "invoiced", {status: "invoiced"}],
           ["Payé", "paid", {status: "paid"}],
-          ["Corbeille", "bin", {status: "bin"}]
+          ["Corbeille", "bin", {status: "bin"}],
+          ["Vérifié", "verified", {status: "verified"}]
     end
   end
 

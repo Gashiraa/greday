@@ -1,5 +1,9 @@
 @import "semantic-ui";
 
+body {
+  color: black !important;
+}
+
 .pdf {
   line-height: 1.7rem;
   min-height: 100%;
@@ -75,13 +79,13 @@
         }
       }
     }
-  }
-
-  .customer-infos {
-    font-size: 1.4rem;
-    position: absolute;
-    left: 400px;
-    top: 120px;
+    .customer-infos {
+      font-size: 1.4rem;
+      position: absolute;
+      left: 400px;
+      top: 120px;
+      max-width: 350px;
+    }
   }
 
   .content {
@@ -129,7 +133,9 @@
       position: absolute;
       width: 100%;
       font-size: 0.7rem;
-
+      p {
+        text-align: center;
+      }
       h4 {
         font-size: 0.9rem;
         text-align: center;
@@ -251,5 +257,33 @@
         }
       }
     }
+  }
+}
+
+.label {
+  b {
+    font-size: 1.4em;
+  }
+  i {
+    font-size: 1.2em;
+  }
+  table {
+    margin-top: 0.6em;
+    border: 1px solid black;
+    width: 90%;
+  }
+  .project-id {
+    font-weight: bold;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    position: absolute;
+    font-size: 1.3em;
+    transform: rotate(-180deg);
+    right: 0.2em;
+  }
+  img {
+    position: absolute;
+    right: 2.5em;
+    top: 0;
   }
 }

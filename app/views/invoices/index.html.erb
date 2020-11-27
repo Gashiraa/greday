@@ -40,7 +40,7 @@
           </h5>
           <div id="hideable-field">
             <h3>
-              <%= (number_with_precision @invoices.collect { |w| w.valid? ? w.total_gross : 0 }.sum.to_s, :precision => 2) %> €
+              <%= @total %> €
             </h3>
             <%= link_to invoices_path(q: params[:q]&.to_unsafe_h, format: :pdf), class: 'ui blue compact button', id:'invoice-recap-button' do %>
               <i class="file pdf icon"></i> Voir le récap

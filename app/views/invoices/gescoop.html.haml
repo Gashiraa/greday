@@ -44,6 +44,7 @@
         = @invoice.customer.country
         %br/
         = "TVA : " + @invoice.customer.tva_record
+        = @size
   .content
     - if @size > 15 && @one_project == false
       %h3 Récapitulatif de la facture
@@ -273,9 +274,9 @@
               %br
               = "Communication à mentionner sur votre virement"
               \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
-            %p
+            %p.center.aligned
               = t('invoice_notice')
-        - elsif  @size <= 35
+        - elsif  @size <= 45
           .payment-notes.far-bottom-notes.avoidbreak
             %h4
               = t('invoice_account') + @company.account

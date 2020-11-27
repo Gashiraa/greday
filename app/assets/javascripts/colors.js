@@ -68,6 +68,11 @@ function assignColor(status) {
                 return "green"; //GREEN
             case 'quotation' :
                 return "teal"; //TEAL
+            case 'emailed' :
+            case 'mailed' :
+                return "olive"; //OLIVE
+            case 'verified' :
+                return "violet"
             default:
         }
     }

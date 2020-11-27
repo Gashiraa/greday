@@ -18,7 +18,6 @@ $(document).on("turbolinks:load", function () {
         width: '100%',
         selectOnClose: true,
         language: $('.locale').data('locale'),
-        matcher: matchStart
     });
 
     $("#customer_form_name").select2({
@@ -138,6 +137,7 @@ $(document).on("turbolinks:load", function () {
         });
     });
 
+    //Désactivé pour le moment
     function matchStart(params, data) {
         params.term = params.term || '';
         table = data.text.split(" ");

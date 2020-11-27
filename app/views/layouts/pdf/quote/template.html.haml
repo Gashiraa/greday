@@ -57,92 +57,89 @@
             = t('applicant') + " : "
             %b
               = @project.applicant
-      - if @project.services.any?
-        .avoidbreak
-          %h4
-            = t('services').pluralize
-          %table.ui.unstackable.black.celled.striped.table
-            - if @project.services_recap
-              %thead
-                %tr
-                  %th.nine.wide= t('Name')
-                  %th.two.wide.center.aligned= t('duration')
-                  %th.two.wide.right.aligned= t('tva_rate')
-                  %th.three.wide.right.aligned= t('total_gross')
-              %tbody
-                %tr
-                  %td= @project.services_recap_text
-                  %td.center.aligned= @project.services.where(is_displacement: [nil, false]).sum(:duration).to_s.chop.chop.chop
-                  %td.right.aligned= "21%"
-                  %td.right.aligned= number_to_currency((@project.services.where(is_displacement: [nil, false]).sum(:total_gross)), locale: :fr)
-                - if @project.services.where(is_displacement: true).any?
-                  %tr
-                    %td= @project.displacement_recap
-                    %td.center.aligned= @project.services.where(is_displacement: true).sum(:duration).to_s.chop.chop.chop
-                    %td.right.aligned= "21%"
-                    %td.right.aligned= number_to_currency((@project.services.where(is_displacement:true).sum(:total_gross)), locale: :fr)
-              %tfoot
-                %tr
-                  %th.right.aligned{colspan: 3}
-                    %b= "TOTAL"
-                  %th.right.aligned
-                    %b= number_to_currency(( @project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
-            - else
-              %thead
-                %tr
-                  %th.seven.wide= t('Name')
-                  %th.one.wide.center.aligned= t('duration')
-                  %th.three.wide.right.aligned= t('hourly_rate')
-                  %th.two.wide.right.aligned= t('tva_rate')
-                  %th.three.wide.right.aligned= t('total_gross')
-              %tbody
-                - @project.services.order(:position).each do |service|
-                  %tr
-                    %td= service.name
-                    %td.center.aligned= service.duration.strftime('%H:%M')
-                    %td.right.aligned= number_to_currency((service.hourly_rate), locale: :fr)
-                    %td.right.aligned= (number_with_precision service.tva_rate, :precision => 0).to_s&.+('%')
-                    %td.right.aligned= number_to_currency((service.total_gross), locale: :fr)
-                  - if service.show_desc_quote
-                    %tr
-                      %td{colspan: "5"}
-                        = simple_format(service.comment)
-              %tfoot
-                %tr
-                  %th.right.aligned{colspan: 4}
-                    %b= "TOTAL"
-                  %th.right.aligned
-                    %b= number_to_currency(( @project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
-    - if @project.wares.any?
-      .avoidbreak
-        %h4
-          = t('wares').pluralize
-        %table.ui.unstackable.black.celled.striped.table
+    - if @project.services.any?
+      %h4
+        = t('services').pluralize
+      %table.ui.unstackable.black.celled.striped.table
+        - if @project.services_recap
           %thead
             %tr
-              %th.seven.wide= t('ware_name')
-              %th.one.wide.center.aligned= t('quantity')
-              %th.three.wide.right.aligned= t('sell_price')
+              %th.nine.wide= t('Name')
+              %th.two.wide.center.aligned= t('duration')
               %th.two.wide.right.aligned= t('tva_rate')
               %th.three.wide.right.aligned= t('total_gross')
           %tbody
-            - @project.wares.order(:position).each do |ware|
+            %tr
+              %td= @project.services_recap_text
+              %td.center.aligned= @project.services.where(is_displacement: [nil, false]).sum(:duration).to_s.chop.chop.chop
+              %td.right.aligned= "21%"
+              %td.right.aligned= number_to_currency((@project.services.where(is_displacement: [nil, false]).sum(:total_gross)), locale: :fr)
+            - if @project.services.where(is_displacement: true).any?
               %tr
-                %td= ware.ware_name
-                %td.center.aligned= number_with_precision(ware.quantity, strip_insignificant_zeros: true).to_s
-                %td.right.aligned= number_to_currency((ware.sell_price), locale: :fr)
-                %td.right.aligned= (number_with_precision ware.tva_rate, :precision => 0).to_s&.+('%')
-                %td.right.aligned= number_to_currency((ware.total_gross), locale: :fr)
-              - if ware.show_desc_quot
-                %tr
-                  %td{colspan: "5"}
-                    = simple_format(ware.comment)
+                %td= @project.displacement_recap
+                %td.center.aligned= @project.services.where(is_displacement: true).sum(:duration).to_s.chop.chop.chop
+                %td.right.aligned= "21%"
+                %td.right.aligned= number_to_currency((@project.services.where(is_displacement:true).sum(:total_gross)), locale: :fr)
           %tfoot
             %tr
-              %th.right.aligned{colspan: 4}
+              %th.right.aligned{colspan: 3}
                 %b= "TOTAL"
               %th.right.aligned
-                %b= number_to_currency( (@project.wares.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+                %b= number_to_currency(( @project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+        - else
+          %thead
+            %tr
+              %th.seven.wide= t('Name')
+              %th.one.wide.center.aligned= t('duration')
+              %th.three.wide.right.aligned= t('hourly_rate')
+              %th.two.wide.right.aligned= t('tva_rate')
+              %th.three.wide.right.aligned= t('total_gross')
+          %tbody
+            - @project.services.order(:position).each do |service|
+              %tr
+                %td= service.name
+                %td.center.aligned= service.duration.strftime('%H:%M')
+                %td.right.aligned= number_to_currency((service.hourly_rate), locale: :fr)
+                %td.right.aligned= (number_with_precision service.tva_rate, :precision => 0).to_s&.+('%')
+                %td.right.aligned= number_to_currency((service.total_gross), locale: :fr)
+              - if service.show_desc_quote
+                %tr
+                  %td{colspan: "5"}
+                    = simple_format(service.comment)
+            %tr
+              %td.right.aligned{colspan: 4}
+                %b= "TOTAL"
+              %td.right.aligned
+                %b= number_to_currency(( @project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+    - if @project.wares.any?
+      %h4
+        = t('wares').pluralize
+      %table.ui.unstackable.black.celled.striped.table
+        %thead
+          %tr
+            %th.seven.wide= t('ware_name')
+            %th.one.wide.center.aligned= t('quantity')
+            %th.three.wide.right.aligned= t('sell_price')
+            %th.two.wide.right.aligned= t('tva_rate')
+            %th.three.wide.right.aligned= t('total_gross')
+        %tbody
+          - @project.wares.order(:position).each do |ware|
+            %tr
+              %td= ware.ware_name
+              %td.center.aligned= number_with_precision(ware.quantity, strip_insignificant_zeros: true).to_s
+              %td.right.aligned= number_to_currency((ware.sell_price), locale: :fr)
+              %td.right.aligned= (number_with_precision ware.tva_rate, :precision => 0).to_s&.+('%')
+              %td.right.aligned= number_to_currency((ware.total_gross), locale: :fr)
+            - if ware.show_desc_quot
+              %tr
+                %td{colspan: "5"}
+                  = simple_format(ware.comment)
+        %tfoot
+          %tr
+            %th.right.aligned{colspan: 4}
+              %b= "TOTAL"
+            %th.right.aligned
+              %b= number_to_currency( (@project.wares.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
     - if @project.project_extra_lines.any?
       .avoidbreak
         %h4

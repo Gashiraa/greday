@@ -32,6 +32,11 @@ class ProjectsController < ApplicationController
   def show
     @project = scope.find(params[:id])
 
+    if params[:method] == 'label'
+      print_label
+      return true
+    end
+
     if @company.use_machines
       @machine = @project.machine
     end
@@ -53,7 +58,6 @@ class ProjectsController < ApplicationController
                layout: 'pdf/layout',
                orientation: 'Portrait',
                encoding: 'utf8',
-               lowquality: true,
                show_as_html: params.key?('debug'),
                zoom: 1,
                dpi: 75,
@@ -83,6 +87,25 @@ class ProjectsController < ApplicationController
                        template: 'layouts/pdf/quote/plusview_footer.html.erb'
                    },
                }
+      end
+    end
+  end
+
+  def print_label
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: t('quotation') + "_#{@project.id}",
+               page_size: nil,
+               page_height: '3.6cm',
+               page_width:  '8.9cm',
+               template: 'layouts/pdf/label/template.html.haml',
+               layout: 'pdf/layout',
+               orientation: 'Portrait',
+               encoding: 'utf8',
+               :margin => {:bottom => 4, :top => 4, :left => 4, :right => 4},
+               show_as_html: params.key?('debug'),
+               dpi: 300
       end
     end
   end

@@ -14,7 +14,6 @@ $(document).on("turbolinks:load", function () {
         $("#project_machine_id > option").each(function () {
             if (this.getAttribute("customer") === customer) {
                 this.style.display = "block";
-                // $('#project_machine_id').val(this.value);
             } else {
                 if (this.value !== "") {
                     this.style.display = "none";
@@ -28,6 +27,7 @@ $(document).on("turbolinks:load", function () {
     $('#project_form_customer').trigger({
         type: 'select2:select'
     });
+    $("#project_machine_id").val($('#project-machine-id').data('somedata'));
 
     //adds/removes the line when checkbox is toggled
     $("#project_no_vat").change(function() {

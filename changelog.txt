@@ -1,9 +1,46 @@
-                                                    --QUESTIONS--
+----GREDAY----
 
-Note de crédit à revoir
+    ✓ Utiliser du vrai noir partout sur les factures
+    ✓ Modifier recherche, certains résultats n'apparaissent pas
+    ✓ Total facturé dans projet ne prend que la page en cours en compte
+    ✓ Recherche des projets par numéro de projet
+    ✓ Titre projet doit être plus large dans la facture
+    ✓ Prévoir CG en annexe et ajouter formule en bas de facture
+    ✓ Revoir le calcul du pied de page dans la facture
+    ✓ Bug ouverture de formulaire (pas signalé par vous)
+    ✓ Bug ouverture de certains formulaire (décalé, en double...)
+    ✓ Inverser unité/quantité des extras dans le projet
+    ✓ Aligner les statuts dans le projet
+    ✓ Edition projet avec machine, la machine n'était plus séléctionnée
+    ✓ Edition des divers ne séléctionne pas le bon divers
+    ✓ Pouvoir dupliquer machine et copier les marchandises d'entretien et huiles
+    ✓ Toujours enlever les espaces au début des références à copier/coller
+    ✓ Afficher adresse mail et téléphone du client dans fiche client
+    ✓ Agrandir encart TVA sur facture A CHECKER
+    ✓ Réduire encart titre projet sur facture
+    ✓ Ajouter prix unitaire de la marchandise
+    ✓ Ajouter un nouveau statut "Vérifié" au projet
+    ✓ Ajouter un nouveau statut "Envoyée par mail", "Envoyée par la poste"
+    ✓ Compatibilité étiqueteuse
+
+Inclure des numéros de TVA avec espaces
+Ouvrir dossier sur OneDrive depuis projet
+
 ________________________________________________________________________________________________________________________
+
+----DENIS RASSEL----
+Contacter, demander ses excels, préciser anonymat et chiffrer une proposition
+
+----JEROME FRAINEUX----
+Contacter, demander sa solution en place, fixer un RDV pour démo
+
+________________________________________________________________________________________________________________________
+
                                                     --A FAIRE--
 MAGASIN
+Appliquer le click sur le bouton entier au lieu du texte uniquement
+HMTL markup dans textarea, voir si c'est possible
+
 ________________________________________________________________________________________________________________________
 --24/08--
 MARCHANDISES

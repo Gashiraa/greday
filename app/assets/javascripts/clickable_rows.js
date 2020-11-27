@@ -1,7 +1,9 @@
 $(document).on("turbolinks:load", function () {
 
-    //clickable rows (remote true) Not used ATM
-    $("tr[data-link]").click(function () {
+    //clickable rows (remote true)
+    $("[data-link]").off();
+    $("[data-link]").click(function (event) {
+        console.log(event)
         if (event.target.tagName === "IMG" || event.target.classList.contains('no-link')) {
             return;
         }
@@ -22,7 +24,7 @@ $(document).on("turbolinks:load", function () {
     });
 
     //clickable invoice row
-    $("tr[data-invoice]").click(function () {
+    $("[data-invoice]").click(function () {
         let test = event;
         if (event.target.tagName === "A" || event.target.tagName === "IMG" || event.target.innerHTML === "Payé") {
             return
@@ -46,8 +48,9 @@ $(document).on("turbolinks:load", function () {
         window.location = $(this).data("machine")
     });
 
-    //clickable machine row
-    $("tr[data-oil] ").click(function () {
+    //clickable oil row
+    $("tr[data-oil]").off();
+    $("tr[data-oil] ").click(function (event) {
         if (event.target.tagName === "IMG") {
             return
         }

@@ -181,4 +181,5 @@ en:
   create_new_customer: "Create a new customer"
   invoice_notice: "The invoice total is payable within 8 days. All claims must be made by registered letter at the latest within 8 days following reception. In case of payment delay, a monthly interest of 1% is automatically due, plus an allowance equivalent to 15% of the amount of the invoice with a minimum of 50 euros, without warning or formal notice. For any and all disputes, the competent courts are only those of Liège."
   invoice_account: " All payments are to be made on the BNP Fortis account :"
+  emailed_project: "Envoyé (poste)"
 

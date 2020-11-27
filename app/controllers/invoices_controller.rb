@@ -11,7 +11,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       @search = Invoice.order(date: :desc).ransack(params[:q])
-      @total = @search.result(distinct: true)
+      @total = @search.result(distinct: true).sum(:total_gross)
       @invoices = @search.result(distinct: true).order(:status).paginate(page: params[:page], per_page: 30)
       format.pdf do
         @search = Invoice.order(date: :asc).ransack(params[:q])
@@ -87,6 +87,7 @@ class InvoicesController < ApplicationController
                layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
+               dpi: 300,
                :margin => {:bottom => 20, :top => 15, :left => 15, :right => 15},
                footer: {
                    html: {
