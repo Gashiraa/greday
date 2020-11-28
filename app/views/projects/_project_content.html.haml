@@ -203,9 +203,10 @@
     %table.ui.striped.selectable.yellow.compact.table.table-to-color
       %thead
         %tr
-          %th.seven.wide= t('Name')
-          %th.one.wide.right.aligned= t('quantity')
+          %th.four.wide= t('Name')
           %th.two.wide.right.aligned= t('unit')
+          %th.two.wide.right.aligned= t('quantity')
+          %th.two.wide.right.aligned= t('sell_price')
           %th.two.wide.right.aligned
             = t('total_gross')
             (€)
@@ -223,9 +224,11 @@
               %td
                 = project_extra_line.manual_name
               %td.right.aligned
+                = project_extra_line.unit
+              %td.right.aligned
                 = project_extra_line.quantity
               %td.right.aligned
-                = project_extra_line.unit
+                = number_with_precision project_extra_line.manual_price, :precision => 2
               %td.right.aligned
                 = number_with_precision project_extra_line.total_gross, :precision => 2
               %td.right.aligned
@@ -240,9 +243,11 @@
               %td
                 = project_extra_line.extra.name
               %td.right.aligned
+                = project_extra_line.extra.unit
+              %td.right.aligned
                 = project_extra_line.quantity
               %td.right.aligned
-                = project_extra_line.extra.unit
+                = number_with_precision project_extra_line.extra.unit_price, :precision => 2
               %td.right.aligned
                 = number_with_precision project_extra_line.total_gross, :precision => 2
               %td.right.aligned

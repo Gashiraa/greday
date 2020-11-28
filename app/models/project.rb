@@ -83,4 +83,8 @@ class Project < ApplicationRecord
     end
   end
 
+  def customer_name
+    customer.name
+  end
+
 end

@@ -1,5 +1,25 @@
-----GREDAY----
+________________________________________________________________________________________________________________________
 
+                                                    --A FAIRE--
+
+----GREDAY----
+Inclure des numéros de TVA avec espaces
+Ouvrir dossier sur OneDrive depuis projet
+MAGASIN
+Appliquer le click sur le bouton entier au lieu du texte uniquement
+HMTL markup dans textarea, voir si c'est possible
+
+----PLUSVIEW----
+
+
+----DENIS RASSEL----
+Contacter, demander ses excels, préciser anonymat et chiffrer une proposition
+
+----JEROME FRAINEUX----
+Contacter, demander sa solution en place, fixer un RDV pour démo
+
+________________________________________________________________________________________________________________________
+--28/11--
     ✓ Utiliser du vrai noir partout sur les factures
     ✓ Modifier recherche, certains résultats n'apparaissent pas
     ✓ Total facturé dans projet ne prend que la page en cours en compte
@@ -22,27 +42,9 @@
     ✓ Ajouter un nouveau statut "Vérifié" au projet
     ✓ Ajouter un nouveau statut "Envoyée par mail", "Envoyée par la poste"
     ✓ Compatibilité étiqueteuse
-
-Inclure des numéros de TVA avec espaces
-Ouvrir dossier sur OneDrive depuis projet
-
-________________________________________________________________________________________________________________________
-
-----DENIS RASSEL----
-Contacter, demander ses excels, préciser anonymat et chiffrer une proposition
-
-----JEROME FRAINEUX----
-Contacter, demander sa solution en place, fixer un RDV pour démo
-
-________________________________________________________________________________________________________________________
-
-                                                    --A FAIRE--
-MAGASIN
-Appliquer le click sur le bouton entier au lieu du texte uniquement
-HMTL markup dans textarea, voir si c'est possible
-
 ________________________________________________________________________________________________________________________
 --24/08--
+
 MARCHANDISES
     ✓ Ajouter des champs de référence pour les marchandises de maintenance
 MACHINES
