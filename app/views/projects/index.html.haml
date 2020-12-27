@@ -62,7 +62,7 @@
             = link_to project.customer ? project.customer.name : nil, "/projects?&q%5Bcustomer_id_eq%5D="+project.customer&.id.to_s
           %td= project.name
           = tag.td class: "description-cell", data: {content: project.description} do
-            = project.description.truncate(165)
+            = project.description&.truncate(165)
           %td.center.aligned= project.date ? l(project.date) : ""
           = tag.td class: 'center aligned status-cell', status: project.status do
             %div

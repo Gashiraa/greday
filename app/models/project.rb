@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-
   include TranslateEnum
 
   belongs_to :customer, optional: true
@@ -16,7 +15,7 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :machine
 
-  enum status: [:quotation, :in_progress, :done, :invoiced, :paid, :bin, :created, :accepted, :canceled, :verified]
+  enum status: %i[quotation in_progress done invoiced paid bin created accepted canceled verified]
   translate_enum :status
 
   def self.set_company(company)
@@ -24,56 +23,54 @@ class Project < ApplicationRecord
   end
 
   def self.status_for_sort
-    if @company == "Plusview"
-      options = ["Créé", 6, {status: "created"}],
-          ["Accepté", 7, {status: "accepted"}],
-          ["Facturé", 3, {status: "invoiced"}],
-          ["Corbeille", 5, {status: "bin"}]
-    else
-      options = ["Devis", 0, {status: "quotation"}],
-          ["En réalisation", 1, {status: "in_progress"}],
-          ["Terminé", 2, {status: "done"}],
-          ["Facturé", 3, {status: "invoiced"}],
-          ["Payé", 4, {status: "paid"}],
-          ["Corbeille", 5, {status: "bin"}],
-          ["Vérifié", 8, {status: "verified"}]
-    end
+    options = if @company == 'Plusview'
+                [['Créé', 6, { status: 'created' }],
+                 ['Accepté', 7, { status: 'accepted' }],
+                 ['Facturé', 3, { status: 'invoiced' }],
+                 ['Corbeille', 5, { status: 'bin' }]]
+              else
+                [['Devis', 0, { status: 'quotation' }],
+                 ['En réalisation', 1, { status: 'in_progress' }],
+                 ['Terminé', 2, { status: 'done' }],
+                 ['Vérifié', 8, { status: 'verified' }],
+                 ['Facturé', 3, { status: 'invoiced' }],
+                 ['Payé', 4, { status: 'paid' }],
+                 ['Corbeille', 5, { status: 'bin' }]]
+              end
   end
 
   def self.status_for_form
-    if @company == "Plusview"
-      options = ["Créé", "created", {status: "created"}],
-          ["Accepté", "accepted", {status: "accepted"}],
-          ["Facturé", "invoiced", {status: "invoiced"}],
-          ["Corbeille", "bin", {status: "bin"}]
-    else
-      options = ["Devis", "quotation", {status: "quotation"}],
-          ["En réalisation", "in_progress", {status: "in_progress"}],
-          ["Terminé", "done", {status: "done"}],
-          ["Facturé", "invoiced", {status: "invoiced"}],
-          ["Payé", "paid", {status: "paid"}],
-          ["Corbeille", "bin", {status: "bin"}],
-          ["Vérifié", "verified", {status: "verified"}]
-    end
+    options = if @company == 'Plusview'
+                [['Créé', 'created', { status: 'created' }],
+                 ['Accepté', 'accepted', { status: 'accepted' }],
+                 ['Facturé', 'invoiced', { status: 'invoiced' }],
+                 ['Corbeille', 'bin', { status: 'bin' }]]
+              else
+                [['Devis', 'quotation', { status: 'quotation' }],
+                 ['En réalisation', 'in_progress', { status: 'in_progress' }],
+                 ['Terminé', 'done', { status: 'done' }],
+                 ['Vérifié', 'verified', { status: 'verified' }],
+                 ['Facturé', 'invoiced', { status: 'invoiced' }],
+                 ['Payé', 'paid', { status: 'paid' }],
+                 ['Corbeille', 'bin', { status: 'bin' }]]
+              end
   end
 
   def update_totals_project(project)
     project.update(total: get_total, total_gross: get_total_gross)
-    if project.total.nil?
-      project.update(total: 0, total_gross: 0)
-    end
+    project.update(total: 0, total_gross: 0) if project.total.nil?
   end
 
   def get_total
     wares.sum(:total_cost) +
-        services.sum(:total_cost) +
-        project_extra_lines.sum(:total)
+      services.sum(:total_cost) +
+      project_extra_lines.sum(:total)
   end
 
   def get_total_gross
     wares.sum(:total_gross) +
-        services.sum(:total_gross) +
-        project_extra_lines.sum(:total_gross)
+      services.sum(:total_gross) +
+      project_extra_lines.sum(:total_gross)
   end
 
   def update_statuses_projects_content(project)
@@ -86,5 +83,4 @@ class Project < ApplicationRecord
   def customer_name
     customer.name
   end
-
 end

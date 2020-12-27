@@ -2,24 +2,23 @@ ________________________________________________________________________________
 
                                                     --A FAIRE--
 
-----GREDAY----
+[GENERAL]
 Inclure des numéros de TVA avec espaces
-Ouvrir dossier sur OneDrive depuis projet
-MAGASIN
-Appliquer le click sur le bouton entier au lieu du texte uniquement
-HMTL markup dans textarea, voir si c'est possible
+Créér un script ahk pour ouvrir un dossier depuis projet
+Réfléchir à un modèle de magasin
+Réfléchir à importer du HMTL markup dans textarea
+Réfléchir à des changements de style
+Landing page
+Settings page
 
-----PLUSVIEW----
-
-
-----DENIS RASSEL----
+[DENIS RASSEL]
 Contacter, demander ses excels, préciser anonymat et chiffrer une proposition
 
-----JEROME FRAINEUX----
-Contacter, demander sa solution en place, fixer un RDV pour démo
-
 ________________________________________________________________________________________________________________________
---28/11--
+[--28/11--]
+    ✓ Filtrage par demandeur et affichage du prix unitaire des divers.
+________________________________________________________________________________________________________________________
+[--01/11--]
     ✓ Utiliser du vrai noir partout sur les factures
     ✓ Modifier recherche, certains résultats n'apparaissent pas
     ✓ Total facturé dans projet ne prend que la page en cours en compte
@@ -43,7 +42,7 @@ ________________________________________________________________________________
     ✓ Ajouter un nouveau statut "Envoyée par mail", "Envoyée par la poste"
     ✓ Compatibilité étiqueteuse
 ________________________________________________________________________________________________________________________
---24/08--
+[--24/08--]
 
 MARCHANDISES
     ✓ Ajouter des champs de référence pour les marchandises de maintenance
@@ -52,7 +51,7 @@ MACHINES
     ✓ Réparer anciennes machines
     ✓ listing marchandises d'entretien
 ________________________________________________________________________________________________________________________
---14/08--
+[--14/08--]
 Global
     ✓ Ajouter corbeille marchandises & prestations
 PROJET
@@ -83,7 +82,7 @@ PROJET
     ✓ Voir quantité marchandises sans zoom projet
     ✓ Aligner toutes les icones
 FACTURE
-    **A TESTER** Remonter l'encart d'adresse
+    ✓ Remonter l'encart d'adresse
 MACHINES
     ✓ Marchandise d'entretien disparait apres modification + ajouter corbeille
 DIVERS

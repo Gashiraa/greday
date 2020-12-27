@@ -59,7 +59,8 @@
     <tr>
       <td class="center aligned">
         <% if ware.project %>
-          <%= (link_to '#' + @company&.prefix ? display_id(ware.project.id) : ' #'+ware.project.id.to_s, project_path(ware.project.id), class: 'ui blue button') %>
+          <%= (link_to '#' + (@company&.prefix ? display_id(ware.project&.id) : ware.project&.id&.to_s),
+                       project_path(ware.project&.id), class: 'ui blue button') %>
         <% end %>
       </td>
       <td>

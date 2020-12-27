@@ -3,12 +3,8 @@
 Rails.application.routes.draw do
 
   resources :oils
-  devise_for :users, skip: [:registrations]
+  devise_for :users
 
-  as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    patch 'users' => 'devise/registrations#update', :as => 'user_registration'
-  end
 
   root to: 'projects#index'
 

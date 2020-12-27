@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ProjectsController < ApplicationController
-
   before_action :set_project, only: %i[show edit update destroy]
   before_action :set_company
   require 'date'
@@ -37,14 +36,15 @@ class ProjectsController < ApplicationController
       return true
     end
 
-    if @company.use_machines
-      @machine = @project.machine
-    end
+    @machine = @project.machine if @company.use_machines
 
-    if @company.mode == "Greday"
+    case @company.mode
+    when 'Greday'
       show_greday
-    elsif @company.mode == "Plusview"
+    when 'Plusview'
       show_plusview
+    else
+      # type code here
     end
   end
 
@@ -61,11 +61,11 @@ class ProjectsController < ApplicationController
                show_as_html: params.key?('debug'),
                zoom: 1,
                dpi: 75,
-               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
+               margin: { bottom: 23, top: 15, left: 15, right: 15 },
                footer: {
-                   html: {
-                       template: 'layouts/pdf/quote/greday_footer.html.erb'
-                   },
+                 html: {
+                   template: 'layouts/pdf/quote/greday_footer.html.erb'
+                 }
                }
       end
     end
@@ -75,17 +75,17 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: @company.name.downcase + "-devis" + @project.id.to_s,
+        render pdf: "#{@company.name.downcase}-devis#{@project.id}",
                page_size: 'A4',
                template: 'layouts/pdf/quote/template.html.haml',
                layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
+               margin: { bottom: 23, top: 15, left: 15, right: 15 },
                footer: {
-                   html: {
-                       template: 'layouts/pdf/quote/plusview_footer.html.erb'
-                   },
+                 html: {
+                   template: 'layouts/pdf/quote/plusview_footer.html.erb'
+                 }
                }
       end
     end
@@ -98,12 +98,12 @@ class ProjectsController < ApplicationController
         render pdf: t('quotation') + "_#{@project.id}",
                page_size: nil,
                page_height: '3.6cm',
-               page_width:  '8.9cm',
+               page_width: '8.9cm',
                template: 'layouts/pdf/label/template.html.haml',
                layout: 'pdf/layout',
                orientation: 'Portrait',
                encoding: 'utf8',
-               :margin => {:bottom => 4, :top => 4, :left => 4, :right => 4},
+               margin: { bottom: 4, top: 4, left: 4, right: 4 },
                show_as_html: params.key?('debug'),
                dpi: 300
       end
@@ -147,8 +147,7 @@ class ProjectsController < ApplicationController
   end
 
   # GET /projects/1/edit
-  def edit;
-  end
+  def edit; end
 
   # POST /projects
   # POST /projects.json
@@ -158,7 +157,7 @@ class ProjectsController < ApplicationController
       if @project.save
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
         @project.update_totals_project(@project)
-        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_add_success') }
+        format.html { redirect_to request.env['HTTP_REFERER'], notice: t('project_add_success') }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
@@ -174,7 +173,7 @@ class ProjectsController < ApplicationController
       if @project.update(project_params)
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
         @project.update_totals_project(@project)
-        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
+        format.html { redirect_to request.env['HTTP_REFERER'], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }
@@ -188,7 +187,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_destroy_success') }
+      format.html { redirect_to request.env['HTTP_REFERER'], notice: t('project_destroy_success') }
       format.json { head :no_content }
     end
   end
@@ -197,7 +196,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.update(status: 5)
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
-        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
+        format.html { redirect_to request.env['HTTP_REFERER'], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }
@@ -216,9 +215,9 @@ class ProjectsController < ApplicationController
   private
 
   def set_cache_headers
-    response.headers["Cache-Control"] = "no-cache, no-store"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = Time.now
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = Time.now
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -234,5 +233,4 @@ class ProjectsController < ApplicationController
                                     :description, :no_vat, :machine_id, :po, :applicant,
                                     :comment, :services_recap, :services_recap_text, :displacement_recap, :machine_history)
   end
-
 end

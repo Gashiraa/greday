@@ -183,12 +183,12 @@ class InvoicesController < ApplicationController
 
   def get_next_invoice_number
 
-    max_number = Invoice.maximum("display_number") || 0
-    for i in 200013..max_number
-      if Invoice.exists?(display_number: i)
-        next
-      else
+    max_number = Invoice.maximum("display_number") || @company.fiscal_year
+    for i in @company.fiscal_year..max_number
+      if !Invoice.exists?(display_number: i)
         return i
+      else
+        next
       end
     end
     return 1 + max_number
