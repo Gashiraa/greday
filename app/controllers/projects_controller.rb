@@ -231,6 +231,7 @@ class ProjectsController < ApplicationController
                                     :name, :status, :wielding, :machining,
                                     :karcher, :total, :total_gross, :date,
                                     :description, :no_vat, :machine_id, :po, :applicant,
-                                    :comment, :services_recap, :services_recap_text, :displacement_recap, :machine_history)
+                                    :comment, :services_recap, :services_recap_text, :displacement_recap,
+                                    :machine_history, :hide_services_hours)
   end
 end

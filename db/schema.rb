@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_02_111058) do
+ActiveRecord::Schema.define(version: 2021_01_02_140029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(version: 2021_01_02_111058) do
     t.text "services_recap_text"
     t.text "displacement_recap"
     t.integer "machine_history"
+    t.boolean "hide_services_hours", default: false
     t.index ["customer_id"], name: "index_projects_on_customer_id"
     t.index ["invoice_id"], name: "index_projects_on_invoice_id"
     t.index ["machine_id"], name: "index_projects_on_machine_id"
