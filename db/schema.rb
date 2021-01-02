@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_09_173310) do
+ActiveRecord::Schema.define(version: 2021_01_02_111058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,9 @@ ActiveRecord::Schema.define(version: 2020_12_09_173310) do
     t.string "prefix"
     t.string "autocomplete"
     t.integer "fiscal_year"
+    t.boolean "no_logo", default: false
+    t.boolean "complete_logo", default: false
+    t.boolean "use_partial_invoice", default: false
   end
 
   create_table "customers", force: :cascade do |t|
@@ -128,6 +131,18 @@ ActiveRecord::Schema.define(version: 2020_12_09_173310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["machine_id"], name: "index_oils_on_machine_id"
+  end
+
+  create_table "partial_invoices", force: :cascade do |t|
+    t.bigint "invoice_id"
+    t.bigint "project_id"
+    t.float "amount"
+    t.float "pct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "comment"
+    t.index ["invoice_id"], name: "index_partial_invoices_on_invoice_id"
+    t.index ["project_id"], name: "index_partial_invoices_on_project_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -266,6 +281,8 @@ ActiveRecord::Schema.define(version: 2020_12_09_173310) do
   add_foreign_key "machine_histories", "machines"
   add_foreign_key "machines", "customers"
   add_foreign_key "oils", "machines"
+  add_foreign_key "partial_invoices", "invoices"
+  add_foreign_key "partial_invoices", "projects"
   add_foreign_key "payments", "customers"
   add_foreign_key "project_extra_lines", "extras"
   add_foreign_key "project_extra_lines", "projects"

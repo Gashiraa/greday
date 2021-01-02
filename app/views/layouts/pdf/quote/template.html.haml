@@ -2,12 +2,12 @@
   %table.header
     %tr.company-infos
       %td
-        -if @company.short_name == "AGO Tech"
+        -if @company.complete_logo
           %div.ago-logo
             = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
         -else
           %div.normal-logo
-            -if @company.short_name != "Guinot" && @company.short_name != "Jardin d'Eben"
+            -unless @company.no_logo
               = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
           %br/
           = @company.name

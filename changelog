@@ -3,7 +3,6 @@ ________________________________________________________________________________
                                                     --A FAIRE--
 
 [GENERAL]
-Inclure des numéros de TVA avec espaces
 Créér un script ahk pour ouvrir un dossier depuis projet
 Réfléchir à un modèle de magasin
 Réfléchir à importer du HMTL markup dans textarea
@@ -14,6 +13,10 @@ Settings page
 [DENIS RASSEL]
 Contacter, demander ses excels, préciser anonymat et chiffrer une proposition
 
+________________________________________________________________________________________________________________________
+[--27/12--]
+    ✓ Inclure des numéros de TVA avec espaces
+    ✓ Révision de la mise en page des clients
 ________________________________________________________________________________________________________________________
 [--28/11--]
     ✓ Filtrage par demandeur et affichage du prix unitaire des divers.

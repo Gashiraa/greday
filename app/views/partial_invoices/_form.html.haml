@@ -1,0 +1,25 @@
+.close
+  %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+= form_with(model: @partial_invoice, local: true, html: { autocomplete: @company.autocomplete }) do |form|
+  .ui.form
+    %h2.centered
+      - if @partial_invoice.id
+        = t('editing_partial_invoice')
+      - else
+        = t('creating_partial_invoice')
+    .two.fields
+      .field
+        = form.label t('figures')+' (€)'
+        = form.text_field :amount
+      .field
+        = form.label t('tva_rate')
+        = form.text_field :pct, value: 21
+        = form.hidden_field(:project_id, value: params[:project])
+    .field
+      = form.label t('comment').pluralize
+      = form.text_area :comment, value: @partial_invoice.comment || "Facture d'acompte pour le devis " + display_id(params[:project]), class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+    .field.centered
+      = form.submit t('create'), :class => "ui green button", onclick: "setTimeout(function(){location.reload()}, 3000);", formtarget: @partial_invoice.id ? "" : "_blank"
+    - if @partial_invoice.id
+      .field.centered
+        = link_to t("delete_partial_invoice"), partial_invoice_path(project: @project), :method => :delete, :remote => true, class: 'ui purple button'

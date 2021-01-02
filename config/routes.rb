@@ -5,13 +5,11 @@ Rails.application.routes.draw do
   resources :oils
   devise_for :users
 
-
   root to: 'projects#index'
 
   get 'wares/list' => 'wares#list', as: :list
   get 'wares/specific_list' => 'wares#specific_list', as: :specific_list
   get 'wares/maintenance_list' => 'wares#maintenance_list', as: :maintenance_list
-
 
   get 'services/list' => 'services#list', as: :services_list
 
@@ -39,6 +37,7 @@ Rails.application.routes.draw do
   resources :expense_accounts
   resources :machines
   resources :companies
+  resources :partial_invoices
 
   get '/change_locale', to: 'application#change_locale', as: :change_locale
 

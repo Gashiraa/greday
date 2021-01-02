@@ -1,0 +1,36 @@
+.close
+  %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+= form_with(model: @invoice, local: true, html: {autocomplete: @company.autocomplete}) do |form|
+  .ui.form
+    %h2.centered
+      - if @invoice.id
+        = t('editing_invoice')
+      - else
+        = t('creating_invoice')
+    .four.fields
+      - if @company.use_manual_invoice_number
+        .field
+          = form.label t('invoice_number')
+          = form.collection_select :display_number, Invoice.all.order(display_number: :desc), :display_number, :display_number, {:include_blank => true}, {required: true, class: 'form-control', id: 'invoice_form_number'}
+      .field
+        = form.label t('customer')
+        = form.collection_select :customer_id , Customer.all, :id, :name, {:include_blank => true}, {required: true, class: 'form-control', id: 'invoice_form_customer'}
+      .field
+        = form.label t('status')
+        = form.select(:status, Invoice.translated_statuses.map { |status| [status[0], status[1]] }, {}, {class: 'form-control'})
+      .field
+        = form.label t('date_locale')
+        .picker-container
+          = form.text_field :date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", value: @invoice.date ? l(@invoice.date) : Time.zone.now.to_date.strftime("%d/%m/%Y"), autocomplete: 'off', id: "dateProject", class: "form-control"
+    - if @company.oto_invoice == false
+      .field
+        = form.label t('projects_done').pluralize
+        - if @invoice.id
+          = form.select(:project_ids, Project.where(status: :done).or(Project.where(status: :verified)).or(Project.where(invoice_id: @invoice.id)).collect { |project| [project.name + ' (' + display_id(project.id) + ')', project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', :multiple => true})
+        - else
+          = form.select(:project_ids, Project.where(status: :done).or(Project.where(status: :verified)).collect { |project| [project.name, project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', :multiple => true})
+    - else
+      - unless @invoice.partial_invoice
+        = form.hidden_field :project_ids, :value => params[:project] || @invoice.projects.first.id
+    .field.centered
+      = form.submit t('create'), :class => "ui green button", onclick: "setTimeout(function(){location.reload()}, 3000);", formtarget: params[:project] ? "_blank" : ""

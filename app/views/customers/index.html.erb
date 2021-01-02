@@ -26,28 +26,25 @@
 <table class="ui striped selectable brown table table-to-color">
   <thead class=thead-dark>
   <tr>
-    <th class="three wide">
+    <th class="two wide">
       <%= sort_link(@search, :name, t('customer_name')) %>
     </th>
-    <th class="three wide">
+    <th class="two wide">
       <%= sort_link(@search, :mail, t('mail')) %>
     </th>
-    <th class="one wide">
+    <th class="two wide">
       <%= sort_link(@search, :tva_record, t('tva_record')) %>
     </th>
-    <th class="one wide">
+    <th class="two wide">
       <%= sort_link(@search, :phone_number, t('phone_number')) %>
     </th>
     <th class="three wide">
       <%= sort_link(@search, :street, t('street')) %>
     </th>
     <th class="one wide">
-      <%= sort_link(@search, :number, t('num')) %>
-    </th>
-    <th class="one wide">
       <%= sort_link(@search, :cp, t('zip')) %>
     </th>
-    <th class="one wide">
+    <th class="two wide">
       <%= sort_link(@search, :locality, t('locality')) %>
     </th>
     <th class="one wide">
@@ -69,8 +66,7 @@
       <td><%= customer.mail %></td>
       <td><%= customer.tva_record %></td>
       <td><%= customer.phone_number %></td>
-      <td><%= customer.street %></td>
-      <td><%= customer.number %></td>
+      <td><%= customer.street + ", " + customer.number %></td>
       <td><%= customer.cp %></td>
       <td><%= customer.locality %></td>
       <td><%= customer.country %></td>

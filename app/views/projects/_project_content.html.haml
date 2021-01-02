@@ -94,11 +94,11 @@
         %th.two.wide
           %h3
             = t('ware').pluralize.capitalize
-        %th.ten.wide
+        %th.thirteen.wide
           = link_to(new_ware_path(model: "ware", remote: true), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
             %button.ui.violet.compact.icon.button
               %i.plus.icon
-        %th.four.wide
+        %th.one.wide
           =link_to({controller: :wares, action: :list, project: @project.id, remote: true}) do
             %button#wares-modal.edit-card-button.ui.compact.icon.violet.button
               %i.expand.icon

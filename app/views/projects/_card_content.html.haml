@@ -38,6 +38,11 @@
       %h4
         = t('project_total') + ' : ' + (number_with_precision @project.total, :precision => 2).to_s + ' €'
   = link_to "Dupliquer le projet", {id: @project.id, action: :duplicate, controller: :projects, :method => :get}, {class: "ui bottom attached olive button card-button"}
+  - if @company.use_partial_invoice
+    - unless @project.partial_invoice
+      = link_to "Créér facture d'acompte", new_partial_invoice_path(project: @project), :method => :get, :remote => true, class: 'ui bottom attached purple button'
+    - else
+      = link_to "Editer facture d'acompte", edit_partial_invoice_path(@project.partial_invoice, project: @project), :method => :get, :remote => true, class: 'ui bottom attached purple button'
   = link_to project_path(@project, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom attached teal button" do
     %i.file.pdf.icon
     Voir le devis

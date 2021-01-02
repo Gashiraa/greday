@@ -3,13 +3,13 @@
   %table.header
     %tr.company-infos
       %td
-        -if @company.short_name == "AGO Tech"
+        -if @company.complete_logo
           %div.ago-logo
             = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
             %br/
         -else
           %div.normal-logo
-            -if @company.short_name != "Guinot" && @company.short_name != "Jardin d'Eben"
+            -unless @company.no_logo
               = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
           = @company.name
           %br/
@@ -232,10 +232,46 @@
                     %b= "TOTAL"
                   %th.right.aligned
                     %b= number_to_currency( (project.project_extra_lines.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+        - if @company.use_partial_invoice
+          - if project.partial_invoice
+            .avoidbreak
+              %h4
+                =t("partial_invoice")
+              %table.ui.unstackable.black.celled.striped.table
+                %thead
+                  %tr
+                    %th.nine.wide= t('project_title')
+                    %th.two.wide.center.aligned= t('date_locale')
+                    %th.two.wide.right.aligned= t('tva_rate')
+                    %th.three.wide.right.aligned= t('total_gross')
+                %tbody
+                  %tr
+                    %td= project.partial_invoice.comment
+                    %td.center.aligned= l( project.partial_invoice.invoice.date).to_s
+                    %td.right.aligned= (number_with_precision project.partial_invoice.pct, :precision => 0).to_s&.+('%')
+                    %td.right.aligned= "-"+number_to_currency((project.partial_invoice.amount), locale: :fr)
         %br
         - if project.comment
           .project-comment
             = project.comment
+    - if @company.use_partial_invoice
+      - if @invoice.partial_invoice
+        .avoidbreak
+          %h4
+            =t("partial_invoice")
+          %table.ui.unstackable.black.celled.striped.table
+            %thead
+              %tr
+                %th.nine.wide= t('project_title')
+                %th.two.wide.center.aligned= t('date_locale')
+                %th.two.wide.right.aligned= t('tva_rate')
+                %th.three.wide.right.aligned= t('total_gross')
+            %tbody
+              %tr
+                %td= @invoice.partial_invoice.comment
+                %td.center.aligned= l( @invoice.partial_invoice.invoice.date).to_s
+                %td.right.aligned= (number_with_precision @invoice.partial_invoice.pct, :precision => 0).to_s&.+('%')
+                %td.right.aligned= number_to_currency((@invoice.partial_invoice.amount), locale: :fr)
     - if @size <= 15 || @one_project == true
       %table
         %tr

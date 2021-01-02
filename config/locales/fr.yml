@@ -92,6 +92,17 @@ fr:
   extra_update_success: Divers mis à jour
   extra_delete_success: Divers supprimé
 
+  invoice_add_success: Facture ajoutée
+  invoice_update_success: Facture mise à jour
+  invoice_destroy_success: Facture supprimée
+
+  partial_invoice_add_success: Facture d'acompte ajoutée
+  partial_invoice_update_success: Facture d'acompte mise à jour
+  partial_invoice_destroy_success: Facture d'acompte supprimée
+  delete_partial_invoice : Supprimer la facture d'acompte
+  partial_invoice: Facture d'acompte
+
+
   create: Valider
   will_paginate:
     previous_label: Précedent
@@ -443,3 +454,6 @@ fr:
   emailed_project: "Envoyé (email)"
   mailed_project: "Envoyé (poste)"
   verify_project: "Vérifier projet"
+  editing_partial_invoice: "Edition facture d'acompte"
+  creating_partial_invoice: "Création facture d'acompte"
+  figures: "Montant"

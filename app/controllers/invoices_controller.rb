@@ -116,7 +116,7 @@ class InvoicesController < ApplicationController
       if @invoice.save
         @invoice.update_statuses_invoice(@invoice, @company.short_name)
         @invoice.update_totals_invoice(@invoice, @invoice.projects)
-        format.html { redirect_to invoice_path(@invoice.id, :format => :pdf), notice: 'Invoice was successfully created.' }
+        format.html { redirect_to invoice_path(@invoice.id, :format => :pdf), notice: t('invoice_add_success')}
       else
         format.html { render :new }
       end
@@ -130,7 +130,7 @@ class InvoicesController < ApplicationController
       if @invoice.update(invoice_params)
         @invoice.update_statuses_invoice(@invoice, @company.short_name)
         @invoice.update_totals_invoice(@invoice, @invoice.projects)
-        format.html { redirect_to invoices_url, notice: 'Invoice was successfully updated.' }
+        format.html { redirect_to invoices_url, notice: t('invoice_update_success')}
         format.json { render :show, status: :ok, location: @invoice }
       else
         format.html { render :edit }
@@ -145,7 +145,7 @@ class InvoicesController < ApplicationController
     @invoice.update_invoice_content_on_destroy(@invoice, @company.short_name)
     @invoice.destroy
     respond_to do |format|
-      format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
+      format.html { redirect_to invoices_url, notice: t('invoice_destroy_success') }
       format.json { head :no_content }
     end
   end
@@ -179,19 +179,6 @@ class InvoicesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def invoice_params
     params.require(:invoice).permit(:payment_id, :date, :status, :total, :display_number, :customer_id, :project_ids, project_ids: [])
-  end
-
-  def get_next_invoice_number
-
-    max_number = Invoice.maximum("display_number") || @company.fiscal_year
-    for i in @company.fiscal_year..max_number
-      if !Invoice.exists?(display_number: i)
-        return i
-      else
-        next
-      end
-    end
-    return 1 + max_number
   end
 
 end

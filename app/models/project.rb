@@ -13,6 +13,8 @@ class Project < ApplicationRecord
   has_many :project_extra_lines, dependent: :nullify
   has_many :extra, through: :project_extra_lines
 
+  has_one :partial_invoice, dependent: :nullify
+
   accepts_nested_attributes_for :machine
 
   enum status: %i[quotation in_progress done invoiced paid bin created accepted canceled verified]
