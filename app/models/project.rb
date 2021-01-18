@@ -34,7 +34,7 @@ class Project < ApplicationRecord
                 [['Devis', 0, { status: 'quotation' }],
                  ['En réalisation', 1, { status: 'in_progress' }],
                  ['Terminé', 2, { status: 'done' }],
-                 ['Vérifié', 8, { status: 'verified' }],
+                 ['Vérifié', 9, { status: 'verified' }],
                  ['Facturé', 3, { status: 'invoiced' }],
                  ['Payé', 4, { status: 'paid' }],
                  ['Corbeille', 5, { status: 'bin' }]]

@@ -11,7 +11,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       @search = Invoice.order(date: :desc).ransack(params[:q])
-      @total = @search.result(distinct: true).sum(:total_gross)
+      @total = @search.result.sum(:total_gross)
       @invoices = @search.result(distinct: true).order(:status).paginate(page: params[:page], per_page: 30)
       format.pdf do
         @search = Invoice.order(date: :asc).ransack(params[:q])
@@ -22,11 +22,11 @@ class InvoicesController < ApplicationController
                layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: false,
-               margin: {:bottom => 15, :top => 15, :left => 15, :right => 15},
+               margin: { bottom: 15, top: 15, left: 15, right: 15 },
                footer: {
-                   html: {
-                       template: 'layouts/pdf/report/footer.html.erb'
-                   },
+                 html: {
+                   template: 'layouts/pdf/report/footer.html.erb'
+                 }
                }
       end
     end
@@ -50,10 +50,13 @@ class InvoicesController < ApplicationController
       @tva_amounts.push(@invoice.get_tva_amounts(tva_rate, @invoice))
     end
     # show_gescoop
-    if @company.mode == "Greday"
+    case @company.mode
+    when 'Greday'
       show_greday
-    elsif @company.mode == "Plusview"
+    when 'Plusview'
       show_gescoop
+    else
+      # type code here
     end
   end
 
@@ -61,17 +64,17 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: @company.name.downcase + "-facture" + @invoice.display_number.to_s,
+        render pdf: "#{@company.name.downcase}-facture#{@invoice.display_number}",
                page_size: 'A4',
                template: 'layouts/pdf/invoice/template.html.haml',
                layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
-               :margin => {:bottom => 23, :top => 15, :left => 15, :right => 15},
+               margin: { bottom: 23, top: 15, left: 15, right: 15 },
                footer: {
-                   html: {
-                       template: 'layouts/pdf/invoice/plusview_footer.html.erb'
-                   },
+                 html: {
+                   template: 'layouts/pdf/invoice/plusview_footer.html.erb'
+                 }
                }
       end
     end
@@ -88,11 +91,11 @@ class InvoicesController < ApplicationController
                encoding: 'utf8',
                show_as_html: params.key?('debug'),
                dpi: 300,
-               :margin => {:bottom => 20, :top => 15, :left => 15, :right => 15},
+               margin: { bottom: 20, top: 15, left: 15, right: 15 },
                footer: {
-                   html: {
-                       template: 'layouts/pdf/invoice/greday_footer.html.erb'
-                   },
+                 html: {
+                   template: 'layouts/pdf/invoice/greday_footer.html.erb'
+                 }
                }
       end
     end
@@ -109,14 +112,12 @@ class InvoicesController < ApplicationController
   # POST /invoices.json
   def create
     @invoice = Invoice.new(invoice_params)
-    if @company.use_manual_invoice_number == false
-      @invoice.display_number = get_next_invoice_number
-    end
+    @invoice.display_number = get_next_invoice_number if @company.use_manual_invoice_number == false
     respond_to do |format|
       if @invoice.save
         @invoice.update_statuses_invoice(@invoice, @company.short_name)
         @invoice.update_totals_invoice(@invoice, @invoice.projects)
-        format.html { redirect_to invoice_path(@invoice.id, :format => :pdf), notice: t('invoice_add_success')}
+        format.html { redirect_to invoice_path(@invoice.id, format: :pdf), notice: t('invoice_add_success') }
       else
         format.html { render :new }
       end
@@ -130,7 +131,7 @@ class InvoicesController < ApplicationController
       if @invoice.update(invoice_params)
         @invoice.update_statuses_invoice(@invoice, @company.short_name)
         @invoice.update_totals_invoice(@invoice, @invoice.projects)
-        format.html { redirect_to invoices_url, notice: t('invoice_update_success')}
+        format.html { redirect_to invoices_url, notice: t('invoice_update_success') }
         format.json { render :show, status: :ok, location: @invoice }
       else
         format.html { render :edit }
@@ -154,7 +155,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.update(status: 1)
         @invoice.update_statuses_invoice(@invoice, @company.short_name)
-        format.html { redirect_to request.env["HTTP_REFERER"], notice: t('project_update_success') }
+        format.html { redirect_to request.env['HTTP_REFERER'], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @invoice }
       else
         format.html { render :edit }
@@ -166,9 +167,9 @@ class InvoicesController < ApplicationController
   private
 
   def set_cache_headers
-    response.headers["Cache-Control"] = "no-cache, no-store"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = Time.now
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = Time.now
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -180,5 +181,4 @@ class InvoicesController < ApplicationController
   def invoice_params
     params.require(:invoice).permit(:payment_id, :date, :status, :total, :display_number, :customer_id, :project_ids, project_ids: [])
   end
-
 end

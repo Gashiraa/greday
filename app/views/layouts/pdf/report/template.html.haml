@@ -21,7 +21,7 @@
         %br/
         = t("invoices_amount") + @invoices.length.to_s
         %br/
-        = t("total_amount") + (number_with_precision @invoices.collect { |w| w.valid? ? w.total_gross : 0 }.sum.to_s, :precision => 2) + "€"
+        = t("total_amount") + (number_with_precision @invoices.collect { |invoice| invoice.total_gross }.sum.to_s, :precision => 2) + "€"
   .content
     %table.ui.unstackable.black.celled.striped.table
       %thead
@@ -65,7 +65,7 @@
         %td
           = "TOTAL (€)"
         %td.right.aligned
-          = number_with_precision  @invoices.collect { |w| w.valid? ? w.total_gross : 0 }.sum, :precision => 2
+          = number_with_precision  @invoices.collect { |invoice| invoice.total_gross }.sum, :precision => 2
         %td.right.aligned
-          = number_with_precision  @invoices.collect { |w| w.valid? ? w.total : 0 }.sum, :precision => 2
+          = number_with_precision  @invoices.collect { |invoice| invoice.total }.sum, :precision => 2
 
