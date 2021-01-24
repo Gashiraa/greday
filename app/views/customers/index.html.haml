@@ -1,0 +1,59 @@
+= search_form_for @search do |form|
+  .ui.top.attached.segment
+    .ui.form
+      .fields
+        .two.wide.field.add-button-container
+          = link_to t('create_new_customer'), new_customer_path, {class: 'ui brown button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}
+        .two.wide.field
+          = form.label t('Name')
+          = form.select :name_eq, Customer.pluck(:name), {:include_blank => t('all_customer_names')}, {class: 'form-control', id: 'customer_form_name', onchange: 'this.form.submit();'}
+        .two.wide.field
+          = form.label t('locality')
+          = form.select :locality_eq, Customer.distinct.order(:locality).pluck(:locality), {:include_blank => t('all_customer_localities')}, {class: 'form-control', id: 'customer_form_locality', onchange: 'this.form.submit();'}
+        .field.clear-filter
+          = link_to url_for + "?cancel_filter=true" do
+            %i.icons
+              %i.big.filter.icon
+              %i.large.red.times.icon
+%table.ui.striped.selectable.brown.attached.table.table-to-color
+  %thead.thead-dark
+    %tr
+      %th.two.wide
+        = sort_link(@search, :name, t('customer_name'))
+      %th.two.wide
+        = sort_link(@search, :mail, t('mail'))
+      %th.two.wide
+        = sort_link(@search, :tva_record, t('tva_record'))
+      %th.two.wide
+        = sort_link(@search, :phone_number, t('phone_number'))
+      %th.three.wide
+        = sort_link(@search, :street, t('street'))
+      %th.one.wide
+        = sort_link(@search, :cp, t('zip'))
+      %th.two.wide
+        = sort_link(@search, :locality, t('locality'))
+      %th.one.wide
+        = sort_link(@search, :country, t('country'))
+      %th.one.wide
+  %tbody
+    - unless @customers.any?
+      %tr
+        %td.center.aligned{colspan: "9"}= t('no_data_display')
+    - @customers.each do |customer|
+      %tr{"data-project" => "#{customer_path(customer)}"}
+        %td= customer.name
+        %td= customer.mail
+        %td= customer.tva_record
+        %td= customer.phone_number
+        %td= customer.street + ", " + customer.number
+        %td= customer.cp
+        %td= customer.locality
+        %td= customer.country
+        %td.center.aligned
+          = link_to edit_customer_path(customer), remote: true do
+            = image_tag("edit-icon.png", size: "30x30")
+          = link_to customer, method: :delete, data: {confirm: t('confirm_delete')} do
+            = image_tag("delete-icon.png", size: "30x30")
+= will_paginate @customers
+#modal-window.ui.modal
+  .content

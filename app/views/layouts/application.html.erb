@@ -16,8 +16,6 @@
 </head>
 
 <div class="ui <%= (@company&.use_credit_notes.to_i +
-    @company&.use_wares.to_i +
-    @company&.use_services.to_i +
     @company&.use_machines.to_i + 5).to_words %> item inverted attached menu">
 
   <% if current_user %>
@@ -34,17 +32,17 @@
       <%= t('invoices').capitalize %>
     </a>
 
-    <% if @company.use_wares %>
-      <a class="violet item" href="/wares">
-        <i class="large dolly flatbed icon"></i>
-        <%= t('wares').capitalize %> </a>
-    <% end %>
+    <%# if @company.use_wares %>
+<!--      <a class="violet item" href="/wares">-->
+<!--        <i class="large dolly flatbed icon"></i>-->
+<!--        <%= t('wares').capitalize %> </a>-->
+    <%# end %>
 
-    <% if @company.use_services %>
-      <a class="red item" href="/services">
-        <i class="large wrench icon"></i>
-        <%= t('services').capitalize %> </a>
-    <% end %>
+    <%# if @company.use_services %>
+<!--      <a class="red item" href="/services">-->
+<!--        <i class="large wrench icon"></i>-->
+<!--        <%= t('services').capitalize %> </a>-->
+    <%# end %>
 
     <a class="brown item" href="/customers">
       <i class="large address card icon"></i>

@@ -1,7 +1,8 @@
 @import "semantic-ui";
 
-body {
-  //height: calc(100% - 6rem);
+.content {
+  width: 98%;
+  margin: auto;
 }
 
 .scrollable-project-section {
@@ -15,15 +16,6 @@ body {
 
 #primary-content {
   margin-top: 4rem;
-}
-
-.clear-filter {
-  position: relative;
-
-  img {
-    position: absolute;
-    bottom: 0.8rem;
-  }
 }
 
 .references-table td {
@@ -109,9 +101,22 @@ img {
   }
 }
 
-.add-button {
-  margin: auto 0 !important;
+.add-button-container {
   text-align: center;
+  margin: auto 0 !important;
+}
+
+.clear-filter {
+  margin: auto 0 !important;
+}
+
+
+.invoice-report-total {
+  text-align: center;
+  margin: auto 0 !important;
+  h3 {
+    margin-top: 0.3rem;
+  }
 }
 
 .centered {
@@ -134,17 +139,6 @@ img {
 .bold {
   font-size: 1.1rem;
   font-weight: bold;
-}
-
-.invoice-report-total {
-  position: absolute;
-  text-align: center;
-  right: 0;
-
-  h3 {
-    text-align: center;
-    margin-top: 0.3rem;
-  }
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {

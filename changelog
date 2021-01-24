@@ -9,10 +9,18 @@ Réfléchir à importer du HMTL markup dans textarea
 Réfléchir à des changements de style
 Landing page
 Settings page
+Habiller création de compte
+Habiller création d'utilisateur
+Mot de passe oublié par email
+Masquer TVA dans facture si particulier
+Variable nom de banque
 
 [DENIS RASSEL]
 Contacter, demander ses excels, préciser anonymat et chiffrer une proposition
-
+________________________________________________________________________________________________________________________
+[--03/01--]
+    ✓ Masquer les heures de prestation (normal et résumé)
+    ✓ Factures d'acompte
 ________________________________________________________________________________________________________________________
 [--27/12--]
     ✓ Inclure des numéros de TVA avec espaces

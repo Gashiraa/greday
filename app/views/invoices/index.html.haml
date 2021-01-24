@@ -1,0 +1,89 @@
+= search_form_for @search do |form|
+  .ui.top.attached.segment
+    .ui.form
+      .fields
+        .two.wide.field.add-button-container
+          = link_to t('create_new_invoice'), new_invoice_path, {class: 'ui olive button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}
+        .two.wide.field
+          = form.label t('project')
+          = form.collection_select :id_eq, Project.all, :id, :name, {:include_blank => t('all_projects')}, {class: 'form-control', id: 'project_sort', onchange: 'this.form.submit();'}
+        .two.wide.field
+          = form.label t('customer')
+          = form.collection_select :customer_id_eq, Customer.all, :id, :name, {:include_blank => t('all_customers')}, {class: 'form-control', id: 'customer_sort', onchange: 'this.form.submit();'}
+        .two.wide.field
+          = form.label t('status')
+          = form.select :status_eq, Invoice.statuses.map { |status| [t(status[0]), status[1].to_i, {status: status[0]}] }, {:include_blank => t('all_status')}, {class: 'form-control', id: 'status_sort_select', onchange: 'this.form.submit();'}
+        .two.wide.field
+          = form.label t('from')
+          .picker-container
+            = form.text_field :date_gteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectFrom", class: "form-control", onchange: 'this.form.submit();'
+        .two.wide.field
+          = form.label t('to')
+          .picker-container
+            = form.text_field :date_lteq, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", autocomplete: 'off', id: "sortProjectTo", class: "form-control", onchange: 'this.form.submit();'
+        .two.wide.field.clear-filter
+          = link_to url_for + "?cancel_filter=true" do
+            %i.icons
+              %i.big.filter.icon
+              %i.large.red.times.icon
+        .two.wide.field.invoice-report-total
+          %h5.ui.small.green.button{onclick: "showHidden();"}
+            = t('total_invoiced')
+          = link_to invoices_path(q: params[:q]&.to_unsafe_h, format: :pdf), class: 'ui blue compact button', id:'invoice-recap-button' do
+            %i.file.pdf.icon
+            Voir le récap
+          %h3#hideable-field
+            = @total
+            €
+%table.ui.striped.selectable.olive.table.attached.table-to-color
+  %thead.thead-dark
+    %tr
+      %th.two.wide.center.aligned
+        = sort_link(@search, :display_number, t('invoice_number'))
+      %th.three.wide
+        = sort_link(@search, :customer_id, t('customer'))
+      %th.three.wide.center.aligned
+        = sort_link(@search, :date, t('date_locale'))
+      %th.two.wide.center.aligned
+        = sort_link(@search, :status, t('status'))
+      %th.one.wide.right.aligned
+        = sort_link(@search, :total_gross, t('gross_cost').to_s + ' (€)')
+      %th.one.wide.right.aligned
+        = sort_link(@search, :total, t('total').to_s + ' (€)')
+      %th.two.wide
+  %tbody
+    - unless @invoices.any?
+      %tr
+        %td.center.aligned{colspan: "9"}= t('no_data_display')
+    - @invoices.each do |invoice|
+      %tr{"data-invoice" => "#{invoice_path(invoice)}.pdf", "data-target" => "_blank"}
+        %td.center.aligned
+          = link_to(invoice_path(invoice.id, :format => :pdf), {class: 'ui olive compact button', target: "_blank"}) do
+            %i.file.alternate.icon
+            = display_invoice_id(invoice.display_number)
+        %td
+          = invoice.customer ? invoice.customer.name : ''
+        %td.center.aligned
+          = l(invoice.date)
+        = tag.td class: 'center aligned status-cell', status: invoice.status do
+          %div
+            .visible.content
+              = invoice.translated_status
+            - if invoice.status == "created"
+              .hidden.content
+                = link_to "Payé", invoice_path(invoice, invoice: {status: :paid}), method: :put
+        %td.right.aligned
+          = number_with_precision invoice.total_gross, :precision => 2
+        %td.right.aligned
+          = number_with_precision invoice.total, :precision => 2
+        %td.center.aligned
+          = link_to edit_invoice_path(invoice), remote: true do
+            = image_tag("edit-icon.png", size: "30x30")
+          = link_to image_tag("pdf-icon.png", size: "30x30"), invoice_path(invoice.id, :format => :pdf), target: "_blank"
+          = link_to invoice, method: :delete, data: {confirm: t('confirm_delete')} do
+            = image_tag("delete-icon.png", size: "30x30")
+%br/
+.flickr_pagination
+  = will_paginate @invoices
+#modal-window.ui.modal
+  .content
