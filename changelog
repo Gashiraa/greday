@@ -3,20 +3,66 @@ ________________________________________________________________________________
                                                     --A FAIRE--
 
 [GENERAL]
-Créér un script ahk pour ouvrir un dossier depuis projet
-Réfléchir à un modèle de magasin
+
+    [FACTURE]
+    Variable nom de banque
+    Toujours afficher un récapitulatif sur les factures si plus de deux pages (SI PIED DE PAGE CUSTOM)
+    Virer total tva dans recapitulatif
+    Activer les factures d'acompte pour AGO Techniques
+    Montrer le numéro du projet dans la liste des projets terminés à facturer
+    Supprimer le lien facture-client ou vérouiller le champ client dans le formulaire à partir d'un projet
+    Changer exercice AGO pour 2021
+    Reformater commentaire sur facture et devis et ajouter un padding
+    Total couleur orange facture
+    Essais d'autre mises en page sur une facture
+    Sous-total des projets avec TVA HT TTC
+    Masquer TVA dans facture si particulier
+
+    [PROJET]
+    Vérifier ecartement encart cards et content dans le projet
+    Changer l'intitulé du devis avec le bon matricule (matricule_client_intitulé)
+    Ajouter filtre par nom de projet
+    Voir comment mieux filtrer correctement sur les clients/statut
+    Retrier les statuts dans le bon ordre
+    Créér un statut "sans suite" qui n'apparaît que sur le filtre
+    Passer les projets à 2021 et convertir ceux déjà créé en 2021
+    Récapitulatif de projet comme récapitulatif de factures
+
+    [MACHINE]
+    Filtrage par client sur machine déclenche le clic sur la ligne
+    Ajouter un champ "nom machine" pour les machines
+
+    [MAGASIN]
+    Prévoir marchandises de stock sous forme de magasin
+    Matériel de fixation -> vis -> vis métrique -> diamètre -> filet partiel
+
+    [CLIENT]
+    Sous-nom pour un client comme le demandeur
+    Voir ce qui se passe quand on supprime un client
+
+    [PRESTATIONS]
+    Pouvoir encoder des prestations de plus de 24h
+
+    [MARCHANDISE]
+    Pouvoir avoir une marchandises à prix négatif
+    Cocher afficher devis factures si input dans commentaires
+    Pouvoir se faire calculer une marge en fonction d'un prix de vente (activer/désactiver)
+
+    [DIVERS]
+    Mettre quantité par défaut à 0 dans les divers (highlight)
+    Revoir catégorie/divers
+
+    [RE-DEMANDER]
+    Quantité dans les divers déplacement
+
+[MINEUR]
 Réfléchir à importer du HMTL markup dans textarea
 Réfléchir à des changements de style
-Landing page
-Settings page
 Habiller création de compte
 Habiller création d'utilisateur
 Mot de passe oublié par email
-Masquer TVA dans facture si particulier
-Variable nom de banque
-
-[DENIS RASSEL]
-Contacter, demander ses excels, préciser anonymat et chiffrer une proposition
+Landing page
+Settings page
 ________________________________________________________________________________________________________________________
 [--03/01--]
     ✓ Masquer les heures de prestation (normal et résumé)
