@@ -67,7 +67,7 @@
                 = image_tag("edit-icon.png", size: "30x30")
               = link_to ware_path(ware, modal: true), method: :delete, data: {confirm: t('confirm_delete'), remote: true} do
                 = image_tag("delete-icon.png", size: "30x30")
-        - @wares.where("total_gross > 0").order(:position).each do |ware|
+        - @wares.where("total_gross != 0").order(:position).each do |ware|
           %tr{"data-link" => "#{edit_ware_path(ware, modal: true)}", id: dom_id(ware)}
             %td
               = ware.ware_name

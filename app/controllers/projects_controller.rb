@@ -52,7 +52,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: t('quotation') + "_#{@project.id}",
+        render pdf: "#{display_quote_id(@project.id)}_#{@project.customer.name.upcase.tr(' ', '_')}_#{@project.name.upcase.tr(' ', '_')}",
                page_size: 'A4',
                template: 'layouts/pdf/quote/template.html.haml',
                layout: 'pdf/layout',

@@ -17,7 +17,9 @@ $(document).on("turbolinks:load", function () {
 
     //clickable project row
     $("tr[data-project]").click(function () {
-        if (event.target.tagName === "A" || event.target.tagName === "IMG" || event.target.innerHTML === "Accepté") {
+        console.log(event.target.innerHTML)
+        if (event.target.tagName === "A" || event.target.tagName === "IMG" || event.target.innerHTML === "Accepté" ||
+            event.target.innerHTML.indexOf("status_eq") >= 0) {
             return
         }
         window.location = $(this).data("project")
@@ -42,7 +44,7 @@ $(document).on("turbolinks:load", function () {
 
     //clickable machine row
     $(".card[data-machine],tr[data-machine] ").click(function () {
-        if (event.target.tagName === "IMG") {
+        if (event.target.tagName === "IMG" || event.target.tagName === "A")  {
             return
         }
         window.location = $(this).data("machine")

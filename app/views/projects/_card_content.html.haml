@@ -17,11 +17,12 @@
           = image_tag("edit-icon.png", size: "20x20")
       %br/
       = l(@project.date)
-    .description
-      = @project.description
-      %br/
-    .description
-      - if @project.no_vat
+    -if @project.description != ''
+      .description
+        = @project.description
+        %br/
+    - if @project.no_vat
+      .description
         %b Pas de TVA
       %br/
   .content.center.aligned
@@ -37,37 +38,37 @@
         = t('project_total_gross') + ' : ' + (number_with_precision @project.total_gross, :precision => 2).to_s + ' €'
       %h4
         = t('project_total') + ' : ' + (number_with_precision @project.total, :precision => 2).to_s + ' €'
-  = link_to "Dupliquer le projet", {id: @project.id, action: :duplicate, controller: :projects, :method => :get}, {class: "ui bottom attached olive button card-button"}
+  = link_to "Dupliquer le projet", {id: @project.id, action: :duplicate, controller: :projects, :method => :get}, {class: "ui bottom compact attached olive button card-button"}
   - if @company.use_partial_invoice
     - unless @project.partial_invoice
-      = link_to "Créér facture d'acompte", new_partial_invoice_path(project: @project), :method => :get, :remote => true, class: 'ui bottom attached purple button'
+      = link_to "Créér facture d'acompte", new_partial_invoice_path(project: @project), :method => :get, :remote => true, class: 'ui bottom compact attached purple button'
     - else
       = link_to "Editer facture d'acompte", edit_partial_invoice_path(@project.partial_invoice, project: @project), :method => :get, :remote => true, class: 'ui bottom attached purple button'
-  = link_to project_path(@project, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom attached teal button" do
+  = link_to project_path(@project, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom compact attached teal button" do
     %i.file.pdf.icon
     Voir le devis
     %br/
   - case @project.status
     - when "quotation"
-      = link_to t('switch_in_progress'), project_path(@project, project: {status: :in_progress}), method: :put, class: 'ui bottom attached orange button'
+      = link_to t('switch_in_progress'), project_path(@project, project: {status: :in_progress}), method: :put, class: 'ui bottom compact attached orange button'
     - when "in_progress"
-      = link_to t('do_done'), project_path(@project, project: {status: :done}), method: :put, class: 'ui bottom attached red button'
+      = link_to t('do_done'), project_path(@project, project: {status: :done}), method: :put, class: 'ui bottom compact attached red button'
     - when "created"
-      = link_to t('do_accepted'), project_path(@project, project: {status: :accepted}), method: :put, class: 'ui bottom attached red button card-button'
+      = link_to t('do_accepted'), project_path(@project, project: {status: :accepted}), method: :put, class: 'ui bottom compact attached red button card-button'
     - when "done"
       - if @company.mode == "Greday"
-        = link_to t('verify_project').capitalize, project_path(@project, project: {status: :verified}), method: :put, class: 'ui bottom attached violet button card-button'
-      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
+        = link_to t('verify_project').capitalize, project_path(@project, project: {status: :verified}), method: :put, class: 'ui bottom compact attached violet button card-button'
+      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom compact attached yellow button'
     - when "verified"
-      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
+      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom compact attached yellow button'
     - when "accepted"
-      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom attached yellow button'
+      = link_to t('invoice_project').capitalize, new_invoice_path(project: @project.id), :method => :get, :remote => true, class: 'ui bottom compact attached yellow button'
     - when "invoiced"
       - if @project.invoice
-        = link_to invoice_path(@project.invoice, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom attached yellow button", :target => "_blank" do
+        = link_to invoice_path(@project.invoice, :format => :pdf), :method => :get, form: {target: "_blank"}, class: "ui bottom compact attached yellow button", :target => "_blank" do
           %i.file.pdf.icon
           Voir la facture
-  = link_to(:projects, class: "ui top attached grey button") do
+  = link_to(:projects, class: "ui bottom compact attached grey button") do
     %i.left.arrow.icon
     =t('back')
 - if @project.machine_id

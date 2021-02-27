@@ -117,6 +117,7 @@ class MachinesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def machine_params
-      params.require(:machine).permit(:model, :brand, :year, :category, :comment, :oils_text,:customer_id, :isKm, :serial)
+      params.require(:machine).permit(:model, :brand, :year, :category, :comment, :oils_text,
+                                      :customer_id, :isKm, :serial, :subname)
     end
 end

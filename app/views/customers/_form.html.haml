@@ -1,0 +1,48 @@
+.close
+  %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+= form_with(model: @customer, local: true, html: {autocomplete: @company.autocomplete}) do |form|
+  %input{autocomplete: "false", name: "hidden", style: "display:none;", type: "text"}
+  .ui.form
+    %h2.centered
+      - if @customer.id
+        = t('editing_customers')
+      - else
+        = t('creating_customers')
+    .three.fields
+      .field
+        = form.label t('Name')
+        = form.text_field :name, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+      .field
+        = form.label t('subname')
+        = form.text_field :subname, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+      .field
+        = form.label t('mail')
+        = form.text_field :mail, class: "form-control"
+      .field
+        = form.label :tva_record, t('tva_record')
+        = form.text_field :tva_record, class: "form-control"
+    .three.fields
+      .field
+        = form.label t('phone_number')
+        = form.text_field :phone_number, class: "form-control"
+      .field
+        = form.label t('street')
+        = form.text_field :street, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+      .field
+        = form.label t('num')
+        = form.text_field :number, class: "form-control"
+    .three.fields
+      .field
+        = form.label t('zip')
+        = form.number_field :cp, class: "form-control"
+      .field
+        = form.label t('locality')
+        = form.text_field :locality, class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+      .field
+        = form.label t('country')
+        = form.text_field :country, value: @customer.country || "Belgique", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);"
+    .field
+      = form.label t('customer_rate')
+      = form.text_field :customer_rate, value: @customer.customer_rate || '45'
+    .field.centered
+      = form.submit t('create'), :class => "ui green button"

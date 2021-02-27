@@ -40,8 +40,19 @@ class ApplicationController < ActionController::Base
     if @company&.prefix
       id = id.to_s
       id.length < 5 ? id = id.rjust(4, '0') : ''
-      id = id.last(4)
-      "#{@company.prefix}P20#{id}"
+      id = id.last(6)
+      "#{@company.prefix}P#{id}"
+    else
+      id.to_s
+    end
+  end
+
+  def display_quote_id(id)
+    if @company&.prefix
+      id = id.to_s
+      id.length < 5 ? id = id.rjust(4, '0') : ''
+      id = id.last(6)
+      "D#{@company.prefix}#{id}"
     else
       id.to_s
     end

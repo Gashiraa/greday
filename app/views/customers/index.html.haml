@@ -45,7 +45,7 @@
         %td= customer.mail
         %td= customer.tva_record
         %td= customer.phone_number
-        %td= customer.street + ", " + customer.number
+        %td= [customer.street, customer.number].compact.join(', ')
         %td= customer.cp
         %td= customer.locality
         %td= customer.country

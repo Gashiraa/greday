@@ -13,7 +13,10 @@ $(document).on("turbolinks:load", function () {
         });
 
     $('.description-cell')
-        .popup();
+        .popup({
+            position: 'left center',
+            hoverable  : true,
+        });
 
     var text = {
         days: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],

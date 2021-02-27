@@ -61,7 +61,7 @@
             -#%td.center.aligned
             -#  = link_to edit_ware_path(ware, model: "machine"), remote: true do
             -#    = image_tag("edit-icon.png", size: "30x30")
-        - @specific_wares.where("total_gross > 0").order(:position).each do |ware|
+        - @specific_wares.where("total_gross != 0").order(:position).each do |ware|
           %tr
             %td
               = ware.ware_name

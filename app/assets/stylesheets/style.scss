@@ -1,12 +1,29 @@
 @import "semantic-ui";
 
-.content {
-  width: 98%;
-  margin: auto;
+body {
+  height: 94%;
+
+  .content {
+    width: 98%;
+    margin: auto;
+
+    .ui.attached.segment {
+      width: calc(100% + 1px);
+
+      .filters-section {
+        margin-bottom: 0 !important;
+      }
+    }
+
+    .partial-content {
+      margin-left: 2em;
+    }
+  }
 }
 
+
 .scrollable-project-section {
-  max-height: 25vh;
+  max-height: 24vh;
   overflow-y: auto;
 
   .ui.table {
@@ -49,7 +66,8 @@
 }
 
 .red-row {
-  background-color: #ffbaba;
+  background-color: #fce4e4;
+  color: #8f2f2d;
 }
 
 select {
@@ -203,4 +221,6 @@ img {
 
 .ui.table.total-section, .ui.table.total-section td {
   border: none;
+  margin-top: 0;
+  margin-bottom: 1em;
 }

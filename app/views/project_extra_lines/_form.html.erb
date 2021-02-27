@@ -7,7 +7,7 @@
   <%= form_for(@project_extra_line, html: {autocomplete: @company.autocomplete}) do |form| %>
     <div class="ui form">
 
-      <h2 class="centered">
+      <h2 class="centered" id="form-title">
         <% if @project_extra_line.id %>
           <%= t('editing_extra_line') %>
         <% else %>
@@ -80,7 +80,7 @@
   <%= form_for(@project_extra_line, html: {autocomplete: @company.autocomplete}) do |form| %>
     <div class="ui form">
 
-      <h2 class="centered">
+      <h2 class="centered" id="form-title">
         <% if @project_extra_line.id %>
           <%= t('editing_extra_line') %>
         <% else %>
@@ -117,7 +117,7 @@
 
         <div class="field">
           <%= form.label t('Quantity') %>
-          <%= form.number_field :quantity, step: :any, class: "form-control", id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1" %>
+          <%= form.number_field :quantity, step: :any, class: "form-control", id: 'extra_quantity', value: @project_extra_line.quantity ? @project_extra_line.quantity : "1", onclick: "this.select();" %>
         </div>
 
         <div class="field">

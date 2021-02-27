@@ -18,41 +18,45 @@
             %i.icons
               %i.big.filter.icon
               %i.large.red.times.icon
-%table.ui.striped.selectable.violet.attached.table.table-to-color
-  %thead.thead-dark
-    %tr
-      %th
-        = sort_link(@search, :customer, t('customer'))
-      %th
-        = sort_link(@search, :category, t('category'))
-      %th
-        = sort_link(@search, :project_id, t('model'))
-      %th
-        = sort_link(@search, :name, t('brand'))
-      %th.center.aligned
-        = sort_link(@search, :comment, t('year'))
-      %th.center.aligned
-  %tbody
-    - unless @machines.any?
+  %table.ui.striped.selectable.violet.attached.table.table-to-color
+    %thead.thead-dark
       %tr
-        %td.center.aligned{colspan: "10"}= t('no_data_display')
-    - @machines.order(created_at: :desc).each do |machine|
-      %tr{"data-machine" => "#{machine_path(machine)}"}
-        %td
-          = link_to (machine.customer ? machine.customer.name : ""), "/machines?&q%5Bcustomer_id_eq%5D=" + machine.customer&.id.to_s
-        %td
-          = machine.category
-        %td
-          = machine.model
-        %td
-          = machine.brand
-        %td.center.aligned
-          = machine.year
-        %td.center.aligned
-          = link_to edit_machine_path(machine), remote: true do
-            = image_tag("edit-icon.png", size: "30x30")
-          = link_to machine, method: :delete, data: {confirm: t('confirm_delete')} do
-            = image_tag("delete-icon.png", size: "30x30")
+        %th
+          = sort_link(@search, :customer, t('customer'))
+        %th
+          = sort_link(@search, :category, t('category'))
+        %th
+          = sort_link(@search, :project_id, t('model'))
+        %th
+          = sort_link(@search, :subname, t('subname'))
+        %th
+          = sort_link(@search, :name, t('brand'))
+        %th.center.aligned
+          = sort_link(@search, :comment, t('year'))
+        %th.center.aligned
+    %tbody
+      - unless @machines.any?
+        %tr
+          %td.center.aligned{colspan: "10"}= t('no_data_display')
+      - @machines.order(created_at: :desc).each do |machine|
+        %tr{"data-machine" => "#{machine_path(machine)}"}
+          %td
+            = link_to (machine.customer ? machine.customer.name : ""), 'javascript:void(0);', onclick: "$('#customer_sort').val(\"#{machine.customer&.id.to_s}\");$('#machine_search').submit();"
+          %td
+            = machine.category
+          %td
+            = machine.model
+          %td
+            = machine.subname
+          %td
+            = machine.brand
+          %td.center.aligned
+            = machine.year
+          %td.center.aligned
+            = link_to edit_machine_path(machine), remote: true do
+              = image_tag("edit-icon.png", size: "30x30")
+            = link_to machine, method: :delete, data: {confirm: t('confirm_delete')} do
+              = image_tag("delete-icon.png", size: "30x30")
 = will_paginate @machines
 #modal-window.ui.modal
   .content

@@ -27,7 +27,7 @@ $(document).on("turbolinks:load", function () {
             $('#extra_total_gross').trigger('mouseover');
         });
 
-        //Sort extras depending on selected category
+        //Filter extras depending on selected category
         $('#project_extra_line_id').on('load trigger change', function () {
             //check all extra options, hide ones not belonging to selected category
             let category = this.options[this.selectedIndex].text;
@@ -93,10 +93,13 @@ $(document).on("turbolinks:load", function () {
             });
             $('#project_extra_line_extra_id').val(extra);
         }
-
         if (document.getElementById("project_extra_line_extra_id")) {
             onFormOpen();
+            if ( $('#form-title').html().indexOf("Ajout divers") >= 0) {
+                $('#project_extra_line_id').trigger('change');
+            }
         }
+
         //auto-calculate once
     $('#project_extra_line_extra_id option').each(function () {
         if ($(this).css('display') != 'none') {

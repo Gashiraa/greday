@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_02_140029) do
+ActiveRecord::Schema.define(version: 2021_02_16_202724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2021_01_02_140029) do
     t.datetime "updated_at", null: false
     t.string "phone_number"
     t.float "customer_rate"
+    t.string "subname"
   end
 
   create_table "expense_accounts", force: :cascade do |t|
@@ -120,6 +121,7 @@ ActiveRecord::Schema.define(version: 2021_01_02_140029) do
     t.string "serial"
     t.text "oils_text"
     t.boolean "isKm"
+    t.string "subname"
     t.index ["customer_id"], name: "index_machines_on_customer_id"
   end
 

@@ -1,14 +1,21 @@
 .card
   .content
-    .header
+    .header.centered{style: "margin-bottom:0"}
       = @machine.brand + " " + @machine.model
-      = link_to edit_machine_path(@machine), remote: true do
-        %button.edit-card-button.ui.compact.icon.purple.button
-          %i.edit.icon
+  .ui.two.buttons
+    = button_tag class: "ui bottom attached purple button card-button", type: :button do
+      = link_to machines_path do
+        %i.arrow.left.icon
+        = "Retour"
+    = button_tag class: "ui bottom attached blue button card-button", type: :button, data: {link: edit_machine_path(@machine)} do
+      %i.edit.icon
+  .content
     .meta
       = @machine.category
       %br/
     .description
+      = @machine.subname ? @machine.subname : ""
+      %br/
       = @machine.customer ? @machine.customer.name : ""
       %br/
       = "Année : " + (@machine.year ? @machine.year : "")
@@ -18,12 +25,6 @@
   .content
     .description
       = @machine.comment
-  .content
-    .center.aligned
-      = link_to(machines_path) do
-        %button.ui.purple.compact.labeled.icon.button
-          Retour aux machines
-          %i.arrow.left.icon
   = link_to "Dupliquer la machine", {id: @machine.id, action: :duplicate, controller: :machines, :method => :get}, {class: "ui bottom attached olive button card-button"}
 
 .card

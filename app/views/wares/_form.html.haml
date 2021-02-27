@@ -52,7 +52,7 @@
         .three.fields
           .field
             = form.label t('project')
-            = form.select :project_id, Project.includes(:customer).all.map { |project| [project.name + ' - ' + project.customer&.name, project.id] }, {:include_blank => true}, {id: 'ware_form_project'}
+            = form.select :project_id, Project.includes(:customer).all.map { |project| [project.project_name_and_customer_name, project.id] }, {:include_blank => true}, {id: 'ware_form_project'}
           .field
             = form.label t('customer')
             = form.collection_select :customer_id, Customer.all, :id, :name, {:include_blank => true}, { id: 'ware_form_customer'}
@@ -74,11 +74,11 @@
             = form.label t('comment')
             = form.text_area :comment,  onkeyup: "javascript:capitalize(this.id, this.value);"
           .field
-            .ui.toggle.checkbox
+            .ui.toggle.checkbox.trigger-check
               = form.check_box :show_desc_quot, class: "form-check-input", id: "show_desc_quot"
               = form.label t('showInQuot'), class: "form-check-label", for: "show_desc_quot"
           .field
-            .ui.toggle.checkbox
+            .ui.toggle.checkbox.trigger-check
               = form.check_box :show_desc_invoice, class: "form-check-input", id: "show_desc_invoice"
               = form.label t('showInInv'), class: "form-check-label", for: "show_desc_invoice"
           .field
@@ -109,7 +109,7 @@
             = form.label t('sell_price')
             .ui.labeled.input
               %label.ui.red.label{for: "amount"} €
-              = form.text_field :sell_price, readonly: true, id: 'sell_price'
+              = form.text_field :sell_price, readonly: false, id: 'sell_price'
           .field
             = form.label t('margin')
             .ui.labeled.input

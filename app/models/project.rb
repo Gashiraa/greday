@@ -17,7 +17,7 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :machine
 
-  enum status: %i[quotation in_progress done invoiced paid bin created accepted canceled verified]
+  enum status: %i[quotation in_progress done verified invoiced paid bin created accepted dropped]
   translate_enum :status
 
   def self.set_company(company)
@@ -26,18 +26,19 @@ class Project < ApplicationRecord
 
   def self.status_for_sort
     options = if @company == 'Plusview'
-                [['Créé', 6, { status: 'created' }],
-                 ['Accepté', 7, { status: 'accepted' }],
-                 ['Facturé', 3, { status: 'invoiced' }],
-                 ['Corbeille', 5, { status: 'bin' }]]
+                [['Créé', 7, { status: 'created' }],
+                 ['Accepté', 8, { status: 'accepted' }],
+                 ['Facturé', 4, { status: 'invoiced' }],
+                 ['Corbeille', 6, { status: 'bin' }]]
               else
                 [['Devis', 0, { status: 'quotation' }],
                  ['En réalisation', 1, { status: 'in_progress' }],
                  ['Terminé', 2, { status: 'done' }],
-                 ['Vérifié', 9, { status: 'verified' }],
-                 ['Facturé', 3, { status: 'invoiced' }],
-                 ['Payé', 4, { status: 'paid' }],
-                 ['Corbeille', 5, { status: 'bin' }]]
+                 ['Vérifié', 3, { status: 'verified' }],
+                 ['Facturé', 4, { status: 'invoiced' }],
+                 ['Payé', 5, { status: 'paid' }],
+                 ['Corbeille', 6, { status: 'bin' }],
+                 ['Sans suite', 9, { status: 'dropped' }]]
               end
   end
 
@@ -54,7 +55,8 @@ class Project < ApplicationRecord
                  ['Vérifié', 'verified', { status: 'verified' }],
                  ['Facturé', 'invoiced', { status: 'invoiced' }],
                  ['Payé', 'paid', { status: 'paid' }],
-                 ['Corbeille', 'bin', { status: 'bin' }]]
+                 ['Corbeille', 'bin', { status: 'bin' }],
+                 ['Sans suite', 'dropped', { status: 'dropped' }]]
               end
   end
 
@@ -84,5 +86,17 @@ class Project < ApplicationRecord
 
   def customer_name
     customer.name
+  end
+
+  def name_and_id
+    "#{name} - #{id}"
+  end
+
+  def project_name_and_customer_name
+    if customer
+      "#{name} - #{customer&.name}"
+    else
+      name.to_s
+    end
   end
 end

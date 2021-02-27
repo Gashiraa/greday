@@ -84,7 +84,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: t('invoice') + "_#{@invoice.display_number}",
+        render pdf: "#{@invoice.display_number}_#{@invoice.customer.name.upcase.tr(' ', '_')}",
                page_size: 'A4',
                template: 'layouts/pdf/invoice/template.html.haml',
                layout: 'pdf/layout',

@@ -3,14 +3,13 @@
   .project-content
     .ui.left.rail
       .ui
-        .ui.cards
+        .ui.cards.card-content
           .card
-            .content
+            .content.centered
               .header
                 = @customer.name
-                = link_to edit_customer_path(@customer), remote: true do
-                  %button.edit-card-button.ui.compact.icon.brown.button
-                    %i.edit.icon
+            = link_to t('editing_customers'), edit_customer_path(@customer), remote: true, class: 'ui top attached brown button'
+            .content
               .meta
                 = @customer.mail
                 = @customer.phone_number
@@ -26,17 +25,14 @@
                 = @customer.country
                 %br/
                 = "Taux horaire : " + (@customer.customer_rate ? @customer.customer_rate.to_s : "")
-            .content
-              .center.aligned
-                = link_to(customers_path) do
-                  %button.ui.brown.compact.labeled.icon.button
-                    Retour aux clients
-                    %i.arrow.left.icon
-    .project-section
-      %h4
+            = link_to(:customers, class: "ui bottom attached grey button") do
+              %i.left.arrow.icon
+              =t('back')
+    .partial-content
+      %h3
         Machines du client
         = link_to(new_machine_path(customer: @customer.id), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do
-          %button.ui.purple.compact.labeled.icon.button
+          %button.ui.purple.compact.labeled.icon.button{style:"margin-left:1em"}
             Ajouter une machine
             %i.plus.icon
       %table.ui.striped.selectable.violet.table.table-to-color
@@ -71,7 +67,7 @@
                 = link_to machine, method: :delete, data: {confirm: t('confirm_delete')} do
                   = image_tag("delete-icon.png", size: "30x30")
       %table.ui.striped.selectable.blue.table.table-to-color
-        %h4 Projets du client
+        %h3 Projets du client
         %thead.thead-dark
           %tr
             %th.four.wide

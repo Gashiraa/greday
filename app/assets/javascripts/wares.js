@@ -37,7 +37,7 @@ $(document).on("turbolinks:load", function () {
         $('#provider_price').trigger('mouseover');
 
         //WARES TOTAL auto-complete
-        $('#provider_discount,#provider_price,#new_ware,#total_cost,#total_gross,#quantity,#bought_price,#tva_rate,#margin')
+        $('#provider_discount,#provider_price,#new_ware,#sell_price,#total_cost,#total_gross,#quantity,#bought_price,#tva_rate,#margin')
             .on('keyup keypress mouseover change', function () {
                 let total_cost = document.getElementById('total_cost');
                 let total_gross = document.getElementById('total_gross');
@@ -61,6 +61,15 @@ $(document).on("turbolinks:load", function () {
             $("#ware_form_project").val($('#project-id').data('somedata'));
             $('select[id="ware_form_project"]').trigger('change');
         }
+    $('#ware_comment')
+        .on('keyup keypress change', function () {
+            if ($('#ware_comment').val() !== '') {
+                $('.trigger-check').checkbox('check');
+            }
+            else {
+                $('.trigger-check').checkbox('uncheck');
+            }
+        });
     }
 );
 

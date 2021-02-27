@@ -81,6 +81,14 @@ $(document).on("turbolinks:load", function () {
                     duration4.value = pad2((Math.floor(durationMinutes / 60)));
                 }
             });
+    $('#service_comment')
+        .on('keyup keypress change', function () {
+            if ($('#service_comment').val() !== '') {
+                $('.trigger-check').checkbox('check');
+            } else {
+                $('.trigger-check').checkbox('uncheck');
+            }
+        });
     }
 );
 

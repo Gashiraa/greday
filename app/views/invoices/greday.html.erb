@@ -210,7 +210,7 @@
                     </tr>
                   <% end %>
                 <% end %>
-                <% project.wares.where("total_gross > 0").each do |ware| %>
+                <% project.wares.where("total_gross != 0").each do |ware| %>
                   <tr>
                     <td class="name-cell"><%= ware.ware_name %></td>
                     <td class="quantity-cell"><%= ware.quantity %></td>
