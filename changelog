@@ -5,24 +5,23 @@ ________________________________________________________________________________
 [GENERAL]
 
     [FACTURE]
-    Variable nom de banque
-    Toujours afficher un récapitulatif sur les factures si plus de deux pages (SI PIED DE PAGE CUSTOM)
-    Virer total tva dans recapitulatif
-    Activer les factures d'acompte pour AGO Techniques
-    Montrer le numéro du projet dans la liste des projets terminés à facturer
-    Reformater commentaire sur facture et devis et ajouter un padding
-    Total couleur orange facture
-    Essais d'autre mises en page sur une facture
-    Sous-total des projets avec TVA HT TTC
-    Masquer TVA dans facture si particulier
+    [DEMANDER] Essais d'autre mises en page sur une facture
+    [DEMANDER] Reformater commentaire sur facture et devis et ajouter un padding
+    [DEMANDER] Total couleur orange facture
+    [OK] Toujours afficher un récapitulatif sur les factures si plus de deux pages (SI PIED DE PAGE CUSTOM)
+    [OK] Sous-total des projets avec TVA HT TTC
+    [OK] Montrer le numéro du projet dans la liste des projets terminés à facturer
+    [OK] Virer total tva dans recapitulatif
+    [OK] Masquer TVA dans facture si particulier
+    [OK] Variable nom de banque
     [OK] Changer exercice AGO pour 2021
 
     [PROJET]
+    [OK] Récapitulatif de projet comme récapitulatif de factures
     [OK] Changer l'intitulé du devis avec le bon matricule (matricule_client_intitulé)
     [OK] Ajouter filtre par nom de projet
     [OK] Voir comment mieux filtrer correctement sur les clients/statut
     [OK] Créér un statut "sans suite" qui n'apparaît que sur le filtre
-    Récapitulatif de projet comme récapitulatif de factures
     [OK] Vérifier ecartement encart cards et content dans le projet
     [OK] Retrier les statuts dans le bon ordre
     [OK] Passer les projets à 2021 et convertir ceux déjà créé en 2021
@@ -40,7 +39,7 @@ ________________________________________________________________________________
     [OK] Voir ce qui se passe quand on supprime un client
 
     [PRESTATIONS]
-    [NON] Pouvoir encoder des prestations de plus de 24h
+    Pouvoir encoder des prestations de plus de 24h
 
     [MARCHANDISE]
     Pouvoir se faire calculer une marge en fonction d'un prix de vente (activer/désactiver)

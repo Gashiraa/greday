@@ -29,7 +29,11 @@
         .two.wide.field.invoice-report-total
           %h5.ui.small.green.button{onclick: "showHidden();"}
             = t('total_projects')
-            %h3#hideable-field
+          %div.hideable-field
+            = link_to projects_path(q: params[:q]&.to_unsafe_h, format: :pdf), class: 'ui blue compact button', id:'project-recap-button' do
+              %i.file.pdf.icon
+              Voir le récap
+            %h3
               = @total
               €
   %table.ui.striped.selectable.attached.table.table-to-color

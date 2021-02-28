@@ -39,14 +39,14 @@ $(document).on("turbolinks:load", function () {
 
 //hide/show some divs
 function showHidden() {
-    let element = document.getElementById("hideable-field");
-    if (element) {
-        if (element.style.display === "none" || element.style.display === "") {
-            element.style.display = "block"
-        } else {
-            element.style.display = "none"
+    $(".hideable-field").each(function() {
+        if ($(this).css("display") === '' || $(this).css("display") === 'none') {
+            $(this).css({'display':'block'})
         }
-    }
+        else {
+            $(this).css({'display':'none'})
+        }
+    })
 }
 
 function copyStringToClipboard(string) {

@@ -18,21 +18,19 @@ $(document).on("turbolinks:load", function () {
             hoverable  : true,
         });
 
-    var text = {
-        days: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-        months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
-        monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
-        today: 'Aujourd\'hui',
-        now: 'Maintenant',
-        am: 'AM',
-        pm: 'PM'
-    }
-
     $('#rangestart').calendar({
         type: 'date',
         firstDayOfWeek: 1,
         monthFirst: false,
-        text: text,
+        text: {
+            days: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+            monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Aujourd\'hui',
+            now: 'Maintenant',
+            am: 'AM',
+            pm: 'PM'
+        },
         formatter: {
             date: function (date, settings) {
                 if (!date) return '';
@@ -42,7 +40,7 @@ $(document).on("turbolinks:load", function () {
                 return ('0' + day).slice(-2) + '/' + ('0' + month).slice(-2) + '/' + year;
             }
         },
-        onChange: function(date, text, mode) {
+        onChange: function (date, text, mode) {
             $('#project_search').submit();
         }
     });
@@ -51,7 +49,15 @@ $(document).on("turbolinks:load", function () {
         type: 'date',
         firstDayOfWeek: 1,
         monthFirst: false,
-        text: text,
+        text: {
+            days: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+            monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Aujourd\'hui',
+            now: 'Maintenant',
+            am: 'AM',
+            pm: 'PM'
+        },
         formatter: {
             date: function (date, settings) {
                 if (!date) return '';
@@ -61,7 +67,7 @@ $(document).on("turbolinks:load", function () {
                 return ('0' + day).slice(-2) + '/' + ('0' + month).slice(-2) + '/' + year;
             }
         },
-        onChange: function(date, text, mode) {
+        onChange: function (date, text, mode) {
             $('#project_search').submit();
         }
     });

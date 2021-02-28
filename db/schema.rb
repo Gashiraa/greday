@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_202724) do
+ActiveRecord::Schema.define(version: 2021_02_27_093225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_202724) do
     t.boolean "no_logo", default: false
     t.boolean "complete_logo", default: false
     t.boolean "use_partial_invoice", default: false
+    t.string "bank"
   end
 
   create_table "customers", force: :cascade do |t|

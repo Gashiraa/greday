@@ -28,7 +28,7 @@
         - if @invoice.id
           = form.select(:project_ids, Project.where(status: :done).or(Project.where(status: :verified)).or(Project.where(invoice_id: @invoice.id)).collect { |project| [project.name + ' (' + display_id(project.id) + ')', project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', :multiple => true})
         - else
-          = form.select(:project_ids, Project.where(status: :done).or(Project.where(status: :verified)).collect { |project| [project.name, project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', :multiple => true})
+          = form.select(:project_ids, Project.where(status: :done).or(Project.where(status: :verified)).collect { |project| [project.name + ' (' + display_id(project.id) + ')', project.id, {customer: project.customer.id}] }, {}, {class: 'form-control', id: 'invoice_form_projects', :multiple => true})
     - else
       - unless @invoice.partial_invoice
         = form.hidden_field :project_ids, :value => params[:project] || @invoice.projects.first.id

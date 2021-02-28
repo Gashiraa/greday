@@ -1,0 +1,172 @@
+.avoidbreak
+  %h3.project-header
+    - if @company.mode !="Greday"
+      = t('quotation') + " #"
+    = display_id(project.id) + " : " + project.name
+  %p
+    = project.description
+    - if project.po.present?
+      %br
+      = t('PO') + " : "
+      %b
+        = project.po
+    - if project.applicant.present?
+      %br
+      = t('applicant') + " : "
+      %b
+        = project.applicant
+- if project.services.any?
+  = tag.div class: project.services.count < 15 ? 'avoidbreak' : '' do
+    %h4
+      = t('services').pluralize
+    %table.ui.unstackable.black.celled.striped.table
+      - if project.services_recap
+        %thead
+          %tr
+            %th.nine.wide= t('Name')
+            %th.two.wide.center.aligned= project.hide_services_hours ? '' : t('duration')
+            %th.two.wide.right.aligned= t('tva_rate')
+            %th.three.wide.right.aligned= t('total_gross')
+        %tbody
+          %tr
+            %td= project.services_recap_text
+            %td.center.aligned= project.hide_services_hours ? '' : project.services.where(is_displacement: [nil, false]).sum(:duration).to_s.chop.chop.chop
+            %td.right.aligned= "21%"
+            %td.right.aligned= number_to_currency((project.services.where(is_displacement: [nil, false]).sum(:total_gross)), locale: :fr)
+          - if project.services.where(is_displacement: true).any?
+            %tr
+              %td= project.displacement_recap
+              %td.center.aligned= project.hide_services_hours ? '' : project.services.where(is_displacement: true).sum(:duration).to_s.chop.chop.chop
+              %td.right.aligned= "21%"
+              %td.right.aligned= number_to_currency((project.services.where(is_displacement:true).sum(:total_gross)), locale: :fr)
+        - if @one_project
+          %tfoot
+            %tr
+              %th.right.aligned{colspan: 3}
+                %b= "TOTAL"
+              %th.right.aligned
+                %b= number_to_currency(( project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+      - else
+        %thead
+          %tr
+            %th.seven.wide= t('Name')
+            %th.one.wide.center.aligned= t('duration')
+            %th.three.wide.right.aligned= project.hide_services_hours ? '' : t('hourly_rate')
+            %th.two.wide.right.aligned= t('tva_rate')
+            %th.three.wide.right.aligned= t('total_gross')
+        %tbody
+          - project.services.order(:position).each do |service|
+            %tr
+              %td= service.name
+              %td.center.aligned= project.hide_services_hours ? '' : service.duration.strftime('%H:%M')
+              %td.right.aligned= number_to_currency((service.hourly_rate), locale: :fr)
+              %td.right.aligned= (number_with_precision service.tva_rate, :precision => 0).to_s&.+('%')
+              %td.right.aligned= number_to_currency((service.total_gross), locale: :fr)
+            - if service.show_desc_invoice
+              %tr
+                %td.comment-line{colspan: "5"}
+                  = simple_format(service.comment)
+        - if @one_project
+          %tfoot
+            %tr
+              %th.right.aligned{colspan: 4}
+                %b= "TOTAL"
+              %th.right.aligned
+                %b= number_to_currency(( project.services.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+- if project.wares.any?
+  = tag.div class: project.wares.count < 15 ? 'avoidbreak' : '' do
+    %h4
+      = t('wares').pluralize
+    %table.ui.unstackable.black.celled.striped.table
+      %thead
+        %tr
+          %th.seven.wide= t('ware_name')
+          %th.one.wide.center.aligned= t('quantity')
+          %th.three.wide.right.aligned= t('sell_price')
+          %th.two.wide.right.aligned= t('tva_rate')
+          %th.three.wide.right.aligned= t('total_gross')
+      %tbody
+        - project.wares.order(:position).each do |ware|
+          %tr
+            %td= ware.ware_name
+            %td.center.aligned= number_with_precision(ware.quantity, strip_insignificant_zeros: true).to_s
+            %td.right.aligned= number_to_currency((ware.sell_price), locale: :fr)
+            %td.right.aligned= (number_with_precision ware.tva_rate, :precision => 0).to_s&.+('%')
+            %td.right.aligned= number_to_currency((ware.total_gross), locale: :fr)
+          - if ware.show_desc_invoice
+            %tr
+              %td.comment-line{colspan: "5"}
+                = simple_format(ware.comment)
+      - if @one_project
+        %tfoot
+          %tr
+            %th.right.aligned{colspan: 4}
+              %b= "TOTAL"
+            %th.right.aligned
+              %b= number_to_currency( (project.wares.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+- if project.project_extra_lines.any?
+  = tag.div class: project.project_extra_lines.count < 15 ? 'avoidbreak' : '' do
+    %h4
+      = @company.use_articles == false ? t('extra').pluralize : t('article').pluralize
+    %table.ui.unstackable.black.celled.striped.table
+      %thead
+        %tr
+          %th.seven.wide= t('Name')
+          %th.one.wide.center.aligned= t('quantity')
+          %th.three.wide.right.aligned= t('unit_price')
+          %th.two.wide.right.aligned= t('tva_rate')
+          %th.three.wide.right.aligned= t('total_gross')
+      %tbody
+        - project.project_extra_lines.order(:position).each do |project_extra_line|
+          %tr
+          - if project_extra_line.is_manual
+            %td= project_extra_line.manual_name
+            %td.center.aligned= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.unit
+            %td.right.aligned= number_to_currency((project_extra_line.manual_price), locale: :fr)
+          - else
+            %td= project_extra_line.extra.name
+            %td.center.aligned= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.extra.unit
+            %td.right.aligned= number_to_currency((project_extra_line.extra.unit_price), locale: :fr)
+          %td.right.aligned= (number_with_precision project_extra_line.tva_rate, :precision => 0).to_s&.+('%')
+          %td.right.aligned= number_to_currency((project_extra_line.total_gross), locale: :fr)
+      - if @one_project
+        %tfoot
+          %tr
+            %th.right.aligned{colspan: 4}
+              %b= "TOTAL"
+            %th.right.aligned
+              %b= number_to_currency( (project.project_extra_lines.collect { |p| p.valid? ? p.total_gross : 0 }.sum), locale: :fr)
+- if @company.use_partial_invoice
+  - if project.partial_invoice
+    .avoidbreak
+      %h4
+        =t("partial_invoice")
+      %table.ui.unstackable.black.celled.striped.table
+        %thead
+          %tr
+            %th.nine.wide= t('project_title')
+            %th.two.wide.center.aligned= t('date_locale')
+            %th.two.wide.right.aligned= t('tva_rate')
+            %th.three.wide.right.aligned= t('total_gross')
+        %tbody
+          %tr
+            %td= project.partial_invoice.comment
+            %td.center.aligned= l( project.partial_invoice.invoice.date).to_s
+            %td.right.aligned= (number_with_precision project.partial_invoice.pct, :precision => 0).to_s&.+('%')
+            %td.right.aligned= "-"+number_to_currency((project.partial_invoice.amount), locale: :fr)
+- if project.comment != ''
+  %br
+  .project-comment
+    = project.comment
+- unless @one_project
+  %table.ui.unstackable.project-total.compact.table.avoidbreak
+    %tbody
+      %tr
+        %td.thirteen.wide TOTAL HT
+        %td.three.wide= number_to_currency( (project.total_gross), locale: :fr)
+      %tr
+        %td.thirteen.wide  Total TVA
+        %td.three.wide= number_to_currency( (project.total - project.total_gross), locale: :fr)
+      %tr
+        %td.thirteen.wide  TOTAL TTC
+        %td.three.wide= number_to_currency(project.total, locale: :fr)

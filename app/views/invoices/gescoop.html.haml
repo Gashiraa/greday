@@ -81,14 +81,14 @@
             %table.ui.unstackable.compact.table.total-table.avoidbreak
               %tbody
                 %tr
-                  %td TOTAL HT
+                  %td.thirteen.wide TOTAL HT
                   %td.three.wide= number_to_currency( (@invoice.total_gross), locale: :fr)
                 %tr
-                  %td Total TVA
-                  %td= number_to_currency( (@invoice.total - @invoice.total_gross), locale: :fr)
+                  %td.thirteen.wide Total TVA
+                  %td.three.wide= number_to_currency( (@invoice.total - @invoice.total_gross), locale: :fr)
                 %tr.ttc-total
-                  %td TOTAL TTC
-                  %td= number_to_currency(@invoice.total, locale: :fr)
+                  %td.thirteen.wide TOTAL TTC
+                  %td.three.wide= number_to_currency(@invoice.total, locale: :fr)
       .payment-notes.top-notes.avoidbreak
         %h4
           = t('invoice_account') + @company.account
@@ -258,14 +258,14 @@
             %table.ui.unstackable.compact.table.total-table.avoidbreak
               %tbody
                 %tr
-                  %td TOTAL HT
+                  %td.thirteen.wide TOTAL HT
                   %td.three.wide= number_to_currency( (@invoice.total_gross), locale: :fr)
                 %tr
-                  %td Total TVA
-                  %td= number_to_currency( (@invoice.total - @invoice.total_gross), locale: :fr)
+                  %td.thirteen.wide Total TVA
+                  %td.three.wide= number_to_currency( (@invoice.total - @invoice.total_gross), locale: :fr)
                 %tr.ttc-total
-                  %td TOTAL TTC
-                  %td= number_to_currency(@invoice.total, locale: :fr)
+                  %td.thirteen.wide TOTAL TTC
+                  %td.three.wide= number_to_currency(@invoice.total, locale: :fr)
       - if @company.mode == "Greday"
         - if @size <= 19
           .payment-notes.bottom-notes.avoidbreak

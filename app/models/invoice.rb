@@ -128,7 +128,7 @@ class Invoice < ApplicationRecord
         total += (service.comment.length / 70).ceil
       end
     end
-    total += (invoice.projects.count * 5)
+    total += (invoice.projects.count * 6)
   end
 
 end

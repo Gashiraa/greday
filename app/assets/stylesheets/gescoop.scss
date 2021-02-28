@@ -12,8 +12,9 @@ body {
     width: 100%;
   }
 
-  .header {
+  .head {
     font-size: 1.4rem;
+    margin-bottom: 3em;
 
     .company-infos {
       font-size: 1.2rem;
@@ -74,6 +75,7 @@ body {
         }
 
         .quotation-header {
+          margin-top: 1rem;
           background-color: #2185d0;
           color: white;
         }
@@ -92,7 +94,8 @@ body {
     line-height: 0.93rem;
 
     h4 {
-      margin: 0.4rem 0;
+      margin-top: 0.8em;
+      margin-bottom: 0;
     }
 
     h3 {
@@ -111,24 +114,53 @@ body {
       margin-bottom: 1rem;
     }
 
-    .total-table, .total-table > tbody > tr > td {
-      line-height: 1.3rem;
-      border: none;
-      font-size: 1.2rem;
-      text-align: right;
+    .comment-line {
+      font-size: 0.9em;
+
+      p {
+        padding: 0.6em;
+      }
     }
 
-    .total-table {
-      width: 17rem;
-      float: right;
+    .project-total {
+      margin-top: 1em;
+      text-align: right;
+      border: none;
+      table, tbody, tr, td {
+        border: none;
+      }
     }
 
     .tva-table {
-      //border: none;
+      width: 50%;
+    }
+
+    .total-cell {
+      width: 100% !important;
+    }
+
+    .total-table {
+
+      margin-top: 1em;
+      font-size: 1.25em;
+      line-height: 1.2em;
+      border: none;
+      float: right;
+
+      table, tbody, tr, td {
+        border: none;
+        text-align: right;
+      }
+
+      .ttc-total {
+        .ttc-cell {
+          font-weight: bold !important;
+          color: white;
+        }
+      }
     }
 
     .payment-notes {
-      text-align: justify;
       position: absolute;
       width: 100%;
       font-size: 0.7rem;
@@ -142,27 +174,11 @@ body {
     }
 
     .top-notes {
-      top: 1150px;
+      top: 1175px;
     }
 
     .bottom-notes {
       bottom: 10px;
-    }
-
-    .far-bottom-notes {
-      top: 2375px;
-    }
-
-    .very-far-bottom-notes {
-      top: 3600px;
-    }
-
-    .ttc-total {
-      td {
-        background-color: #DB2828;
-        font-weight: bold !important;
-        color: white;
-      }
     }
 
     .ui.table > thead > tr:first-child > th:first-child, .ui.table {
@@ -219,7 +235,6 @@ body {
       }
 
       tr > td {
-        width: auto !important;
         display: table-cell;
         padding: 0.4em 0.7em;
         box-shadow: none !important;
@@ -257,6 +272,14 @@ body {
       }
     }
   }
+}
+
+.invoice .ttc-cell {
+  background-color: #f2711c;
+}
+
+.quote .ttc-cell {
+  background-color: #2185d0;
 }
 
 .label {

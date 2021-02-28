@@ -29,12 +29,13 @@
         .two.wide.field.invoice-report-total
           %h5.ui.small.green.button{onclick: "showHidden();"}
             = t('total_invoiced')
-          = link_to invoices_path(q: params[:q]&.to_unsafe_h, format: :pdf), class: 'ui blue compact button', id:'invoice-recap-button' do
-            %i.file.pdf.icon
-            Voir le récap
-          %h3#hideable-field
-            = @total
-            €
+          %div.hideable-field
+            = link_to invoices_path(q: params[:q]&.to_unsafe_h, format: :pdf), class: 'ui blue compact button', id:'invoice-recap-button' do
+              %i.file.pdf.icon
+              Voir le récap
+            %h3
+              = @total
+              €
 %table.ui.striped.selectable.olive.table.attached.table-to-color
   %thead.thead-dark
     %tr

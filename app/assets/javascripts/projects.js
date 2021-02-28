@@ -38,4 +38,9 @@ $(document).on("turbolinks:load", function () {
             $("#project_comment").val("");
         }
     });
+    if ($("#q_date_gteq").val() === '' || $("#q_date_lteq").val() === '' || $("#customer_sort").val() === '') {
+        $('#project-recap-button').addClass("disabled");
+    } else {
+        $('#project-recap-button').removeClass("disabled");
+    }
 });

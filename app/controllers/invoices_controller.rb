@@ -18,7 +18,7 @@ class InvoicesController < ApplicationController
         @invoices = @search.result(distinct: true)
         render pdf: t('invoice_report'),
                page_size: 'A4',
-               template: 'layouts/pdf/report/template.html.haml',
+               template: 'layouts/pdf/report/invoices.html.haml',
                layout: 'pdf/layout',
                encoding: 'utf8',
                show_as_html: false,
@@ -84,7 +84,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "#{@invoice.display_number}_#{@invoice.customer.name.upcase.tr(' ', '_')}",
+        render pdf: "#{display_invoice_id(@invoice.display_number)}_#{@invoice.customer.name.upcase.tr(' ', '_')}",
                page_size: 'A4',
                template: 'layouts/pdf/invoice/template.html.haml',
                layout: 'pdf/layout',

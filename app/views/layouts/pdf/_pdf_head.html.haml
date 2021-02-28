@@ -1,0 +1,51 @@
+%table.head
+  %tr.company-infos
+    %td
+      -if @company.complete_logo
+        %div.ago-logo
+          = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
+          %br/
+      -else
+        %div.normal-logo
+          -unless @company.no_logo
+            = wicked_pdf_image_tag("logo_"+@company.short_name.downcase+".png")
+        = @company.name
+        %br/
+        = @company.street
+        %br/
+        = @company.postcode + ' ' + @company.locality
+        %br/
+        = @company.phone
+        %br/
+        = @company.email
+        %br/
+        = @company.vat
+    %td.invoice-date
+      = @company.locality + " le, " + l(project.date).to_s
+  %tr.second-row
+    %td.invoice-number
+      -if type == 'quote'
+        .ui.huge.header
+          .quotation-header
+            = t('quotation').upcase
+        .ui.medium.header
+          = @company&.prefix ? display_id(project.id) : ' #'+project.id.to_s
+      -if type == 'invoice'
+        .ui.huge.header
+          .invoice-header
+            = t('invoice').upcase
+        .ui.medium.header
+          - unless @company.prefix
+            = '#'
+          = display_invoice_id(@invoice.display_number)
+    %td.customer-infos
+      = project.customer.name
+      %br/
+      = project.customer.street.to_s + ', ' + project.customer.number.to_s
+      %br/
+      = project.customer.cp.to_s + ' ' + project.customer.locality
+      %br/
+      = project.customer.country
+      - if project.customer.tva_record.present?
+        %br/
+        = "TVA : " +  project.customer.tva_record

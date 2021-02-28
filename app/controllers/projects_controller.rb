@@ -14,9 +14,31 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @search = Project.order(created_at: :desc).includes(:customer).ransack(params[:q])
-    @total = @search.result(distinct: true).sum(:total_gross)
-    @projects = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
+    respond_to do |format|
+      format.html
+      @search = Project.order(created_at: :desc).includes(:customer).ransack(params[:q])
+      @total = @search.result(distinct: true).sum(:total_gross)
+      @projects = @search.result(distinct: true).paginate(page: params[:page], per_page: 30)
+      format.pdf do
+        @search = Project.order(date: :asc).ransack(params[:q])
+        @projects = @search.result(distinct: true)
+        @total_gross = @projects.sum(:total_gross)
+        @total = @projects.sum(:total)
+
+        render pdf: t('invoice_report'),
+               page_size: 'A4',
+               template: 'layouts/pdf/report/projects.html.haml',
+               layout: 'pdf/layout',
+               encoding: 'utf8',
+               show_as_html: false,
+               margin: { bottom: 15, top: 15, left: 15, right: 15 },
+               footer: {
+                 html: {
+                   template: 'layouts/pdf/report/footer.html.erb'
+                 }
+               }
+      end
+    end
   end
 
   def refresh_content
@@ -30,7 +52,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = scope.find(params[:id])
-
+    @one_project = true
     if params[:method] == 'label'
       print_label
       return true

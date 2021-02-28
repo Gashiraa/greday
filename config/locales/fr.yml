@@ -368,7 +368,7 @@ fr:
   create_new_extra: "Créer un nouveau divers"
   create_new_customer: "Créer un nouveau client"
   invoice_notice: "Voir condition générales en annexe."
-  invoice_account: "Les paiements se feront au compte CBC : IBAN "
+  invoice_account: "Les paiements se feront au compte "
   total_duration: "Durée totale"
   showInQuot: "Afficher dans devis"
   showInInv: "Afficher dans facture"

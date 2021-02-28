@@ -63,7 +63,9 @@ class ApplicationController < ActionController::Base
   def display_invoice_id(id)
     if @company&.prefix
       id = id.to_s
-      id = "#{@company.prefix}F#{id}"
+      id.length < 5 ? id = id.rjust(4, '0') : ''
+      id = id.last(6)
+      "#{@company.prefix}F#{id}"
     else
       id.to_s
     end

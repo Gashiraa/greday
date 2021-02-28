@@ -1,0 +1,39 @@
+%div{"data-somedata": @size}
+.pdf.invoice
+  = render partial: '/layouts/pdf/pdf_head', locals: {project: @projects.first, company: @company, type: 'project',
+  one_project: @one_project}
+  .content
+    %h3{style:"margin-top:7em"} Récapitulatif des projets séléctionnés
+    %table.ui.unstackable.black.celled.striped.table
+      %thead
+        %tr
+          %th.seven.wide= t('project')
+          %th.three.wide.center.aligned= t('date_locale')
+          %th.six.wide.right.aligned= t('total_gross')
+      - if @projects.any?
+        - @projects.order(date: :asc).each do |project|
+          %tr
+            %td= project.name
+            %td.center.aligned= l(project.date)
+            %td.right.aligned= number_to_currency( (project.total_gross), locale: :fr)
+      %table
+        %tr
+          %td.total-cell
+            %table.ui.unstackable.compact.table.avoidbreak.total-table
+              %tbody
+                %tr
+                  %td.six.wide
+                  %td.five.wide Total HT
+                  %td.five.wide= number_to_currency( (@total_gross), locale: :fr)
+                %tr
+                  %td.six.wide
+                  %td.five.wide Total TVA
+                  %td.five.wide= number_to_currency( (@total - @total_gross), locale: :fr)
+                %tr.ttc-total
+                  %td.six.wide
+                  %td.five.wide.ttc-cell TOTAL TTC
+                  %td.five.wide.ttc-cell= number_to_currency(@total, locale: :fr)
+      .page-break
+    - if @projects.any?
+      - @projects.order(:id).each do |project|
+        = render partial: '/layouts/pdf/project', locals: {project: project}
