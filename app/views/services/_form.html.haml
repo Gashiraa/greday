@@ -1,0 +1,87 @@
+.close
+  %i.big.close.icon{onclick: "$('.ui.modal').modal('hide');"}
+= form_with(model: @service, remote: true, html: {autocomplete: @company.autocomplete}, id: "servicesForm") do |form|
+  .ui.form
+    %h2.centered
+      - if @service.id
+        = t('editing_services')
+      - else
+        = t('creating_services')
+    = form.hidden_field :id, value: @service.id || 0, id: "service_id"
+    = form.hidden_field :duration_float
+    .four.fields
+      .field
+        = form.label t('project')
+        = form.collection_select :project_id, Project.all, :id, :name, {:include_blank => true, :required => true}, {class: 'form-control', id: 'service_form_project'}
+      .field
+        = form.label t('status')
+        = form.select :status, Service.translated_statuses.map { |status| [status[0], status[1]] }, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'}
+      .field
+        = form.label t('date_locale'), class: "label"
+        .ui.left.icon.input
+          = form.text_field :date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy", value: @service.date ? l(@service.date) : Time.zone.now.to_date.strftime("%d/%m/%Y"), autocomplete: 'off', id: "dateProject", class: "form-control"
+          %i.calendar.icon
+      .field
+        = form.label t('provider')
+        = form.select :provider, Service.providers_for_form, {:include_blank => true}, {class: 'form-control', id: 'status_edit_select'}
+    .ui.horizontal.segments
+      .ui.segment
+        .fields
+          .inline.field
+            = form.label t('start_time')
+            = form.time_select :start_time, {default: {hour: 0, min: 0}, minute_step: 15}, autocomplete: 'off'
+          .inline.field
+            = form.label t('end_time')
+            = form.time_select :end_time, {default: {hour: 0, min: 0}, minute_step: 15}, autocomplete: 'off'
+      .ui.segment
+        .two.fields.duration-fields
+          .inline.field
+            = form.label t('duration')
+            = form.select :duration_hours, options_for_select((0..100).map {|n| "%02d" % n})
+          =':'
+          .inline.field
+            = form.select :duration_minutes, options_for_select((00..59).step(15).map {|n| "%02d" % n})
+    .two.fields
+      .field
+        = form.label t('Description')
+        = form.text_area :name, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'off'
+      .field
+        = form.label t('comment')
+        = form.text_area :comment, rows: "5", class: "form-control", onkeyup: "javascript:capitalize(this.id, this.value);", autocomplete: 'off'
+    .field
+      .ui.toggle.checkbox.trigger-check
+        = form.check_box :show_desc_quote, class: "form-check-input", id: "show_desc_quot"
+        = form.label t('showInQuot'), class: "form-check-label", for: "show_desc_quot"
+    .field
+      .ui.toggle.checkbox.trigger-check
+        = form.check_box :show_desc_invoice, class: "form-check-input", id: "show_desc_invoice"
+        = form.label t('showInInv'), class: "form-check-label", for: "show_desc_invoice"
+    .field
+      .ui.toggle.checkbox
+        = form.check_box :is_displacement, class: "form-check-input", id: "machine_specific"
+        = form.label t('is_displacement'), class: "form-check-label", for: "machine_specific"
+    .four.fields
+      .field
+        = form.label t('hourly_rate')
+        .ui.labeled.input
+          %label.ui.label{for: "amount"} €/H
+          = form.text_field :hourly_rate, value: @service.hourly_rate || '45', class: "form-control", id: 'hourly_rate'
+      .field
+        = form.label t('tva_rate')
+        .ui.labeled.input
+          %label.ui.label{for: "amount"} %
+          = form.text_field :tva_rate, value: @service.tva_rate || '21', class: "form-control", id: "tva_rate_s"
+      .field
+        = form.label t('gross_cost')
+        .ui.labeled.input
+          %label.ui.label{for: "amount"} €
+          = form.text_field :total_gross, class: "form-control", readonly: true, id: "total_gross_s"
+      .field
+        = form.label t('total_cost') + " (€)"
+        .ui.labeled.input
+          %label.ui.label{for: "amount"} €
+          = form.text_field :total_cost, class: "form-control", readonly: true, id: "total_cost_s"
+      = form.hidden_field(:project, value: @service&.project_id)
+    .field
+      .centered
+        = form.submit t('create'), :class => "ui green button", data: @service.project&.invoice ? {confirm: t('service_already_invoiced')} : {}

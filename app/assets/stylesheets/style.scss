@@ -18,6 +18,11 @@ body {
     .partial-content {
       margin-left: 2em;
     }
+    .duration-fields {
+      select {
+        width: 60% !important;
+      }
+    }
   }
 }
 

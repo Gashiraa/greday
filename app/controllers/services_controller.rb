@@ -106,6 +106,7 @@ class ServicesController < ApplicationController
                                     :customer_id, :quotation_id, :name, :comment,
                                     :hourly_rate, :coefficient, :date, :duration,
                                     :status, :tva_rate, :total_cost, :start_time,
-                                    :end_time, :provider, :is_displacement,:show_desc_invoice, :show_desc_quote )
+                                    :end_time, :provider, :is_displacement,:show_desc_invoice, :show_desc_quote,
+                                    :duration_float)
   end
 end

@@ -47,7 +47,7 @@
           %td.center.aligned
             = service.provider
           %td.right.aligned
-            = service.duration.strftime('%H:%M')
+            = display_duration(service.duration_float)
           %td.right.aligned
             = number_with_precision service.total_gross, :precision => 2
           %td.right.aligned
@@ -65,7 +65,7 @@
         %td.two.wide.right.aligned
           = t('total_duration') + ' : '
           %b
-            = Service.where(provider: provider).where(project_id: @services&.first&.project_id).sum(:duration).to_s.chop.chop.chop
+            = display_duration(Service.where(provider: provider).where(project_id: @project.id).sum(:duration_float))
         %td.two.wide.right.aligned
           = t('total_gross') + ' : '
           %b
@@ -84,7 +84,7 @@
       %td.two.wide.right.aligned
         = t('total_duration') + ' : '
         %b
-          = Service.where(project_id: @services&.first&.project_id).sum(:duration).to_s.chop.chop.chop
+          = display_duration(Service.where(project_id: @project.id).sum(:duration_float))
       %td.two.wide.right.aligned
         = t('total_gross') + ' : '
         %b

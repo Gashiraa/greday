@@ -1,7 +1,14 @@
 $(document).on("turbolinks:load", function () {
 
+        {
+            let hours = document.getElementById('service_duration_hours') || 0;
+            let minutes = document.getElementById('service_duration_minutes') || 0;
+            let duration_float = document.getElementById('service_duration_float').value || 0;
+            hours.value = pad2(Math.floor(duration_float))
+            minutes.value = pad2((duration_float - Math.floor(duration_float)) * 60)
+        }
         //SERVICES TOTAL auto-complete
-        $('#servicesForm, #total_cost_s, #total_gross_s, #hourly_rate, #tva_rate_s, #coefficient, #_duration_4i, #_duration_5i, #service_duration_4i, #service_duration_5i')
+        $('#servicesForm, #total_cost_s, #total_gross_s, #hourly_rate, #tva_rate_s, #coefficient, #_duration_4i, #_duration_5i, #service_duration_hours, #service_duration_minutes')
             .on('keyup keypress mouseover change', function () {
                     let total_cost = document.getElementById('total_cost_s');
                     let total_gross = document.getElementById('total_gross_s');
@@ -14,8 +21,8 @@ $(document).on("turbolinks:load", function () {
                         hours = document.getElementById('_duration_4i').value || 0;
                         minutes = document.getElementById('_duration_5i').value || 0;
                     } else {
-                        hours = document.getElementById('service_duration_4i').value || 0;
-                        minutes = document.getElementById('service_duration_5i').value || 0;
+                        hours = document.getElementById('service_duration_hours').value || 0;
+                        minutes = document.getElementById('service_duration_minutes').value || 0;
                     }
 
                     let gross = (((parseInt(hours) + parseFloat(minutes) / 60) * parseFloat(hourly_rate)));
@@ -61,8 +68,8 @@ $(document).on("turbolinks:load", function () {
                 let endTime4 = document.getElementById('service_end_time_4i');
                 let endTime5 = document.getElementById('service_end_time_5i');
 
-                let duration4 = document.getElementById('service_duration_4i');
-                let duration5 = document.getElementById('service_duration_5i');
+                let duration4 = document.getElementById('service_duration_hours');
+                let duration5 = document.getElementById('service_duration_minutes');
 
                 let totalMinutesStart = (parseInt(startTime4.options[startTime4.selectedIndex].value) * 60)
                     + parseInt(startTime5.options[startTime5.selectedIndex].value);
@@ -75,20 +82,30 @@ $(document).on("turbolinks:load", function () {
 
                     let durationMinutes = totalMinutesEnd - totalMinutesStart;
 
-                    console.log(pad2(durationMinutes % 60));
-
-                    duration5.value = pad2((durationMinutes % 60));
                     duration4.value = pad2((Math.floor(durationMinutes / 60)));
+                    duration5.value = pad2((durationMinutes % 60));
                 }
             });
-    $('#service_comment')
-        .on('keyup keypress change', function () {
-            if ($('#service_comment').val() !== '') {
-                $('.trigger-check').checkbox('check');
-            } else {
-                $('.trigger-check').checkbox('uncheck');
-            }
-        });
+        $('#service_comment')
+            .on('keyup keypress change', function () {
+                if ($('#service_comment').val() !== '') {
+                    $('.trigger-check').checkbox('check');
+                } else {
+                    $('.trigger-check').checkbox('uncheck');
+                }
+            });
+
+        // Auto adjust hidden field duration_float value
+        $('#service_start_time_4i, #service_start_time_5i, #service_end_time_4i, #service_end_time_5i, #service_duration_hours, #service_duration_minutes')
+            .on('keyup keypress mouseover change', function () {
+
+                    let hours = document.getElementById('service_duration_hours').value || 0;
+                    let minutes = document.getElementById('service_duration_minutes').value || 0;
+                    let duration_float = document.getElementById('service_duration_float') || 0;
+                    duration_float.value = parseFloat(hours) + parseFloat((minutes / 60));
+                }
+            );
+        $('#service_duration_hours').trigger('mouseover');
     }
 );
 

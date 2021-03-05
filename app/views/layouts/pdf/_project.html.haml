@@ -30,13 +30,13 @@
         %tbody
           %tr
             %td= project.services_recap_text
-            %td.center.aligned= project.hide_services_hours ? '' : project.services.where(is_displacement: [nil, false]).sum(:duration).to_s.chop.chop.chop
+            %td.center.aligned= project.hide_services_hours ? '' : display_duration(project.services.where(is_displacement: [nil, false]).sum(:duration_float))
             %td.right.aligned= "21%"
             %td.right.aligned= number_to_currency((project.services.where(is_displacement: [nil, false]).sum(:total_gross)), locale: :fr)
           - if project.services.where(is_displacement: true).any?
             %tr
               %td= project.displacement_recap
-              %td.center.aligned= project.hide_services_hours ? '' : project.services.where(is_displacement: true).sum(:duration).to_s.chop.chop.chop
+              %td.center.aligned= project.hide_services_hours ? '' :  display_duration(project.services.where(is_displacement: true).sum(:duration_float))
               %td.right.aligned= "21%"
               %td.right.aligned= number_to_currency((project.services.where(is_displacement:true).sum(:total_gross)), locale: :fr)
         - if @one_project
@@ -58,7 +58,7 @@
           - project.services.order(:position).each do |service|
             %tr
               %td= service.name
-              %td.center.aligned= project.hide_services_hours ? '' : service.duration.strftime('%H:%M')
+              %td.center.aligned= project.hide_services_hours ? '' : display_duration(service.duration_float)
               %td.right.aligned= number_to_currency((service.hourly_rate), locale: :fr)
               %td.right.aligned= (number_with_precision service.tva_rate, :precision => 0).to_s&.+('%')
               %td.right.aligned= number_to_currency((service.total_gross), locale: :fr)

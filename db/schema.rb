@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_27_093225) do
+ActiveRecord::Schema.define(version: 2021_03_05_161418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 2021_02_27_093225) do
     t.boolean "show_desc_quote"
     t.boolean "is_displacement"
     t.integer "position"
+    t.float "duration_float"
     t.index ["project_id"], name: "index_services_on_project_id"
   end
 

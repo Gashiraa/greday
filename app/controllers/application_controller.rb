@@ -71,6 +71,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  helper_method :display_duration
+
+  def display_duration(duration_float)
+    "#{format('%02d', duration_float.floor)}:#{format('%02d', (duration_float - duration_float.floor) * 60)}"
+  end
+
   def get_next_invoice_number
     max_number = Invoice.maximum('display_number') || @company.fiscal_year
     max_number = max_number < @company.fiscal_year ? @company.fiscal_year : max_number
