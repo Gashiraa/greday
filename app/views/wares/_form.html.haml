@@ -106,15 +106,15 @@
             = form.label t('Quantity')
             = form.text_field :quantity, step: :any, :onclick => 'this.select();',  id: 'quantity', value: @ware.quantity || "1"
           .field
-            = form.label t('sell_price')
-            .ui.labeled.input
-              %label.ui.red.label{for: "amount"} €
-              = form.text_field :sell_price, readonly: false, id: 'sell_price'
-          .field
             = form.label t('margin')
             .ui.labeled.input
-              %label.ui.label{for: "amount"} %
+              %label.ui.label{for: "amount", id: 'margin_label', onclick:"flipWareInputMethod();"} %
               = form.text_field :margin, id: 'margin'
+          .field
+            = form.label t('sell_price')
+            .ui.labeled.input
+              %label.ui.red.label{for: "amount", id: 'sell_label', onclick:"flipWareInputMethod();"} €
+              = form.text_field :sell_price, readonly: true, id: 'sell_price'
         .three.fields
           .field
             = form.label t('tva_rate')

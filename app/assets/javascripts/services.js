@@ -1,6 +1,6 @@
 $(document).on("turbolinks:load", function () {
 
-        {
+        if (document.getElementById('service_duration_float')) {
             let hours = document.getElementById('service_duration_hours') || 0;
             let minutes = document.getElementById('service_duration_minutes') || 0;
             let duration_float = document.getElementById('service_duration_float').value || 0;
