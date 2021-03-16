@@ -216,7 +216,7 @@ class ProjectsController < ApplicationController
 
   def bin
     respond_to do |format|
-      if @project.update(status: 5)
+      if @project.update(status: 6)
         @project.invoice&.update_totals_invoice(@project.invoice, @project.invoice.projects)
         format.html { redirect_to request.env['HTTP_REFERER'], notice: t('project_update_success') }
         format.json { render :show, status: :ok, location: @project }

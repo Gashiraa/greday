@@ -126,6 +126,7 @@ fr:
       mailed: "Envoyée (mail)"
       emailed: "Envoyée (poste)"
       verified: "Vérifié"
+      dropped: "Sans suite"
 
   activerecord:
     attributes:
@@ -348,6 +349,7 @@ fr:
   phone_number: "Téléphone"
   invoice_project: "Facturer"
   do_done: "Terminer"
+  dropped: "Sans suite"
   unauthorized_action: "Action non autorisée"
   payment_reference: "Référence de paiement"
   editing_payment: "Edition paiement"
