@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   resources :machines
   resources :companies
   resources :partial_invoices
+  resources :stock_wares
+
 
   get '/change_locale', to: 'application#change_locale', as: :change_locale
 

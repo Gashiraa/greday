@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_161418) do
+ActiveRecord::Schema.define(version: 2021_04_17_150047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2021_03_05_161418) do
     t.boolean "complete_logo", default: false
     t.boolean "use_partial_invoice", default: false
     t.string "bank"
+    t.boolean "use_stock_wares", default: false
   end
 
   create_table "customers", force: :cascade do |t|
@@ -229,6 +230,18 @@ ActiveRecord::Schema.define(version: 2021_03_05_161418) do
     t.index ["project_id"], name: "index_services_on_project_id"
   end
 
+  create_table "stock_wares", force: :cascade do |t|
+    t.string "name"
+    t.string "cat1"
+    t.string "cat2"
+    t.string "cat3"
+    t.string "cat4"
+    t.string "cat5"
+    t.integer "stock_quantity"
+    t.bigint "wares_id"
+    t.index ["wares_id"], name: "index_stock_wares_on_wares_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -296,6 +309,7 @@ ActiveRecord::Schema.define(version: 2021_03_05_161418) do
   add_foreign_key "projects", "machines"
   add_foreign_key "services", "customers"
   add_foreign_key "services", "projects"
+  add_foreign_key "stock_wares", "wares", column: "wares_id"
   add_foreign_key "users", "companies"
   add_foreign_key "wares", "customers"
   add_foreign_key "wares", "machines"

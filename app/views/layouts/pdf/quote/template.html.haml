@@ -6,15 +6,15 @@
       %table.ui.unstackable.compact.table.avoidbreak
         %tbody
           %tr
-            %td.seven.wide
+            %td.six.wide
             %td.five.wide TOTAL HT
-            %td.four.wide= number_to_currency( (@project.total_gross), locale: :fr)
+            %td.five.wide= number_to_currency( (@project.total_gross), locale: :fr)
           %tr
-            %td.seven.wide
+            %td.six.wide
             %td.five.wide Total TVA
-            %td.four.wide= number_to_currency( (@project.total - @project.total_gross), locale: :fr)
+            %td.five.wide= number_to_currency( (@project.total - @project.total_gross), locale: :fr)
           %tr.ttc-total
-            %td.seven.wide
+            %td.six.wide
             %td.five.wide.ttc-cell TOTAL TTC
-            %td.four.wide.ttc-cell= number_to_currency(@project.total, locale: :fr)
+            %td.five.wide.ttc-cell= number_to_currency(@project.total, locale: :fr)
 

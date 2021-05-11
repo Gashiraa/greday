@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   def set_company
-    Project.set_company(@company.mode)
+    Project.set_company(@company.short_name)
   end
 
   # GET /projects
@@ -60,55 +60,43 @@ class ProjectsController < ApplicationController
 
     @machine = @project.machine if @company.use_machines
 
-    case @company.mode
-    when 'Greday'
-      show_greday
-    when 'Plusview'
-      show_plusview
-    else
-      # type code here
-    end
-  end
-
-  def show_greday
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "#{display_quote_id(@project.id)}_#{@project.customer.name.upcase.tr(' ', '_')}_#{@project.name.upcase.tr(' ', '_')}",
-               page_size: 'A4',
-               template: 'layouts/pdf/quote/template.html.haml',
-               layout: 'pdf/layout',
-               orientation: 'Portrait',
-               encoding: 'utf8',
-               show_as_html: params.key?('debug'),
-               zoom: 1,
-               dpi: 75,
-               margin: { bottom: 23, top: 15, left: 15, right: 15 },
-               footer: {
-                 html: {
-                   template: 'layouts/pdf/quote/greday_footer.html.erb'
+        case @company.mode
+        when 'Plusview'
+          render pdf: "#{@company.name.downcase}-devis#{@project.id}",
+                 page_size: 'A4',
+                 template: 'layouts/pdf/quote/template.html.haml',
+                 layout: 'pdf/layout',
+                 encoding: 'utf8',
+                 show_as_html: params.key?('debug'),
+                 margin: { bottom: 23, top: 15, left: 15, right: 15 },
+                 footer: {
+                   html: {
+                     template: 'layouts/pdf/quote/plusview_footer.html.erb'
+                   }
                  }
-               }
-      end
-    end
-  end
-
-  def show_plusview
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "#{@company.name.downcase}-devis#{@project.id}",
-               page_size: 'A4',
-               template: 'layouts/pdf/quote/template.html.haml',
-               layout: 'pdf/layout',
-               encoding: 'utf8',
-               show_as_html: params.key?('debug'),
-               margin: { bottom: 23, top: 15, left: 15, right: 15 },
-               footer: {
-                 html: {
-                   template: 'layouts/pdf/quote/plusview_footer.html.erb'
+        when 'Greday'
+          render pdf: "#{display_quote_id(@project.id)}_#{@project.customer.name.upcase.tr(' ', '_')}_#{@project.name
+                                                                                                .upcase.tr(' ', '_')}",
+                 page_size: 'A4',
+                 template: 'layouts/pdf/quote/template.html.haml',
+                 layout: 'pdf/layout',
+                 orientation: 'Portrait',
+                 encoding: 'utf8',
+                 show_as_html: params.key?('debug'),
+                 zoom: 1,
+                 dpi: 75,
+                 margin: { bottom: 23, top: 15, left: 15, right: 15 },
+                 footer: {
+                   html: {
+                     template: 'layouts/pdf/quote/greday_footer.html.erb'
+                   }
                  }
-               }
+        else
+          #empty
+        end
       end
     end
   end
@@ -257,3 +245,4 @@ class ProjectsController < ApplicationController
                                     :machine_history, :hide_services_hours)
   end
 end
+

@@ -126,7 +126,7 @@
           - else
             %td= project_extra_line.extra.name
             %td.center.aligned= number_with_precision(project_extra_line.quantity, strip_insignificant_zeros: true).to_s + ' ' + project_extra_line.extra.unit
-            %td.right.aligned= number_to_currency((project_extra_line.extra.unit_price), locale: :fr)
+            %td.right.aligned= number_to_currency((project_extra_line.manual_price), locale: :fr)
           %td.right.aligned= (number_with_precision project_extra_line.tva_rate, :precision => 0).to_s&.+('%')
           %td.right.aligned= number_to_currency((project_extra_line.total_gross), locale: :fr)
       - if @one_project

@@ -59,7 +59,6 @@ function assignColor(status) {
             case 'assigned_project' :
             case 'assigned_customer' :
                 return "orange"; //ORANGE
-            case 'accepted' :
             case 'sent' :
             case 'created' :
             case 'invoiced' :
@@ -70,6 +69,7 @@ function assignColor(status) {
                 return "teal"; //TEAL
             case 'emailed' :
             case 'mailed' :
+            case 'accepted' :
                 return "olive"; //OLIVE
             case 'verified' :
                 return "violet"

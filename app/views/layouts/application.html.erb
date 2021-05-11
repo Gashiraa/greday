@@ -16,7 +16,7 @@
 </head>
 
 <div class="ui <%= (@company&.use_credit_notes.to_i +
-    @company&.use_machines.to_i + 5).to_words %> item inverted attached menu">
+    @company&.use_machines.to_i + 6).to_words %> item inverted attached menu">
 
   <% if current_user %>
 
@@ -54,8 +54,13 @@
         <%= t('machines').capitalize %> </a>
     <% end %>
 
-    <a class="yellow item" href="/extras">
+    <a class="violet item" href="/stock_wares">
       <i class="large pallet icon"></i>
+      <%= t('stock').capitalize %> </a>
+    </a>
+
+    <a class="yellow item" href="/extras">
+      <i class="large bars icon"></i>
       <%= @company.use_articles == false ? t('extra').pluralize : t('article').pluralize %>
     </a>
 

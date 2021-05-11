@@ -1,7 +1,9 @@
 $(document).on("turbolinks:load", function () {
 
-        //On selection of extra, autoselect : unit and price
-        $('#project_extra_line_extra_id').on('focus load trigger mouseover change', function () {
+    let temp_price = 0
+
+    //On selection of extra, autoselect : unit and price
+        $('#project_extra_line_extra_id').on('change', function () {
             if (this.selectedIndex >= 0) {
                 let extra = this.options[this.selectedIndex].value;
                 //autoselect unit
@@ -21,12 +23,13 @@ $(document).on("turbolinks:load", function () {
                     } else {
                         this.style.display = "none";
                     }
+                    $('#extra_manual_price').val($( "#extra_unit_price option:selected" ).text())
                 });
+                temp_price = $('#extra_manual_price').val()
             }
             //trigger auto calculation when we're done
             $('#extra_total_gross').trigger('mouseover');
         });
-
         //Filter extras depending on selected category
         $('#project_extra_line_id').on('load trigger change', function () {
             //check all extra options, hide ones not belonging to selected category
@@ -42,18 +45,15 @@ $(document).on("turbolinks:load", function () {
             $('#project_extra_line_extra_id').trigger('change');
         });
 
-        //Auto-calculation
-        $('#extra_edit_select,#edit_project_extra_line,#extra_total_gross,#extra_total,#extra_quantity,#extra_tva_rate,#extra_unit_price')
+    //Auto-calculation
+        $('#extra_edit_select,#edit_project_extra_line,#extra_total_gross,#extra_total,#extra_quantity,#extra_tva_rate,#extra_unit_price,#extra_manual_price')
             .on('keyup keypress mouseover change', function () {
                 let quantity = document.getElementById('extra_quantity').value || 0;
                 let tva_rate = document.getElementById('extra_tva_rate').value || 0;
 
                 let extra_unit_price;
-                if (document.getElementById('extra_unit_price').options) {
-                    extra_unit_price = document.getElementById('extra_unit_price').options[document.getElementById('extra_unit_price').selectedIndex].text || 0;
-                } else {
-                    extra_unit_price = document.getElementById('extra_unit_price').value || 0;
-                }
+                extra_unit_price = document.getElementById('extra_manual_price').value || 0;
+
                 let extra_total_gross = document.getElementById('extra_total_gross');
                 let extra_total = document.getElementById('extra_total');
 
@@ -107,7 +107,8 @@ $(document).on("turbolinks:load", function () {
             return false;
         }
     });
-        $('#project_extra_line_extra_id').trigger('change');
-        $('#extra_total_gross').trigger('mouseover');
+    $('#project_extra_line_extra_id').trigger('change');
+    $('#extra_total_gross').trigger('mouseover');
+    $('#extra_manual_price').val(temp_price);
     }
 );

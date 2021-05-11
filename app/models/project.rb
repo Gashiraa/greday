@@ -25,11 +25,22 @@ class Project < ApplicationRecord
   end
 
   def self.status_for_sort
-    options = if @company == 'Plusview'
+    options = case @company
+              when 'Plusview'
                 [['Créé', 7, { status: 'created' }],
                  ['Accepté', 8, { status: 'accepted' }],
                  ['Facturé', 4, { status: 'invoiced' }],
                  ['Corbeille', 6, { status: 'bin' }]]
+              when 'VERTIYO', 'Jardin d\'Eben'
+                [['Devis', 0, { status: 'quotation' }],
+                 ['Devis accepté', 8, { status: 'accepted' }],
+                 ['En réalisation', 1, { status: 'in_progress' }],
+                 ['Terminé', 2, { status: 'done' }],
+                 ['Vérifié', 3, { status: 'verified' }],
+                 ['Facturé', 4, { status: 'invoiced' }],
+                 ['Payé', 5, { status: 'paid' }],
+                 ['Corbeille', 6, { status: 'bin' }],
+                 ['Sans suite', 9, { status: 'dropped' }]]
               else
                 [['Devis', 0, { status: 'quotation' }],
                  ['En réalisation', 1, { status: 'in_progress' }],
@@ -43,11 +54,22 @@ class Project < ApplicationRecord
   end
 
   def self.status_for_form
-    options = if @company == 'Plusview'
+    options = case @company
+              when 'Plusview'
                 [['Créé', 'created', { status: 'created' }],
                  ['Accepté', 'accepted', { status: 'accepted' }],
                  ['Facturé', 'invoiced', { status: 'invoiced' }],
                  ['Corbeille', 'bin', { status: 'bin' }]]
+              when 'VERTIYO', 'Jardin d\'Eben'
+                [['Devis', 'quotation', { status: 'quotation' }],
+                 ['Devis accepté', 'accepted', { status: 'accepted' }],
+                 ['En réalisation', 'in_progress', { status: 'in_progress' }],
+                 ['Terminé', 'done', { status: 'done' }],
+                 ['Vérifié', 'verified', { status: 'verified' }],
+                 ['Facturé', 'invoiced', { status: 'invoiced' }],
+                 ['Payé', 'paid', { status: 'paid' }],
+                 ['Corbeille', 'bin', { status: 'bin' }],
+                 ['Sans suite', 'dropped', { status: 'dropped' }]]
               else
                 [['Devis', 'quotation', { status: 'quotation' }],
                  ['En réalisation', 'in_progress', { status: 'in_progress' }],

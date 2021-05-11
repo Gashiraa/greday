@@ -3,7 +3,7 @@
   = render partial: '/layouts/pdf/pdf_head', locals: {project: @invoice, company: @company, type: 'invoice',
   one_project: @one_project}
   .content
-    - if @size > 15
+    - if @size > 15 && @company.mode == "Greday"
       %h3 Récapitulatif de la facture
       %table.ui.unstackable.black.celled.striped.table
         %thead
@@ -47,14 +47,14 @@
                   %td.six.wide
                   %td.five.wide.ttc-cell TOTAL TTC
                   %td.five.wide.ttc-cell= number_to_currency(@invoice.total, locale: :fr)
-      .payment-notes.top-notes.avoidbreak
-        %h4
-          = t('invoice_account') + @company.bank + ' IBAN : ' + @company.account
-          %br
-          = "Communication à mentionner sur votre virement"
-          \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
-        %p
-          = t('invoice_notice')
+        .payment-notes.top-notes.avoidbreak
+          %h4
+            = t('invoice_account') + @company.bank + ' IBAN : ' + @company.account
+            %br
+            = "Communication à mentionner sur votre virement"
+            \: #{display_invoice_id(@invoice.display_number) + " - " + l(@invoice.date).to_s}
+          %p
+            = t('invoice_notice')
       .page-break
     - if @invoice.projects.any?
       - @invoice.projects.order(:id).each do |project|
@@ -77,7 +77,7 @@
                 %td.center.aligned= l( @invoice.partial_invoice.invoice.date).to_s
                 %td.right.aligned= (number_with_precision @invoice.partial_invoice.pct, :precision => 0).to_s&.+('%')
                 %td.right.aligned= number_to_currency((@invoice.partial_invoice.amount), locale: :fr)
-    - if @size <= 15
+    - if @size <= 15 || @company.mode != "Greday"
       %table
         %tr
           %td.tva-table

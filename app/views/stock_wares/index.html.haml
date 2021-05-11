@@ -1,0 +1,52 @@
+= search_form_for @search do |form|
+  .ui.top.attached.segment
+    .ui.form
+      .six.fields
+        .two.wide.field.add-button-container
+          = link_to @company.use_articles == false ? t('create_new_extra').pluralize : t('create_new_article').pluralize, new_extra_path, {class: 'ui yellow button', :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}
+        .field
+          = form.label t('category')
+          = form.select :category_eq, Extra.distinct.pluck(:category), {:include_blank => t('all_categories')}, {id: 'extra_form_category', onchange: 'this.form.submit();'}
+        .two.wide.field.clear-filter
+          = link_to url_for + "?cancel_filter=true" do
+            %i.icons
+              %i.big.filter.icon
+              %i.large.red.times.icon
+%table.ui.striped.selectable.yellow.attached.table.table-to-color
+  %thead.thead-dark
+    %tr
+      %th.five.wide
+        = sort_link(@search, :name, t('extra_name'))
+      %th.three.wide.center.aligned
+        = sort_link(@search, :category, t('category'))
+      %th.one.wide.center.aligned
+        = sort_link(@search, :unit, t('unit'))
+      %th.two.wide.right.aligned
+        = sort_link(@search, :unit_price, t('unit_price'))
+      %th.two.wide.right.aligned
+        = sort_link(@search, :tva_rate, t('tva_rate'))
+      %th.three.wide.center.aligned
+  %tbody
+    - unless @extras.any?
+      %tr
+        %td.center.aligned{colspan: "9"}= t('no_data_display')
+    - @extras.where(delete_flag: nil).each do |extra|
+      %tr
+        %td
+          = extra.name
+        %td.five.wide.center.aligned
+          = extra.category
+        %td.one.wide.center.aligned
+          = extra.unit
+        %td.two.wide.right.aligned
+          = extra.unit_price
+        %td.two.wide.right.aligned
+          = extra.tva_rate
+        %td.three.wide.center.aligned
+          = link_to edit_extra_path(extra), remote: true do
+            = image_tag("edit-icon.png", size: "30x30")
+          = link_to extra_path(extra, extra: {delete_flag: true}), method: :put, data: {confirm: t('confirm_delete')} do
+            = image_tag("delete-icon.png", size: "30x30")
+= will_paginate @extras
+#modal-window.ui.modal
+  .content
